@@ -1,0 +1,378 @@
+
+D:\git\bookshare>java -jar target/bookshare-0.0.1-SNAPSHOT.jar 
+2018-10-23 22:17:14.575 DEBUG 10092 --- [           main] o.s.w.c.s.StandardServletEnvironment     : Adding PropertySource 'configurationProperties' with highest search precedence
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.0.6.RELEASE)
+
+2018-10-23 22:17:14.750 DEBUG 10092 --- [           main] o.s.w.c.s.StandardServletEnvironment     : Adding PropertySource 'servletConfigInitParams' with lowest search precedence
+2018-10-23 22:17:14.751 DEBUG 10092 --- [           main] o.s.w.c.s.StandardServletEnvironment     : Adding PropertySource 'servletContextInitParams' with lowest search precedence
+2018-10-23 22:17:14.753 DEBUG 10092 --- [           main] o.s.w.c.s.StandardServletEnvironment     : Adding PropertySource 'systemProperties' with lowest search precedence
+2018-10-23 22:17:14.753 DEBUG 10092 --- [           main] o.s.w.c.s.StandardServletEnvironment     : Adding PropertySource 'systemEnvironment' with lowest search precedence
+2018-10-23 22:17:14.753 DEBUG 10092 --- [           main] o.s.w.c.s.StandardServletEnvironment     : Initialized StandardServletEnvironment with PropertySources [StubPropertySource {name='servletConfigInitParams'}, StubPropertySource {name='servletContextInitParams'}, MapPropertySource {name='systemProperties'}, SystemEnvironmentPropertySource {name='systemEnvironment'}]
+2018-10-23 22:17:14.924  INFO 10092 --- [           main] c.deeach.bookshare.BookshareApplication  : Starting BookshareApplication v0.0.1-SNAPSHOT on DeeaCh-PC with PID 10092 (D:\git\bookshare\target\bookshare-0.0.1-SNAPSHOT.jar started by Andreea in D:\git\bookshare)
+2018-10-23 22:17:14.925  INFO 10092 --- [           main] c.deeach.bookshare.BookshareApplication  : No active profile set, falling back to default profiles: default
+2018-10-23 22:17:15.077  INFO 10092 --- [           main] ConfigServletWebServerApplicationContext : Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@956de9: startup date [Tue Oct 23 22:17:15 EEST 2018]; root of context hierarchy
+2018-10-23 22:17:17.690 DEBUG 10092 --- [           main] o.s.w.c.s.StandardServletEnvironment     : Removing PropertySource 'defaultProperties'
+2018-10-23 22:17:19.512  INFO 10092 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2018-10-23 22:17:19.594  INFO 10092 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2018-10-23 22:17:19.595  INFO 10092 --- [           main] org.apache.catalina.core.StandardEngine  : Starting Servlet Engine: Apache Tomcat/8.5.34
+2018-10-23 22:17:19.633  INFO 10092 --- [ost-startStop-1] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;D:\apache-maven-3.2.1\bin;C:\ProgramData\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\ATI Technologies\ATI.ACE\Core-Static;C:\Program Files (x86)\AMD\ATI.ACE\Core-Static;C:\Program Files (x86)\Skype\Phone\;C:\Program Files (x86)\nodejs\;C:\Users\Andreea\AppData\Roaming\npm;C:\Users\Andreea\AppData\Local\Microsoft\WindowsApps;C:\Program Files\curl-7.59.0-win64-mingw\bin\;;.]
+2018-10-23 22:17:19.892  INFO 10092 --- [ost-startStop-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2018-10-23 22:17:19.892 DEBUG 10092 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Published root WebApplicationContext as ServletContext attribute with name [org.springframework.web.context.WebApplicationContext.ROOT]
+2018-10-23 22:17:19.893  INFO 10092 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 4822 ms
+2018-10-23 22:17:20.097  INFO 10092 --- [ost-startStop-1] o.s.b.w.servlet.ServletRegistrationBean  : Servlet dispatcherServlet mapped to [/]
+2018-10-23 22:17:20.108  INFO 10092 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-10-23 22:17:20.108  INFO 10092 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-10-23 22:17:20.109  INFO 10092 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-10-23 22:17:20.109  INFO 10092 --- [ost-startStop-1] o.s.b.w.servlet.FilterRegistrationBean   : Mapping filter: 'requestContextFilter' to: [/*]
+2018-10-23 22:17:20.188 DEBUG 10092 --- [           main] o.s.w.c.s.StandardServletEnvironment     : Replacing PropertySource 'servletContextInitParams' with 'servletContextInitParams'
+2018-10-23 22:17:21.068  INFO 10092 --- [           main] org.mongodb.driver.cluster               : Cluster created with settings {hosts=[localhost:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+2018-10-23 22:17:21.254  INFO 10092 --- [localhost:27017] org.mongodb.driver.connection            : Opened connection [connectionId{localValue:1, serverValue:40}] to localhost:27017
+2018-10-23 22:17:21.260  INFO 10092 --- [localhost:27017] org.mongodb.driver.cluster               : Monitor thread successfully connected to server with description ServerDescription{address=localhost:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[3, 0, 4]}, minWireVersion=0, maxWireVersion=3, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=null, roundTripTimeNanos=2645114}
+2018-10-23 22:17:22.644  INFO 10092 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'clientInboundChannelExecutor'
+2018-10-23 22:17:22.666  INFO 10092 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'clientOutboundChannelExecutor'
+2018-10-23 22:17:22.728  INFO 10092 --- [           main] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'messageBrokerTaskScheduler'
+2018-10-23 22:17:22.906  INFO 10092 --- [           main] o.s.w.s.s.s.WebSocketHandlerMapping      : Mapped URL path [/books-ws/**] onto handler of type [class org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler]
+2018-10-23 22:17:22.938  INFO 10092 --- [           main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'brokerChannelExecutor'
+2018-10-23 22:17:23.286 DEBUG 10092 --- [           main] .WebSocketAnnotationMethodMessageHandler : Looking for @MessageExceptionHandler mappings: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@956de9: startup date [Tue Oct 23 22:17:15 EEST 2018]; root of context hierarchy
+2018-10-23 22:17:23.344 DEBUG 10092 --- [           main] .WebSocketAnnotationMethodMessageHandler : 1 message handler methods found on class com.deeach.bookshare.controller.GetBookController: {public com.deeach.bookshare.api.book.GetBooksResponse com.deeach.bookshare.controller.GetBookController.books(com.deeach.bookshare.api.book.GetBooksRequest) throws java.lang.Exception={[/getBook],messageType=[MESSAGE]}}
+2018-10-23 22:17:23.352  INFO 10092 --- [           main] .WebSocketAnnotationMethodMessageHandler : Mapped "{[/getBook],messageType=[MESSAGE]}" onto public com.deeach.bookshare.api.book.GetBooksResponse com.deeach.bookshare.controller.GetBookController.books(com.deeach.bookshare.api.book.GetBooksRequest) throws java.lang.Exception
+2018-10-23 22:17:23.353 DEBUG 10092 --- [           main] .WebSocketAnnotationMethodMessageHandler : 1 message handler methods found on class com.deeach.bookshare.controller.AddBookController: {public com.deeach.bookshare.api.book.AddBookResponse com.deeach.bookshare.controller.AddBookController.books(com.deeach.bookshare.api.book.AddBookRequest) throws java.lang.Exception={[/addBook],messageType=[MESSAGE]}}
+2018-10-23 22:17:23.353  INFO 10092 --- [           main] .WebSocketAnnotationMethodMessageHandler : Mapped "{[/addBook],messageType=[MESSAGE]}" onto public com.deeach.bookshare.api.book.AddBookResponse com.deeach.bookshare.controller.AddBookController.books(com.deeach.bookshare.api.book.AddBookRequest) throws java.lang.Exception
+2018-10-23 22:17:23.362 DEBUG 10092 --- [           main] .WebSocketAnnotationMethodMessageHandler : 0 message handler methods found on class org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController: {}
+2018-10-23 22:17:23.683  INFO 10092 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-10-23 22:17:23.992  INFO 10092 --- [           main] s.w.s.m.m.a.RequestMappingHandlerAdapter : Looking for @ControllerAdvice: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@956de9: startup date [Tue Oct 23 22:17:15 EEST 2018]; root of context hierarchy
+2018-10-23 22:17:24.195 DEBUG 10092 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Looking for request mappings in application context: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@956de9: startup date [Tue Oct 23 22:17:15 EEST 2018]; root of context hierarchy
+2018-10-23 22:17:24.197 DEBUG 10092 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 0 request handler methods found on class com.deeach.bookshare.controller.GetBookController: {}
+2018-10-23 22:17:24.199 DEBUG 10092 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 0 request handler methods found on class com.deeach.bookshare.controller.AddBookController: {}
+2018-10-23 22:17:24.231 DEBUG 10092 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : 2 request handler methods found on class org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController: {public org.springframework.http.ResponseEntity org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)={[/error]}, public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)={[/error],produces=[text/html]}}
+2018-10-23 22:17:24.233  INFO 10092 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-10-23 22:17:24.233 TRACE 10092 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapping name 'BEC#error'
+2018-10-23 22:17:24.236  INFO 10092 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.servlet.error.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-10-23 22:17:24.236 TRACE 10092 --- [           main] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapping name 'BEC#errorHtml'
+2018-10-23 22:17:24.299 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Looking for URL mappings in application context: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@956de9: startup date [Tue Oct 23 22:17:15 EEST 2018]; root of context hierarchy
+2018-10-23 22:17:24.300 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.context.annotation.internalConfigurationAnnotationProcessor': no URL paths identified
+2018-10-23 22:17:24.300 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.context.annotation.internalAutowiredAnnotationProcessor': no URL paths identified
+2018-10-23 22:17:24.300 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.context.annotation.internalRequiredAnnotationProcessor': no URL paths identified
+2018-10-23 22:17:24.300 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.context.annotation.internalCommonAnnotationProcessor': no URL paths identified
+2018-10-23 22:17:24.301 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.context.event.internalEventListenerProcessor': no URL paths identified
+2018-10-23 22:17:24.301 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.context.event.internalEventListenerFactory': no URL paths identified
+2018-10-23 22:17:24.301 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'bookshareApplication': no URL paths identified
+2018-10-23 22:17:24.301 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.internalCachingMetadataReaderFactory': no URL paths identified
+2018-10-23 22:17:24.301 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'getBookController': no URL paths identified
+2018-10-23 22:17:24.301 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'webSocketConfig': no URL paths identified
+2018-10-23 22:17:24.301 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'addBookController': no URL paths identified
+2018-10-23 22:17:24.302 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.web.socket.config.annotation.DelegatingWebSocketMessageBrokerConfiguration': no URL paths identified
+2018-10-23 22:17:24.302 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'stompWebSocketHandlerMapping': no URL paths identified
+2018-10-23 22:17:24.302 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'subProtocolWebSocketHandler': no URL paths identified
+2018-10-23 22:17:24.302 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'webSocketScopeConfigurer': no URL paths identified
+2018-10-23 22:17:24.302 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'webSocketMessageBrokerStats': no URL paths identified
+2018-10-23 22:17:24.302 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'clientInboundChannel': no URL paths identified
+2018-10-23 22:17:24.302 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'clientInboundChannelExecutor': no URL paths identified
+2018-10-23 22:17:24.303 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'clientOutboundChannel': no URL paths identified
+2018-10-23 22:17:24.303 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'clientOutboundChannelExecutor': no URL paths identified
+2018-10-23 22:17:24.303 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'brokerChannel': no URL paths identified
+2018-10-23 22:17:24.303 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'brokerChannelExecutor': no URL paths identified
+2018-10-23 22:17:24.303 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'simpAnnotationMethodMessageHandler': no URL paths identified
+2018-10-23 22:17:24.303 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'simpleBrokerMessageHandler': no URL paths identified
+2018-10-23 22:17:24.304 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'stompBrokerRelayMessageHandler': no URL paths identified
+2018-10-23 22:17:24.304 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'userDestinationMessageHandler': no URL paths identified
+2018-10-23 22:17:24.304 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'userRegistryMessageHandler': no URL paths identified
+2018-10-23 22:17:24.304 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'messageBrokerTaskScheduler': no URL paths identified
+2018-10-23 22:17:24.304 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'brokerMessagingTemplate': no URL paths identified
+2018-10-23 22:17:24.304 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'brokerMessageConverter': no URL paths identified
+2018-10-23 22:17:24.305 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'userDestinationResolver': no URL paths identified
+2018-10-23 22:17:24.305 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'userRegistry': no URL paths identified
+2018-10-23 22:17:24.305 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.AutoConfigurationPackages': no URL paths identified
+2018-10-23 22:17:24.305 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.305 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.condition.BeanTypeRegistry': no URL paths identified
+2018-10-23 22:17:24.305 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'propertySourcesPlaceholderConfigurer': no URL paths identified
+2018-10-23 22:17:24.305 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration$TomcatWebSocketConfiguration': no URL paths identified
+2018-10-23 22:17:24.306 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'websocketServletWebServerCustomizer': no URL paths identified
+2018-10-23 22:17:24.306 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.websocket.servlet.WebSocketServletAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.306 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryConfiguration$EmbeddedTomcat': no URL paths identified
+2018-10-23 22:17:24.306 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'tomcatServletWebServerFactory': no URL paths identified
+2018-10-23 22:17:24.306 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.306 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'servletWebServerFactoryCustomizer': no URL paths identified
+2018-10-23 22:17:24.306 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'tomcatServletWebServerFactoryCustomizer': no URL paths identified
+2018-10-23 22:17:24.307 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'server-org.springframework.boot.autoconfigure.web.ServerProperties': no URL paths identified
+2018-10-23 22:17:24.307 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor': no URL paths identified
+2018-10-23 22:17:24.307 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.context.properties.ConfigurationBeanFactoryMetadata': no URL paths identified
+2018-10-23 22:17:24.307 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'webServerFactoryCustomizerBeanPostProcessor': no URL paths identified
+2018-10-23 22:17:24.307 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'errorPageRegistrarBeanPostProcessor': no URL paths identified
+2018-10-23 22:17:24.307 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletConfiguration': no URL paths identified
+2018-10-23 22:17:24.308 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'dispatcherServlet': no URL paths identified
+2018-10-23 22:17:24.308 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'spring.mvc-org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties': no URL paths identified
+2018-10-23 22:17:24.308 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration$DispatcherServletRegistrationConfiguration': no URL paths identified
+2018-10-23 22:17:24.308 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'dispatcherServletRegistration': no URL paths identified
+2018-10-23 22:17:24.308 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.308 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.308 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'defaultValidator': no URL paths identified
+2018-10-23 22:17:24.309 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'methodValidationPostProcessor': no URL paths identified
+2018-10-23 22:17:24.309 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$WhitelabelErrorViewConfiguration': no URL paths identified
+2018-10-23 22:17:24.309 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'error': no URL paths identified
+2018-10-23 22:17:24.309 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'beanNameViewResolver': no URL paths identified
+2018-10-23 22:17:24.309 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration$DefaultErrorViewResolverConfiguration': no URL paths identified
+2018-10-23 22:17:24.309 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'conventionErrorViewResolver': no URL paths identified
+2018-10-23 22:17:24.309 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.310 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'errorAttributes': no URL paths identified
+2018-10-23 22:17:24.310 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'basicErrorController': no URL paths identified
+2018-10-23 22:17:24.310 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'errorPageCustomizer': no URL paths identified
+2018-10-23 22:17:24.310 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'preserveErrorControllerTargetClassPostProcessor': no URL paths identified
+2018-10-23 22:17:24.310 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'spring.resources-org.springframework.boot.autoconfigure.web.ResourceProperties': no URL paths identified
+2018-10-23 22:17:24.310 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter$FaviconConfiguration': no URL paths identified
+2018-10-23 22:17:24.310 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'faviconHandlerMapping': no URL paths identified
+2018-10-23 22:17:24.311 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'faviconRequestHandler': no URL paths identified
+2018-10-23 22:17:24.311 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$EnableWebMvcConfiguration': no URL paths identified
+2018-10-23 22:17:24.311 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'requestMappingHandlerAdapter': no URL paths identified
+2018-10-23 22:17:24.311 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'requestMappingHandlerMapping': no URL paths identified
+2018-10-23 22:17:24.311 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mvcConversionService': no URL paths identified
+2018-10-23 22:17:24.311 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mvcValidator': no URL paths identified
+2018-10-23 22:17:24.311 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mvcContentNegotiationManager': no URL paths identified
+2018-10-23 22:17:24.311 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mvcPathMatcher': no URL paths identified
+2018-10-23 22:17:24.312 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mvcUrlPathHelper': no URL paths identified
+2018-10-23 22:17:24.312 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'viewControllerHandlerMapping': no URL paths identified
+2018-10-23 22:17:24.312 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'beanNameHandlerMapping': no URL paths identified
+2018-10-23 22:17:24.312 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'resourceHandlerMapping': no URL paths identified
+2018-10-23 22:17:24.312 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mvcResourceUrlProvider': no URL paths identified
+2018-10-23 22:17:24.312 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'defaultServletHandlerMapping': no URL paths identified
+2018-10-23 22:17:24.312 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mvcUriComponentsContributor': no URL paths identified
+2018-10-23 22:17:24.313 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'httpRequestHandlerAdapter': no URL paths identified
+2018-10-23 22:17:24.313 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'simpleControllerHandlerAdapter': no URL paths identified
+2018-10-23 22:17:24.313 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'handlerExceptionResolver': no URL paths identified
+2018-10-23 22:17:24.313 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mvcViewResolver': no URL paths identified
+2018-10-23 22:17:24.313 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mvcHandlerMappingIntrospector': no URL paths identified
+2018-10-23 22:17:24.313 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration$WebMvcAutoConfigurationAdapter': no URL paths identified
+2018-10-23 22:17:24.313 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'defaultViewResolver': no URL paths identified
+2018-10-23 22:17:24.313 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'viewResolver': no URL paths identified
+2018-10-23 22:17:24.314 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'welcomePageHandlerMapping': no URL paths identified
+2018-10-23 22:17:24.314 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'requestContextFilter': no URL paths identified
+2018-10-23 22:17:24.314 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.314 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'hiddenHttpMethodFilter': no URL paths identified
+2018-10-23 22:17:24.314 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'httpPutFormContentFilter': no URL paths identified
+2018-10-23 22:17:24.314 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.314 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mbeanExporter': no URL paths identified
+2018-10-23 22:17:24.314 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'objectNamingStrategy': no URL paths identified
+2018-10-23 22:17:24.314 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mbeanServer': no URL paths identified
+2018-10-23 22:17:24.315 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.context.ConfigurationPropertiesAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.315 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.315 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'persistenceExceptionTranslationPostProcessor': no URL paths identified
+2018-10-23 22:17:24.315 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.315 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mongo': no URL paths identified
+2018-10-23 22:17:24.315 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'spring.data.mongodb-org.springframework.boot.autoconfigure.mongo.MongoProperties': no URL paths identified
+2018-10-23 22:17:24.315 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.316 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mongoDbFactory': no URL paths identified
+2018-10-23 22:17:24.316 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mongoTemplate': no URL paths identified
+2018-10-23 22:17:24.316 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mappingMongoConverter': no URL paths identified
+2018-10-23 22:17:24.316 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mongoMappingContext': no URL paths identified
+2018-10-23 22:17:24.316 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'gridFsTemplate': no URL paths identified
+2018-10-23 22:17:24.316 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mongoCustomConversions': no URL paths identified
+2018-10-23 22:17:24.316 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.317 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'bookRepository': no URL paths identified
+2018-10-23 22:17:24.317 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$Jackson2ObjectMapperBuilderCustomizerConfiguration': no URL paths identified
+2018-10-23 22:17:24.317 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'standardJacksonObjectMapperBuilderCustomizer': no URL paths identified
+2018-10-23 22:17:24.317 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'spring.jackson-org.springframework.boot.autoconfigure.jackson.JacksonProperties': no URL paths identified
+2018-10-23 22:17:24.317 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration': no URL paths identified
+2018-10-23 22:17:24.317 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'jacksonObjectMapperBuilder': no URL paths identified
+2018-10-23 22:17:24.317 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$ParameterNamesModuleConfiguration': no URL paths identified
+2018-10-23 22:17:24.317 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'parameterNamesModule': no URL paths identified
+2018-10-23 22:17:24.317 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperConfiguration': no URL paths identified
+2018-10-23 22:17:24.318 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'jacksonObjectMapper': no URL paths identified
+2018-10-23 22:17:24.318 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.318 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'jsonComponentModule': no URL paths identified
+2018-10-23 22:17:24.318 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration$StringHttpMessageConverterConfiguration': no URL paths identified
+2018-10-23 22:17:24.318 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'stringHttpMessageConverter': no URL paths identified
+2018-10-23 22:17:24.318 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'spring.http.encoding-org.springframework.boot.autoconfigure.http.HttpEncodingProperties': no URL paths identified
+2018-10-23 22:17:24.319 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.http.JacksonHttpMessageConvertersConfiguration$MappingJackson2HttpMessageConverterConfiguration': no URL paths identified
+2018-10-23 22:17:24.319 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'mappingJackson2HttpMessageConverter': no URL paths identified
+2018-10-23 22:17:24.319 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.http.JacksonHttpMessageConvertersConfiguration': no URL paths identified
+2018-10-23 22:17:24.319 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.319 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'messageConverters': no URL paths identified
+2018-10-23 22:17:24.319 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.data.web.config.ProjectingArgumentResolverRegistrar': no URL paths identified
+2018-10-23 22:17:24.319 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'projectingArgumentResolverBeanPostProcessor': no URL paths identified
+2018-10-23 22:17:24.320 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.data.web.config.SpringDataWebConfiguration': no URL paths identified
+2018-10-23 22:17:24.320 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'pageableResolver': no URL paths identified
+2018-10-23 22:17:24.320 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'sortResolver': no URL paths identified
+2018-10-23 22:17:24.320 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.data.mongodb.config.GeoJsonConfiguration': no URL paths identified
+2018-10-23 22:17:24.320 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'geoJsonModule': no URL paths identified
+2018-10-23 22:17:24.320 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.data.web.config.SpringDataJacksonConfiguration': no URL paths identified
+2018-10-23 22:17:24.320 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'jacksonGeoModule': no URL paths identified
+2018-10-23 22:17:24.320 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.320 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'pageableCustomizer': no URL paths identified
+2018-10-23 22:17:24.321 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'sortCustomizer': no URL paths identified
+2018-10-23 22:17:24.321 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'spring.data.web-org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties': no URL paths identified
+2018-10-23 22:17:24.321 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration$JacksonCodecConfiguration': no URL paths identified
+2018-10-23 22:17:24.321 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'jacksonCodecCustomizer': no URL paths identified
+2018-10-23 22:17:24.321 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.321 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.321 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'spring.info-org.springframework.boot.autoconfigure.info.ProjectInfoProperties': no URL paths identified
+2018-10-23 22:17:24.321 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.322 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'platformTransactionManagerCustomizers': no URL paths identified
+2018-10-23 22:17:24.322 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'spring.transaction-org.springframework.boot.autoconfigure.transaction.TransactionProperties': no URL paths identified
+2018-10-23 22:17:24.322 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.322 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'restTemplateBuilder': no URL paths identified
+2018-10-23 22:17:24.322 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration$TomcatWebServerFactoryCustomizerConfiguration': no URL paths identified
+2018-10-23 22:17:24.322 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'tomcatWebServerFactoryCustomizer': no URL paths identified
+2018-10-23 22:17:24.322 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.322 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.322 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'characterEncodingFilter': no URL paths identified
+2018-10-23 22:17:24.322 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'localeCharsetMappingsCustomizer': no URL paths identified
+2018-10-23 22:17:24.323 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.323 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'multipartConfigElement': no URL paths identified
+2018-10-23 22:17:24.323 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'multipartResolver': no URL paths identified
+2018-10-23 22:17:24.323 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'spring.servlet.multipart-org.springframework.boot.autoconfigure.web.servlet.MultipartProperties': no URL paths identified
+2018-10-23 22:17:24.324 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.websocket.servlet.WebSocketMessagingAutoConfiguration$WebSocketMessageConverterConfiguration': no URL paths identified
+2018-10-23 22:17:24.324 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.autoconfigure.websocket.servlet.WebSocketMessagingAutoConfiguration': no URL paths identified
+2018-10-23 22:17:24.324 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'autoConfigurationReport': no URL paths identified
+2018-10-23 22:17:24.324 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.boot.context.ContextIdApplicationContextInitializer$ContextId': no URL paths identified
+2018-10-23 22:17:24.324 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'springApplicationArguments': no URL paths identified
+2018-10-23 22:17:24.325 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'springBootBanner': no URL paths identified
+2018-10-23 22:17:24.325 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'springBootLoggingSystem': no URL paths identified
+2018-10-23 22:17:24.325 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'environment': no URL paths identified
+2018-10-23 22:17:24.325 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'systemProperties': no URL paths identified
+2018-10-23 22:17:24.325 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'systemEnvironment': no URL paths identified
+2018-10-23 22:17:24.326 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'org.springframework.context.annotation.ConfigurationClassPostProcessor.importRegistry': no URL paths identified
+2018-10-23 22:17:24.326 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'messageSource': no URL paths identified
+2018-10-23 22:17:24.326 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'applicationEventMulticaster': no URL paths identified
+2018-10-23 22:17:24.326 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'servletContext': no URL paths identified
+2018-10-23 22:17:24.326 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'contextParameters': no URL paths identified
+2018-10-23 22:17:24.326 DEBUG 10092 --- [           main] o.s.w.s.h.BeanNameUrlHandlerMapping      : Rejected bean name 'contextAttributes': no URL paths identified
+2018-10-23 22:17:24.343  INFO 10092 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-10-23 22:17:24.343  INFO 10092 --- [           main] o.s.w.s.handler.SimpleUrlHandlerMapping  : Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-10-23 22:17:24.375 DEBUG 10092 --- [           main] .m.m.a.ExceptionHandlerExceptionResolver : Looking for exception mappings: org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@956de9: startup date [Tue Oct 23 22:17:15 EEST 2018]; root of context hierarchy
+2018-10-23 22:17:24.945  INFO 10092 --- [           main] o.s.j.e.a.AnnotationMBeanExporter        : Registering beans for JMX exposure on startup
+2018-10-23 22:17:24.970  INFO 10092 --- [           main] o.s.c.support.DefaultLifecycleProcessor  : Starting beans in phase 2147483647
+2018-10-23 22:17:24.970 DEBUG 10092 --- [           main] o.s.m.s.ExecutorSubscribableChannel      : clientOutboundChannel added SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2018-10-23 22:17:24.970 DEBUG 10092 --- [           main] o.s.m.s.ExecutorSubscribableChannel      : clientInboundChannel added WebSocketAnnotationMethodMessageHandler[prefixes=[]]
+2018-10-23 22:17:24.971  INFO 10092 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2018-10-23 22:17:24.971 DEBUG 10092 --- [           main] o.s.m.s.ExecutorSubscribableChannel      : clientInboundChannel added SimpleBrokerMessageHandler [DefaultSubscriptionRegistry[cache[0 destination(s)], registry[0 sessions]]]
+2018-10-23 22:17:24.971 DEBUG 10092 --- [           main] o.s.m.s.ExecutorSubscribableChannel      : brokerChannel added SimpleBrokerMessageHandler [DefaultSubscriptionRegistry[cache[0 destination(s)], registry[0 sessions]]]
+2018-10-23 22:17:24.972  INFO 10092 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [DefaultSubscriptionRegistry[cache[0 destination(s)], registry[0 sessions]]]]
+2018-10-23 22:17:24.978  INFO 10092 --- [           main] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2018-10-23 22:17:24.978 DEBUG 10092 --- [           main] o.s.m.s.ExecutorSubscribableChannel      : clientInboundChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2018-10-23 22:17:24.978 DEBUG 10092 --- [           main] o.s.m.s.ExecutorSubscribableChannel      : brokerChannel added UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2018-10-23 22:17:24.993 DEBUG 10092 --- [           main] o.s.w.s.resource.ResourceUrlProvider     : Looking for resource handler mappings
+2018-10-23 22:17:24.994 DEBUG 10092 --- [           main] o.s.w.s.resource.ResourceUrlProvider     : Found resource handler mapping: URL pattern="/**/favicon.ico", locations=[class path resource [META-INF/resources/], class path resource [resources/], class path resource [static/], class path resource [public/], ServletContext resource [/], class path resource []], resolvers=[org.springframework.web.servlet.resource.PathResourceResolver@11f9e9]
+2018-10-23 22:17:24.994 DEBUG 10092 --- [           main] o.s.w.s.resource.ResourceUrlProvider     : Found resource handler mapping: URL pattern="/webjars/**", locations=[class path resource [META-INF/resources/webjars/]], resolvers=[org.springframework.web.servlet.resource.PathResourceResolver@1e5f259]
+2018-10-23 22:17:24.994 DEBUG 10092 --- [           main] o.s.w.s.resource.ResourceUrlProvider     : Found resource handler mapping: URL pattern="/**", locations=[class path resource [META-INF/resources/], class path resource [resources/], class path resource [static/], class path resource [public/], ServletContext resource [/]], resolvers=[org.springframework.web.servlet.resource.PathResourceResolver@9d991e]
+2018-10-23 22:17:25.072  INFO 10092 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2018-10-23 22:17:25.074 DEBUG 10092 --- [           main] o.s.w.c.s.StandardServletEnvironment     : Adding PropertySource 'server.ports' with highest search precedence
+2018-10-23 22:17:25.079  INFO 10092 --- [           main] c.deeach.bookshare.BookshareApplication  : Started BookshareApplication in 11.283 seconds (JVM running for 12.413)
+2018-10-23 22:17:50.912 DEBUG 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing servlet 'dispatcherServlet'
+2018-10-23 22:17:50.914  INFO 10092 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring FrameworkServlet 'dispatcherServlet'
+2018-10-23 22:17:50.914  INFO 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization started
+2018-10-23 22:17:50.915 DEBUG 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Using MultipartResolver [org.springframework.web.multipart.support.StandardServletMultipartResolver@154d46a]
+2018-10-23 22:17:50.927 DEBUG 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Unable to locate LocaleResolver with name 'localeResolver': using default [org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver@1620271]
+2018-10-23 22:17:50.940 DEBUG 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Unable to locate ThemeResolver with name 'themeResolver': using default [org.springframework.web.servlet.theme.FixedThemeResolver@56738a]
+2018-10-23 22:17:50.952 DEBUG 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Unable to locate RequestToViewNameTranslator with name 'viewNameTranslator': using default [org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@152b4c6]
+2018-10-23 22:17:50.969 DEBUG 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Unable to locate FlashMapManager with name 'flashMapManager': using default [org.springframework.web.servlet.support.SessionFlashMapManager@12f28e0]
+2018-10-23 22:17:50.969 DEBUG 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Published WebApplicationContext of servlet 'dispatcherServlet' as ServletContext attribute with name [org.springframework.web.servlet.FrameworkServlet.CONTEXT.dispatcherServlet]
+2018-10-23 22:17:50.969  INFO 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : FrameworkServlet 'dispatcherServlet': initialization completed in 55 ms
+2018-10-23 22:17:50.969 DEBUG 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Servlet 'dispatcherServlet' configured successfully
+2018-10-23 22:17:51.017 TRACE 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Bound request context to thread: org.apache.catalina.connector.RequestFacade@3f3712
+2018-10-23 22:17:51.018 DEBUG 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : DispatcherServlet with name 'dispatcherServlet' processing GET request for [/books-ws/info]
+2018-10-23 22:17:51.022 TRACE 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Testing handler map [org.springframework.web.servlet.handler.SimpleUrlHandlerMapping@1a1e46d] in DispatcherServlet with name 'dispatcherServlet'
+2018-10-23 22:17:51.026 TRACE 10092 --- [nio-8080-exec-1] o.s.w.s.handler.SimpleUrlHandlerMapping  : No handler mapping found for [/books-ws/info]
+2018-10-23 22:17:51.026 TRACE 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Testing handler map [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping@143b75a] in DispatcherServlet with name 'dispatcherServlet'
+2018-10-23 22:17:51.026 DEBUG 10092 --- [nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Looking up handler method for path /books-ws/info
+2018-10-23 22:17:51.034 DEBUG 10092 --- [nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Did not find handler method for [/books-ws/info]
+2018-10-23 22:17:51.034 TRACE 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Testing handler map [org.springframework.web.socket.server.support.WebSocketHandlerMapping@19cdf1b] in DispatcherServlet with name 'dispatcherServlet'
+2018-10-23 22:17:51.034 DEBUG 10092 --- [nio-8080-exec-1] o.s.w.s.s.s.WebSocketHandlerMapping      : Matching patterns for request [/books-ws/info] are [/books-ws/**]
+2018-10-23 22:17:51.036 DEBUG 10092 --- [nio-8080-exec-1] o.s.w.s.s.s.WebSocketHandlerMapping      : URI Template variables for request [/books-ws/info] are {}
+2018-10-23 22:17:51.038 DEBUG 10092 --- [nio-8080-exec-1] o.s.w.s.s.s.WebSocketHandlerMapping      : Mapping [/books-ws/info] to HandlerExecutionChain with handler [org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@1a54932] and 1 interceptor
+2018-10-23 22:17:51.040 TRACE 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Testing handler adapter [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter@ab9060]
+2018-10-23 22:17:51.040 TRACE 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Testing handler adapter [org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter@14fe3ad]
+2018-10-23 22:17:51.041 DEBUG 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Last-Modified value for [/books-ws/info] is: -1
+2018-10-23 22:17:51.079 DEBUG 10092 --- [nio-8080-exec-1] o.s.w.s.s.t.h.DefaultSockJsService       : Processing transport request: GET http://localhost:8080/books-ws/info?t=1540322270716
+2018-10-23 22:17:51.082 DEBUG 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Null ModelAndView returned to DispatcherServlet with name 'dispatcherServlet': assuming HandlerAdapter completed request handling
+2018-10-23 22:17:51.082 TRACE 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Cleared thread-bound request context: org.apache.catalina.connector.RequestFacade@3f3712
+2018-10-23 22:17:51.082 DEBUG 10092 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Successfully completed request
+2018-10-23 22:17:51.108 TRACE 10092 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Bound request context to thread: org.apache.catalina.connector.RequestFacade@3f3712
+2018-10-23 22:17:51.109 DEBUG 10092 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : DispatcherServlet with name 'dispatcherServlet' processing GET request for [/books-ws/058/v03ziwdk/websocket]
+2018-10-23 22:17:51.109 TRACE 10092 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Testing handler map [org.springframework.web.servlet.handler.SimpleUrlHandlerMapping@1a1e46d] in DispatcherServlet with name 'dispatcherServlet'
+2018-10-23 22:17:51.109 TRACE 10092 --- [nio-8080-exec-2] o.s.w.s.handler.SimpleUrlHandlerMapping  : No handler mapping found for [/books-ws/058/v03ziwdk/websocket]
+2018-10-23 22:17:51.109 TRACE 10092 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Testing handler map [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping@143b75a] in DispatcherServlet with name 'dispatcherServlet'
+2018-10-23 22:17:51.109 DEBUG 10092 --- [nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Looking up handler method for path /books-ws/058/v03ziwdk/websocket
+2018-10-23 22:17:51.110 DEBUG 10092 --- [nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Did not find handler method for [/books-ws/058/v03ziwdk/websocket]
+2018-10-23 22:17:51.110 TRACE 10092 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Testing handler map [org.springframework.web.socket.server.support.WebSocketHandlerMapping@19cdf1b] in DispatcherServlet with name 'dispatcherServlet'
+2018-10-23 22:17:51.110 DEBUG 10092 --- [nio-8080-exec-2] o.s.w.s.s.s.WebSocketHandlerMapping      : Matching patterns for request [/books-ws/058/v03ziwdk/websocket] are [/books-ws/**]
+2018-10-23 22:17:51.110 DEBUG 10092 --- [nio-8080-exec-2] o.s.w.s.s.s.WebSocketHandlerMapping      : URI Template variables for request [/books-ws/058/v03ziwdk/websocket] are {}
+2018-10-23 22:17:51.111 DEBUG 10092 --- [nio-8080-exec-2] o.s.w.s.s.s.WebSocketHandlerMapping      : Mapping [/books-ws/058/v03ziwdk/websocket] to HandlerExecutionChain with handler [org.springframework.web.socket.sockjs.support.SockJsHttpRequestHandler@1a54932] and 1 interceptor
+2018-10-23 22:17:51.111 TRACE 10092 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Testing handler adapter [org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter@ab9060]
+2018-10-23 22:17:51.111 TRACE 10092 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Testing handler adapter [org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter@14fe3ad]
+2018-10-23 22:17:51.111 DEBUG 10092 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Last-Modified value for [/books-ws/058/v03ziwdk/websocket] is: -1
+2018-10-23 22:17:51.113 DEBUG 10092 --- [nio-8080-exec-2] o.s.w.s.s.t.h.DefaultSockJsService       : Processing transport request: GET http://localhost:8080/books-ws/058/v03ziwdk/websocket
+2018-10-23 22:17:51.135 TRACE 10092 --- [nio-8080-exec-2] o.s.w.s.s.s.DefaultHandshakeHandler      : Processing request http://localhost:8080/books-ws/058/v03ziwdk/websocket with headers={host=[localhost:8080], connection=[Upgrade], pragma=[no-cache], cache-control=[no-cache], user-agent=[Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36], upgrade=[websocket], origin=[http://localhost:8090], sec-websocket-version=[13], accept-encoding=[gzip, deflate, br], accept-language=[en-US,en;q=0.9,de;q=0.8,ro;q=0.7], sec-websocket-key=[yrKY/0qJE4Mcsipt61PhVg==], sec-websocket-extensions=[permessage-deflate; client_max_window_bits]}
+2018-10-23 22:17:51.138 TRACE 10092 --- [nio-8080-exec-2] o.s.w.s.s.s.DefaultHandshakeHandler      : Upgrading to WebSocket, subProtocol=null, extensions=[]
+2018-10-23 22:17:51.243 DEBUG 10092 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Null ModelAndView returned to DispatcherServlet with name 'dispatcherServlet': assuming HandlerAdapter completed request handling
+2018-10-23 22:17:51.243 TRACE 10092 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Cleared thread-bound request context: org.apache.catalina.connector.RequestFacade@3f3712
+2018-10-23 22:17:51.243 DEBUG 10092 --- [nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Successfully completed request
+2018-10-23 22:17:51.295 DEBUG 10092 --- [nio-8080-exec-2] s.w.s.h.LoggingWebSocketHandlerDecorator : New WebSocketServerSockJsSession[id=v03ziwdk]
+2018-10-23 22:17:51.318 TRACE 10092 --- [nio-8080-exec-2] o.s.w.s.adapter.NativeWebSocketSession   : Sending TextMessage payload=[o], byteCount=1, last=true], StandardWebSocketSession[id=54a16ace-831f-9657-e6cf-c681804e6795, uri=/books-ws/058/v03ziwdk/websocket]
+2018-10-23 22:17:51.324 TRACE 10092 --- [nio-8080-exec-2] s.w.s.s.t.s.WebSocketServerSockJsSession : Scheduled heartbeat in session v03ziwdk
+2018-10-23 22:17:51.376 TRACE 10092 --- [nio-8080-exec-2] s.w.s.h.LoggingWebSocketHandlerDecorator : Handling TextMessage payload=[CONNECT
+ac..], byteCount=56, last=true] in WebSocketServerSockJsSession[id=v03ziwdk]
+2018-10-23 22:17:51.389 TRACE 10092 --- [nio-8080-exec-2] o.s.messaging.simp.stomp.StompDecoder    : Decoded CONNECT {accept-version=[1.1,1.0], heart-beat=[10000,10000]} session=null
+2018-10-23 22:17:51.390 TRACE 10092 --- [nio-8080-exec-2] o.s.w.s.m.StompSubProtocolHandler        : From client: CONNECT session=v03ziwdk
+2018-10-23 22:17:51.399 DEBUG 10092 --- [nboundChannel-2] o.s.m.s.b.SimpleBrokerMessageHandler     : Processing CONNECT session=v03ziwdk
+2018-10-23 22:17:51.403 TRACE 10092 --- [tboundChannel-1] o.s.messaging.simp.stomp.StompEncoder    : Encoding STOMP CONNECTED, headers={version=[1.1], heart-beat=[0,0]}
+2018-10-23 22:17:51.404 TRACE 10092 --- [tboundChannel-1] s.w.s.s.t.s.WebSocketServerSockJsSession : Cancelling heartbeat in session v03ziwdk
+2018-10-23 22:17:51.406 TRACE 10092 --- [tboundChannel-1] s.w.s.s.t.s.WebSocketServerSockJsSession : Preparing to write SockJsFrame content='a["CONNECTED\nversion:1.1\nheart-beat:0,0\n\n\u0000"]'
+2018-10-23 22:17:51.407 TRACE 10092 --- [tboundChannel-1] s.w.s.s.t.s.WebSocketServerSockJsSession : Writing SockJsFrame content='a["CONNECTED\nversion:1.1\nheart-beat:0,0\n\n\u0000"]'
+2018-10-23 22:17:51.407 TRACE 10092 --- [tboundChannel-1] o.s.w.s.adapter.NativeWebSocketSession   : Sending TextMessage payload=[a["CONNECT..], byteCount=53, last=true], StandardWebSocketSession[id=54a16ace-831f-9657-e6cf-c681804e6795, uri=/books-ws/058/v03ziwdk/websocket]
+2018-10-23 22:17:51.409 TRACE 10092 --- [tboundChannel-1] s.w.s.s.t.s.WebSocketServerSockJsSession : Scheduled heartbeat in session v03ziwdk
+2018-10-23 22:17:51.423 TRACE 10092 --- [nio-8080-exec-3] s.w.s.h.LoggingWebSocketHandlerDecorator : Handling TextMessage payload=[SUBSCRIBE
+..], byteCount=45, last=true] in WebSocketServerSockJsSession[id=v03ziwdk]
+2018-10-23 22:17:51.423 TRACE 10092 --- [nio-8080-exec-3] o.s.messaging.simp.stomp.StompDecoder    : Decoded SUBSCRIBE {id=[sub-0], destination=[/topic/book]} session=null
+2018-10-23 22:17:51.424 TRACE 10092 --- [nio-8080-exec-3] o.s.w.s.m.StompSubProtocolHandler        : From client: SUBSCRIBE /topic/book id=sub-0 session=v03ziwdk
+2018-10-23 22:17:51.425 DEBUG 10092 --- [nboundChannel-4] .WebSocketAnnotationMethodMessageHandler : Searching methods to handle SUBSCRIBE /topic/book id=sub-0 session=v03ziwdk, lookupDestination='/topic/book'
+2018-10-23 22:17:51.425 DEBUG 10092 --- [nboundChannel-4] .WebSocketAnnotationMethodMessageHandler : No matching message handler methods.
+2018-10-23 22:17:55.328 TRACE 10092 --- [nio-8080-exec-4] s.w.s.h.LoggingWebSocketHandlerDecorator : Handling TextMessage payload=[SEND
+desti..], byteCount=66, last=true] in WebSocketServerSockJsSession[id=v03ziwdk]
+2018-10-23 22:17:55.329 TRACE 10092 --- [nio-8080-exec-4] o.s.messaging.simp.stomp.StompDecoder    : Decoded SEND {destination=[/app/getBook], content-length=[16]} session=null
+2018-10-23 22:17:55.329 TRACE 10092 --- [nio-8080-exec-4] o.s.w.s.m.StompSubProtocolHandler        : From client: SEND /app/getBook session=v03ziwdk
+2018-10-23 22:17:55.330 DEBUG 10092 --- [nboundChannel-7] .WebSocketAnnotationMethodMessageHandler : Searching methods to handle SEND /app/getBook session=v03ziwdk, lookupDestination='/app/getBook'
+2018-10-23 22:17:55.331 DEBUG 10092 --- [nboundChannel-7] .WebSocketAnnotationMethodMessageHandler : No matching message handler methods.
+2018-10-23 22:17:59.078 TRACE 10092 --- [nio-8080-exec-5] s.w.s.h.LoggingWebSocketHandlerDecorator : Handling TextMessage payload=[SEND
+desti..], byteCount=66, last=true] in WebSocketServerSockJsSession[id=v03ziwdk]
+2018-10-23 22:17:59.078 TRACE 10092 --- [nio-8080-exec-5] o.s.messaging.simp.stomp.StompDecoder    : Decoded SEND {destination=[/app/addBook], content-length=[16]} session=null
+2018-10-23 22:17:59.078 TRACE 10092 --- [nio-8080-exec-5] o.s.w.s.m.StompSubProtocolHandler        : From client: SEND /app/addBook session=v03ziwdk
+2018-10-23 22:17:59.079 DEBUG 10092 --- [boundChannel-10] .WebSocketAnnotationMethodMessageHandler : Searching methods to handle SEND /app/addBook session=v03ziwdk, lookupDestination='/app/addBook'
+2018-10-23 22:17:59.080 DEBUG 10092 --- [boundChannel-10] .WebSocketAnnotationMethodMessageHandler : No matching message handler methods.
+2018-10-23 22:18:16.409 TRACE 10092 --- [MessageBroker-3] s.w.s.s.t.s.WebSocketServerSockJsSession : Preparing to write SockJsFrame content='h'
+2018-10-23 22:18:16.409 TRACE 10092 --- [MessageBroker-3] s.w.s.s.t.s.WebSocketServerSockJsSession : Writing SockJsFrame content='h'
+2018-10-23 22:18:16.409 TRACE 10092 --- [MessageBroker-3] o.s.w.s.adapter.NativeWebSocketSession   : Sending TextMessage payload=[h], byteCount=1, last=true], StandardWebSocketSession[id=54a16ace-831f-9657-e6cf-c681804e6795, uri=/books-ws/058/v03ziwdk/websocket]
+2018-10-23 22:18:16.410 TRACE 10092 --- [MessageBroker-3] s.w.s.s.t.s.WebSocketServerSockJsSession : Cancelling heartbeat in session v03ziwdk
+2018-10-23 22:18:16.410 TRACE 10092 --- [MessageBroker-3] s.w.s.s.t.s.WebSocketServerSockJsSession : Scheduled heartbeat in session v03ziwdk
+2018-10-23 22:18:22.934  INFO 10092 --- [MessageBroker-1] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[1 current WS(1)-HttpStream(0)-HttpPoll(0), 1 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(1)-CONNECTED(1)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 12, active threads = 0, queued tasks = 0, completed tasks = 12], outboundChannelpool size = 1, active threads = 0, queued tasks = 0, completed tasks = 1], sockJsScheduler[pool size = 8, active threads = 1, queued tasks = 2, completed tasks = 8]
+2018-10-23 22:18:26.809  INFO 10092 --- [       Thread-3] ConfigServletWebServerApplicationContext : Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@956de9: startup date [Tue Oct 23 22:17:15 EEST 2018]; root of context hierarchy
+2018-10-23 22:18:26.813  INFO 10092 --- [       Thread-3] o.s.c.support.DefaultLifecycleProcessor  : Stopping beans in phase 2147483647
+2018-10-23 22:18:26.815 DEBUG 10092 --- [       Thread-3] o.s.m.s.ExecutorSubscribableChannel      : clientOutboundChannel removed SubProtocolWebSocketHandler[StompSubProtocolHandler[v10.stomp, v11.stomp, v12.stomp]]
+2018-10-23 22:18:26.815 DEBUG 10092 --- [       Thread-3] s.w.s.s.t.s.WebSocketServerSockJsSession : Closing SockJS session v03ziwdk with CloseStatus[code=1001, reason=null]
+2018-10-23 22:18:26.816 TRACE 10092 --- [       Thread-3] s.w.s.s.t.s.WebSocketServerSockJsSession : Writing SockJsFrame content='c[1001,""]'
+2018-10-23 22:18:26.816 TRACE 10092 --- [       Thread-3] o.s.w.s.adapter.NativeWebSocketSession   : Sending TextMessage payload=[c[1001,""]], byteCount=10, last=true], StandardWebSocketSession[id=54a16ace-831f-9657-e6cf-c681804e6795, uri=/books-ws/058/v03ziwdk/websocket]
+2018-10-23 22:18:26.817 TRACE 10092 --- [       Thread-3] s.w.s.s.t.s.WebSocketServerSockJsSession : Cancelling heartbeat in session v03ziwdk
+2018-10-23 22:18:26.817 DEBUG 10092 --- [       Thread-3] o.s.w.s.adapter.NativeWebSocketSession   : Closing StandardWebSocketSession[id=54a16ace-831f-9657-e6cf-c681804e6795, uri=/books-ws/058/v03ziwdk/websocket]
+2018-10-23 22:18:26.819 DEBUG 10092 --- [       Thread-3] s.w.s.h.LoggingWebSocketHandlerDecorator : WebSocketServerSockJsSession[id=v03ziwdk] closed with CloseStatus[code=1001, reason=null]
+2018-10-23 22:18:26.819 DEBUG 10092 --- [       Thread-3] o.s.w.s.m.SubProtocolWebSocketHandler    : Clearing session v03ziwdk
+2018-10-23 22:18:26.823 DEBUG 10092 --- [boundChannel-14] o.s.m.s.b.SimpleBrokerMessageHandler     : Processing DISCONNECT session=v03ziwdk
+2018-10-23 22:18:26.824 DEBUG 10092 --- [       Thread-3] o.s.m.s.ExecutorSubscribableChannel      : clientInboundChannel removed WebSocketAnnotationMethodMessageHandler[prefixes=[]]
+2018-10-23 22:18:26.825  INFO 10092 --- [       Thread-3] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopping...
+2018-10-23 22:18:26.825  INFO 10092 --- [       Thread-3] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=false, SimpleBrokerMessageHandler [DefaultSubscriptionRegistry[cache[0 destination(s)], registry[0 sessions]]]]
+2018-10-23 22:18:26.825 DEBUG 10092 --- [       Thread-3] o.s.m.s.ExecutorSubscribableChannel      : clientInboundChannel removed SimpleBrokerMessageHandler [DefaultSubscriptionRegistry[cache[0 destination(s)], registry[0 sessions]]]
+2018-10-23 22:18:26.825 DEBUG 10092 --- [       Thread-3] o.s.m.s.ExecutorSubscribableChannel      : brokerChannel removed SimpleBrokerMessageHandler [DefaultSubscriptionRegistry[cache[0 destination(s)], registry[0 sessions]]]
+2018-10-23 22:18:26.825  INFO 10092 --- [       Thread-3] o.s.m.s.b.SimpleBrokerMessageHandler     : Stopped.
+2018-10-23 22:18:26.826 DEBUG 10092 --- [       Thread-3] o.s.m.s.ExecutorSubscribableChannel      : clientInboundChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2018-10-23 22:18:26.826 DEBUG 10092 --- [       Thread-3] o.s.m.s.ExecutorSubscribableChannel      : brokerChannel removed UserDestinationMessageHandler[DefaultUserDestinationResolver[prefix=/user/]]
+2018-10-23 22:18:26.826  INFO 10092 --- [       Thread-3] o.s.j.e.a.AnnotationMBeanExporter        : Unregistering JMX-exposed beans on shutdown
+2018-10-23 22:18:26.830  INFO 10092 --- [       Thread-3] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'brokerChannelExecutor'
+2018-10-23 22:18:26.831  INFO 10092 --- [       Thread-3] o.s.s.c.ThreadPoolTaskScheduler          : Shutting down ExecutorService 'messageBrokerTaskScheduler'
+2018-10-23 22:18:26.835  INFO 10092 --- [       Thread-3] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'clientOutboundChannelExecutor'
+2018-10-23 22:18:26.836  INFO 10092 --- [       Thread-3] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'clientInboundChannelExecutor'
+Terminate batch job (Y/N)? Terminate batch job (Y/N)? Terminate batch job (Y/N)? 
