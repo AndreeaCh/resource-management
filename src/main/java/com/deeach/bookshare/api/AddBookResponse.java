@@ -1,4 +1,4 @@
-package com.deeach.bookshare.api.book;
+package com.deeach.bookshare.api;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 
