@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BookshareApplication {
+public class ResourceManagementApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BookshareApplication.class, args);
+		SpringApplication.run(ResourceManagementApplication.class, args);
 	}
 }

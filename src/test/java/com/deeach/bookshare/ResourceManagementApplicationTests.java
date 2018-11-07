@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Ignore
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class BookshareApplicationTests {
+public class ResourceManagementApplicationTests {
 
     @Test
     public void contextLoads() {
