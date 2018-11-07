@@ -1,9 +1,9 @@
-package com.deeach.bookshare.controller;
+package com.resource.management.controller;
 
-import com.deeach.bookshare.api.AddBookRequest;
-import com.deeach.bookshare.api.AddBookResponse;
-import com.deeach.bookshare.data.Book;
-import com.deeach.bookshare.data.BookRepository;
+import com.resource.management.api.AddBookRequest;
+import com.resource.management.api.AddBookResponse;
+import com.resource.management.data.Book;
+import com.resource.management.data.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;

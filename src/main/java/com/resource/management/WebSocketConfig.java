@@ -1,4 +1,4 @@
-package com.deeach.bookshare;
+package com.resource.management;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;

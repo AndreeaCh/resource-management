@@ -1,4 +1,4 @@
-package com.deeach.bookshare.data;
+package com.resource.management.data;
 
 
 import org.springframework.data.mongodb.repository.MongoRepository;

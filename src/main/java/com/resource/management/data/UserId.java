@@ -1,4 +1,4 @@
-package com.deeach.bookshare.data;
+package com.resource.management.data;
 
 import java.util.UUID;
 

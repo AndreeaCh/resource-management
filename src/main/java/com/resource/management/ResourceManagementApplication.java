@@ -1,4 +1,4 @@
-package com.deeach.bookshare;
+package com.resource.management;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
