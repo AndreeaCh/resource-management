@@ -1,24 +1,21 @@
 package com.resource.management.data;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 
-public class Detachment {
-    @Id
-    private final String name;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.ToString;
 
-    public Detachment(String name) {
-        this.name = name;
-    }
+@Data
+@AllArgsConstructor
+@ToString
+public class Detachment
+{
+   @Id
+   private String name;
 
-    public String getName() {
-        return name;
-    }
+   private List<Resource> resources;
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this)
-                .append("name", name)
-                .toString();
-    }
 }
