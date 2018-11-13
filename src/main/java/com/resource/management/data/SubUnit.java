@@ -11,7 +11,7 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor
 @ToString
-public class Detachment
+public class SubUnit
 {
    @Id
    private String name;
