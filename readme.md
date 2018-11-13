@@ -1,3 +1,3 @@
-#Resource Management Application
+# Resource Management Application
 
-## [Subscribing for Sub-units Updates](/src/main/doc/index.md)
+* [Subscribing for Sub-units Updates](/src/main/doc/index.md)
