@@ -1,0 +1,71 @@
+{
+    "_id": "AGHIRES",
+    "resources": [
+  {
+    "_id": "CJ61FWY",
+    "identificationNumber": 6301,
+    "vehicleType": "EPA",
+    "captain": "Gilbert Houston",
+    "crew": [
+      "Reeves Cox",
+      "Naomi Medina"
+    ],
+    "status": "IN_INTERVENTION"
+  },
+  {
+    "_id": "CJ61EFS",
+    "identificationNumber": 9158,
+    "vehicleType": "EPA",
+    "captain": "Harrison Watson",
+    "crew": [
+      "Gamble Andrews",
+      "Leon Rios"
+    ],
+    "status": "IN_INTERVENTION"
+  },
+  {
+    "_id": "CJ96TYA",
+    "identificationNumber": 9936,
+    "vehicleType": "EPA",
+    "captain": "Constance Greene",
+    "crew": [
+      "Foley Keith",
+      "Salazar Osborne"
+    ],
+    "status": "IN_INTERVENTION"
+  },
+  {
+    "_id": "CJ22CDE",
+    "identificationNumber": 3116,
+    "vehicleType": "APCA",
+    "captain": "Keisha Swanson",
+    "crew": [
+      "Susie Foley",
+      "Sampson Mcmahon"
+    ],
+    "status": "AVAILABLE_IN_GARAGE"
+  },
+  {
+    "_id": "CJ72POR",
+    "identificationNumber": 1869,
+    "vehicleType": "ATA",
+    "captain": "Angelique Logan",
+    "crew": [
+      "Gibbs Cleveland",
+      "Mcintyre Brown"
+    ],
+    "status": "UNAVAILABLE"
+  },
+  {
+    "_id": "CJ24CDE",
+    "identificationNumber": 9407,
+    "vehicleType": "APCA",
+    "captain": "Cleveland Guerrero",
+    "crew": [
+      "Rose Reeves",
+      "Barbara Carr"
+    ],
+    "status": "UNAVAILABLE"
+  }
+]
+  }

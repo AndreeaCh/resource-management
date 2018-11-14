@@ -2,6 +2,7 @@
 
 ## Development info - Running the application
 * Install and start MongoDB
+* Run fillDb.bat script to import some test data to MongoDB
 * Make your code changes
 * Run a mvn clean install
 * Run the deploy.bat script
