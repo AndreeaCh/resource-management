@@ -1,6 +1,6 @@
 package com.resource.management.controller;
 
-import com.resource.management.api.SubscribeSubUnitResponse;
+import com.resource.management.api.SubscribeSubUnitsResponse;
 import com.resource.management.data.SubUnit;
 import com.resource.management.data.SubUnitRepository;
 import org.slf4j.Logger;
@@ -12,14 +12,14 @@ import org.springframework.stereotype.Controller;
 import java.util.List;
 
 @Controller
-public class SubscribeSubUnitController {
-    private static final Logger LOG = LoggerFactory.getLogger(SubscribeSubUnitController.class);
+public class SubscribeSubUnitsController {
+    private static final Logger LOG = LoggerFactory.getLogger(SubscribeSubUnitsController.class);
     @Autowired
     private SubUnitRepository repository;
 
     @SubscribeMapping("/subunits")
-    public SubscribeSubUnitResponse handleSubscribeMessage() {
+    public SubscribeSubUnitsResponse handleSubscribeMessage() {
         List<SubUnit> subUnits = repository.findAll();
-        return new SubscribeSubUnitResponse(subUnits);
+        return new SubscribeSubUnitsResponse(subUnits);
     }
 }

@@ -1,6 +1,6 @@
 package com.resource.management.controller;
 
-import com.resource.management.api.SubscribeSubUnitResponse;
+import com.resource.management.api.SubscribeSubUnitsResponse;
 import com.resource.management.data.SubUnit;
 import com.resource.management.data.SubUnitRepository;
 import org.junit.Test;
@@ -21,12 +21,12 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SubscribeSubUnitControllerTest {
+public class SubscribeSubUnitsControllerTest {
     @MockBean
     private SubUnitRepository subUnitRepository;
 
     @Autowired
-    private SubscribeSubUnitController sut;
+    private SubscribeSubUnitsController sut;
 
     @Test
     public void contextLoads() throws Exception {
@@ -39,11 +39,11 @@ public class SubscribeSubUnitControllerTest {
         List<SubUnit> subUnitsList = prepareSubUnitsInRepository();
 
         //when
-        SubscribeSubUnitResponse subscribeSubUnitResponse = sut.handleSubscribeMessage();
+        SubscribeSubUnitsResponse subscribeSubUnitsResponse = sut.handleSubscribeMessage();
 
         //then
         assertThat("Expected response to contain the list of sub-units.",
-                subscribeSubUnitResponse.getSubUnitsList(),
+                subscribeSubUnitsResponse.getSubUnitsList(),
                 equalTo(subUnitsList));
     }
 
