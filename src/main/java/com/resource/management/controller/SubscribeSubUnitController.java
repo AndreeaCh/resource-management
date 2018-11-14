@@ -1,6 +1,6 @@
 package com.resource.management.controller;
 
-import com.resource.management.api.SubscribeSubUnitResponse;
+import com.resource.management.api.SubscribeSubUnitsResponse;
 import com.resource.management.data.SubUnit;
 import com.resource.management.data.SubUnitRepository;
 import org.slf4j.Logger;
@@ -17,9 +17,9 @@ public class SubscribeSubUnitController {
     @Autowired
     private SubUnitRepository repository;
 
-    @SubscribeMapping("/topic/subunits")
-    public SubscribeSubUnitResponse handleSubscribeMessage() {
+    @SubscribeMapping("/subunits")
+    public SubscribeSubUnitsResponse handleSubscribeMessage() {
         List<SubUnit> subUnits = repository.findAll();
-        return new SubscribeSubUnitResponse(subUnits);
+        return new SubscribeSubUnitsResponse(subUnits);
     }
 }

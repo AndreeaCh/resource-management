@@ -1,6 +1,6 @@
 package com.resource.management.controller;
 
-import com.resource.management.api.SubscribeSubUnitResponse;
+import com.resource.management.api.SubscribeSubUnitsResponse;
 import com.resource.management.data.SubUnit;
 import com.resource.management.data.SubUnitRepository;
 import org.junit.Test;
@@ -39,11 +39,11 @@ public class SubscribeSubUnitControllerTest {
         List<SubUnit> subUnitsList = prepareSubUnitsInRepository();
 
         //when
-        SubscribeSubUnitResponse subscribeSubUnitResponse = sut.handleSubscribeMessage();
+        SubscribeSubUnitsResponse subscribeSubUnitsResponse = sut.handleSubscribeMessage();
 
         //then
         assertThat("Expected response to contain the list of sub-units.",
-                subscribeSubUnitResponse.getSubUnitsList(),
+                subscribeSubUnitsResponse.getSubUnitsList(),
                 equalTo(subUnitsList));
     }
 
