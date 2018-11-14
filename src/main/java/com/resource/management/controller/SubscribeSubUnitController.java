@@ -17,7 +17,7 @@ public class SubscribeSubUnitController {
     @Autowired
     private SubUnitRepository repository;
 
-    @SubscribeMapping("/topic/subunits")
+    @SubscribeMapping("/subunits")
     public SubscribeSubUnitResponse handleSubscribeMessage() {
         List<SubUnit> subUnits = repository.findAll();
         return new SubscribeSubUnitResponse(subUnits);
