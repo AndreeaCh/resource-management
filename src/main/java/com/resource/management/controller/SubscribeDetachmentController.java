@@ -2,7 +2,7 @@ package com.resource.management.controller;
 
 import com.resource.management.api.SubscribeDetachmentsRequest;
 import com.resource.management.api.SubscribeDetachmentsResponse;
-import com.resource.management.data.DetachmentsRepository;
+import com.resource.management.data.SubUnitsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 public class SubscribeDetachmentController {
     private static final Logger LOG = LoggerFactory.getLogger(SubscribeDetachmentController.class);
     @Autowired
-    private DetachmentsRepository repository;
+    private SubUnitsRepository repository;
 
     @MessageMapping("/subscribeDetachment")
     @SendTo("/topic/detachments")

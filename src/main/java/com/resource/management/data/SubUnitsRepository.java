@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface DetachmentsRepository extends MongoRepository<Detachment, String> {
+public interface SubUnitsRepository extends MongoRepository<SubUnit, String> {
 
-    List<Detachment> findByName(String name);
+    List<SubUnit> findByName(String name);
 }
