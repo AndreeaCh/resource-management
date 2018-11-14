@@ -21,12 +21,12 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class SubscribeSubUnitControllerTest {
+public class SubscribeSubUnitsControllerTest {
     @MockBean
     private SubUnitRepository subUnitRepository;
 
     @Autowired
-    private SubscribeSubUnitController sut;
+    private SubscribeSubUnitsController sut;
 
     @Test
     public void contextLoads() throws Exception {
