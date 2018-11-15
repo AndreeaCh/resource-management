@@ -3,6 +3,7 @@ package com.resource.management.data;
 import java.util.Date;
 import java.util.List;
 
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 
 import lombok.AllArgsConstructor;
