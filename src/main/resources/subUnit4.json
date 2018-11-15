@@ -1,0 +1,71 @@
+{
+    "_id": "TURDA",
+    "resources": [
+  {
+    "_id": "CJ13POR",
+    "identificationNumber": 5646,
+    "vehicleType": "EPA",
+    "captain": "Hammond Marks",
+    "crew": [
+      "Patrica Gray",
+      "Kerri Ford"
+    ],
+    "status": "AVAILABLE_IN_GARAGE"
+  },
+  {
+    "_id": "CJ71TYA",
+    "identificationNumber": 2489,
+    "vehicleType": "EPA",
+    "captain": "Tara Maxwell",
+    "crew": [
+      "Hines Walls",
+      "Hilda Grant"
+    ],
+    "status": "IN_INTERVENTION"
+  },
+  {
+    "_id": "CJ85POR",
+    "identificationNumber": 4034,
+    "vehicleType": "APCA",
+    "captain": "Young Finch",
+    "crew": [
+      "Terra Vaughn",
+      "Ewing Nielsen"
+    ],
+    "status": "IN_INTERVENTION"
+  },
+  {
+    "_id": "CJ51FWY",
+    "identificationNumber": 5474,
+    "vehicleType": "APCA",
+    "captain": "Henry Wells",
+    "crew": [
+      "Dale Bentley",
+      "Wilcox Dotson"
+    ],
+    "status": "IN_INTERVENTION"
+  },
+  {
+    "_id": "CJ24FWY",
+    "identificationNumber": 5246,
+    "vehicleType": "EPA",
+    "captain": "Gross Fowler",
+    "crew": [
+      "Morse Morrison",
+      "Yates Donaldson"
+    ],
+    "status": "AVAILABLE_IN_GARAGE"
+  },
+  {
+    "_id": "CJ53POR",
+    "identificationNumber": 1603,
+    "vehicleType": "ATA",
+    "captain": "Mclean Castillo",
+    "crew": [
+      "Zimmerman Cash",
+      "Walsh Barber"
+    ],
+    "status": "UNAVAILABLE"
+  }
+]
+  }

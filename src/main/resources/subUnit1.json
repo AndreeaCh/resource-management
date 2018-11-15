@@ -1,0 +1,60 @@
+{
+    "_id": "CJ",
+    "resources": [
+  {
+    "_id": "CJ90CDE",
+    "identificationNumber": 8945,
+    "vehicleType": "APCA",
+    "captain": "Dorsey Gutierrez",
+    "crew": [
+      "Perkins Dominguez",
+      "Maldonado Nichols"
+    ],
+    "status": "IN_INTERVENTION"
+  },
+  {
+    "_id": "CJ29POR",
+    "identificationNumber": 3253,
+    "vehicleType": "APCA",
+    "captain": "Stokes Graves",
+    "crew": [
+      "King Rivers",
+      "Olive Koch"
+    ],
+    "status": "UNAVAILABLE"
+  },
+  {
+    "_id": "CJ64FWY",
+    "identificationNumber": 3192,
+    "vehicleType": "ATA",
+    "captain": "Dionne Morales",
+    "crew": [
+      "Jordan Potts",
+      "Lorrie Sanford"
+    ],
+    "status": "UNAVAILABLE"
+  },
+  {
+    "_id": "CJ25FWY",
+    "identificationNumber": 6791,
+    "vehicleType": "APCA",
+    "captain": "Dena Avila",
+    "crew": [
+      "Benson Noble",
+      "Maxine Huber"
+    ],
+    "status": "IN_INTERVENTION"
+  },
+  {
+    "_id": "CJ46CDE",
+    "identificationNumber": 3261,
+    "vehicleType": "ATA",
+    "captain": "Mcfadden Moss",
+    "crew": [
+      "Macias Langley",
+      "Letha Duffy"
+    ],
+    "status": "UNAVAILABLE"
+  }
+]
+  }
