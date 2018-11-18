@@ -4,9 +4,15 @@ import java.time.Instant;
 
 import org.springframework.data.annotation.Id;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.Instant;
+
+import org.springframework.data.annotation.Id;
+
 @Data
+@AllArgsConstructor
 public class ResourceLog
 {
    @Id
