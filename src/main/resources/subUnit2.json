@@ -1,0 +1,82 @@
+{
+    "_id": "DEJ",
+    "resources": [
+  {
+    "_id": "CJ57ABC",
+    "identificationNumber": 3354,
+    "vehicleType": "APCA",
+    "captain": "Douglas Shepherd",
+    "crew": [
+      "Kristy Welch",
+      "Cole Mendez"
+    ],
+    "status": "AVAILABLE_IN_GARAGE"
+  },
+  {
+    "_id": "CJ91EFS",
+    "identificationNumber": 5199,
+    "vehicleType": "APCA",
+    "captain": "Davis Coffey",
+    "crew": [
+      "Lorie Beach",
+      "Pat Wyatt"
+    ],
+    "status": "AVAILABLE_IN_GARAGE"
+  },
+  {
+    "_id": "CJ83EFS",
+    "identificationNumber": 2606,
+    "vehicleType": "ATA",
+    "captain": "Alisa Monroe",
+    "crew": [
+      "Barton Pena",
+      "Hobbs Aguirre"
+    ],
+    "status": "UNAVAILABLE"
+  },
+  {
+    "_id": "CJ20TYA",
+    "identificationNumber": 5039,
+    "vehicleType": "EPA",
+    "captain": "Tanisha Dale",
+    "crew": [
+      "Johnston Justice",
+      "Underwood Sharp"
+    ],
+    "status": "UNAVAILABLE"
+  },
+  {
+    "_id": "CJ59AMB",
+    "identificationNumber": 9894,
+    "vehicleType": "APCA",
+    "captain": "Obrien Mcdowell",
+    "crew": [
+      "Angelique Durham",
+      "Franco Dotson"
+    ],
+    "status": "UNAVAILABLE"
+  },
+  {
+    "_id": "CJ76ABC",
+    "identificationNumber": 8478,
+    "vehicleType": "EPA",
+    "captain": "Concepcion Prince",
+    "crew": [
+      "Janie Mercer",
+      "Shepherd Head"
+    ],
+    "status": "IN_INTERVENTION"
+  },
+  {
+    "_id": "CJ68CDE",
+    "identificationNumber": 5573,
+    "vehicleType": "APCA",
+    "captain": "Munoz Vincent",
+    "crew": [
+      "Jacobson Allen",
+      "Cornelia Baldwin"
+    ],
+    "status": "UNAVAILABLE"
+  }
+]
+  }
