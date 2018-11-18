@@ -2,7 +2,7 @@
 
 ## Subscribing for Sub-Units Updates
 
-A client can subscribe to for unit updates by sending the following message:
+A client can subscribe for unit updates by sending the following message:
 
 ``` javascript
 SUBSCRIBE

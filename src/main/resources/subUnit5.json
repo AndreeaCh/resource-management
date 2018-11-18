@@ -1,0 +1,60 @@
+{
+    "_id": "HUEDIN",
+    "resources": [
+  {
+    "_id": "CJ52AMB",
+    "identificationNumber": 4721,
+    "vehicleType": "ATA",
+    "captain": "Debora Peck",
+    "crew": [
+      "Stafford Swanson",
+      "Steele Donovan"
+    ],
+    "status": "UNAVAILABLE"
+  },
+  {
+    "_id": "CJ89AMB",
+    "identificationNumber": 5931,
+    "vehicleType": "APCA",
+    "captain": "Doris Serrano",
+    "crew": [
+      "Kristie Cunningham",
+      "Velasquez Bernard"
+    ],
+    "status": "AVAILABLE_IN_GARAGE"
+  },
+  {
+    "_id": "CJ27ABC",
+    "identificationNumber": 2207,
+    "vehicleType": "APCA",
+    "captain": "Courtney Leonard",
+    "crew": [
+      "Jefferson Osborn",
+      "Manuela Davenport"
+    ],
+    "status": "UNAVAILABLE"
+  },
+  {
+    "_id": "CJ72EFS",
+    "identificationNumber": 2047,
+    "vehicleType": "EPA",
+    "captain": "Gale Gates",
+    "crew": [
+      "Brandi Snider",
+      "Katheryn Stephens"
+    ],
+    "status": "AVAILABLE_IN_GARAGE"
+  },
+  {
+    "_id": "CJ51AMB",
+    "identificationNumber": 9197,
+    "vehicleType": "EPA",
+    "captain": "Villarreal James",
+    "crew": [
+      "Sampson Hughes",
+      "Cara Williams"
+    ],
+    "status": "IN_INTERVENTION"
+  }
+]
+  }

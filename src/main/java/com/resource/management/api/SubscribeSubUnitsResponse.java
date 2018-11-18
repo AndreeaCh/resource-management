@@ -10,6 +10,6 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @ToString
-public class SubscribeSubUnitResponse {
+public class SubscribeSubUnitsResponse {
     private List<SubUnit> subUnitsList;
 }
