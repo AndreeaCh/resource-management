@@ -22,6 +22,4 @@ public class Resource
 
    private ResourceStatus status;
 
-   private List<ResourceLog> logs;
-
 }

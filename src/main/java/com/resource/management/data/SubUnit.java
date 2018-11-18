@@ -1,17 +1,17 @@
 package com.resource.management.data;
 
-import java.util.Date;
+import java.time.Instant;
 import java.util.List;
 
-import lombok.ToString;
 import org.springframework.data.annotation.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
-@AllArgsConstructor
 @ToString
+@AllArgsConstructor
 public class SubUnit
 {
    @Id
@@ -19,6 +19,6 @@ public class SubUnit
 
    private List<Resource> resources;
 
-   private Date lastUpdate;
+   private Instant lastUpdate;
 
 }
