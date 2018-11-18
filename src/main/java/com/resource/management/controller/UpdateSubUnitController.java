@@ -8,7 +8,7 @@ package com.resource.management.controller;
 import com.resource.management.api.edit.UpdateSubUnitRequest;
 import com.resource.management.api.edit.UpdateSubUnitResponse;
 import com.resource.management.data.SubUnit;
-import com.resource.management.data.SubUnitRepository;
+import com.resource.management.data.SubUnitsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,9 @@ import org.springframework.stereotype.Controller;
 public class UpdateSubUnitController {
     private static final Logger LOG = LoggerFactory.getLogger(UpdateSubUnitController.class);
     @Autowired
-    private SubUnitRepository repository;
+    private SubUnitsRepository repository;
 
-    @SubscribeMapping("/topic/updatesubunit")
+    @SubscribeMapping("/updatesubunit")
     public UpdateSubUnitResponse handleUpdateSubUnitMessage(final UpdateSubUnitRequest request) {
         SubUnit subUnit = repository.findByName(request.getSubUnitName());
 
