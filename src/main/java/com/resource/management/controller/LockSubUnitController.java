@@ -21,7 +21,7 @@ public class LockSubUnitController {
     @Autowired
     private SubUnitsRepository repository;
 
-    @SubscribeMapping("/topic/locksubunit")
+    @SubscribeMapping("/locksubunit")
     public LockSubUnitResponse handleLockSubUnitMessage(final LockSubUnitRequest request) {
         SubUnit subUnit = repository.findByName(request.getSubUnitName());
 

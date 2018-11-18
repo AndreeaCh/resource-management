@@ -21,7 +21,7 @@ public class UpdateSubUnitController {
     @Autowired
     private SubUnitsRepository repository;
 
-    @SubscribeMapping("/topic/updatesubunit")
+    @SubscribeMapping("/updatesubunit")
     public UpdateSubUnitResponse handleUpdateSubUnitMessage(final UpdateSubUnitRequest request) {
         SubUnit subUnit = repository.findByName(request.getSubUnitName());
 
