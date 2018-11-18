@@ -5,6 +5,7 @@
  */
 package com.resource.management.api.edit;
 
+import com.resource.management.data.SubUnit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
@@ -13,9 +14,5 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class UpdateSubUnitRequest {
-    private String subUnitName;
-
-    public String getSubUnitName() {
-        return subUnitName;
-    }
+    private SubUnit subUnit;
 }

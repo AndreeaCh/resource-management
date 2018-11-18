@@ -69,21 +69,6 @@ destination:/topic/locksubunit
 ]
 ```
 
-After start editing was requested the client will receive the following message:
-
-``` javascript
-MESSAGE
-message-id:lock-resp-1
-destination:/topic/locksubunit
-content-type:text/json
-
-[
-  {
-
-  }
-]
-```
-
 When a sub-unit is locked all the clients will receive the following message:
 ``` javascript
 MESSAGE
@@ -134,20 +119,6 @@ content-type:text/json
         "status": "IN_INTERVENTION"
       }
     ]
-  }
-]
-```
-
-After updating a sub-unit was requested the client will receive the following message:
-``` javascript
-MESSAGE
-message-id:update-resp-1
-destination:/topic/updatesubunit
-content-type:text/json
-
-[
-  {
-
   }
 ]
 ```

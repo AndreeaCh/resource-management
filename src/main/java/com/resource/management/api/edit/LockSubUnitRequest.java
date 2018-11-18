@@ -15,8 +15,4 @@ import lombok.ToString;
 public class LockSubUnitRequest {
 
     private String subUnitName;
-
-    public String getSubUnitName() {
-        return subUnitName;
-    }
 }
