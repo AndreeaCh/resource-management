@@ -16,10 +16,8 @@ import com.resource.management.data.SubUnitsRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MongoDbSpringIntegrationTest
-{
-
-   @Autowired
-   private SubUnitsRepository repository;
+ {   @Autowired
+    private SubUnitsRepository repository;
 
 
    @Test
@@ -30,5 +28,4 @@ public class MongoDbSpringIntegrationTest
 
       Assert.assertEquals( "CJ", this.repository.findAll().get( 0 ).getName() );
    }
-
 }
