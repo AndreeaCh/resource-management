@@ -23,7 +23,7 @@ content-type:text/json
 
 [
   {
-    "name": "CJ",
+    "deletedSubUnitName": "CJ",
     "resources": [
       {
         "identificationNumber": "1234",
