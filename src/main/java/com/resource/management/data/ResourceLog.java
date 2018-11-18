@@ -1,12 +1,14 @@
 package com.resource.management.data;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+
 import java.time.Instant;
 
 import org.springframework.data.annotation.Id;
 
-import lombok.Data;
-
 @Data
+@AllArgsConstructor
 public class ResourceLog
 {
    @Id

@@ -16,8 +16,9 @@ import com.resource.management.data.SubUnitsRepository;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class MongoDbSpringIntegrationTest
- {   @Autowired
-    private SubUnitsRepository repository;
+{
+   @Autowired
+   private SubUnitsRepository repository;
 
 
    @Test
