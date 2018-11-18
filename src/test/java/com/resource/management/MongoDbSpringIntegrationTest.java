@@ -1,8 +1,8 @@
 package com.resource.management;
 
-import java.util.List;
+import java.time.Instant;
+import java.util.Collections;
 
-import org.json.JSONException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,10 +22,10 @@ public class MongoDbSpringIntegrationTest
 
 
    @Test
-   public void test() throws JSONException
+   public void test()
    {
-      List<SubUnit> subUnits = SubUnitsTestDataUtils.loadAllSubUnits();
-      this.repository.saveAll( subUnits );
+      final SubUnit subUnit = new SubUnit( "CJ", Collections.emptyList(), Instant.now() );
+      this.repository.save( subUnit );
 
       Assert.assertEquals( "CJ", this.repository.findAll().get( 0 ).getName() );
    }
