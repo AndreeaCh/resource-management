@@ -60,7 +60,7 @@ A client can start editing a sub-unit by sending the following message:
 ``` javascript
 MESSAGE
 id:lock-req-1
-destination:/topic/lockunit
+destination:/topic/locksubunit
 
 [
   {
@@ -74,7 +74,7 @@ After start editing was requested the client will receive the following message:
 ``` javascript
 MESSAGE
 message-id:lock-resp-1
-destination:/topic/lockunit
+destination:/topic/locksubunit
 content-type:text/json
 
 [

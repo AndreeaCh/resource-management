@@ -12,8 +12,11 @@ import com.resource.management.data.SubUnitsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class LockSubUnitController {
@@ -21,10 +24,10 @@ public class LockSubUnitController {
     @Autowired
     private SubUnitsRepository repository;
 
-    @SubscribeMapping("/locksubunit")
+    @MessageMapping("/locksubunit")
+    @SendTo("/locksubunit")
     public LockSubUnitResponse handleLockSubUnitMessage(final LockSubUnitRequest request) {
         SubUnit subUnit = repository.findByName(request.getSubUnitName());
-
         return new LockSubUnitResponse();
     }
 }
