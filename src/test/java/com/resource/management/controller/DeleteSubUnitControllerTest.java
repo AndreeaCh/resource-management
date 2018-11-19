@@ -37,7 +37,7 @@ public class DeleteSubUnitControllerTest {
         SubUnitDeletedNotification notification = this.sut.handle(request);
 
         //then
-        assertThat("Expected notification to contain the deleted sub-unit deletedSubUnitName.", notification.getName(),
-                equalTo(request.getName()));
+        assertThat("Expected notification to contain the deleted sub-unit deletedSubUnitName.", notification.getDeletedSubUnitName(),
+                   equalTo(request.getName()));
     }
 }
