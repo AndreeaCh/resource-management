@@ -23,7 +23,7 @@ public class DeleteSubUnitController {
     @SendTo("/topic/subunits")
     public DeleteSubUnitResponse handle(final DeleteSubUnitRequest request) {
         repository.deleteById(request.getName());
-        notificationService.sendSubUnitDeletedNotification(new SubUnitDeletedNotification(request.getName()));
+        notificationService.publishSubUnitNotification(new SubUnitDeletedNotification(request.getName()));
         return new DeleteSubUnitResponse(StatusCode.OK);
     }
 }

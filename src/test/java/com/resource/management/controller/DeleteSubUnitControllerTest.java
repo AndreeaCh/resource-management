@@ -46,7 +46,7 @@ public class DeleteSubUnitControllerTest {
 
         //then
         ArgumentCaptor<SubUnitDeletedNotification> captor = ArgumentCaptor.forClass(SubUnitDeletedNotification.class);
-        verify(notificationService).sendSubUnitDeletedNotification(captor.capture());
+        verify(notificationService).publishSubUnitNotification(captor.capture());
         assertThat("Expected that the notification contains the deleted subunit name",
                 captor.getValue().getDeletedSubUnitName(),
                 equalTo(request.getName()));

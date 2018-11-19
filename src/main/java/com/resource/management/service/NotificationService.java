@@ -10,11 +10,10 @@ public class NotificationService {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
-    public void sendSubUnitDeletedNotification(final Object notification) {
+    public void publishSubUnitNotification(final Object notification) {
         messagingTemplate.convertAndSend(
                 "/topic/subunits",
                 notification
         );
     }
-
 }
