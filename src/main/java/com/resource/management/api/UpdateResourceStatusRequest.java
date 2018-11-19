@@ -20,9 +20,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import com.resource.management.data.ResourceStatus;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class UpdateResourceStatusRequest
 {
    private String plateNumber;
