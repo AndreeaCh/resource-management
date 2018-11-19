@@ -1,0 +1,29 @@
+[
+  {
+    "name": "CJ",
+    "resources": [
+      {
+        "identificationNumber": "1234",
+        "plateNumber": "CJ04ASD",
+        "vehicleType": "APCA",
+        "captain": "Pt. Major John Doe",
+        "crew": [
+          "Lt. Anne Doe",
+          "Ben Doe"
+        ],
+        "status": "AVAILABLE_IN_GARAGE"
+      },
+      {
+        "identificationNumber": "1235",
+        "plateNumber": "CJ05ASD",
+        "vehicleType": "EPA",
+        "captain": "Pt. Major Jack Moe",
+        "crew": [
+          "Lt. Anne Moe",
+          "Ben Moe"
+        ],
+        "status": "IN_INTERVENTION"
+      }
+    ]
+  }
+]
