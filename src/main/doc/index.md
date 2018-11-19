@@ -60,26 +60,11 @@ A client can start editing a sub-unit by sending the following message:
 ``` javascript
 MESSAGE
 id:lock-req-1
-destination:/topic/lockunit
+destination:/topic/locksubunit
 
 [
   {
     "name": "CJ"
-  }
-]
-```
-
-After start editing was requested the client will receive the following message:
-
-``` javascript
-MESSAGE
-message-id:lock-resp-1
-destination:/topic/lockunit
-content-type:text/json
-
-[
-  {
-
   }
 ]
 ```
@@ -134,20 +119,6 @@ content-type:text/json
         "status": "IN_INTERVENTION"
       }
     ]
-  }
-]
-```
-
-After updating a sub-unit was requested the client will receive the following message:
-``` javascript
-MESSAGE
-message-id:update-resp-1
-destination:/topic/updatesubunit
-content-type:text/json
-
-[
-  {
-
   }
 ]
 ```
