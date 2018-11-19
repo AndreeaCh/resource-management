@@ -7,6 +7,7 @@ package com.resource.management.controller;
 
 import com.resource.management.api.edit.LockSubUnitRequest;
 import com.resource.management.api.edit.SubUnitLockedNotification;
+import com.resource.management.api.edit.UnlockSubUnitNotification;
 import com.resource.management.data.SubUnit;
 import com.resource.management.data.SubUnitsRepository;
 import java.util.Optional;
@@ -18,19 +19,21 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class LockSubUnitController {
-    private static final Logger LOG = LoggerFactory.getLogger(LockSubUnitController.class);
+public class UnlockSubUnitController {
+
+    private static final Logger LOG = LoggerFactory.getLogger(UnlockSubUnitController.class);
+
     @Autowired
     private SubUnitsRepository repository;
 
-    @MessageMapping("/lockSubUnit")
-    @SendTo("/topic/lockSubUnitNotification")
-    public SubUnitLockedNotification handleLockSubUnitMessage(final LockSubUnitRequest request) {
+    @MessageMapping("/unlockSubUnit")
+    @SendTo("/topic/unlockSubUnitNotification")
+    public UnlockSubUnitNotification handleUnlockSubUnitMessage(final LockSubUnitRequest request) {
         Optional<SubUnit> subUnit = repository.findByName(request.getSubUnitName());
-        SubUnitLockedNotification notification = null;
+        UnlockSubUnitNotification notification = null;
         if (subUnit.isPresent()) {
-            subUnit.get().setLocked(true);
-            notification = new SubUnitLockedNotification(request.getSubUnitName());
+            subUnit.get().setLocked(false);
+            notification = new UnlockSubUnitNotification(request.getSubUnitName());
         }
 
         return notification;

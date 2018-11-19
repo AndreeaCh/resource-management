@@ -57,7 +57,7 @@ public class SubscribeSubUnitsControllerTest
    private List<SubUnit> prepareSubUnitsInRepository()
    {
       final List<SubUnit> subUnitsList = new ArrayList<>();
-      subUnitsList.add( new SubUnit( "CJ", Collections.emptyList(), Instant.now() ) );
+      subUnitsList.add( new SubUnit( "CJ", Collections.emptyList(), Instant.now(), true ) );
       when( this.subUnitsRepository.findAll() ).thenReturn( subUnitsList );
       return subUnitsList;
    }

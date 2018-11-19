@@ -1,6 +1,7 @@
 {
   "_id": "DET 1 CJN",
   "name": "DET 1 CJN",
+  "isLocked": false,
   "resources": [
     {
       "_id": "CJ90ABC",

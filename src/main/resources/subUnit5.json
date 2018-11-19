@@ -1,6 +1,7 @@
 {
     "_id": "DET 2 CJN",
-    "resources": [
+  "isLocked": false,
+  "resources": [
   {
     "_id": "CJ64ABQ",
     "identificationNumber": 4721,

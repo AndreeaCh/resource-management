@@ -21,4 +21,5 @@ public class SubUnit
 
    private Instant lastUpdate;
 
+   private boolean isLocked;
 }

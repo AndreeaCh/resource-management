@@ -1,6 +1,7 @@
 {
     "_id": "G2 BAI",
-    "resources": [
+  "isLocked": false,
+  "resources": [
   {
     "_id": "CJ64ABY",
     "identificationNumber": 4721,

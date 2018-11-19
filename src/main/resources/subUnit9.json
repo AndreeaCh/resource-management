@@ -1,6 +1,7 @@
 {
     "_id": "PL BAI",
-    "resources": [
+  "isLocked": false,
+  "resources": [
   {
     "_id": "CJ64AEA",
     "identificationNumber": 4721,
