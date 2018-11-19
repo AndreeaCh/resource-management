@@ -1,10 +1,10 @@
 {
-    "_id": "HUEDIN",
+    "_id": "DET 2 CJN",
     "resources": [
   {
-    "_id": "CJ52AMB",
+    "_id": "CJ64ABQ",
     "identificationNumber": 4721,
-    "vehicleType": "ATA",
+    "vehicleType": "APCA",
     "captain": "Debora Peck",
     "crew": [
       "Stafford Swanson",
@@ -13,9 +13,9 @@
     "status": "UNAVAILABLE"
   },
   {
-    "_id": "CJ89AMB",
+    "_id": "CJ64ABR",
     "identificationNumber": 5931,
-    "vehicleType": "APCA",
+    "vehicleType": "SCAF",
     "captain": "Doris Serrano",
     "crew": [
       "Kristie Cunningham",
@@ -24,9 +24,9 @@
     "status": "AVAILABLE_IN_GARAGE"
   },
   {
-    "_id": "CJ27ABC",
+    "_id": "CJ64ABS",
     "identificationNumber": 2207,
-    "vehicleType": "APCA",
+    "vehicleType": "EPA",
     "captain": "Courtney Leonard",
     "crew": [
       "Jefferson Osborn",
@@ -35,7 +35,7 @@
     "status": "UNAVAILABLE"
   },
   {
-    "_id": "CJ72EFS",
+    "_id": "CJ64ABT",
     "identificationNumber": 2047,
     "vehicleType": "EPA",
     "captain": "Gale Gates",
@@ -46,9 +46,9 @@
     "status": "AVAILABLE_IN_GARAGE"
   },
   {
-    "_id": "CJ51AMB",
+    "_id": "CJ64ABU",
     "identificationNumber": 9197,
-    "vehicleType": "EPA",
+    "vehicleType": "MU",
     "captain": "Villarreal James",
     "crew": [
       "Sampson Hughes",

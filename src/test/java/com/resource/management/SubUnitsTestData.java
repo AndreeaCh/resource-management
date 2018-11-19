@@ -23,7 +23,7 @@ import java.util.List;
 class SubUnitsTestData
 {
    static final String SUBUNIT1 =
-         "{\n" + "  \"name\": \"CJ\",\n" + "  \"resources\": [\n" + "    {\n" + "      \"plateNumber\": \"CJ90CDE\",\n"
+         "{\n" + "  \"deletedSubUnitName\": \"CJ\",\n" + "  \"resources\": [\n" + "    {\n" + "      \"plateNumber\": \"CJ90CDE\",\n"
                + "      \"identificationNumber\": 8945,\n" + "      \"vehicleType\": \"APCA\",\n"
                + "      \"captain\": \"Dorsey Gutierrez\",\n" + "      \"crew\": [\n"
                + "        \"Perkins Dominguez\",\n" + "        \"Maldonado Nichols\"\n" + "      ],\n"
@@ -46,7 +46,7 @@ class SubUnitsTestData
                + "      \"status\": \"UNAVAILABLE\"\n" + "    }\n" + "  ]\n" + "}";
 
    private static final String SUBUNIT2 =
-         "{\n" + "    \"name\": \"DEJ\",\n" + "    \"resources\": [\n" + "  {\n" + "    \"plateNumber\": \"CJ57ABC\",\n"
+         "{\n" + "    \"deletedSubUnitName\": \"DEJ\",\n" + "    \"resources\": [\n" + "  {\n" + "    \"plateNumber\": \"CJ57ABC\",\n"
                + "    \"identificationNumber\": 3354,\n" + "    \"vehicleType\": \"APCA\",\n"
                + "    \"captain\": \"Douglas Shepherd\",\n" + "    \"crew\": [\n" + "      \"Kristy Welch\",\n"
                + "      \"Cole Mendez\"\n" + "    ],\n" + "    \"status\": \"AVAILABLE_IN_GARAGE\"\n" + "  },\n"
@@ -74,7 +74,7 @@ class SubUnitsTestData
                + "    \"status\": \"UNAVAILABLE\"\n" + "  }\n" + "]\n" + "  }";
 
    private static final String SUBUNIT3 =
-         "{\n" + "    \"name\": \"AGHIRES\",\n" + "    \"resources\": [\n" + "  {\n"
+         "{\n" + "    \"deletedSubUnitName\": \"AGHIRES\",\n" + "    \"resources\": [\n" + "  {\n"
                + "    \"plateNumber\": \"CJ61FWY\",\n" + "    \"identificationNumber\": 6301,\n"
                + "    \"vehicleType\": \"EPA\",\n" + "    \"captain\": \"Gilbert Houston\",\n" + "    \"crew\": [\n"
                + "      \"Reeves Cox\",\n" + "      \"Naomi Medina\"\n" + "    ],\n"
@@ -99,7 +99,7 @@ class SubUnitsTestData
                + "  }";
 
    private static final String SUBUNIT4 =
-         "{\n" + "    \"name\": \"TURDA\",\n" + "    \"resources\": [\n" + "  {\n"
+         "{\n" + "    \"deletedSubUnitName\": \"TURDA\",\n" + "    \"resources\": [\n" + "  {\n"
                + "    \"plateNumber\": \"CJ13POR\",\n" + "    \"identificationNumber\": 5646,\n"
                + "    \"vehicleType\": \"EPA\",\n" + "    \"captain\": \"Hammond Marks\",\n" + "    \"crew\": [\n"
                + "      \"Patrica Gray\",\n" + "      \"Kerri Ford\"\n" + "    ],\n"
@@ -124,7 +124,7 @@ class SubUnitsTestData
                + "    \"status\": \"UNAVAILABLE\"\n" + "  }\n" + "]\n" + "  }";
 
    private static final String SUBUNIT5 =
-         "{\n" + "    \"name\": \"HUEDIN\",\n" + "    \"resources\": [\n" + "  {\n"
+         "{\n" + "    \"deletedSubUnitName\": \"HUEDIN\",\n" + "    \"resources\": [\n" + "  {\n"
                + "    \"plateNumber\": \"CJ52AMB\",\n" + "    \"identificationNumber\": 4721,\n"
                + "    \"vehicleType\": \"ATA\",\n" + "    \"captain\": \"Debora Peck\",\n" + "    \"crew\": [\n"
                + "      \"Stafford Swanson\",\n" + "      \"Steele Donovan\"\n" + "    ],\n"
