@@ -1,0 +1,16 @@
+{
+    "_id": "PL FLO",
+    "resources": [
+  {
+    "_id": "CJ64AGA",
+    "identificationNumber": 5931,
+    "vehicleType": "EPA",
+    "captain": "Doris Serrano",
+    "crew": [
+      "Kristie Cunningham",
+      "Velasquez Bernard"
+    ],
+    "status": "AVAILABLE_IN_GARAGE"
+  }
+]
+  }

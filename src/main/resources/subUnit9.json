@@ -1,0 +1,27 @@
+{
+    "_id": "PL BAI",
+    "resources": [
+  {
+    "_id": "CJ64AEA",
+    "identificationNumber": 4721,
+    "vehicleType": "APCA",
+    "captain": "Debora Peck",
+    "crew": [
+      "Stafford Swanson",
+      "Steele Donovan"
+    ],
+    "status": "UNAVAILABLE"
+  },
+  {
+    "_id": "CJ64AFA",
+    "identificationNumber": 5931,
+    "vehicleType": "EPA",
+    "captain": "Doris Serrano",
+    "crew": [
+      "Kristie Cunningham",
+      "Velasquez Bernard"
+    ],
+    "status": "AVAILABLE_IN_GARAGE"
+  }
+]
+  }

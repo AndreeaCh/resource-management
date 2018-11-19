@@ -1,0 +1,27 @@
+{
+    "_id": "G2 GIL",
+    "resources": [
+  {
+    "_id": "CJ64ACA",
+    "identificationNumber": 4721,
+    "vehicleType": "APCA",
+    "captain": "Debora Peck",
+    "crew": [
+      "Stafford Swanson",
+      "Steele Donovan"
+    ],
+    "status": "UNAVAILABLE"
+  },
+  {
+    "_id": "CJ64ADA",
+    "identificationNumber": 5931,
+    "vehicleType": "EPA",
+    "captain": "Doris Serrano",
+    "crew": [
+      "Kristie Cunningham",
+      "Velasquez Bernard"
+    ],
+    "status": "AVAILABLE_IN_GARAGE"
+  }
+]
+  }
