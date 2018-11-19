@@ -2,10 +2,12 @@ package com.resource.management.controller;
 
 import com.resource.management.api.DeleteSubUnitRequest;
 import com.resource.management.api.DeleteSubUnitResponse;
+import com.resource.management.api.SubUnitDeletedNotification;
 import com.resource.management.data.SubUnitsRepository;
 import com.resource.management.service.NotificationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -43,7 +45,11 @@ public class DeleteSubUnitControllerTest {
         this.sut.handle(request);
 
         //then
-        verify(notificationService).sendSubUnitDeletedNotification(request.getName());
+        ArgumentCaptor<SubUnitDeletedNotification> captor = ArgumentCaptor.forClass(SubUnitDeletedNotification.class);
+        verify(notificationService).sendSubUnitDeletedNotification(captor.capture());
+        assertThat("Expected that the notification contains the deleted subunit name",
+                captor.getValue().getDeletedSubUnitName(),
+                equalTo(request.getName()));
     }
 
     @Test
