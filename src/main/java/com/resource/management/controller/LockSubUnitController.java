@@ -6,13 +6,15 @@
 package com.resource.management.controller;
 
 import com.resource.management.api.edit.LockSubUnitRequest;
-import com.resource.management.api.edit.LockSubUnitResponse;
+import com.resource.management.api.edit.SubUnitLockedNotification;
 import com.resource.management.data.SubUnit;
 import com.resource.management.data.SubUnitsRepository;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.annotation.SubscribeMapping;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
 @Controller
@@ -21,10 +23,15 @@ public class LockSubUnitController {
     @Autowired
     private SubUnitsRepository repository;
 
-    @SubscribeMapping("/locksubunit")
-    public LockSubUnitResponse handleLockSubUnitMessage(final LockSubUnitRequest request) {
-        SubUnit subUnit = repository.findByName(request.getSubUnitName());
+    @MessageMapping("/lockSubUnit")
+    @SendTo("/topic/lockSubUnitNotification")
+    public SubUnitLockedNotification handleLockSubUnitMessage(final LockSubUnitRequest request) {
+        Optional<SubUnit> subUnit = repository.findByName(request.getSubUnitName());
+        SubUnitLockedNotification notification = null;
+        if (subUnit.isPresent()) {
+            notification = new SubUnitLockedNotification(request.getSubUnitName());
+        }
 
-        return new LockSubUnitResponse();
+        return notification;
     }
 }
