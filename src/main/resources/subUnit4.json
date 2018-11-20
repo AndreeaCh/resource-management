@@ -1,40 +1,91 @@
 {
-    "_id": "DET HUE",
+  "_id": "DET HUE",
   "lastUpdate": "2018-11-20T10:49:48Z",
   "isLocked": false,
   "resources": [
-  {
-    "_id": "CJ64ABN",
-    "identificationNumber": 5646,
-    "vehicleType": "APCA",
-    "captain": "Hammond Marks",
-    "crew": [
-      "Patrica Gray",
-      "Kerri Ford"
-    ],
-    "status": "AVAILABLE_IN_GARAGE"
-  },
-  {
-    "_id": "CJ64ABO",
-    "identificationNumber": 2489,
-    "vehicleType": "SCARA",
-    "captain": "Tara Maxwell",
-    "crew": [
-      "Hines Walls",
-      "Hilda Grant"
-    ],
-    "status": "IN_INTERVENTION"
-  },
-  {
-    "_id": "CJ64ABP",
-    "identificationNumber": 4034,
-    "vehicleType": "EPA",
-    "captain": "Young Finch",
-    "crew": [
-      "Terra Vaughn",
-      "Ewing Nielsen"
-    ],
-    "status": "IN_INTERVENTION"
-  }
-]
-  }
+    {
+      "_id": "CJ64ABN",
+      "identificationNumber": 5646,
+      "vehicleType": "APCA",
+      "captain": "Hammond Marks",
+      "crew": [
+        "Patrica Gray",
+        "Kerri Ford"
+      ],
+      "status": "AVAILABLE_IN_GARAGE",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
+    },
+    {
+      "_id": "CJ64ABO",
+      "identificationNumber": 2489,
+      "vehicleType": "SCARA",
+      "captain": "Tara Maxwell",
+      "crew": [
+        "Hines Walls",
+        "Hilda Grant"
+      ],
+      "status": "IN_INTERVENTION",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
+    },
+    {
+      "_id": "CJ64ABP",
+      "identificationNumber": 4034,
+      "vehicleType": "EPA",
+      "captain": "Young Finch",
+      "crew": [
+        "Terra Vaughn",
+        "Ewing Nielsen"
+      ],
+      "status": "IN_INTERVENTION",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
+    }
+  ]
+}

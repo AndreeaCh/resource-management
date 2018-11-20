@@ -12,7 +12,24 @@
         "Stafford Swanson",
         "Steele Donovan"
       ],
-      "status": "UNAVAILABLE"
+      "status": "UNAVAILABLE",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
     },
     {
       "_id": "CJ64AFA",
@@ -23,7 +40,24 @@
         "Kristie Cunningham",
         "Velasquez Bernard"
       ],
-      "status": "AVAILABLE_IN_GARAGE"
+      "status": "AVAILABLE_IN_GARAGE",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
     }
   ]
 }

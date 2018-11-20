@@ -5,8 +5,10 @@ import com.resource.management.api.GetResourceLogResponse;
 import com.resource.management.data.Resource;
 import com.resource.management.data.SubUnit;
 import com.resource.management.data.SubUnitsRepository;
+
 import java.util.List;
 import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +26,17 @@ public class GetResourceLogController {
 
     @MessageMapping("/getResourceLog")
     @SendTo("/topic/resourceLogs")
-    public GetResourceLogResponse handleResourceLogMessage(final GetResourceLogRequest request) {
+    public GetResourceLogResponse handle(final GetResourceLogRequest request) {
+        GetResourceLogResponse response = new GetResourceLogResponse();
         List<SubUnit> subUnits = repository.findAll();
         final Optional<Resource> resourceOptional =
                 subUnits.stream()
                         .flatMap(subUnit -> subUnit.getResources().stream().filter(resource -> resource.getPlateNumber().equals(request.getPlateNumber())))
                         .findFirst();
-        return new GetResourceLogResponse(resourceOptional.get().getResourceLogs());
+        if (resourceOptional.isPresent()) {
+            response = new GetResourceLogResponse(resourceOptional.get().getResourceLogs());
+        }
+
+        return response;
     }
 }

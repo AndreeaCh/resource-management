@@ -18,6 +18,16 @@
           "changedAt": "2018-11-20T10:49:48Z",
           "changedBy": "10.17.23.32",
           "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
         }
       ]
     },
@@ -30,7 +40,24 @@
         "King Rivers",
         "Olive Koch"
       ],
-      "status": "UNAVAILABLE"
+      "status": "UNAVAILABLE",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
     },
     {
       "_id": "CJ64ABE",
@@ -41,7 +68,24 @@
         "Jordan Potts",
         "Lorrie Sanford"
       ],
-      "status": "UNAVAILABLE"
+      "status": "UNAVAILABLE",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
     },
     {
       "_id": "CJ64ABF",
@@ -52,7 +96,24 @@
         "Benson Noble",
         "Maxine Huber"
       ],
-      "status": "IN_INTERVENTION"
+      "status": "IN_INTERVENTION",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
     },
     {
       "_id": "CJ64ABG",
@@ -63,7 +124,24 @@
         "Macias Langley",
         "Letha Duffy"
       ],
-      "status": "UNAVAILABLE"
+      "status": "UNAVAILABLE",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
     },
     {
       "_id": "CJ64ABH",
@@ -74,7 +152,24 @@
         "Macias Langley",
         "Letha Duffy"
       ],
-      "status": "UNAVAILABLE"
+      "status": "UNAVAILABLE",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
     }
   ]
 }

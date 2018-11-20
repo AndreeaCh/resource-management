@@ -1,29 +1,63 @@
 {
-    "_id": "DET DEJ",
+  "_id": "DET DEJ",
   "lastUpdate": "2018-11-20T10:49:48Z",
   "isLocked": false,
   "resources": [
-  {
-    "_id": "CJ64ABI",
-    "identificationNumber": 3354,
-    "vehicleType": "APCA",
-    "captain": "Douglas Shepherd",
-    "crew": [
-      "Kristy Welch",
-      "Cole Mendez"
-    ],
-    "status": "AVAILABLE_IN_GARAGE"
-  },
-  {
-    "_id": "CJ64ABJ",
-    "identificationNumber": 5199,
-    "vehicleType": "EPA",
-    "captain": "Davis Coffey",
-    "crew": [
-      "Lorie Beach",
-      "Pat Wyatt"
-    ],
-    "status": "AVAILABLE_IN_GARAGE"
-  }
-]
-  }
+    {
+      "_id": "CJ64ABI",
+      "identificationNumber": 3354,
+      "vehicleType": "APCA",
+      "captain": "Douglas Shepherd",
+      "crew": [
+        "Kristy Welch",
+        "Cole Mendez"
+      ],
+      "status": "AVAILABLE_IN_GARAGE",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
+    },
+    {
+      "_id": "CJ64ABJ",
+      "identificationNumber": 5199,
+      "vehicleType": "EPA",
+      "captain": "Davis Coffey",
+      "crew": [
+        "Lorie Beach",
+        "Pat Wyatt"
+      ],
+      "status": "AVAILABLE_IN_GARAGE",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
+    }
+  ]
+}
