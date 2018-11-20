@@ -5,7 +5,7 @@
  */
 package com.resource.management.controller;
 
-import com.resource.management.api.edit.UnlockSubUnitNotification;
+import com.resource.management.api.edit.SubUnitUnlockedNotification;
 import com.resource.management.api.edit.UnlockSubUnitRequest;
 import com.resource.management.data.SubUnit;
 import com.resource.management.data.SubUnitsRepository;
@@ -27,12 +27,14 @@ public class UnlockSubUnitController {
 
     @MessageMapping("/unlockSubUnit")
     @SendTo("/topic/unlockSubUnitNotification")
-    public UnlockSubUnitNotification handleUnlockSubUnitMessage(final UnlockSubUnitRequest request) {
+    public SubUnitUnlockedNotification handleUnlockSubUnitMessage(final UnlockSubUnitRequest request) {
         Optional<SubUnit> subUnit = repository.findByName(request.getSubUnitName());
-        UnlockSubUnitNotification notification = null;
+        SubUnitUnlockedNotification notification = null;
         if (subUnit.isPresent()) {
             subUnit.get().setLocked(false);
-            notification = new UnlockSubUnitNotification(request.getSubUnitName());
+            subUnit.get().setLockedBy(null);
+            repository.save(subUnit.get());
+            notification = new SubUnitUnlockedNotification(request.getSubUnitName());
         }
 
         return notification;

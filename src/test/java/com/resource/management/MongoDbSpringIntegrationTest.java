@@ -20,7 +20,7 @@ public class MongoDbSpringIntegrationTest {
 
     @Test
     public void test() {
-        final SubUnit subUnit = new SubUnit("CJ", Collections.emptyList(), Instant.now().toString(), true);
+        final SubUnit subUnit = new SubUnit("CJ", Collections.emptyList(), Instant.now().toString(), null, true);
         this.repository.save(subUnit);
 
         Assert.assertEquals("CJ", this.repository.findAll().get(0).getName());
