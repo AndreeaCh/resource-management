@@ -5,10 +5,14 @@
  */
 package com.resource.management.controller;
 
+import com.resource.management.api.SubUnitUpdatedNotification;
 import com.resource.management.api.edit.LockSubUnitRequest;
 import com.resource.management.api.edit.SubUnitLockedNotification;
 import com.resource.management.data.SubUnit;
 import com.resource.management.data.SubUnitsRepository;
+import com.resource.management.service.NotificationService;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,20 +29,30 @@ public class LockSubUnitController {
     @Autowired
     private SubUnitsRepository repository;
 
+    @Autowired
+    private NotificationService notificationService;
 
     @MessageMapping("/lockSubUnit")
     @SendTo("/topic/lockSubUnitNotification")
     public SubUnitLockedNotification handleLockSubUnitMessage(@Payload final LockSubUnitRequest request, final SimpMessageHeaderAccessor headerAccessor) {
         String sessionId = headerAccessor.getSessionId();
-        Optional<SubUnit> subUnit = repository.findByName(request.getSubUnitName());
+        Optional<SubUnit> subUnitOptional = repository.findByName(request.getSubUnitName());
         SubUnitLockedNotification notification = null;
-        if (subUnit.isPresent()) {
-            subUnit.get().setLocked(true);
-            subUnit.get().setLockedBy(sessionId);
-            repository.save(subUnit.get());
+        if (subUnitOptional.isPresent()) {
+            SubUnit subUnit = subUnitOptional.get();
+            lockSubUnit(sessionId, subUnit);
+            repository.save(subUnit);
             notification = new SubUnitLockedNotification(request.getSubUnitName());
+            notificationService.publishSubUnitNotification(new SubUnitUpdatedNotification(subUnit));
         }
 
         return notification;
+    }
+
+    private void lockSubUnit(final String sessionId, final SubUnit subUnit) {
+        subUnit.setLocked(true);
+        subUnit.setLockedBy(sessionId);
+        subUnit.setLastUpdate(Instant.now().toString());
+        subUnit.setResources(new ArrayList<>());
     }
 }
