@@ -24,7 +24,7 @@ public class UpdateSubUnitController {
     private SubUnitsRepository repository;
 
     @MessageMapping("/updatesubunit")
-    @SendTo("/topic/subunit")
+    @SendTo("/topic/unitUpdatedNotification")
     public SubUnitUpdatedNotification handleUpdateSubUnitMessage(final UpdateSubUnitRequest request) {
         SubUnitUpdatedNotification notification = null;
         SubUnit updatedSubUnit = request.getSubUnit();
