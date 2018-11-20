@@ -12,7 +12,14 @@
         "Perkins Dominguez",
         "Maldonado Nichols"
       ],
-      "status": "IN_INTERVENTION"
+      "status": "IN_INTERVENTION",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        }
+      ]
     },
     {
       "_id": "CJ29ABD",

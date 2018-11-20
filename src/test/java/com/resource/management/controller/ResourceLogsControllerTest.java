@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.resource.management.api.SubscribeResourceLogResponse;
+import com.resource.management.api.GetResourceLogResponse;
 import com.resource.management.data.ResourceLog;
 import com.resource.management.data.ResourceLogRepository;
 import com.resource.management.data.ResourceStatus;
@@ -31,7 +31,7 @@ public class ResourceLogsControllerTest
    private ResourceLogRepository resourceLogsRepository;
 
    @Autowired
-   private ResourceLogController controller;
+   private GetResourceLogController controller;
 
 
    @Test
@@ -48,7 +48,7 @@ public class ResourceLogsControllerTest
       final List<ResourceLog> resourceLogsList = prepareResourceLogsInRepository();
 
       //when
-      final SubscribeResourceLogResponse subscribeResourceLogsResponse =
+      final GetResourceLogResponse subscribeResourceLogsResponse =
             this.controller.handleResourceLogMessage( PLATE_NUMBER );
 
       //then

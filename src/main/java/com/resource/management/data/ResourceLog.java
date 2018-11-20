@@ -1,27 +1,14 @@
 package com.resource.management.data;
 
-import java.time.Instant;
-
-import org.springframework.data.annotation.Id;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.time.Instant;
-
-import org.springframework.data.annotation.Id;
-
 @Data
 @AllArgsConstructor
-public class ResourceLog
-{
-   @Id
-   private String id;
+public class ResourceLog {
+    private String changedAt;
 
-   private String plateNumber;
+    private String changedBy;
 
-   private ResourceStatus newStatus;
-
-   private Instant time;
-
+    private ResourceStatus status;
 }
