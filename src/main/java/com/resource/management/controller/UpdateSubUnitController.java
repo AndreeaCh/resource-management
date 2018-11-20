@@ -9,6 +9,7 @@ import com.resource.management.api.SubUnitUpdatedNotification;
 import com.resource.management.api.edit.UpdateSubUnitRequest;
 import com.resource.management.data.SubUnit;
 import com.resource.management.data.SubUnitsRepository;
+import java.time.Instant;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,12 +25,13 @@ public class UpdateSubUnitController {
     private SubUnitsRepository repository;
 
     @MessageMapping("/updatesubunit")
-    @SendTo("/topic/subunits")
+    @SendTo("/topic/unitUpdatedNotification")
     public SubUnitUpdatedNotification handleUpdateSubUnitMessage(final UpdateSubUnitRequest request) {
         SubUnitUpdatedNotification notification = null;
         SubUnit updatedSubUnit = request.getSubUnit();
         Optional<SubUnit> subUnit = repository.findByName(updatedSubUnit.getName());
         if (subUnit.isPresent()) {
+            updatedSubUnit.setLastUpdate(Instant.now().toString());
             repository.save(updatedSubUnit);
             notification = new SubUnitUpdatedNotification(updatedSubUnit);
         }

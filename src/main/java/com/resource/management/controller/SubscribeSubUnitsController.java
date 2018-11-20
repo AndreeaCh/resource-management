@@ -14,12 +14,12 @@ import java.util.List;
 @Controller
 public class SubscribeSubUnitsController {
     private static final Logger LOG = LoggerFactory.getLogger(SubscribeSubUnitsController.class);
-    @Autowired
-    private SubUnitsRepository repository;
-
     @SubscribeMapping("/subunits")
     public SubscribeSubUnitsResponse handleSubscribeMessage() {
         List<SubUnit> subUnits = repository.findAll();
         return new SubscribeSubUnitsResponse(subUnits);
     }
+
+    @Autowired
+    private SubUnitsRepository repository;
 }

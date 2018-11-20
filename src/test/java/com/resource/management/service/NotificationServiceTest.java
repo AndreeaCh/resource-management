@@ -28,6 +28,6 @@ public class NotificationServiceTest {
         sut.publishSubUnitNotification(notification);
 
         //then
-        verify(messagingTemplate).convertAndSend("/topic/subunits", notification);
+        verify(messagingTemplate).convertAndSend("/topic/subunit", notification);
     }
 }
