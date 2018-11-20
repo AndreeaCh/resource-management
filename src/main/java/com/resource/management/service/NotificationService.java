@@ -16,4 +16,11 @@ public class NotificationService {
                 notification
         );
     }
+
+    public void publishUnlockedSubUnitNotification(final Object notification) {
+        messagingTemplate.convertAndSend(
+                "/topic/unlockSubUnitNotification",
+                notification
+        );
+    }
 }

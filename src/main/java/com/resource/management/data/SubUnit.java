@@ -1,5 +1,6 @@
 package com.resource.management.data;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,9 @@ public class SubUnit {
     private List<Resource> resources;
 
     private String lastUpdate;
+
+    @JsonIgnore
+    private String lockedBy;
 
     private boolean isLocked;
 }

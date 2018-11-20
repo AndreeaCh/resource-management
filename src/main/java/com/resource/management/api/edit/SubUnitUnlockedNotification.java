@@ -14,7 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UnlockSubUnitNotification {
+public class SubUnitUnlockedNotification {
 
     private String subUnitName;
 }
