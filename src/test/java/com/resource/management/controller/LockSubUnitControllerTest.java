@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.hamcrest.Matchers.is;
@@ -28,6 +29,8 @@ public class LockSubUnitControllerTest {
     @Autowired
     private LockSubUnitController controller;
 
+    @MockBean
+    private SimpMessageHeaderAccessor accessor;
 
     @Test
     public void handleRequest_subUnitExists_sendSubUnitLockedNotification() {
@@ -36,7 +39,7 @@ public class LockSubUnitControllerTest {
         when(subUnitsRepository.findByName(subUnit.getName())).thenReturn(Optional.of(subUnit));
 
         // When
-        SubUnitLockedNotification notification = controller.handleLockSubUnitMessage(new LockSubUnitRequest(subUnit.getName()));
+        SubUnitLockedNotification notification = controller.handleLockSubUnitMessage(new LockSubUnitRequest(subUnit.getName()), accessor);
 
         // Then
         assertThat(notification.getSubUnitName(), is(subUnit.getName()));
@@ -49,7 +52,7 @@ public class LockSubUnitControllerTest {
         when(subUnitsRepository.findByName(subUnit.getName())).thenReturn(Optional.empty());
 
         // When
-        SubUnitLockedNotification notification = controller.handleLockSubUnitMessage(new LockSubUnitRequest(subUnit.getName()));
+        SubUnitLockedNotification notification = controller.handleLockSubUnitMessage(new LockSubUnitRequest(subUnit.getName()), accessor);
 
         // Then
         assertNull(notification);

@@ -1,24 +1,27 @@
 package com.resource.management.data;
 
-import java.time.Instant;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
-
-import org.springframework.data.annotation.Id;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.annotation.Id;
 
 @Data
 @ToString
+@NoArgsConstructor
 @AllArgsConstructor
-public class SubUnit
-{
-   @Id
-   private String name;
+public class SubUnit {
+    @Id
+    private String name;
 
-   private List<Resource> resources;
+    private List<Resource> resources;
 
-   private Instant lastUpdate;
+    private String lastUpdate;
 
+    @JsonIgnore
+    private String lockedBy;
+
+    private boolean isLocked;
 }
