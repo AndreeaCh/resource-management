@@ -1,38 +1,39 @@
 {
-    "_id": "DET TUR",
-    "resources": [
-  {
-    "_id": "CJ64ABK",
-    "identificationNumber": 6301,
-    "vehicleType": "APCA",
-    "captain": "Gilbert Houston",
-    "crew": [
-      "Reeves Cox",
-      "Naomi Medina"
-    ],
-    "status": "IN_INTERVENTION"
-  },
-  {
-    "_id": "CJ64ABL",
-    "identificationNumber": 9158,
-    "vehicleType": "APCA",
-    "captain": "Harrison Watson",
-    "crew": [
-      "Gamble Andrews",
-      "Leon Rios"
-    ],
-    "status": "IN_INTERVENTION"
-  },
-  {
-    "_id": "CJ64ABM",
-    "identificationNumber": 9936,
-    "vehicleType": "EPA",
-    "captain": "Constance Greene",
-    "crew": [
-      "Foley Keith",
-      "Salazar Osborne"
-    ],
-    "status": "IN_INTERVENTION"
-  }
-]
-  }
+  "_id": "DET TUR",
+  "lastUpdate": "2018-11-20T10:49:48Z",
+  "resources": [
+    {
+      "_id": "CJ64ABK",
+      "identificationNumber": 6301,
+      "vehicleType": "APCA",
+      "captain": "Gilbert Houston",
+      "crew": [
+        "Reeves Cox",
+        "Naomi Medina"
+      ],
+      "status": "IN_INTERVENTION"
+    },
+    {
+      "_id": "CJ64ABL",
+      "identificationNumber": 9158,
+      "vehicleType": "APCA",
+      "captain": "Harrison Watson",
+      "crew": [
+        "Gamble Andrews",
+        "Leon Rios"
+      ],
+      "status": "IN_INTERVENTION"
+    },
+    {
+      "_id": "CJ64ABM",
+      "identificationNumber": 9936,
+      "vehicleType": "EPA",
+      "captain": "Constance Greene",
+      "crew": [
+        "Foley Keith",
+        "Salazar Osborne"
+      ],
+      "status": "IN_INTERVENTION"
+    }
+  ]
+}
