@@ -1,28 +1,28 @@
 {
-    "_id": "PL BAI",
-  "isLocked": false,
+  "_id": "PL BAI",
+  "lastUpdate": "2018-11-20T10:49:48Z",
   "resources": [
-  {
-    "_id": "CJ64AEA",
-    "identificationNumber": 4721,
-    "vehicleType": "APCA",
-    "captain": "Debora Peck",
-    "crew": [
-      "Stafford Swanson",
-      "Steele Donovan"
-    ],
-    "status": "UNAVAILABLE"
-  },
-  {
-    "_id": "CJ64AFA",
-    "identificationNumber": 5931,
-    "vehicleType": "EPA",
-    "captain": "Doris Serrano",
-    "crew": [
-      "Kristie Cunningham",
-      "Velasquez Bernard"
-    ],
-    "status": "AVAILABLE_IN_GARAGE"
-  }
-]
-  }
+    {
+      "_id": "CJ64AEA",
+      "identificationNumber": 4721,
+      "vehicleType": "APCA",
+      "captain": "Debora Peck",
+      "crew": [
+        "Stafford Swanson",
+        "Steele Donovan"
+      ],
+      "status": "UNAVAILABLE"
+    },
+    {
+      "_id": "CJ64AFA",
+      "identificationNumber": 5931,
+      "vehicleType": "EPA",
+      "captain": "Doris Serrano",
+      "crew": [
+        "Kristie Cunningham",
+        "Velasquez Bernard"
+      ],
+      "status": "AVAILABLE_IN_GARAGE"
+    }
+  ]
+}

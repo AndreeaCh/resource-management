@@ -1,17 +1,17 @@
 {
-    "_id": "PL FLO",
-  "isLocked": false,
+  "_id": "PL FLO",
+  "lastUpdate": "2018-11-20T10:49:48Z",
   "resources": [
-  {
-    "_id": "CJ64AGA",
-    "identificationNumber": 5931,
-    "vehicleType": "EPA",
-    "captain": "Doris Serrano",
-    "crew": [
-      "Kristie Cunningham",
-      "Velasquez Bernard"
-    ],
-    "status": "AVAILABLE_IN_GARAGE"
-  }
-]
-  }
+    {
+      "_id": "CJ64AGA",
+      "identificationNumber": 5931,
+      "vehicleType": "EPA",
+      "captain": "Doris Serrano",
+      "crew": [
+        "Kristie Cunningham",
+        "Velasquez Bernard"
+      ],
+      "status": "AVAILABLE_IN_GARAGE"
+    }
+  ]
+}

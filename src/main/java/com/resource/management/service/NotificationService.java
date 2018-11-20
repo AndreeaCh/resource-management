@@ -12,7 +12,7 @@ public class NotificationService {
 
     public void publishSubUnitNotification(final Object notification) {
         messagingTemplate.convertAndSend(
-                "/topic/subunits",
+                "/topic/subunit",
                 notification
         );
     }
