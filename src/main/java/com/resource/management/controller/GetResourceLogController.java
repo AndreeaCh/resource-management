@@ -1,7 +1,7 @@
 package com.resource.management.controller;
 
-import com.resource.management.api.GetResourceLogRequest;
-import com.resource.management.api.GetResourceLogResponse;
+import com.resource.management.api.status.GetResourceLogRequest;
+import com.resource.management.api.status.GetResourceLogResponse;
 import com.resource.management.data.Resource;
 import com.resource.management.data.SubUnit;
 import com.resource.management.data.SubUnitsRepository;
@@ -22,7 +22,6 @@ public class GetResourceLogController {
 
     @Autowired
     private SubUnitsRepository repository;
-
 
     @MessageMapping("/getResourceLog")
     @SendTo("/topic/resourceLogs")

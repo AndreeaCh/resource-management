@@ -38,7 +38,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.resource.management.SubUnitsTestDataUtils;
 import com.resource.management.api.SubUnitUpdatedNotification;
-import com.resource.management.api.UpdateResourceStatusRequest;
+import com.resource.management.api.status.UpdateResourceStatusRequest;
 import com.resource.management.data.ResourceStatus;
 import com.resource.management.data.SubUnit;
 import com.resource.management.data.SubUnitsRepository;
@@ -74,10 +74,9 @@ public class UpdateResourceStatusControllerTest {
         controller.handle(request, headerAccessor);
 
         // then
-        Class<List<SubUnit>> listClass = (Class<List<SubUnit>>) (Class) List.class;
-        ArgumentCaptor<List<SubUnit>> captor = ArgumentCaptor.forClass(listClass);
-        verify(subUnitsRepository).saveAll(captor.capture());
-        assertThat(captor.getValue().get(0).getResources().get(0).getStatus(), is(resourceStatus));
+        ArgumentCaptor<SubUnit> captor = ArgumentCaptor.forClass(SubUnit.class);
+        verify(subUnitsRepository).save(captor.capture());
+        assertThat(captor.getValue().getResources().get(0).getStatus(), is(resourceStatus));
     }
 
 

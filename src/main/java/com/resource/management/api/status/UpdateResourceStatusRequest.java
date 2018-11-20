@@ -14,7 +14,7 @@
  ** the written permission of Frequentis AG.
  **
  ************************************************************************/
-package com.resource.management.api;
+package com.resource.management.api.status;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
