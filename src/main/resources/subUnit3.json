@@ -1,40 +1,91 @@
 {
-    "_id": "DET TUR",
+  "_id": "DET TUR",
   "lastUpdate": "2018-11-20T10:49:48Z",
   "isLocked": false,
   "resources": [
-  {
-    "_id": "CJ64ABK",
-    "identificationNumber": 6301,
-    "vehicleType": "APCA",
-    "captain": "Gilbert Houston",
-    "crew": [
-      "Reeves Cox",
-      "Naomi Medina"
-    ],
-    "status": "IN_INTERVENTION"
-  },
-  {
-    "_id": "CJ64ABL",
-    "identificationNumber": 9158,
-    "vehicleType": "APCA",
-    "captain": "Harrison Watson",
-    "crew": [
-      "Gamble Andrews",
-      "Leon Rios"
-    ],
-    "status": "IN_INTERVENTION"
-  },
-  {
-    "_id": "CJ64ABM",
-    "identificationNumber": 9936,
-    "vehicleType": "EPA",
-    "captain": "Constance Greene",
-    "crew": [
-      "Foley Keith",
-      "Salazar Osborne"
-    ],
-    "status": "IN_INTERVENTION"
-  }
-]
-  }
+    {
+      "_id": "CJ64ABK",
+      "identificationNumber": 6301,
+      "vehicleType": "APCA",
+      "captain": "Gilbert Houston",
+      "crew": [
+        "Reeves Cox",
+        "Naomi Medina"
+      ],
+      "status": "IN_INTERVENTION",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
+    },
+    {
+      "_id": "CJ64ABL",
+      "identificationNumber": 9158,
+      "vehicleType": "APCA",
+      "captain": "Harrison Watson",
+      "crew": [
+        "Gamble Andrews",
+        "Leon Rios"
+      ],
+      "status": "IN_INTERVENTION",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
+    },
+    {
+      "_id": "CJ64ABM",
+      "identificationNumber": 9936,
+      "vehicleType": "EPA",
+      "captain": "Constance Greene",
+      "crew": [
+        "Foley Keith",
+        "Salazar Osborne"
+      ],
+      "status": "IN_INTERVENTION",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
+    }
+  ]
+}

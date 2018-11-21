@@ -16,7 +16,7 @@ After subcribing the client will receive a response message containing the list 
 MESSAGE
 subscription:sub-1
 message-id:sub-resp-123
-destination:/topic/subunits
+destination:/topic/unitUpdatedNotification
 content-type:text/json
 
 [

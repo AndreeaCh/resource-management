@@ -1,27 +1,20 @@
 package com.resource.management.data;
 
-import java.time.Instant;
-
-import org.springframework.data.annotation.Id;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.time.Instant;
-
-import org.springframework.data.annotation.Id;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
-public class ResourceLog
-{
-   @Id
-   private String id;
+public class ResourceLog {
+    @JsonIgnore
+    private UUID id;
 
-   private String plateNumber;
+    private String changedAt;
 
-   private ResourceStatus newStatus;
+    private String changedBy;
 
-   private Instant time;
-
+    private ResourceStatus status;
 }

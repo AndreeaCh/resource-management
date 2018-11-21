@@ -10,5 +10,7 @@
 ## Client info
 * [Subscribing for Sub-units Updates](/src/main/doc/subscribe.md)
 * [Editing a Sub-unit](/src/main/doc/edit.md)
+* [Updating the Status for a Resource](/src/main/doc/updatestatus.md)
+* [Getting the log for a resource](/src/main/doc/getLog.md)
 * [Adding a Sub-unit](/src/main/doc/add.md)
 * [Deleting a Sub-unit](/src/main/doc/delete.md)

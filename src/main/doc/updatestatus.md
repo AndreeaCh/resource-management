@@ -1,43 +1,20 @@
-# Editing a Sub-Unit
+# Changing the status for a resource
 
-A client can start editing a sub-unit by sending the following message:
-
-``` javascript
-MESSAGE
-id:lock-req-1
-destination:/topic/addSubUnit
-[
-  {
-    "name": "CJ"
-  }
-]
-```
-
-The response can be a success or a failure :
+A client can change the status of a resource by sending the following message:
 
 ``` javascript
 MESSAGE
 id:lock-req-1
-destination:/topic/subunits
+destination:/topic/updateStatus
 [
   {
-    "statusCode": "OK"
+    "plateNumber": "CJ05ACH",
+    "resourceStatus": "AVAILABLE_IN_GARAGE"
   }
 ]
 ```
 
-``` javascript
-MESSAGE
-id:lock-req-1
-destination:/topic/subunits
-[
-  {
-    "statusCode": "ERROR"
-  }
-]
-```
-
-When a sub-unit is added all the clients will receive the following message:
+When the status of a resource changes all the clients will receive the following message:
 
 ``` javascript
 MESSAGE

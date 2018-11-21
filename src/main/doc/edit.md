@@ -73,7 +73,7 @@ All the clients that are subscribed to sub-unit topic will receive the following
 MESSAGE
 subscription:sub-1
 message-id:sub-notification-123
-destination:/topic/subunits
+destination:/topic/unitUpdatedNotification
 content-type:text/json
 
 [
