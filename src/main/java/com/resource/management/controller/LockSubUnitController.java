@@ -43,7 +43,6 @@ public class LockSubUnitController {
             lockSubUnit(sessionId, subUnit);
             repository.save(subUnit);
             notification = new SubUnitLockedNotification(request.getSubUnitName());
-            notificationService.publishSubUnitNotification(new SubUnitUpdatedNotification(subUnit));
         }
 
         return notification;
@@ -52,7 +51,5 @@ public class LockSubUnitController {
     private void lockSubUnit(final String sessionId, final SubUnit subUnit) {
         subUnit.setLocked(true);
         subUnit.setLockedBy(sessionId);
-        subUnit.setLastUpdate(Instant.now().toString());
-        subUnit.setResources(new ArrayList<>());
     }
 }

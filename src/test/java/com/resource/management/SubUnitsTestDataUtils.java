@@ -28,6 +28,10 @@ public class SubUnitsTestDataUtils
       return JsonUtils.loadFromJsonString( SubUnit.class, SubUnitsTestData.SUBUNIT1 );
    }
 
+   public static SubUnit loadRandomSubUnitUpdate()
+   {
+      return JsonUtils.loadFromJsonString( SubUnit.class, SubUnitsTestData.SUBUNIT1_UPDATED );
+   }
 
    public static List<SubUnit> loadAllSubUnits()
    {

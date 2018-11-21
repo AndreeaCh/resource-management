@@ -34,25 +34,27 @@ public class UpdateSubUnitControllerTest {
     @Test
     public void handleRequest_subUnitExists_sendUnitUpdatedNotification() {
         // Given
-        SubUnit subUnit = prepareSubUnitInRepository();
+        prepareSubUnitInRepository();
+        SubUnit updatedSubUnit = SubUnitsTestDataUtils.loadRandomSubUnitUpdate();
 
         // When
-        SubUnitUpdatedNotification notification = controller.handleUpdateSubUnitMessage(new UpdateSubUnitRequest(subUnit));
+        SubUnitUpdatedNotification notification = controller.handleUpdateSubUnitMessage(new UpdateSubUnitRequest(updatedSubUnit));
 
         // Then
-        assertThat(notification.getSubUnit(), is(subUnit));
+        assertThat(notification.getSubUnit(), is(updatedSubUnit));
     }
 
     @Test
     public void handleRequest_subUnitExists_saveUpdatedSubUnit() {
         // Given
-        SubUnit subUnit = prepareSubUnitInRepository();
+        prepareSubUnitInRepository();
+        SubUnit updatedSubUnit = SubUnitsTestDataUtils.loadRandomSubUnitUpdate();
 
         // When
-        controller.handleUpdateSubUnitMessage(new UpdateSubUnitRequest(subUnit));
+        controller.handleUpdateSubUnitMessage(new UpdateSubUnitRequest(updatedSubUnit));
 
         // Then
-        verify(subUnitsRepository).save(subUnit);
+        verify(subUnitsRepository).save(updatedSubUnit);
     }
 
     @Test

@@ -30,7 +30,7 @@ public class UpdateSubUnitController {
         SubUnitUpdatedNotification notification = null;
         SubUnit updatedSubUnit = request.getSubUnit();
         Optional<SubUnit> subUnit = repository.findByName(updatedSubUnit.getName());
-        if (subUnit.isPresent()) {
+        if (subUnit.isPresent() && !subUnit.get().equals(updatedSubUnit)) {
             updatedSubUnit.setLastUpdate(Instant.now().toString());
             repository.save(updatedSubUnit);
             notification = new SubUnitUpdatedNotification(updatedSubUnit);
