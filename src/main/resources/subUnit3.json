@@ -5,7 +5,7 @@
   "resources": [
     {
       "_id": "CJ64ABK",
-      "identificationNumber": 6301,
+      "identificationNumber": "6301",
       "vehicleType": "APCA",
       "captain": "Gilbert Houston",
       "crew": [
@@ -33,7 +33,7 @@
     },
     {
       "_id": "CJ64ABL",
-      "identificationNumber": 9158,
+      "identificationNumber": "9158",
       "vehicleType": "APCA",
       "captain": "Harrison Watson",
       "crew": [
@@ -61,7 +61,7 @@
     },
     {
       "_id": "CJ64ABM",
-      "identificationNumber": 9936,
+      "identificationNumber": "9936",
       "vehicleType": "EPA",
       "captain": "Constance Greene",
       "crew": [

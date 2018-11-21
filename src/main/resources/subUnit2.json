@@ -5,7 +5,7 @@
   "resources": [
     {
       "_id": "CJ64ABI",
-      "identificationNumber": 3354,
+      "identificationNumber": "3354",
       "vehicleType": "APCA",
       "captain": "Douglas Shepherd",
       "crew": [
@@ -33,7 +33,7 @@
     },
     {
       "_id": "CJ64ABJ",
-      "identificationNumber": 5199,
+      "identificationNumber": "5199",
       "vehicleType": "EPA",
       "captain": "Davis Coffey",
       "crew": [

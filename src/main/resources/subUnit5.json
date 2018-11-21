@@ -5,7 +5,7 @@
   "resources": [
     {
       "_id": "CJ64ABQ",
-      "identificationNumber": 4721,
+      "identificationNumber": "4721",
       "vehicleType": "APCA",
       "captain": "Debora Peck",
       "crew": [
@@ -33,7 +33,7 @@
     },
     {
       "_id": "CJ64ABR",
-      "identificationNumber": 5931,
+      "identificationNumber": "5931",
       "vehicleType": "SCAF",
       "captain": "Doris Serrano",
       "crew": [
@@ -61,7 +61,7 @@
     },
     {
       "_id": "CJ64ABS",
-      "identificationNumber": 2207,
+      "identificationNumber": "2207",
       "vehicleType": "EPA",
       "captain": "Courtney Leonard",
       "crew": [
@@ -89,7 +89,7 @@
     },
     {
       "_id": "CJ64ABT",
-      "identificationNumber": 2047,
+      "identificationNumber": "2047",
       "vehicleType": "EPA",
       "captain": "Gale Gates",
       "crew": [
@@ -117,7 +117,7 @@
     },
     {
       "_id": "CJ64ABU",
-      "identificationNumber": 9197,
+      "identificationNumber": "9197",
       "vehicleType": "MU",
       "captain": "Villarreal James",
       "crew": [
