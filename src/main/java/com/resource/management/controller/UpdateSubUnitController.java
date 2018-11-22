@@ -29,7 +29,7 @@ public class UpdateSubUnitController {
     @Autowired
     private NotificationService notificationService;
 
-    @MessageMapping("/updateSubunit")
+    @MessageMapping("/updateSubUnit")
     public void handleUpdateSubUnitMessage(final UpdateSubUnitRequest request) {
         SubUnit updatedSubUnit = request.getSubUnit();
         Optional<SubUnit> subUnit = repository.findByName(updatedSubUnit.getName());
