@@ -23,7 +23,7 @@ public class AddSubUnitController {
     @SendTo("/topic/subunits")
     public AddSubUnitResponse handle(final AddSubUnitRequest request) {
         repository.insert(request.getSubUnit());
-        notificationService.publishSubUnitNotification(new SubUnitUpdatedNotification(request.getSubUnit()));
+        notificationService.publishSubUnitAddedNotification(request.getSubUnit());
         return new AddSubUnitResponse(StatusCode.OK);
     }
 }

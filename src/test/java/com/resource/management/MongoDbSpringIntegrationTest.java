@@ -5,6 +5,7 @@ import com.resource.management.data.SubUnitsRepository;
 import java.time.Instant;
 import java.util.Collections;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Ignore
 public class MongoDbSpringIntegrationTest {
     @Autowired
     private SubUnitsRepository repository;

@@ -11,9 +11,11 @@ import com.resource.management.api.edit.SubUnitLockedNotification;
 import com.resource.management.data.SubUnit;
 import com.resource.management.data.SubUnitsRepository;
 import com.resource.management.service.NotificationService;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

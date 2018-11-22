@@ -1,5 +1,8 @@
 package com.resource.management.service;
 
+import com.resource.management.api.SubUnitDeletedNotification;
+import com.resource.management.api.SubUnitUpdatedNotification;
+import com.resource.management.data.SubUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -10,10 +13,24 @@ public class NotificationService {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
-    public void publishSubUnitNotification(final Object notification) {
+    public void publishSubUnitNotification(final SubUnit subUnit) {
+        messagingTemplate.convertAndSend(
+                "/topic/unitUpdatedNotification",
+                new SubUnitUpdatedNotification(subUnit)
+        );
+    }
+
+    public void publishSubUnitAddedNotification(final SubUnit subUnit) {
         messagingTemplate.convertAndSend(
                 "/topic/subunit",
-                notification
+                new SubUnitUpdatedNotification(subUnit)
+        );
+    }
+
+    public void publishSubUnitDeletedNotification(final String name) {
+        messagingTemplate.convertAndSend(
+                "/topic/subunit",
+                new SubUnitDeletedNotification(name)
         );
     }
 
