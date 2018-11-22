@@ -3,12 +3,10 @@ package com.resource.management.controller;
 import com.resource.management.SubUnitsTestDataUtils;
 import com.resource.management.api.AddSubUnitRequest;
 import com.resource.management.api.AddSubUnitResponse;
-import com.resource.management.api.SubUnitUpdatedNotification;
 import com.resource.management.data.SubUnitsRepository;
 import com.resource.management.service.NotificationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -61,11 +59,6 @@ public class AddSubUnitControllerTest {
         this.sut.handle(request);
 
         //then
-        ArgumentCaptor<SubUnitUpdatedNotification> captor = ArgumentCaptor.forClass(SubUnitUpdatedNotification.class);
-        verify(notificationService).publishSubUnitNotification(captor.capture());
-        assertThat(
-                "Expected that the notification contains the deleted subunit name",
-                captor.getValue().getSubUnit(),
-                equalTo(request.getSubUnit()));
+        verify(notificationService).publishSubUnitAddedNotification(request.getSubUnit());
     }
 }

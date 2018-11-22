@@ -1,6 +1,8 @@
 package com.resource.management.service;
 
-import com.resource.management.api.SubUnitDeletedNotification;
+import com.resource.management.SubUnitsTestDataUtils;
+import com.resource.management.api.SubUnitUpdatedNotification;
+import com.resource.management.data.SubUnit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.eq;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -20,14 +24,14 @@ public class NotificationServiceTest {
     private NotificationService sut;
 
     @Test
-    public void publishSubUnitNotification_sut_callsOnMessagingTemplate() {
+    public void publishoNotification_sut_callsOnMessagingTemplate() {
         //given
-        SubUnitDeletedNotification notification = new SubUnitDeletedNotification("CJ");
+        SubUnit subUnit = SubUnitsTestDataUtils.loadRandomSubUnit();
 
         //when
-        sut.publishSubUnitNotification(notification);
+        sut.publishSubUnitNotification(subUnit);
 
         //then
-        verify(messagingTemplate).convertAndSend("/topic/subunit", notification);
+        verify(messagingTemplate).convertAndSend(eq("/topic/unitUpdatedNotification"), isA(SubUnitUpdatedNotification.class));
     }
 }

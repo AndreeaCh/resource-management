@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.UUID;
+import lombok.EqualsAndHashCode;
 
 @Data
 @AllArgsConstructor
+@EqualsAndHashCode
 public class ResourceLog {
     @JsonIgnore
     private UUID id;

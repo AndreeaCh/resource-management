@@ -11,9 +11,11 @@ import com.resource.management.api.edit.SubUnitLockedNotification;
 import com.resource.management.data.SubUnit;
 import com.resource.management.data.SubUnitsRepository;
 import com.resource.management.service.NotificationService;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +45,6 @@ public class LockSubUnitController {
             lockSubUnit(sessionId, subUnit);
             repository.save(subUnit);
             notification = new SubUnitLockedNotification(request.getSubUnitName());
-            notificationService.publishSubUnitNotification(new SubUnitUpdatedNotification(subUnit));
         }
 
         return notification;
@@ -52,7 +53,5 @@ public class LockSubUnitController {
     private void lockSubUnit(final String sessionId, final SubUnit subUnit) {
         subUnit.setLocked(true);
         subUnit.setLockedBy(sessionId);
-        subUnit.setLastUpdate(Instant.now().toString());
-        subUnit.setResources(new ArrayList<>());
     }
 }
