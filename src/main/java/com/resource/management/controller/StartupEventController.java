@@ -6,9 +6,10 @@
 package com.resource.management.controller;
 
 import com.resource.management.data.SubUnitsRepository;
-import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
 
 @Component
 public class StartupEventController {
@@ -19,7 +20,7 @@ public class StartupEventController {
     public void init() {
         // If the server is closed abnormally then some resources might remain locked in the DB. As a safety measure, at startup we unlock everything.
         repository.findAll().forEach(s -> {
-            s.setLocked(false);
+            s.setIsLocked(false);
             s.setLockedBy(null);
             repository.save(s);
         });

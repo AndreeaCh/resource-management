@@ -28,5 +28,5 @@ public class SubUnit {
     private String lockedBy;
 
     @EqualsAndHashCode.Exclude
-    private boolean isLocked;
+    private boolean isIsLocked;
 }
