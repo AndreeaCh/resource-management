@@ -22,7 +22,7 @@ public class Resource {
 
     private String captain;
 
-    private int identificationNumber;
+    private String identificationNumber;
 
     private List<String> crew;
 

@@ -5,7 +5,7 @@
   "resources": [
     {
       "_id": "CJ64AEA",
-      "identificationNumber": 4721,
+      "identificationNumber": "4721",
       "vehicleType": "APCA",
       "captain": "Debora Peck",
       "crew": [
@@ -33,7 +33,7 @@
     },
     {
       "_id": "CJ64AFA",
-      "identificationNumber": 5931,
+      "identificationNumber": "5931",
       "vehicleType": "EPA",
       "captain": "Doris Serrano",
       "crew": [
