@@ -25,7 +25,6 @@ public final class SubUnitMapper {
     public static final com.resource.management.model.SubUnit toInternal(final SubUnit externalSubUnit) {
         com.resource.management.model.SubUnit subUnit = new com.resource.management.model.SubUnit();
         subUnit.setName(externalSubUnit.getName());
-        subUnit.setIsLocked(externalSubUnit.getIsLocked());
         subUnit.setLastUpdate(externalSubUnit.getLastUpdate());
         List<com.resource.management.model.Resource> resourceList = externalSubUnit
                 .getResources()

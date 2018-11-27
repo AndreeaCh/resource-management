@@ -32,9 +32,10 @@ public class UnlockSubUnitController {
         Optional<SubUnit> subUnit = repository.findByName(request.getSubUnitName());
         SubUnitUnlockedNotification notification = null;
         if (subUnit.isPresent()) {
-            subUnit.get().setIsLocked(false);
-            subUnit.get().setLockedBy(null);
-            repository.save(subUnit.get());
+            SubUnit unit = subUnit.get();
+            unit.setIsLocked(false);
+            unit.setLockedBy(null);
+            repository.save(unit);
             notification = new SubUnitUnlockedNotification(request.getSubUnitName());
         }
 
