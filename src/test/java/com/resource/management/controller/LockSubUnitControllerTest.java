@@ -1,10 +1,10 @@
 package com.resource.management.controller;
 
-import com.resource.management.SubUnitsTestDataUtils;
-import com.resource.management.api.edit.LockSubUnitRequest;
-import com.resource.management.api.edit.SubUnitLockedNotification;
-import com.resource.management.data.SubUnit;
-import com.resource.management.data.SubUnitsRepository;
+import com.resource.management.SubUnits;
+import com.resource.management.api.lock.LockSubUnitRequest;
+import com.resource.management.api.lock.SubUnitLockedNotification;
+import com.resource.management.model.SubUnit;
+import com.resource.management.model.SubUnitsRepository;
 import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +35,7 @@ public class LockSubUnitControllerTest {
     @Test
     public void handleRequest_subUnitExists_sendSubUnitLockedNotification() {
         // Given
-        SubUnit subUnit = SubUnitsTestDataUtils.loadRandomSubUnit();
+        SubUnit subUnit = SubUnits.internal();
         when(subUnitsRepository.findByName(subUnit.getName())).thenReturn(Optional.of(subUnit));
 
         // When
@@ -48,7 +48,7 @@ public class LockSubUnitControllerTest {
     @Test
     public void handleRequest_subUnitDoesNotExists_sendNullSubUnitLockedNotification() {
         // Given
-        SubUnit subUnit = SubUnitsTestDataUtils.loadRandomSubUnit();
+        SubUnit subUnit = SubUnits.internal();
         when(subUnitsRepository.findByName(subUnit.getName())).thenReturn(Optional.empty());
 
         // When

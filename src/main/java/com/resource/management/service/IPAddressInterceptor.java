@@ -1,4 +1,4 @@
-package com.resource.management;
+package com.resource.management.service;
 
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;

@@ -5,7 +5,7 @@
  */
 package com.resource.management.controller;
 
-import com.resource.management.data.SubUnitsRepository;
+import com.resource.management.model.SubUnitsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

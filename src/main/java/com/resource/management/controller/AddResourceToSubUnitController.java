@@ -1,10 +1,7 @@
 package com.resource.management.controller;
 
-import com.resource.management.api.SubUnitUpdatedNotification;
-import com.resource.management.api.edit.AddResourceToSubUnitRequest;
-import com.resource.management.data.Resource;
-import com.resource.management.data.SubUnit;
-import com.resource.management.data.SubUnitsRepository;
+import com.resource.management.api.crud.AddResourceToSubUnitRequest;
+import com.resource.management.model.*;
 import com.resource.management.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -33,10 +30,10 @@ public class AddResourceToSubUnitController {
                 resources = new ArrayList<>();
             }
 
-            resources.add(request.getResource());
+            resources.add(ResourceMapper.toInternal(request.getResource()));
             subUnit.setLastUpdate(Instant.now().toString());
             subUnitsRepository.save(subUnit);
-            notificationService.publishSubUnitNotification(subUnit);
+            notificationService.publishSubUnitNotification(SubUnitMapper.toApi(subUnit));
         }
     }
 }

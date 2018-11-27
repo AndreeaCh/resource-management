@@ -5,9 +5,9 @@
  */
 package com.resource.management.controller;
 
-import com.resource.management.api.edit.SubUnitUnlockedNotification;
-import com.resource.management.data.SubUnit;
-import com.resource.management.data.SubUnitsRepository;
+import com.resource.management.api.lock.SubUnitUnlockedNotification;
+import com.resource.management.model.SubUnit;
+import com.resource.management.model.SubUnitsRepository;
 import com.resource.management.service.NotificationService;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;

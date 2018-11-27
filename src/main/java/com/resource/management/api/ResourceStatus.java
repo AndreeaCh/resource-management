@@ -1,4 +1,4 @@
-package com.resource.management.data;
+package com.resource.management.api;
 
 public enum ResourceStatus
 {

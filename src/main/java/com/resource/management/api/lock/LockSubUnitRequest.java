@@ -3,7 +3,7 @@
  *            Registered with Commercial Court Vienna,
  *            reg.no. FN 72.115b.
  */
-package com.resource.management.api.edit;
+package com.resource.management.api.lock;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

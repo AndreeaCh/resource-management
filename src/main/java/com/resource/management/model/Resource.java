@@ -1,13 +1,10 @@
-package com.resource.management.data;
+package com.resource.management.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import com.resource.management.api.ResourceStatus;
+import lombok.*;
 import org.springframework.data.annotation.Id;
+
+import java.util.List;
 
 @Data
 @ToString
@@ -29,7 +26,6 @@ public class Resource {
     @EqualsAndHashCode.Exclude
     private ResourceStatus status;
 
-    @JsonIgnore
     @EqualsAndHashCode.Exclude
     private List<ResourceLog> resourceLogs;
 }

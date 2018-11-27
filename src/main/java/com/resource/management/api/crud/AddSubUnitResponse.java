@@ -1,5 +1,6 @@
-package com.resource.management.api;
+package com.resource.management.api.crud;
 
+import com.resource.management.api.StatusCode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

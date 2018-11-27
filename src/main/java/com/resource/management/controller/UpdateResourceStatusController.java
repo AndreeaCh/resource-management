@@ -16,9 +16,10 @@
  ************************************************************************/
 package com.resource.management.controller;
 
-import com.resource.management.api.SubUnitUpdatedNotification;
+import com.resource.management.api.ResourceStatus;
+import com.resource.management.api.crud.notifications.SubUnitUpdatedNotification;
 import com.resource.management.api.status.UpdateResourceStatusRequest;
-import com.resource.management.data.*;
+import com.resource.management.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -49,7 +50,7 @@ public class UpdateResourceStatusController {
         if (subUnitOptional.isPresent()) {
             SubUnit subUnit = subUnitOptional.get();
             updateResource(subUnit, request.getPlateNumber(), ipAddress, request.getResourceStatus());
-            notification = new SubUnitUpdatedNotification(subUnit);
+            notification = new SubUnitUpdatedNotification(SubUnitMapper.toApi(subUnit));
         }
 
         return notification;

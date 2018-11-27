@@ -1,13 +1,9 @@
-package com.resource.management.data;
+package com.resource.management.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.Id;
+
+import java.util.List;
 
 @Data
 @ToString
@@ -23,10 +19,9 @@ public class SubUnit {
     @EqualsAndHashCode.Exclude
     private String lastUpdate;
 
-    @JsonIgnore
     @EqualsAndHashCode.Exclude
     private String lockedBy;
 
     @EqualsAndHashCode.Exclude
-    private boolean isIsLocked;
+    private Boolean isLocked;
 }

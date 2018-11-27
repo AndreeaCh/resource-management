@@ -7,9 +7,11 @@ import static org.mockito.Mockito.when;
 
 import java.time.Instant;
 import java.util.*;
+import java.util.stream.Collectors;
 
+import com.resource.management.api.ResourceStatus;
 import com.resource.management.api.status.GetResourceLogRequest;
-import com.resource.management.data.*;
+import com.resource.management.model.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +45,16 @@ public class GetResourceLogControllerTest {
         final List<ResourceLog> resourceLogsList = prepareResourceLogsInRepository();
 
         //when
-        final GetResourceLogResponse subscribeResourceLogsResponse =
+        final GetResourceLogResponse getRes =
                 this.controller.handle(new GetResourceLogRequest(PLATE_NUMBER));
 
         //then
+        List<com.resource.management.api.ResourceLog> expected = resourceLogsList
+                .stream()
+                .map(r -> ResourceLogMapper.toApi(r))
+                .collect(Collectors.toList());
         assertThat("Expected response to contain the list of sub-units.",
-                subscribeResourceLogsResponse.getResourceLogs(), equalTo(resourceLogsList));
+                getRes.getResourceLogs(), equalTo(expected));
     }
 
 

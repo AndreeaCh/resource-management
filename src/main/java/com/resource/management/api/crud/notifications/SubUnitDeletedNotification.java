@@ -1,4 +1,4 @@
-package com.resource.management.api;
+package com.resource.management.api.crud.notifications;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

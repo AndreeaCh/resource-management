@@ -5,10 +5,10 @@
  */
 package com.resource.management.controller;
 
-import com.resource.management.SubUnitsTestDataUtils;
-import com.resource.management.api.edit.SubUnitUnlockedNotification;
-import com.resource.management.data.SubUnit;
-import com.resource.management.data.SubUnitsRepository;
+import com.resource.management.SubUnits;
+import com.resource.management.api.lock.SubUnitUnlockedNotification;
+import com.resource.management.model.SubUnit;
+import com.resource.management.model.SubUnitsRepository;
 import com.resource.management.service.NotificationService;
 import java.util.Optional;
 import org.junit.Test;
@@ -43,7 +43,7 @@ public class SessionDisconnectedControllerTest {
     @Test
     public void handleAddSubUnitRequest_sut_publishesDeletedSubUnit() {
         //given
-        SubUnit subUnit = SubUnitsTestDataUtils.loadRandomSubUnit();
+        SubUnit subUnit = SubUnits.internal();
         String sessionId = "SessionId";
         when(repository.findByLockedBy(sessionId)).thenReturn(Optional.of(subUnit));
         SessionDisconnectEvent event = new SessionDisconnectEvent(mock(Object.class), mock(Message.class), sessionId, CloseStatus.GOING_AWAY);

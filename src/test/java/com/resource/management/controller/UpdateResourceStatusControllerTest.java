@@ -23,9 +23,9 @@ import static org.mockito.Mockito.when;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import com.resource.management.api.ResourceStatus;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,12 +36,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.resource.management.SubUnitsTestDataUtils;
-import com.resource.management.api.SubUnitUpdatedNotification;
+import com.resource.management.SubUnits;
+import com.resource.management.api.crud.notifications.SubUnitUpdatedNotification;
 import com.resource.management.api.status.UpdateResourceStatusRequest;
-import com.resource.management.data.ResourceStatus;
-import com.resource.management.data.SubUnit;
-import com.resource.management.data.SubUnitsRepository;
+import com.resource.management.model.SubUnit;
+import com.resource.management.model.SubUnitsRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -97,7 +96,7 @@ public class UpdateResourceStatusControllerTest {
 
 
     private String prepareSubUnitWithResourceInRepository() {
-        final SubUnit subUnit = SubUnitsTestDataUtils.loadRandomSubUnit();
+        final SubUnit subUnit = SubUnits.internal();
         when(subUnitsRepository.findAll()).thenReturn(Collections.singletonList(subUnit));
 
         return subUnit.getResources().get(0).getPlateNumber();

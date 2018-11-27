@@ -1,9 +1,9 @@
 package com.resource.management.controller;
 
-import com.resource.management.SubUnitsTestDataUtils;
-import com.resource.management.api.AddSubUnitRequest;
-import com.resource.management.api.AddSubUnitResponse;
-import com.resource.management.data.SubUnitsRepository;
+import com.resource.management.SubUnits;
+import com.resource.management.api.crud.AddSubUnitRequest;
+import com.resource.management.api.crud.AddSubUnitResponse;
+import com.resource.management.model.SubUnitsRepository;
 import com.resource.management.service.NotificationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,7 +38,7 @@ public class AddSubUnitControllerTest {
     @Test
     public void handleAddSubUnitRequest_sut_respondsWithSuccess() {
         //given
-        AddSubUnitRequest request = new AddSubUnitRequest(SubUnitsTestDataUtils.loadRandomSubUnit());
+        AddSubUnitRequest request = new AddSubUnitRequest(SubUnits.api());
 
         //when
         AddSubUnitResponse response = this.sut.handle(request);
@@ -53,7 +53,7 @@ public class AddSubUnitControllerTest {
     @Test
     public void handleAddSubUnitRequest_sut_publishesNewSubUnit() {
         //given
-        AddSubUnitRequest request = new AddSubUnitRequest(SubUnitsTestDataUtils.loadRandomSubUnit());
+        AddSubUnitRequest request = new AddSubUnitRequest(SubUnits.api());
 
         //when
         this.sut.handle(request);

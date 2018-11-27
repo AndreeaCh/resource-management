@@ -1,10 +1,11 @@
 package com.resource.management.controller;
 
-import com.resource.management.api.AddSubUnitRequest;
-import com.resource.management.api.AddSubUnitResponse;
 import com.resource.management.api.StatusCode;
-import com.resource.management.api.SubUnitUpdatedNotification;
-import com.resource.management.data.SubUnitsRepository;
+import com.resource.management.api.crud.AddSubUnitRequest;
+import com.resource.management.api.crud.AddSubUnitResponse;
+import com.resource.management.model.SubUnit;
+import com.resource.management.model.SubUnitMapper;
+import com.resource.management.model.SubUnitsRepository;
 import com.resource.management.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -22,7 +23,8 @@ public class AddSubUnitController {
     @MessageMapping("/addSubUnit")
     @SendTo("/topic/subunits")
     public AddSubUnitResponse handle(final AddSubUnitRequest request) {
-        repository.insert(request.getSubUnit());
+        SubUnit subUnit = SubUnitMapper.toInternal(request.getSubUnit());
+        repository.insert(subUnit);
         notificationService.publishSubUnitAddedNotification(request.getSubUnit());
         return new AddSubUnitResponse(StatusCode.OK);
     }

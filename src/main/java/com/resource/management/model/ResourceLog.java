@@ -1,17 +1,18 @@
-package com.resource.management.data;
+package com.resource.management.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.resource.management.api.ResourceStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
-import lombok.EqualsAndHashCode;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 public class ResourceLog {
-    @JsonIgnore
     private UUID id;
 
     private String changedAt;

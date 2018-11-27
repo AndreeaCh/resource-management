@@ -16,10 +16,10 @@
  ************************************************************************/
 package com.resource.management.api.status;
 
+import com.resource.management.api.ResourceStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import com.resource.management.data.ResourceStatus;
 import lombok.NoArgsConstructor;
 
 @Data

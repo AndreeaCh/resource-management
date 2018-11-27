@@ -5,10 +5,10 @@
  */
 package com.resource.management.controller;
 
-import com.resource.management.api.edit.LockSubUnitRequest;
-import com.resource.management.api.edit.SubUnitLockedNotification;
-import com.resource.management.data.SubUnit;
-import com.resource.management.data.SubUnitsRepository;
+import com.resource.management.api.lock.LockSubUnitRequest;
+import com.resource.management.api.lock.SubUnitLockedNotification;
+import com.resource.management.model.SubUnit;
+import com.resource.management.model.SubUnitsRepository;
 import com.resource.management.service.NotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

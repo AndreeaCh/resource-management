@@ -1,8 +1,8 @@
 package com.resource.management.controller;
 
-import com.resource.management.api.DeleteSubUnitRequest;
-import com.resource.management.api.DeleteSubUnitResponse;
-import com.resource.management.data.SubUnitsRepository;
+import com.resource.management.api.crud.DeleteSubUnitRequest;
+import com.resource.management.api.crud.DeleteSubUnitResponse;
+import com.resource.management.model.SubUnitsRepository;
 import com.resource.management.service.NotificationService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

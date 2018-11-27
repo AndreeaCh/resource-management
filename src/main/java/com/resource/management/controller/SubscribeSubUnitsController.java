@@ -1,8 +1,8 @@
 package com.resource.management.controller;
 
-import com.resource.management.api.SubscribeSubUnitsResponse;
-import com.resource.management.data.SubUnit;
-import com.resource.management.data.SubUnitsRepository;
+import com.resource.management.api.crud.notifications.InitialSubUnitsNotification;
+import com.resource.management.model.SubUnit;
+import com.resource.management.model.SubUnitsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,9 @@ import java.util.List;
 public class SubscribeSubUnitsController {
     private static final Logger LOG = LoggerFactory.getLogger(SubscribeSubUnitsController.class);
     @SubscribeMapping("/subunits")
-    public SubscribeSubUnitsResponse handleSubscribeMessage() {
+    public InitialSubUnitsNotification handleSubscribeMessage() {
         List<SubUnit> subUnits = repository.findAll();
-        return new SubscribeSubUnitsResponse(subUnits);
+        return new InitialSubUnitsNotification(subUnits);
     }
 
     @Autowired

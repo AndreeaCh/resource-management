@@ -1,8 +1,8 @@
 package com.resource.management.service;
 
-import com.resource.management.SubUnitsTestDataUtils;
-import com.resource.management.api.SubUnitUpdatedNotification;
-import com.resource.management.data.SubUnit;
+import com.resource.management.SubUnits;
+import com.resource.management.api.SubUnit;
+import com.resource.management.api.crud.notifications.SubUnitUpdatedNotification;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class NotificationServiceTest {
     @Test
     public void publishoNotification_sut_callsOnMessagingTemplate() {
         //given
-        SubUnit subUnit = SubUnitsTestDataUtils.loadRandomSubUnit();
+        SubUnit subUnit = SubUnits.api();
 
         //when
         sut.publishSubUnitNotification(subUnit);

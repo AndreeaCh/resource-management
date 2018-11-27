@@ -1,7 +1,7 @@
 package com.resource.management;
 
-import com.resource.management.data.SubUnit;
-import com.resource.management.data.SubUnitsRepository;
+import com.resource.management.model.SubUnit;
+import com.resource.management.model.SubUnitsRepository;
 import java.time.Instant;
 import java.util.Collections;
 import org.junit.Assert;

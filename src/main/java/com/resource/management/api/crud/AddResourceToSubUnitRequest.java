@@ -1,6 +1,6 @@
-package com.resource.management.api.edit;
+package com.resource.management.api.crud;
 
-import com.resource.management.data.Resource;
+import com.resource.management.api.Resource;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

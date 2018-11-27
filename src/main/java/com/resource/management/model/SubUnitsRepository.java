@@ -1,4 +1,4 @@
-package com.resource.management.data;
+package com.resource.management.model;
 
 
 import java.util.Optional;

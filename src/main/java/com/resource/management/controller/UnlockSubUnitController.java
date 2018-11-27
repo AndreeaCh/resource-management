@@ -5,10 +5,10 @@
  */
 package com.resource.management.controller;
 
-import com.resource.management.api.edit.SubUnitUnlockedNotification;
-import com.resource.management.api.edit.UnlockSubUnitRequest;
-import com.resource.management.data.SubUnit;
-import com.resource.management.data.SubUnitsRepository;
+import com.resource.management.api.lock.SubUnitUnlockedNotification;
+import com.resource.management.api.lock.UnlockSubUnitRequest;
+import com.resource.management.model.SubUnit;
+import com.resource.management.model.SubUnitsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

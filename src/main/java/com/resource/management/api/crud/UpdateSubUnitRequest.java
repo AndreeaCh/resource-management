@@ -3,8 +3,9 @@
  *            Registered with Commercial Court Vienna,
  *            reg.no. FN 72.115b.
  */
-package com.resource.management.api.edit;
+package com.resource.management.api.crud;
 
+import com.resource.management.api.SubUnit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class SubUnitUnlockedNotification {
-
-    private String subUnitName;
+public class UpdateSubUnitRequest {
+    private SubUnit subUnit;
 }
