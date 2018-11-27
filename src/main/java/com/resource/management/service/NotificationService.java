@@ -1,8 +1,8 @@
 package com.resource.management.service;
 
+import com.resource.management.api.SubUnit;
 import com.resource.management.api.crud.notifications.SubUnitDeletedNotification;
 import com.resource.management.api.crud.notifications.SubUnitUpdatedNotification;
-import com.resource.management.api.SubUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;

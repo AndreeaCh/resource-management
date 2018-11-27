@@ -5,7 +5,6 @@ import com.resource.management.api.lock.LockSubUnitRequest;
 import com.resource.management.api.lock.SubUnitLockedNotification;
 import com.resource.management.model.SubUnit;
 import com.resource.management.model.SubUnitsRepository;
-import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNull;

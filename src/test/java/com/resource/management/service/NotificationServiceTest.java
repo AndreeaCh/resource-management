@@ -12,8 +12,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.verify;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

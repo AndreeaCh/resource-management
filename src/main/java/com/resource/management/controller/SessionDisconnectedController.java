@@ -9,11 +9,12 @@ import com.resource.management.api.lock.SubUnitUnlockedNotification;
 import com.resource.management.model.SubUnit;
 import com.resource.management.model.SubUnitsRepository;
 import com.resource.management.service.NotificationService;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
+
+import java.util.Optional;
 
 @Controller
 public class SessionDisconnectedController {

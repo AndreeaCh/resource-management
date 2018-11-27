@@ -10,7 +10,6 @@ import com.resource.management.api.lock.SubUnitUnlockedNotification;
 import com.resource.management.model.SubUnit;
 import com.resource.management.model.SubUnitsRepository;
 import com.resource.management.service.NotificationService;
-import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -22,11 +21,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+import java.util.Optional;
+
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

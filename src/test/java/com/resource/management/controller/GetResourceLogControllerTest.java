@@ -1,16 +1,8 @@
 package com.resource.management.controller;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
-
-import java.time.Instant;
-import java.util.*;
-import java.util.stream.Collectors;
-
 import com.resource.management.api.ResourceStatus;
 import com.resource.management.api.status.GetResourceLogRequest;
+import com.resource.management.api.status.GetResourceLogResponse;
 import com.resource.management.model.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,7 +11,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.resource.management.api.status.GetResourceLogResponse;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

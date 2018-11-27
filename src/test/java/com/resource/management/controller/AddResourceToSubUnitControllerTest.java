@@ -2,8 +2,8 @@ package com.resource.management.controller;
 
 import com.resource.management.ResourcesTestData;
 import com.resource.management.SubUnits;
-import com.resource.management.api.crud.AddResourceToSubUnitRequest;
 import com.resource.management.api.Resource;
+import com.resource.management.api.crud.AddResourceToSubUnitRequest;
 import com.resource.management.model.SubUnit;
 import com.resource.management.model.SubUnitMapper;
 import com.resource.management.model.SubUnitsRepository;

@@ -1,8 +1,9 @@
 package com.resource.management.model;
 
 
-import java.util.Optional;
 import org.springframework.data.mongodb.repository.MongoRepository;
+
+import java.util.Optional;
 
 public interface SubUnitsRepository extends MongoRepository<SubUnit, String> {
 

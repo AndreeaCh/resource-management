@@ -1,9 +1,9 @@
 package com.resource.management;
 
+import com.resource.management.model.SubUnit;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
-import com.resource.management.model.SubUnit;
 
 public class SubUnits {
     public static SubUnit internal() {
