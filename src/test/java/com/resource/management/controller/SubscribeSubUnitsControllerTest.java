@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 public class SubscribeSubUnitsControllerTest {
     @MockBean
-    private SubUnitsRepository subUnitsRepository;
+    private SubUnitsRepository repository;
 
     @Autowired
     private SubscribeSubUnitsController sut;
@@ -50,7 +50,7 @@ public class SubscribeSubUnitsControllerTest {
     private List<SubUnit> prepareSubUnitsInRepository() {
         final List<SubUnit> subUnitsList = new ArrayList<>();
         subUnitsList.add(new SubUnit("CJ", Collections.emptyList(), Instant.now().toString(), null, true));
-        when(this.subUnitsRepository.findAll()).thenReturn(subUnitsList);
+        when(this.repository.findAll()).thenReturn(subUnitsList);
         return subUnitsList;
     }
 }

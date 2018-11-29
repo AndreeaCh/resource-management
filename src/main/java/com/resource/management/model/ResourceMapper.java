@@ -1,6 +1,5 @@
 package com.resource.management.model;
 
-
 public final class ResourceMapper {
     public static final Resource toInternal(final com.resource.management.api.Resource externalResource) {
         Resource resource = new Resource();

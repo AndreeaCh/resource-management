@@ -3,8 +3,8 @@ package com.resource.management.controller;
 import com.resource.management.SubUnits;
 import com.resource.management.api.crud.AddSubUnitRequest;
 import com.resource.management.api.crud.AddSubUnitResponse;
-import com.resource.management.model.SubUnitsRepository;
 import com.resource.management.service.NotificationService;
+import com.resource.management.service.SubUnitsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.verify;
 @SpringBootTest
 public class AddSubUnitControllerTest {
     @MockBean
-    private SubUnitsRepository subUnitsRepository;
+    private SubUnitsService subUnitsService;
 
     @MockBean
     private NotificationService notificationService;

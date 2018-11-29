@@ -18,34 +18,36 @@ package com.resource.management.controller;
 
 import com.resource.management.SubUnits;
 import com.resource.management.api.ResourceStatus;
-import com.resource.management.api.crud.notifications.SubUnitUpdatedNotification;
 import com.resource.management.api.status.UpdateResourceStatusRequest;
 import com.resource.management.model.SubUnit;
-import com.resource.management.model.SubUnitsRepository;
+import com.resource.management.model.SubUnitMapper;
+import com.resource.management.service.NotificationService;
+import com.resource.management.service.SubUnitsService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UpdateResourceStatusControllerTest {
+    private static final String IP_ADDRESS = "12.2.2.2";
+
     @MockBean
-    private SubUnitsRepository subUnitsRepository;
+    private SubUnitsService subUnitsService;
+
+    @MockBean
+    private NotificationService notificationService;
 
     @Autowired
     private UpdateResourceStatusController controller;
@@ -56,7 +58,7 @@ public class UpdateResourceStatusControllerTest {
     @Before
     public void setUp() throws Exception {
         Map<String, Object> sessionAttributes = new HashMap<>();
-        sessionAttributes.put("ip", "12.2.2.2");
+        sessionAttributes.put("ip", IP_ADDRESS);
         when(headerAccessor.getSessionAttributes()).thenReturn(sessionAttributes);
 
     }
@@ -64,7 +66,8 @@ public class UpdateResourceStatusControllerTest {
     @Test
     public void handleRequest_itemInRepo_updatedItemIsSavedInRepo() {
         // given
-        final String plateNumber = prepareSubUnitWithResourceInRepository();
+        SubUnit subUnit = SubUnits.internal();
+        final String plateNumber = subUnit.getResources().stream().findFirst().get().getPlateNumber();
         final ResourceStatus resourceStatus = ResourceStatus.IN_DECONTAMINATION;
         UpdateResourceStatusRequest request = new UpdateResourceStatusRequest(plateNumber, resourceStatus);
 
@@ -72,32 +75,25 @@ public class UpdateResourceStatusControllerTest {
         controller.handle(request, headerAccessor);
 
         // then
-        ArgumentCaptor<SubUnit> captor = ArgumentCaptor.forClass(SubUnit.class);
-        verify(subUnitsRepository).save(captor.capture());
-        assertThat(captor.getValue().getResources().get(0).getStatus(), is(resourceStatus));
+        verify(subUnitsService).updateResourceStatus(request.getPlateNumber(), resourceStatus, IP_ADDRESS);
     }
 
 
     @Test
     public void handleRequest_itemInRepo_sendNotification() {
         // given
-        final String plateNumber = prepareSubUnitWithResourceInRepository();
+        SubUnit subUnit = SubUnits.internal();
+        final String plateNumber = subUnit.getResources().stream().findFirst().get().getPlateNumber();
+        ResourceStatus resourceStatus = ResourceStatus.AVAILABLE_IN_GARAGE;
         UpdateResourceStatusRequest request =
-                new UpdateResourceStatusRequest(plateNumber, ResourceStatus.AVAILABLE_IN_GARAGE);
+                new UpdateResourceStatusRequest(plateNumber, resourceStatus);
+        when(subUnitsService.updateResourceStatus(request.getPlateNumber(), resourceStatus, IP_ADDRESS))
+                .thenReturn(java.util.Optional.of(subUnit));
 
         // when
-        final SubUnitUpdatedNotification notification = controller.handle(request, headerAccessor);
+        controller.handle(request, headerAccessor);
 
         // then
-        assertThat(notification.getSubUnit().getResources().get(0).getStatus(),
-                is(ResourceStatus.AVAILABLE_IN_GARAGE));
-    }
-
-
-    private String prepareSubUnitWithResourceInRepository() {
-        final SubUnit subUnit = SubUnits.internal();
-        when(subUnitsRepository.findAll()).thenReturn(Collections.singletonList(subUnit));
-
-        return subUnit.getResources().get(0).getPlateNumber();
+        verify(notificationService).publishSubUnitNotification(SubUnitMapper.toApi(subUnit));
     }
 }

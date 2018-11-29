@@ -2,9 +2,9 @@ package com.resource.management.controller;
 
 import com.resource.management.SubUnits;
 import com.resource.management.api.lock.LockSubUnitRequest;
-import com.resource.management.api.lock.SubUnitLockedNotification;
 import com.resource.management.model.SubUnit;
-import com.resource.management.model.SubUnitsRepository;
+import com.resource.management.service.NotificationService;
+import com.resource.management.service.SubUnitsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,19 +13,19 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Optional;
-
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class LockSubUnitControllerTest {
 
     @MockBean
-    private SubUnitsRepository subUnitsRepository;
+    private SubUnitsService subUnitsService;
+
+    @MockBean
+    private NotificationService notificationService;
 
     @Autowired
     private LockSubUnitController controller;
@@ -37,25 +37,25 @@ public class LockSubUnitControllerTest {
     public void handleRequest_subUnitExists_sendSubUnitLockedNotification() {
         // Given
         SubUnit subUnit = SubUnits.internal();
-        when(subUnitsRepository.findByName(subUnit.getName())).thenReturn(Optional.of(subUnit));
+        when(subUnitsService.lockSubUnit(eq(subUnit.getName()), any())).thenReturn(true);
 
         // When
-        SubUnitLockedNotification notification = controller.handleLockSubUnitMessage(new LockSubUnitRequest(subUnit.getName()), accessor);
+        controller.handleLockSubUnitMessage(new LockSubUnitRequest(subUnit.getName()), accessor);
 
         // Then
-        assertThat(notification.getSubUnitName(), is(subUnit.getName()));
+        verify(notificationService).publishSubUnitLockedNotification(subUnit.getName());
     }
 
     @Test
-    public void handleRequest_subUnitDoesNotExists_sendNullSubUnitLockedNotification() {
+    public void handleRequest_subUnitDoesNotExists_doesNotSendSubUnitLockedNotification() {
         // Given
         SubUnit subUnit = SubUnits.internal();
-        when(subUnitsRepository.findByName(subUnit.getName())).thenReturn(Optional.empty());
+        when(subUnitsService.lockSubUnit(eq(subUnit.getName()), any())).thenReturn(false);
 
         // When
-        SubUnitLockedNotification notification = controller.handleLockSubUnitMessage(new LockSubUnitRequest(subUnit.getName()), accessor);
+        controller.handleLockSubUnitMessage(new LockSubUnitRequest(subUnit.getName()), accessor);
 
         // Then
-        assertNull(notification);
+        verifyNoMoreInteractions(notificationService);
     }
 }

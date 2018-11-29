@@ -3,7 +3,10 @@ package com.resource.management.controller;
 import com.resource.management.api.ResourceStatus;
 import com.resource.management.api.status.GetResourceLogRequest;
 import com.resource.management.api.status.GetResourceLogResponse;
-import com.resource.management.model.*;
+import com.resource.management.model.Resource;
+import com.resource.management.model.ResourceLog;
+import com.resource.management.model.ResourceLogMapper;
+import com.resource.management.service.SubUnitsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +15,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -29,7 +31,7 @@ public class GetResourceLogControllerTest {
     private static final String PLATE_NUMBER = "1234";
 
     @MockBean
-    private SubUnitsRepository subUnitsRepository;
+    private SubUnitsService subUnitsService;
 
     @Autowired
     private GetResourceLogController controller;
@@ -53,7 +55,7 @@ public class GetResourceLogControllerTest {
         //then
         List<com.resource.management.api.ResourceLog> expected = resourceLogsList
                 .stream()
-                .map(r -> ResourceLogMapper.toApi(r))
+                .map(ResourceLogMapper::toApi)
                 .collect(Collectors.toList());
         assertThat("Expected response to contain the list of sub-units.",
                 getRes.getResourceLogs(), equalTo(expected));
@@ -62,15 +64,12 @@ public class GetResourceLogControllerTest {
 
     private List<ResourceLog> prepareResourceLogsInRepository() {
         ResourceLog resourceLog = new ResourceLog(UUID.randomUUID(), Instant.now().toString(), "10.12.12.12", ResourceStatus.AVAILABLE_ON_ROUTE);
+        List<ResourceLog> resourceLogs = Collections.singletonList(resourceLog);
         Resource resource = new Resource();
         resource.setIdentificationNumber("1");
         resource.setPlateNumber(PLATE_NUMBER);
-        resource.setResourceLogs(Collections.singletonList(resourceLog));
-        List<Resource> resources = Collections.singletonList(resource);
-        SubUnit subUnit = new SubUnit("name", resources, "2081-10-10", "102.2.2.2", false);
-        final List<ResourceLog> resourceLogsList = new ArrayList<>();
-        resourceLogsList.add(resourceLog);
-        when(this.subUnitsRepository.findAll()).thenReturn(Collections.singletonList(subUnit));
-        return resourceLogsList;
+        resource.setResourceLogs(resourceLogs);
+        when(this.subUnitsService.getLogForResource(PLATE_NUMBER)).thenReturn(resourceLogs);
+        return resourceLogs;
     }
 }
