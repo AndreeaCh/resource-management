@@ -1,18 +1,18 @@
 {
-  "_id": "DET TUR",
+  "_id": "G2 GIL",
   "lastUpdate": "2018-11-20T10:49:48Z",
   "isLocked": false,
   "resources": [
     {
-      "_id": "CJ64ABK",
-      "identificationNumber": "6301",
+      "_id": "CJ64ACA",
+      "identificationNumber": "4721",
       "vehicleType": "APCA",
-      "captain": "Gilbert Houston",
+      "captain": "Debora Peck",
       "crew": [
-        "Reeves Cox",
-        "Naomi Medina"
+        "Stafford Swanson",
+        "Steele Donovan"
       ],
-      "status": "IN_INTERVENTION",
+      "status": "UNAVAILABLE",
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
@@ -32,43 +32,15 @@
       ]
     },
     {
-      "_id": "CJ64ABL",
-      "identificationNumber": "9158",
-      "vehicleType": "APCA",
-      "captain": "Harrison Watson",
-      "crew": [
-        "Gamble Andrews",
-        "Leon Rios"
-      ],
-      "status": "IN_INTERVENTION",
-      "resourceLogs": [
-        {
-          "changedAt": "2018-11-20T10:49:48Z",
-          "changedBy": "10.17.23.32",
-          "status": "IN_INTERVENTION"
-        },
-        {
-          "changedAt": "2018-11-20T10:49:33Z",
-          "changedBy": "10.17.23.32",
-          "status": "AVAILABLE_ON_ROUTE"
-        },
-        {
-          "changedAt": "2018-11-20T10:49:39Z",
-          "changedBy": "10.17.23.32",
-          "status": "AVAILABLE_IN_GARAGE"
-        }
-      ]
-    },
-    {
-      "_id": "CJ64ABM",
-      "identificationNumber": "9936",
+      "_id": "CJ64ADA",
+      "identificationNumber": "5931",
       "vehicleType": "EPA",
-      "captain": "Constance Greene",
+      "captain": "Doris Serrano",
       "crew": [
-        "Foley Keith",
-        "Salazar Osborne"
+        "Kristie Cunningham",
+        "Velasquez Bernard"
       ],
-      "status": "IN_INTERVENTION",
+      "status": "AVAILABLE_IN_GARAGE",
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",

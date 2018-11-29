@@ -1,10 +1,38 @@
 {
-  "_id": "PL FLO",
+  "_id": "G2 AGH",
   "lastUpdate": "2018-11-20T10:49:48Z",
   "isLocked": false,
   "resources": [
     {
-      "_id": "CJ64AGA",
+      "_id": "CJ64ABV",
+      "identificationNumber": "4721",
+      "vehicleType": "APCA",
+      "captain": "Debora Peck",
+      "crew": [
+        "Stafford Swanson",
+        "Steele Donovan"
+      ],
+      "status": "UNAVAILABLE",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
+    },
+    {
+      "_id": "CJ64ABX",
       "identificationNumber": "5931",
       "vehicleType": "EPA",
       "captain": "Doris Serrano",

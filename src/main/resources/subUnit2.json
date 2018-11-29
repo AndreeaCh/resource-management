@@ -1,16 +1,44 @@
 {
-  "_id": "DET DEJ",
+  "_id": "DET 2 CJN",
   "lastUpdate": "2018-11-20T10:49:48Z",
   "isLocked": false,
   "resources": [
     {
-      "_id": "CJ64ABI",
-      "identificationNumber": "3354",
+      "_id": "CJ64ABQ",
+      "identificationNumber": "4721",
       "vehicleType": "APCA",
-      "captain": "Douglas Shepherd",
+      "captain": "Debora Peck",
       "crew": [
-        "Kristy Welch",
-        "Cole Mendez"
+        "Stafford Swanson",
+        "Steele Donovan"
+      ],
+      "status": "UNAVAILABLE",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
+    },
+    {
+      "_id": "CJ64ABR",
+      "identificationNumber": "5931",
+      "vehicleType": "SCAF",
+      "captain": "Doris Serrano",
+      "crew": [
+        "Kristie Cunningham",
+        "Velasquez Bernard"
       ],
       "status": "AVAILABLE_IN_GARAGE",
       "resourceLogs": [
@@ -32,15 +60,71 @@
       ]
     },
     {
-      "_id": "CJ64ABJ",
-      "identificationNumber": "5199",
+      "_id": "CJ64ABS",
+      "identificationNumber": "2207",
       "vehicleType": "EPA",
-      "captain": "Davis Coffey",
+      "captain": "Courtney Leonard",
       "crew": [
-        "Lorie Beach",
-        "Pat Wyatt"
+        "Jefferson Osborn",
+        "Manuela Davenport"
+      ],
+      "status": "UNAVAILABLE",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
+    },
+    {
+      "_id": "CJ64ABT",
+      "identificationNumber": "2047",
+      "vehicleType": "EPA",
+      "captain": "Gale Gates",
+      "crew": [
+        "Brandi Snider",
+        "Katheryn Stephens"
       ],
       "status": "AVAILABLE_IN_GARAGE",
+      "resourceLogs": [
+        {
+          "changedAt": "2018-11-20T10:49:48Z",
+          "changedBy": "10.17.23.32",
+          "status": "IN_INTERVENTION"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:33Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_ON_ROUTE"
+        },
+        {
+          "changedAt": "2018-11-20T10:49:39Z",
+          "changedBy": "10.17.23.32",
+          "status": "AVAILABLE_IN_GARAGE"
+        }
+      ]
+    },
+    {
+      "_id": "CJ64ABU",
+      "identificationNumber": "9197",
+      "vehicleType": "MU",
+      "captain": "Villarreal James",
+      "crew": [
+        "Sampson Hughes",
+        "Cara Williams"
+      ],
+      "status": "IN_INTERVENTION",
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",

@@ -1,18 +1,18 @@
 {
-  "_id": "G2 BAI",
+  "_id": "DET DEJ",
   "lastUpdate": "2018-11-20T10:49:48Z",
   "isLocked": false,
   "resources": [
     {
-      "_id": "CJ64ABY",
-      "identificationNumber": "4721",
+      "_id": "CJ64ABI",
+      "identificationNumber": "3354",
       "vehicleType": "APCA",
-      "captain": "Debora Peck",
+      "captain": "Douglas Shepherd",
       "crew": [
-        "Stafford Swanson",
-        "Steele Donovan"
+        "Kristy Welch",
+        "Cole Mendez"
       ],
-      "status": "UNAVAILABLE",
+      "status": "AVAILABLE_IN_GARAGE",
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
@@ -32,13 +32,13 @@
       ]
     },
     {
-      "_id": "CJ64ABZ",
-      "identificationNumber": "5931",
+      "_id": "CJ64ABJ",
+      "identificationNumber": "5199",
       "vehicleType": "EPA",
-      "captain": "Doris Serrano",
+      "captain": "Davis Coffey",
       "crew": [
-        "Kristie Cunningham",
-        "Velasquez Bernard"
+        "Lorie Beach",
+        "Pat Wyatt"
       ],
       "status": "AVAILABLE_IN_GARAGE",
       "resourceLogs": [
