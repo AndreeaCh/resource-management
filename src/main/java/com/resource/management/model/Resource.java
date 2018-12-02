@@ -1,31 +1,38 @@
 package com.resource.management.model;
 
-import com.resource.management.api.ResourceStatus;
-import lombok.*;
-import org.springframework.data.annotation.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
+
+import org.springframework.data.annotation.Id;
+
+import com.resource.management.model.status.ResourceStatus;
 
 @Data
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Resource {
-    @Id
-    private String plateNumber;
+public class Resource
+{
+   @Id
+   private String plateNumber;
 
-    private String vehicleType;
+   private String vehicleType;
 
-    private String captain;
+   private String captain;
 
-    private String identificationNumber;
+   private String identificationNumber;
 
-    private List<String> crew;
+   private List<String> crew;
 
-    @EqualsAndHashCode.Exclude
-    private ResourceStatus status;
+   @EqualsAndHashCode.Exclude
+   private ResourceStatus status;
 
-    @EqualsAndHashCode.Exclude
-    private List<ResourceLog> resourceLogs;
+   @EqualsAndHashCode.Exclude
+   private List<ResourceLog> resourceLogs;
 }
