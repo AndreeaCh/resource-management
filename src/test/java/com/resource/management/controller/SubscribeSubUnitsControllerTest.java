@@ -2,6 +2,7 @@ package com.resource.management.controller;
 
 import com.resource.management.api.crud.notifications.InitialSubUnitsNotification;
 import com.resource.management.model.SubUnit;
+import com.resource.management.model.SubUnitMapper;
 import com.resource.management.model.SubUnitsRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,7 +45,7 @@ public class SubscribeSubUnitsControllerTest {
 
         //then
         assertThat("Expected response to contain the list of sub-units.", response.getSubUnitsList(),
-                equalTo(subUnitsList));
+                equalTo(SubUnitMapper.toApi(subUnitsList)));
     }
 
     private List<SubUnit> prepareSubUnitsInRepository() {

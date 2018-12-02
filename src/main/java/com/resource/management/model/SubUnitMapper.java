@@ -7,7 +7,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public final class SubUnitMapper {
-    public static final SubUnit toApi(com.resource.management.model.SubUnit internalSubUnit) {
+    public static List<SubUnit> toApi(List<com.resource.management.model.SubUnit> internalSubUnits) {
+        return internalSubUnits.stream().map(SubUnitMapper::toApi).collect(Collectors.toList());
+    }
+
+    public static SubUnit toApi(com.resource.management.model.SubUnit internalSubUnit) {
         SubUnit subUnit = new SubUnit();
         subUnit.setName(internalSubUnit.getName());
         subUnit.setIsLocked(internalSubUnit.getIsLocked());
@@ -22,7 +26,7 @@ public final class SubUnitMapper {
         return subUnit;
     }
 
-    public static final com.resource.management.model.SubUnit toInternal(final SubUnit externalSubUnit) {
+    public static com.resource.management.model.SubUnit toInternal(final SubUnit externalSubUnit) {
         com.resource.management.model.SubUnit subUnit = new com.resource.management.model.SubUnit();
         subUnit.setName(externalSubUnit.getName());
         subUnit.setLastUpdate(externalSubUnit.getLastUpdate());
