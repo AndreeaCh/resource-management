@@ -50,7 +50,8 @@ content-type:text/json
           "Lt. Anne Doe",
           "Ben Doe"
         ],
-        "status": "AVAILABLE_IN_GARAGE"
+        "status": "AVAILABLE_IN_GARAGE",
+        "type": "FIRST_INTERVENTION"
       },
       {
         "identificationNumber": "1235",
@@ -61,7 +62,8 @@ content-type:text/json
           "Lt. Anne Moe",
           "Ben Moe"
         ],
-        "status": "IN_INTERVENTION"
+        "status": "IN_INTERVENTION",
+        "type": "OTHER"
       }
     ]
   }
@@ -89,7 +91,8 @@ content-type:text/json
           "Lt. Anne Doe",
           "Ben Doe"
         ],
-        "status": "AVAILABLE_IN_GARAGE"
+        "status": "AVAILABLE_IN_GARAGE",
+        "type": "EQUIPMENT"
       },
       {
         "identificationNumber": "1235",
@@ -100,7 +103,8 @@ content-type:text/json
           "Lt. Anne Moe",
           "Ben Moe"
         ],
-        "status": "IN_INTERVENTION"
+        "status": "IN_INTERVENTION",
+        "type": "FIRST_INTERVENTION"
       }
     ]
   }
