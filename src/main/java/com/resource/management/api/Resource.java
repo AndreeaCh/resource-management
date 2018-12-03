@@ -1,5 +1,6 @@
 package com.resource.management.api;
 
+import com.resource.management.model.ResourceType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,4 +26,6 @@ public class Resource {
     private List<String> crew;
 
     private ResourceStatus status;
+
+    private ResourceType type;
 }

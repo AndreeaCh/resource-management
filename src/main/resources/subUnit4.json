@@ -13,6 +13,7 @@
         "Velasquez Bernard"
       ],
       "status": "AVAILABLE_IN_GARAGE",
+      "type": "FIRST_INTERVENTION",
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",

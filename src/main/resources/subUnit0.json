@@ -13,6 +13,7 @@
         "Maldonado Nichols"
       ],
       "status": "IN_INTERVENTION",
+      "type": "EQUIPMENT",
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",

@@ -13,6 +13,7 @@
         "Steele Donovan"
       ],
       "status": "UNAVAILABLE",
+      "type": "FIRST_INTERVENTION",
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
@@ -41,6 +42,7 @@
         "Velasquez Bernard"
       ],
       "status": "AVAILABLE_IN_GARAGE",
+      "type": "OTHER",
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
@@ -69,6 +71,7 @@
         "Manuela Davenport"
       ],
       "status": "UNAVAILABLE",
+      "type": "EQUIPMENT",
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
@@ -97,6 +100,7 @@
         "Katheryn Stephens"
       ],
       "status": "AVAILABLE_IN_GARAGE",
+      "type": "FIRST_INTERVENTION",
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
@@ -125,6 +129,7 @@
         "Cara Williams"
       ],
       "status": "IN_INTERVENTION",
+      "type": "OTHER",
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",

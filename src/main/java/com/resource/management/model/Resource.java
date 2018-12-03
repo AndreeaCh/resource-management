@@ -23,6 +23,8 @@ public class Resource {
 
     private List<String> crew;
 
+    private ResourceType type;
+
     @EqualsAndHashCode.Exclude
     private ResourceStatus status;
 
