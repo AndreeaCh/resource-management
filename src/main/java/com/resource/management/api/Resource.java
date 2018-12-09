@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 
-import com.resource.management.model.status.ResourceStatus;
+import com.resource.management.model.ResourceStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

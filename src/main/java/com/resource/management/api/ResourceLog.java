@@ -1,6 +1,6 @@
 package com.resource.management.api;
 
-import com.resource.management.model.status.ResourceStatus;
+import com.resource.management.model.ResourceStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

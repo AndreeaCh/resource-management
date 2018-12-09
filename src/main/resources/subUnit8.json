@@ -12,7 +12,9 @@
         "Stafford Swanson",
         "Steele Donovan"
       ],
-      "status": "UNAVAILABLE",
+      "status": {
+        "status": "UNAVAILABLE"
+      },
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
@@ -25,17 +27,15 @@
           "changedAt": "2018-11-20T10:49:33Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "IN_MISSION",
-              "key": "Incediu 1",
-              "description": "Incendiu mare",
-              "crew": [
-                "Stafford Swanson",
-                "Steele Donovan",
-                "Perkins Dominguez",
-                "Maldonado Nichols"
-              ]
-            }
+            "status": "IN_MISSION",
+            "key": "Incediu 1",
+            "description": "Incendiu mare",
+            "crew": [
+              "Stafford Swanson",
+              "Steele Donovan",
+              "Perkins Dominguez",
+              "Maldonado Nichols"
+            ]
           }
         },
         {
@@ -71,15 +71,13 @@
           "changedAt": "2018-11-20T10:49:33Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "IN_MISSION",
-              "key": "Incediu 1",
-              "description": "Incendiu mare",
-              "crew": [
-                "Kristie Cunningham",
-                "Velasquez Bernard"
-              ]
-            }
+            "status": "IN_MISSION",
+            "key": "Incediu 1",
+            "description": "Incendiu mare",
+            "crew": [
+              "Kristie Cunningham",
+              "Velasquez Bernard"
+            ]
           }
         },
         {

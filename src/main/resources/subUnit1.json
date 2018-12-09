@@ -13,39 +13,33 @@
         "Maldonado Nichols"
       ],
       "status": {
-        "status": {
-          "status": "IN_MISSION",
-          "key": "Incediu 1",
-          "description": "Incendiu mare",
-          "crew": [
-            "Perkins Dominguez",
-            "Maldonado Nichols"
-          ]
-        }
+        "status": "IN_MISSION",
+        "key": "Incediu 1",
+        "description": "Incendiu mare",
+        "crew": [
+          "Perkins Dominguez",
+          "Maldonado Nichols"
+        ]
       },
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "IN_MISSION",
-              "key": "Incediu 1",
-              "description": "Incendiu mare",
-              "crew": [
-                "Perkins Dominguez",
-                "Maldonado Nichols"
-              ]
-            }
+            "status": "IN_MISSION",
+            "key": "Incediu 1",
+            "description": "Incendiu mare",
+            "crew": [
+              "Perkins Dominguez",
+              "Maldonado Nichols"
+            ]
           }
         },
         {
           "changedAt": "2018-11-20T10:49:33Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "AVAILABLE"
-            }
+            "status": "AVAILABLE"
           }
         },
         {
@@ -67,43 +61,33 @@
         "Olive Koch"
       ],
       "status": {
-        "status": {
-          "status": "AVAILABLE"
-        }
+        "status": "AVAILABLE"
       },
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "AVAILABLE"
-            }
+            "status": "AVAILABLE"
           }
         },
         {
           "changedAt": "2018-11-20T10:49:33Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": {
-                "status": "IN_MISSION",
-                "key": "Incediu 1",
-                "description": "Incendiu mare",
-                "crew": [
-                  "King Rivers"
-                ]
-              }
-            }
+            "status": "IN_MISSION",
+            "key": "Incediu 1",
+            "description": "Incendiu mare",
+            "crew": [
+              "King Rivers"
+            ]
           }
         },
         {
           "changedAt": "2018-11-20T10:49:39Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "AVAILABLE"
-            }
+            "status": "AVAILABLE"
           }
         }
       ]
@@ -118,42 +102,34 @@
         "Lorrie Sanford"
       ],
       "status": {
-        "status": {
-          "status": "AVAILABLE"
-        }
+        "status": "AVAILABLE"
       },
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "AVAILABLE"
-            }
+            "status": "AVAILABLE"
           }
         },
         {
           "changedAt": "2018-11-20T10:49:33Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "IN_MISSION",
-              "key": "Incediu 1",
-              "description": "Incendiu mare",
-              "crew": [
-                "Jordan Potts",
-                "Lorrie Sanford"
-              ]
-            }
+            "status": "IN_MISSION",
+            "key": "Incediu 1",
+            "description": "Incendiu mare",
+            "crew": [
+              "Jordan Potts",
+              "Lorrie Sanford"
+            ]
           }
         },
         {
           "changedAt": "2018-11-20T10:49:39Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "AVAILABLE"
-            }
+            "status": "AVAILABLE"
           }
         }
       ]
@@ -168,42 +144,34 @@
         "Maxine Huber"
       ],
       "status": {
-        "status": {
-          "status": "AVAILABLE"
-        }
+        "status": "AVAILABLE"
       },
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "AVAILABLE"
-            }
+            "status": "AVAILABLE"
           }
         },
         {
           "changedAt": "2018-11-20T10:49:33Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "AVAILABLE"
-            }
+            "status": "AVAILABLE"
           }
         },
         {
           "changedAt": "2018-11-20T10:49:39Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "IN_MISSION",
-              "key": "Incediu 1",
-              "description": "Incendiu mare",
-              "crew": [
-                "Benson Noble",
-                "Maxine Huber"
-              ]
-            }
+            "status": "IN_MISSION",
+            "key": "Incediu 1",
+            "description": "Incendiu mare",
+            "crew": [
+              "Benson Noble",
+              "Maxine Huber"
+            ]
           }
         }
       ]
@@ -218,41 +186,33 @@
         "Letha Duffy"
       ],
       "status": {
-        "status": {
-          "status": "AVAILABLE"
-        }
+        "status": "AVAILABLE"
       },
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "AVAILABLE"
-            }
+            "status": "AVAILABLE"
           }
         },
         {
           "changedAt": "2018-11-20T10:49:33Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "AVAILABLE"
-            }
+            "status": "AVAILABLE"
           }
         },
         {
           "changedAt": "2018-11-20T10:49:39Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "IN_MISSION",
-              "key": "Incediu 1",
-              "description": "Incendiu mare",
-              "crew": [
-                "Macias Langley"
-              ]
-            }
+            "status": "IN_MISSION",
+            "key": "Incediu 1",
+            "description": "Incendiu mare",
+            "crew": [
+              "Macias Langley"
+            ]
           }
         }
       ]
@@ -267,36 +227,28 @@
         "Letha Duffy"
       ],
       "status": {
-        "status": {
-          "status": "AVAILABLE"
-        }
+        "status": "AVAILABLE"
       },
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "AVAILABLE"
-            }
+            "status": "AVAILABLE"
           }
         },
         {
           "changedAt": "2018-11-20T10:49:33Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "AVAILABLE"
-            }
+            "status": "AVAILABLE"
           }
         },
         {
           "changedAt": "2018-11-20T10:49:39Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "AVAILABLE"
-            }
+            "status": "AVAILABLE"
           }
         }
       ]

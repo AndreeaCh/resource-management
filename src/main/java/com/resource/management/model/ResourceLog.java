@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
-import com.resource.management.model.status.ResourceStatus;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

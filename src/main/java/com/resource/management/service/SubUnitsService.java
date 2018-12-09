@@ -18,7 +18,7 @@ import com.resource.management.model.Resource;
 import com.resource.management.model.ResourceLog;
 import com.resource.management.model.SubUnit;
 import com.resource.management.model.SubUnitsRepository;
-import com.resource.management.model.status.ResourceStatus;
+import com.resource.management.model.ResourceStatus;
 
 @Service
 public class SubUnitsService

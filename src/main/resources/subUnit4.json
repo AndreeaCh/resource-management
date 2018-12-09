@@ -27,15 +27,13 @@
           "changedAt": "2018-11-20T10:49:33Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "IN_MISSION",
-              "key": "Incediu 3",
-              "description": "Incendiu mic",
-              "crew": [
-                "Kristie Cunningham",
-                "Velasquez Bernard"
-              ]
-            }
+            "status": "IN_MISSION",
+            "key": "Incediu 3",
+            "description": "Incendiu mic",
+            "crew": [
+              "Kristie Cunningham",
+              "Velasquez Bernard"
+            ]
           }
         },
         {

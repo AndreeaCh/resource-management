@@ -10,8 +10,6 @@ import java.util.List;
 
 import org.springframework.data.annotation.Id;
 
-import com.resource.management.model.status.ResourceStatus;
-
 @Data
 @ToString
 @NoArgsConstructor

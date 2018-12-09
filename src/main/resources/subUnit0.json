@@ -13,9 +13,7 @@
         "Maldonado Nichols"
       ],
       "status": {
-        "status": {
-          "status": "AVAILABLE"
-        }
+        "status": "AVAILABLE"
       },
       "resourceLogs": [
         {
@@ -42,9 +40,7 @@
           "changedAt": "2018-11-20T10:49:39Z",
           "changedBy": "10.17.23.32",
           "status": {
-            "status": {
-              "status": "AVAILABLE"
-            }
+            "status": "AVAILABLE"
           }
         }
       ]
