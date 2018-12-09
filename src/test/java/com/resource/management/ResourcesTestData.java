@@ -1,8 +1,8 @@
 package com.resource.management;
 
-import com.resource.management.api.ResourceStatus;
 import com.resource.management.model.Resource;
 import com.resource.management.model.ResourceLog;
+import com.resource.management.model.ResourceStatus;
 
 import java.time.Instant;
 import java.util.Collections;
@@ -13,9 +13,10 @@ public final class ResourcesTestData {
         // prevent instantiation
     }
 
+
     public static Resource randomInternal() {
-        ResourceLog resourceLog
-                = new ResourceLog(UUID.randomUUID(), Instant.now().toString(), "10.12.12.12", ResourceStatus.AVAILABLE_ON_ROUTE);
+        ResourceLog resourceLog =
+                new ResourceLog(UUID.randomUUID(), Instant.now().toString(), "10.12.12.12", new ResourceStatus(ResourceStatus.Status.AVAILABLE));
         Resource resource = new Resource();
         resource.setIdentificationNumber("1");
         resource.setPlateNumber("CJ02AKD");
@@ -23,9 +24,11 @@ public final class ResourcesTestData {
         return resource;
     }
 
+
     public static com.resource.management.api.Resource randomApi() {
-        com.resource.management.api.ResourceLog resourceLog
-                = new com.resource.management.api.ResourceLog(Instant.now().toString(), "10.12.12.12", ResourceStatus.AVAILABLE_ON_ROUTE);
+        com.resource.management.api.ResourceLog resourceLog =
+                new com.resource.management.api.ResourceLog(Instant.now().toString(), "10.12.12.12",
+                        new ResourceStatus(ResourceStatus.Status.AVAILABLE));
         com.resource.management.api.Resource resource = new com.resource.management.api.Resource();
         resource.setIdentificationNumber("1");
         resource.setPlateNumber("CJ02AKD");

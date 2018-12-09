@@ -12,22 +12,30 @@
         "Stafford Swanson",
         "Steele Donovan"
       ],
-      "status": "UNAVAILABLE",
+      "status": {
+        "status": "AVAILABLE"
+      },
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
           "changedBy": "10.17.23.32",
-          "status": "IN_INTERVENTION"
+          "status": {
+            "status": "AVAILABLE"
+          }
         },
         {
           "changedAt": "2018-11-20T10:49:33Z",
           "changedBy": "10.17.23.32",
-          "status": "AVAILABLE_ON_ROUTE"
+          "status": {
+            "status": "AVAILABLE"
+          }
         },
         {
           "changedAt": "2018-11-20T10:49:39Z",
           "changedBy": "10.17.23.32",
-          "status": "AVAILABLE_IN_GARAGE"
+          "status": {
+            "status": "AVAILABLE"
+          }
         }
       ]
     },
@@ -40,22 +48,30 @@
         "Kristie Cunningham",
         "Velasquez Bernard"
       ],
-      "status": "AVAILABLE_IN_GARAGE",
+      "status": {
+        "status": "AVAILABLE"
+      },
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
           "changedBy": "10.17.23.32",
-          "status": "IN_INTERVENTION"
+          "status": {
+            "status": "AVAILABLE"
+          }
         },
         {
           "changedAt": "2018-11-20T10:49:33Z",
           "changedBy": "10.17.23.32",
-          "status": "AVAILABLE_ON_ROUTE"
+          "status": {
+            "status": "AVAILABLE"
+          }
         },
         {
           "changedAt": "2018-11-20T10:49:39Z",
           "changedBy": "10.17.23.32",
-          "status": "AVAILABLE_IN_GARAGE"
+          "status": {
+            "status": "AVAILABLE"
+          }
         }
       ]
     },
@@ -68,22 +84,30 @@
         "Jefferson Osborn",
         "Manuela Davenport"
       ],
-      "status": "UNAVAILABLE",
+      "status": {
+        "status": "AVAILABLE"
+      },
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
           "changedBy": "10.17.23.32",
-          "status": "IN_INTERVENTION"
+          "status": {
+            "status": "AVAILABLE"
+          }
         },
         {
           "changedAt": "2018-11-20T10:49:33Z",
           "changedBy": "10.17.23.32",
-          "status": "AVAILABLE_ON_ROUTE"
+          "status": {
+            "status": "AVAILABLE"
+          }
         },
         {
           "changedAt": "2018-11-20T10:49:39Z",
           "changedBy": "10.17.23.32",
-          "status": "AVAILABLE_IN_GARAGE"
+          "status": {
+            "status": "AVAILABLE"
+          }
         }
       ]
     },
@@ -96,22 +120,30 @@
         "Brandi Snider",
         "Katheryn Stephens"
       ],
-      "status": "AVAILABLE_IN_GARAGE",
+      "status": {
+        "status": "AVAILABLE"
+      },
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
           "changedBy": "10.17.23.32",
-          "status": "IN_INTERVENTION"
+          "status": {
+            "status": "AVAILABLE"
+          }
         },
         {
           "changedAt": "2018-11-20T10:49:33Z",
           "changedBy": "10.17.23.32",
-          "status": "AVAILABLE_ON_ROUTE"
+          "status": {
+            "status": "AVAILABLE"
+          }
         },
         {
           "changedAt": "2018-11-20T10:49:39Z",
           "changedBy": "10.17.23.32",
-          "status": "AVAILABLE_IN_GARAGE"
+          "status": {
+            "status": "AVAILABLE"
+          }
         }
       ]
     },
@@ -124,22 +156,30 @@
         "Sampson Hughes",
         "Cara Williams"
       ],
-      "status": "IN_INTERVENTION",
+      "status": {
+        "status": "AVAILABLE"
+      },
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
           "changedBy": "10.17.23.32",
-          "status": "IN_INTERVENTION"
+          "status": {
+            "status": "AVAILABLE"
+          }
         },
         {
           "changedAt": "2018-11-20T10:49:33Z",
           "changedBy": "10.17.23.32",
-          "status": "AVAILABLE_ON_ROUTE"
+          "status": {
+            "status": "AVAILABLE"
+          }
         },
         {
           "changedAt": "2018-11-20T10:49:39Z",
           "changedBy": "10.17.23.32",
-          "status": "AVAILABLE_IN_GARAGE"
+          "status": {
+            "status": "AVAILABLE"
+          }
         }
       ]
     }
