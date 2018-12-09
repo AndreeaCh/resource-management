@@ -12,6 +12,7 @@
         "Reeves Cox",
         "Naomi Medina"
       ],
+      "type": "FIRST_INTERVENTION",
       "status": {
         "status": "UNAVAILABLE"
       },
@@ -54,6 +55,7 @@
         "Gamble Andrews",
         "Leon Rios"
       ],
+      "type": "FIRST_INTERVENTION",
       "status": {
         "status": "UNAVAILABLE"
       },
@@ -97,6 +99,7 @@
         "Foley Keith",
         "Salazar Osborne"
       ],
+      "type": "FIRST_INTERVENTION",
       "status": {
         "status": "UNAVAILABLE"
       },

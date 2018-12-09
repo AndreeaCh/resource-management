@@ -15,22 +15,23 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Resource
-{
+public class Resource {
    @Id
    private String plateNumber;
 
-   private String vehicleType;
+    private String vehicleType;
 
-   private String captain;
+    private String captain;
 
-   private String identificationNumber;
+    private String identificationNumber;
 
-   private List<String> crew;
+    private List<String> crew;
 
-   @EqualsAndHashCode.Exclude
-   private ResourceStatus status;
+    private ResourceType type;
 
-   @EqualsAndHashCode.Exclude
-   private List<ResourceLog> resourceLogs;
+    @EqualsAndHashCode.Exclude
+    private ResourceStatus status;
+
+    @EqualsAndHashCode.Exclude
+    private List<ResourceLog> resourceLogs;
 }

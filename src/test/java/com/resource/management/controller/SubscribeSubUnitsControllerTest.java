@@ -1,9 +1,7 @@
 package com.resource.management.controller;
 
 import com.resource.management.api.crud.notifications.InitialSubUnitsNotification;
-import com.resource.management.model.SubUnit;
-import com.resource.management.model.SubUnitMapper;
-import com.resource.management.model.SubUnitsRepository;
+import com.resource.management.model.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -50,8 +49,14 @@ public class SubscribeSubUnitsControllerTest {
 
     private List<SubUnit> prepareSubUnitsInRepository() {
         final List<SubUnit> subUnitsList = new ArrayList<>();
-        subUnitsList.add(new SubUnit("CJ", Collections.emptyList(), Instant.now().toString(), null, true));
+        subUnitsList.add(new SubUnit("CJ", Arrays.asList(resource()), Instant.now().toString(), null, true));
         when(this.repository.findAll()).thenReturn(subUnitsList);
         return subUnitsList;
+    }
+
+    private Resource resource() {
+        Resource resource = new Resource();
+        resource.setType(ResourceType.EQUIPMENT);
+        return resource;
     }
 }

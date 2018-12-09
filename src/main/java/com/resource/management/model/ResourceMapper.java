@@ -9,6 +9,7 @@ public final class ResourceMapper {
         resource.setCaptain(externalResource.getCaptain());
         resource.setCrew(externalResource.getCrew());
         resource.setStatus(externalResource.getStatus());
+        resource.setType(externalResource.getType());
         return resource;
     }
 
@@ -20,6 +21,7 @@ public final class ResourceMapper {
         resource.setCaptain(internalResource.getCaptain());
         resource.setCrew(internalResource.getCrew());
         resource.setStatus(internalResource.getStatus());
+        resource.setType(internalResource.getType());
         return resource;
     }
 }

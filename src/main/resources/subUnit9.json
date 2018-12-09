@@ -12,6 +12,7 @@
         "Patrica Gray",
         "Kerri Ford"
       ],
+      "type": "FIRST_INTERVENTION",
       "status": {
         "status": "AVAILABLE"
       },
@@ -54,6 +55,7 @@
         "Hines Walls",
         "Hilda Grant"
       ],
+      "type": "FIRST_INTERVENTION",
       "status": {
         "status": "UNAVAILABLE"
       },
@@ -96,6 +98,7 @@
         "Terra Vaughn",
         "Ewing Nielsen"
       ],
+      "type": "OTHER",
       "status": {
         "status": "UNAVAILABLE"
       },

@@ -12,6 +12,7 @@
         "Stafford Swanson",
         "Steele Donovan"
       ],
+      "type": "FIRST_INTERVENTION",
       "status": {
         "status": "AVAILABLE"
       },
@@ -48,6 +49,7 @@
         "Kristie Cunningham",
         "Velasquez Bernard"
       ],
+      "type": "FIRST_INTERVENTION",
       "status": {
         "status": "AVAILABLE"
       },
@@ -84,6 +86,7 @@
         "Jefferson Osborn",
         "Manuela Davenport"
       ],
+      "type": "FIRST_INTERVENTION",
       "status": {
         "status": "AVAILABLE"
       },
@@ -120,6 +123,7 @@
         "Brandi Snider",
         "Katheryn Stephens"
       ],
+      "type": "OTHER",
       "status": {
         "status": "AVAILABLE"
       },
@@ -156,6 +160,7 @@
         "Sampson Hughes",
         "Cara Williams"
       ],
+      "type": "FIRST_INTERVENTION",
       "status": {
         "status": "AVAILABLE"
       },
