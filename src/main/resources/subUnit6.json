@@ -12,7 +12,9 @@
         "Stafford Swanson",
         "Steele Donovan"
       ],
-      "status": "UNAVAILABLE",
+      "status": {
+        "status": "UNAVAILABLE"
+      },
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
