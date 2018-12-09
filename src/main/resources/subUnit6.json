@@ -12,7 +12,7 @@
         "Stafford Swanson",
         "Steele Donovan"
       ],
-      "type": "INTERVENTION",
+      "type": "FIRST_INTERVENTION",
       "status": {
         "status": "UNAVAILABLE"
       },
@@ -55,7 +55,7 @@
         "Kristie Cunningham",
         "Velasquez Bernard"
       ],
-      "type": "INTERVENTION",
+      "type": "OTHER",
       "status": {
         "status": "AVAILABLE"
       },

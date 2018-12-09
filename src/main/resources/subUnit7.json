@@ -12,7 +12,7 @@
         "Kristy Welch",
         "Cole Mendez"
       ],
-      "type": "INTERVENTION",
+      "type": "OTHER",
       "status": {
         "status": "AVAILABLE"
       },
@@ -55,7 +55,7 @@
         "Lorie Beach",
         "Pat Wyatt"
       ],
-      "type": "INTERVENTION",
+      "type": "FIRST_INTERVENTION",
       "status": {
         "status": "AVAILABLE"
       },

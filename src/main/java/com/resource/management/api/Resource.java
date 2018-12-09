@@ -2,6 +2,7 @@ package com.resource.management.api;
 
 import java.util.List;
 
+import com.resource.management.model.ResourceType;
 import org.springframework.data.annotation.Id;
 
 import com.resource.management.model.ResourceStatus;

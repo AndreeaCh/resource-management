@@ -21,7 +21,7 @@
           "Maldonado Nichols"
         ]
       },
-      "type": "INTERVENTION",
+      "type": "FIRST_INTERVENTION",
       "resourceLogs": [
         {
           "changedAt": "2018-11-20T10:49:48Z",
@@ -61,7 +61,7 @@
         "King Rivers",
         "Olive Koch"
       ],
-      "type": "INTERVENTION",
+      "type": "FIRST_INTERVENTION",
       "status": {
         "status": "AVAILABLE"
       },
@@ -103,7 +103,7 @@
         "Jordan Potts",
         "Lorrie Sanford"
       ],
-      "type": "INTERVENTION",
+      "type": "FIRST_INTERVENTION",
       "status": {
         "status": "AVAILABLE"
       },
@@ -146,7 +146,7 @@
         "Benson Noble",
         "Maxine Huber"
       ],
-      "type": "INTERVENTION",
+      "type": "FIRST_INTERVENTION",
       "status": {
         "status": "AVAILABLE"
       },
@@ -189,7 +189,7 @@
         "Macias Langley",
         "Letha Duffy"
       ],
-      "type": "INTERVENTION",
+      "type": "OTHER",
       "status": {
         "status": "AVAILABLE"
       },
@@ -231,7 +231,7 @@
         "Macias Langley",
         "Letha Duffy"
       ],
-      "type": "INTERVENTION",
+      "type": "FIRST_INTERVENTION",
       "status": {
         "status": "AVAILABLE"
       },
