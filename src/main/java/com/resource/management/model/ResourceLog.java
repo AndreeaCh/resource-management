@@ -1,6 +1,5 @@
 package com.resource.management.model;
 
-import com.resource.management.api.ResourceStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,12 +11,13 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class ResourceLog {
-    private UUID id;
+public class ResourceLog
+{
+   private UUID id;
 
-    private String changedAt;
+   private String changedAt;
 
-    private String changedBy;
+   private String changedBy;
 
-    private ResourceStatus status;
+   private ResourceStatus status;
 }

@@ -17,10 +17,10 @@
 package com.resource.management.controller;
 
 import com.resource.management.SubUnits;
-import com.resource.management.api.ResourceStatus;
 import com.resource.management.api.status.UpdateResourceStatusRequest;
 import com.resource.management.model.SubUnit;
 import com.resource.management.model.SubUnitMapper;
+import com.resource.management.model.ResourceStatus;
 import com.resource.management.service.NotificationService;
 import com.resource.management.service.SubUnitsService;
 import org.junit.Before;
@@ -55,6 +55,7 @@ public class UpdateResourceStatusControllerTest {
     @MockBean
     private SimpMessageHeaderAccessor headerAccessor;
 
+
     @Before
     public void setUp() throws Exception {
         Map<String, Object> sessionAttributes = new HashMap<>();
@@ -63,12 +64,13 @@ public class UpdateResourceStatusControllerTest {
 
     }
 
+
     @Test
     public void handleRequest_itemInRepo_updatedItemIsSavedInRepo() {
         // given
         SubUnit subUnit = SubUnits.internal();
         final String plateNumber = subUnit.getResources().stream().findFirst().get().getPlateNumber();
-        final ResourceStatus resourceStatus = ResourceStatus.IN_DECONTAMINATION;
+        final ResourceStatus resourceStatus = new ResourceStatus(ResourceStatus.Status.AVAILABLE);
         UpdateResourceStatusRequest request = new UpdateResourceStatusRequest(plateNumber, resourceStatus);
 
         // when
@@ -84,9 +86,8 @@ public class UpdateResourceStatusControllerTest {
         // given
         SubUnit subUnit = SubUnits.internal();
         final String plateNumber = subUnit.getResources().stream().findFirst().get().getPlateNumber();
-        ResourceStatus resourceStatus = ResourceStatus.AVAILABLE_IN_GARAGE;
-        UpdateResourceStatusRequest request =
-                new UpdateResourceStatusRequest(plateNumber, resourceStatus);
+        final ResourceStatus resourceStatus = new ResourceStatus(ResourceStatus.Status.AVAILABLE);
+        UpdateResourceStatusRequest request = new UpdateResourceStatusRequest(plateNumber, resourceStatus);
         when(subUnitsService.updateResourceStatus(request.getPlateNumber(), resourceStatus, IP_ADDRESS))
                 .thenReturn(java.util.Optional.of(subUnit));
 

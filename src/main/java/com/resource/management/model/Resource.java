@@ -1,10 +1,14 @@
 package com.resource.management.model;
 
-import com.resource.management.api.ResourceStatus;
-import lombok.*;
-import org.springframework.data.annotation.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.List;
+
+import org.springframework.data.annotation.Id;
 
 @Data
 @ToString
@@ -12,8 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class Resource {
-    @Id
-    private String plateNumber;
+   @Id
+   private String plateNumber;
 
     private String vehicleType;
 
