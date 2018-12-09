@@ -1,6 +1,6 @@
 package com.resource.management;
 
-import com.resource.management.model.SubUnit;
+import com.resource.management.resource.model.SubUnit;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,12 +14,12 @@ public class SubUnits {
         return JsonUtils.loadFromJsonString(SubUnit.class, SubUnitsTestData.SUBUNIT1_UPDATED);
     }
 
-    public static com.resource.management.api.SubUnit api() {
-        return JsonUtils.loadFromJsonString(com.resource.management.api.SubUnit.class, SubUnitsTestData.SUBUNIT1);
+    public static com.resource.management.api.resources.SubUnit api() {
+        return JsonUtils.loadFromJsonString(com.resource.management.api.resources.SubUnit.class, SubUnitsTestData.SUBUNIT1);
     }
 
-    public static com.resource.management.api.SubUnit updatedApi() {
-        return JsonUtils.loadFromJsonString(com.resource.management.api.SubUnit.class, SubUnitsTestData.SUBUNIT1_UPDATED);
+    public static com.resource.management.api.resources.SubUnit updatedApi() {
+        return JsonUtils.loadFromJsonString(com.resource.management.api.resources.SubUnit.class, SubUnitsTestData.SUBUNIT1_UPDATED);
     }
 
     public static List<SubUnit> loadAllSubUnits() {

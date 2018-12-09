@@ -1,8 +1,8 @@
 package com.resource.management;
 
-import com.resource.management.model.Resource;
-import com.resource.management.model.ResourceLog;
-import com.resource.management.model.ResourceStatus;
+import com.resource.management.resource.model.Resource;
+import com.resource.management.resource.model.ResourceLog;
+import com.resource.management.resource.model.ResourceStatus;
 
 import java.time.Instant;
 import java.util.Collections;
@@ -25,11 +25,11 @@ public final class ResourcesTestData {
     }
 
 
-    public static com.resource.management.api.Resource randomApi() {
-        com.resource.management.api.ResourceLog resourceLog =
-                new com.resource.management.api.ResourceLog(Instant.now().toString(), "10.12.12.12",
+    public static com.resource.management.api.resources.Resource randomApi() {
+        com.resource.management.api.resources.ResourceLog resourceLog =
+                new com.resource.management.api.resources.ResourceLog(Instant.now().toString(), "10.12.12.12",
                         new ResourceStatus(ResourceStatus.Status.AVAILABLE));
-        com.resource.management.api.Resource resource = new com.resource.management.api.Resource();
+        com.resource.management.api.resources.Resource resource = new com.resource.management.api.resources.Resource();
         resource.setIdentificationNumber("1");
         resource.setPlateNumber("CJ02AKD");
         ;

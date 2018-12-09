@@ -1,6 +1,6 @@
 package com.resource.management;
 
-import com.resource.management.service.IPAddressInterceptor;
+import com.resource.management.resource.service.IPAddressInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -19,7 +19,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/resources-ws")
+        registry.addEndpoint("/resource-ws")
                 .addInterceptors(new IPAddressInterceptor())
                 .setAllowedOrigins("*")
                 .withSockJS();

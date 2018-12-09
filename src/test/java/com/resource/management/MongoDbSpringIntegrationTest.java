@@ -1,7 +1,7 @@
 package com.resource.management;
 
-import com.resource.management.model.SubUnit;
-import com.resource.management.model.SubUnitsRepository;
+import com.resource.management.resource.model.SubUnit;
+import com.resource.management.resource.model.SubUnitsRepository;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
