@@ -47,9 +47,9 @@ public class SubUnitsService
    {
       Query query =
             new Query().addCriteria( Criteria.where( "name" ).is( subUnit.getName() ) )
-                  .addCriteria( Criteria.where( "resource" ).ne( subUnit.getResources() ) );
+                  .addCriteria( Criteria.where( "resources" ).ne( subUnit.getResources() ) );
       Update update =
-            new Update().set( "lastUpdate", Instant.now().toString() ).set( "resource", subUnit.getResources() );
+            new Update().set( "lastUpdate", Instant.now().toString() ).set( "resources", subUnit.getResources() );
       SubUnit unit =
             template.findAndModify( query, update, new FindAndModifyOptions().returnNew( true ), SubUnit.class );
       return Optional.ofNullable( unit );
