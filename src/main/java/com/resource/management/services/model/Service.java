@@ -1,12 +1,11 @@
 package com.resource.management.services.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
-
-import java.util.UUID;
 
 @Data
 @ToString
@@ -19,4 +18,6 @@ public class Service {
     private String title;
     private String role;
     private String contact;
+    @JsonIgnore
+    private String lastUpdate;
 }

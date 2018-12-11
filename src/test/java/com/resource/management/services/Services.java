@@ -4,6 +4,7 @@ import com.resource.management.services.model.Service;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import java.time.Instant;
 import java.util.UUID;
 
 public class Services {
@@ -12,6 +13,7 @@ public class Services {
                 RandomStringUtils.randomAlphabetic(1, 100),
                 RandomStringUtils.randomAlphabetic(1, 100),
                 RandomStringUtils.randomAlphabetic(1, 100),
-                RandomStringUtils.randomAlphabetic(1, 100));
+                RandomStringUtils.randomAlphabetic(1, 100),
+                Instant.now().toString());
     }
 }

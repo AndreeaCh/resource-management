@@ -14,4 +14,5 @@ import java.util.List;
 @ToString
 public class ServicesListUpdatedNotification {
     private List<Service> services;
+    private String lastUpdate;
 }

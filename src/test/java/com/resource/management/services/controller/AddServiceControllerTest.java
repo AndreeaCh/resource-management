@@ -7,6 +7,7 @@ import com.resource.management.services.model.Service;
 import com.resource.management.services.model.ServiceRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -14,8 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Arrays;
 
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -40,13 +40,20 @@ public class AddServiceControllerTest {
         Service existingService = Services.api();
         Service addedService = Services.api();
         when(repository.findAll()).thenReturn(Arrays.asList(existingService, addedService));
-        AddServiceRequest request = new AddServiceRequest(addedService);
+        AddServiceRequest request
+                = new AddServiceRequest(addedService.getName(), addedService.getTitle(), addedService.getRole(), addedService.getContact());
 
         //when
         this.sut.handle(request);
 
         //then
-        verify(repository).save(addedService);
+        ArgumentCaptor<Service> captor = ArgumentCaptor.forClass(Service.class);
+        verify(repository).save(captor.capture());
+        Service actualService = captor.getValue();
+        assertThat(actualService.getName(), equalTo(addedService.getName()));
+        assertThat(actualService.getTitle(), equalTo(addedService.getTitle()));
+        assertThat(actualService.getRole(), equalTo(addedService.getRole()));
+        assertThat(actualService.getContact(), equalTo(addedService.getContact()));
     }
 
     @Test
@@ -55,7 +62,9 @@ public class AddServiceControllerTest {
         Service existingService = Services.api();
         Service addedService = Services.api();
         when(repository.findAll()).thenReturn(Arrays.asList(existingService, addedService));
-        AddServiceRequest request = new AddServiceRequest(addedService);
+        AddServiceRequest request
+                = new AddServiceRequest(addedService.getName(), addedService.getTitle(), addedService.getRole(), addedService.getContact());
+
 
         //when
         ServicesListUpdatedNotification notification = this.sut.handle(request);

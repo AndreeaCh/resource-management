@@ -1,4 +1,4 @@
 package com.resource.management.api.services;
 
-public class DeleteAllServicesRequest {
+public class UnlockServicesRequest {
 }
