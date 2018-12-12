@@ -259,5 +259,15 @@
         }
       ]
     }
+  ],
+  "equipment": [
+    {
+      "equipmentId": "0370009c-27be-450f-8412-7825e5fabda1",
+      "resourceType": "EQUIPMENT",
+      "equipmentType": "Flashlight",
+      "usable": "0",
+      "unusable": "1",
+      "reserves": "3"
+    }
   ]
 }

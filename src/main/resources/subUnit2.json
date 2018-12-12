@@ -188,5 +188,15 @@
         }
       ]
     }
+  ],
+  "equipment": [
+    {
+      "equipmentId": "0370009c-27be-450f-8412-7825e5fabda2",
+      "resourceType": "EQUIPMENT",
+      "equipmentType": "Pike pole",
+      "usable": "0",
+      "unusable": "0",
+      "reserves": "1"
+    }
   ]
 }

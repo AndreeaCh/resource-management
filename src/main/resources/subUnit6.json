@@ -91,5 +91,23 @@
         }
       ]
     }
+  ],
+  "equipment": [
+    {
+      "equipmentId": "0370009c-27be-450f-8412-7825e5fabda8",
+      "resourceType": "EQUIPMENT",
+      "equipmentType": "Halligan bar",
+      "usable": "3",
+      "unusable": "2",
+      "reserves": "1"
+    },
+    {
+      "equipmentId": "0370009c-27be-450f-8412-7825e5fabda9",
+      "resourceType": "EQUIPMENT",
+      "equipmentType": "Spanner wrench",
+      "usable": "1",
+      "unusable": "2",
+      "reserves": "1"
+    }
   ]
 }

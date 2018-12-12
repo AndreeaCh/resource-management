@@ -46,5 +46,15 @@
         }
       ]
     }
+  ],
+  "equipment": [
+    {
+      "equipmentId": "0370009c-27be-450f-8412-7825e5fabda5",
+      "resourceType": "EQUIPMENT",
+      "equipmentType": "Halligan bar",
+      "usable": "1",
+      "unusable": "2",
+      "reserves": "1"
+    }
   ]
 }
