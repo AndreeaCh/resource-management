@@ -89,5 +89,23 @@
         }
       ]
     }
+  ],
+  "equipment": [
+    {
+      "equipmentId": "0370009c-27be-450f-8412-7825e5fabda10",
+      "resourceType": "EQUIPMENT",
+      "equipmentType": "Halligan bar",
+      "usable": "10",
+      "unusable": "2",
+      "reserves": "1"
+    },
+    {
+      "equipmentId": "0370009c-27be-450f-8412-7825e5fabda11",
+      "resourceType": "EQUIPMENT",
+      "equipmentType": "Safety boots",
+      "usable": "11",
+      "unusable": "2",
+      "reserves": "1"
+    }
   ]
 }

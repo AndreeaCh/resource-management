@@ -16,6 +16,8 @@ public class SubUnit {
 
     private List<Resource> resources;
 
+    private List<Equipment> equipment;
+
     @EqualsAndHashCode.Exclude
     private String lastUpdate;
 

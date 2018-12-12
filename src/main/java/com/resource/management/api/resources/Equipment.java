@@ -1,9 +1,9 @@
-package com.resource.management.resource.model;
+package com.resource.management.api.resources;
 
+import com.resource.management.resource.model.ResourceType;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
@@ -12,9 +12,7 @@ import org.springframework.data.annotation.Id;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 public class Equipment {
-
     @Id
     private UUID equipmentId;
 
