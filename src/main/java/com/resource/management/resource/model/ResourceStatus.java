@@ -27,4 +27,12 @@ public class ResourceStatus {
     public enum Status {
         IN_MISSION, UNAVAILABLE, AVAILABLE
     }
+
+    @Override
+    public String toString() {
+        return "status=" + status +
+                ", cheie='" + key + '\'' +
+                ", descriere='" + description + '\'' +
+                ", echipaj=" + crew;
+    }
 }
