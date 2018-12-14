@@ -12,3 +12,9 @@ for /l %%x in (0, 1, 10) do (
    "%MONGOIMPORTADDR%" -d test -c subUnit --file "%~dp0\src\main\resources\subUnit%%x.json"
    )
 )
+
+for /l %%x in (0, 1, 2) do (
+   echo Adding service number: %%x
+   "%MONGOIMPORTADDR%" -d test -c service --file "%~dp0\src\main\resources\service%%x.json"
+   )
+)
