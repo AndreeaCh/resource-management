@@ -30,9 +30,20 @@ public class ResourceStatus {
 
     @Override
     public String toString() {
-        return "status=" + status +
-                ", cheie='" + key + '\'' +
-                ", descriere='" + description + '\'' +
-                ", echipaj=" + crew;
+        StringBuilder stringBuilder = new StringBuilder();
+        String statusAsString
+                = status.equals(Status.IN_MISSION) ? "Misiune" : status.equals(Status.AVAILABLE) ? "Disponibil" : "Indisponibil";
+        stringBuilder.append("status='").append(statusAsString).append("'");
+        if (key != null && !key.isEmpty()) {
+            stringBuilder.append(", cheie='").append(key).append("'");
+        }
+        if (description != null && !description.isEmpty()) {
+            stringBuilder.append(", descriere='").append(description).append("'");
+        }
+        if (crew != null && !crew.isEmpty()) {
+            stringBuilder.append(", echipaj='").append(crew).append("'");
+        }
+
+        return stringBuilder.toString();
     }
 }
