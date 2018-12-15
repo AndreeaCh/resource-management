@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -37,15 +38,30 @@ public class SubUnitsService {
     }
 
 
+    @Transactional
     public Optional<SubUnit> updateSubUnit(final SubUnit subUnit) {
         Query query =
                 new Query().addCriteria(Criteria.where("name").is(subUnit.getName()))
                         .addCriteria(Criteria.where("resources").ne(subUnit.getResources()));
         Update update =
                 new Update().set("lastUpdate", Instant.now().toString()).set("resources", subUnit.getResources());
-        SubUnit unit =
+        SubUnit updatedUnitResources =
                 template.findAndModify(query, update, new FindAndModifyOptions().returnNew(true), SubUnit.class);
-        return Optional.ofNullable(unit);
+
+        query =
+                new Query().addCriteria(Criteria.where("name").is(subUnit.getName()))
+                        .addCriteria(Criteria.where("equipment").ne(subUnit.getEquipment()));
+
+        update =
+                new Update().set("lastUpdate", Instant.now().toString()).set("equipment", subUnit.getEquipment());
+
+        SubUnit updatedUnitEquipment =
+                template.findAndModify(query, update, new FindAndModifyOptions().returnNew(true), SubUnit.class);
+
+        if (updatedUnitEquipment != null) { // this returns an updated unit that contains the latest verion of the subunit
+            return Optional.of(updatedUnitEquipment);
+        } else
+        return Optional.ofNullable(updatedUnitResources);
     }
 
 

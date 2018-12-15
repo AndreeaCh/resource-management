@@ -26,6 +26,15 @@ public final class SubUnitMapper {
             subUnit.setResources(resourceList);
         }
 
+        if (internalSubUnit.getEquipment() != null) {
+            List<com.resource.management.api.resources.Equipment> equipmentList = internalSubUnit
+                    .getEquipment()
+                    .stream()
+                    .map(EquipmentMapper::toApi)
+                    .collect(Collectors.toList());
+            subUnit.setEquipment(equipmentList);
+        }
+
         return subUnit;
     }
 
@@ -42,6 +51,14 @@ public final class SubUnitMapper {
             subUnit.setResources(resourceList);
         }
 
+        if (externalSubUnit.getEquipment() != null) {
+            List<com.resource.management.resource.model.Equipment> equipmentList = externalSubUnit
+                    .getEquipment()
+                    .stream()
+                    .map(EquipmentMapper::toInternal)
+                    .collect(Collectors.toList());
+            subUnit.setEquipment(equipmentList);
+        }
         return subUnit;
     }
 }

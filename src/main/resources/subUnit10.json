@@ -89,5 +89,23 @@
         }
       ]
     }
+  ],
+  "equipment": [
+    {
+      "equipmentId": "0370009c-27be-450f-8412-7825e5fabda16",
+      "resourceType": "EQUIPMENT",
+      "equipmentType": "Gas detector",
+      "usable": "11",
+      "unusable": "2",
+      "reserves": "21"
+    },
+    {
+      "equipmentId": "0370009c-27be-450f-8412-7825e5fabda17",
+      "resourceType": "EQUIPMENT",
+      "equipmentType": "Safety boots",
+      "usable": "11",
+      "unusable": "5",
+      "reserves": "10"
+    }
   ]
 }

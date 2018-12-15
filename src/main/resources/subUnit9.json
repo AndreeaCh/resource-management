@@ -132,5 +132,23 @@
         }
       ]
     }
+  ],
+  "equipment": [
+    {
+      "equipmentId": "0370009c-27be-450f-8412-7825e5fabda13",
+      "resourceType": "EQUIPMENT",
+      "equipmentType": "Helmet",
+      "usable": "12",
+      "unusable": "4",
+      "reserves": "21"
+    },
+    {
+      "equipmentId": "0370009c-27be-450f-8412-7825e5fabda14",
+      "resourceType": "EQUIPMENT",
+      "equipmentType": "Safety boots",
+      "usable": "11",
+      "unusable": "5",
+      "reserves": "1"
+    }
   ]
 }
