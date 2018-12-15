@@ -16,7 +16,7 @@ import org.springframework.data.annotation.Id;
 public class Equipment {
 
     @Id
-    private UUID equipmentId;
+    private String equipmentId;
 
     private ResourceType resourceType;
 

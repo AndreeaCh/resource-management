@@ -19,6 +19,8 @@ public class SubscribeSubUnitsController {
     @SubscribeMapping("/subunits")
     public InitialSubUnitsNotification handleSubscribeMessage() {
         List<SubUnit> subUnits = repository.findAll();
-        return new InitialSubUnitsNotification(SubUnitMapper.toApi(subUnits));
+        List<com.resource.management.api.resources.SubUnit> subUnitsList = SubUnitMapper.toApi(subUnits);
+        InitialSubUnitsNotification initialSubUnitsNotification = new InitialSubUnitsNotification(subUnitsList);
+        return initialSubUnitsNotification;
     }
 }

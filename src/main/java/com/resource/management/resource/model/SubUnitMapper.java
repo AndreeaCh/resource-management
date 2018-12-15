@@ -2,6 +2,7 @@ package com.resource.management.resource.model;
 
 import com.resource.management.api.resources.Resource;
 import com.resource.management.api.resources.SubUnit;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,6 +24,15 @@ public final class SubUnitMapper {
                     .collect(Collectors.toList());
 
             subUnit.setResources(resourceList);
+        }
+
+        if (internalSubUnit.getEquipment() != null) {
+            List<com.resource.management.api.resources.Equipment> equipmentList = internalSubUnit
+                    .getEquipment()
+                    .stream()
+                    .map(EquipmentMapper::toApi)
+                    .collect(Collectors.toList());
+            subUnit.setEquipment(equipmentList);
         }
 
         return subUnit;
