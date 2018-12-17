@@ -2,9 +2,15 @@ package com.resource.management.resource.controller;
 
 import com.resource.management.SubUnits;
 import com.resource.management.api.resources.lock.LockSubUnitRequest;
+import com.resource.management.resource.model.ResourceType;
 import com.resource.management.resource.model.SubUnit;
 import com.resource.management.resource.service.NotificationService;
 import com.resource.management.resource.service.SubUnitsService;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Random;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +21,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -37,23 +45,31 @@ public class LockSubUnitControllerTest {
     public void handleRequest_subUnitExists_sendSubUnitLockedNotification() {
         // Given
         SubUnit subUnit = SubUnits.internal();
-        when(subUnitsService.lockSubUnit(eq(subUnit.getName()), any())).thenReturn(true);
+        ResourceType resourceType = randomResourceType();
+        HashMap<String, ResourceType> resourceTypeLockedBySessionIdMap = new HashMap<>();
+        resourceTypeLockedBySessionIdMap.put(RandomStringUtils.randomAlphabetic(5), resourceType);
+        when(subUnitsService.lockSubUnit(eq(subUnit.getName()), eq(resourceType), any())).thenReturn(resourceTypeLockedBySessionIdMap);
 
         // When
-        controller.handleLockSubUnitMessage(new LockSubUnitRequest(subUnit.getName()), accessor);
+        controller.handleLockSubUnitMessage(new LockSubUnitRequest(subUnit.getName(), resourceType), accessor);
 
         // Then
-        verify(notificationService).publishSubUnitLockedNotification(subUnit.getName());
+        verify(notificationService).publishSubUnitLockedNotification(subUnit.getName(), new HashSet<>(Collections.singletonList(resourceType)));
+    }
+
+    private ResourceType randomResourceType() {
+        Random r = new Random();
+        return ResourceType.values()[r.nextInt(ResourceType.values().length)];
     }
 
     @Test
     public void handleRequest_subUnitDoesNotExists_doesNotSendSubUnitLockedNotification() {
         // Given
         SubUnit subUnit = SubUnits.internal();
-        when(subUnitsService.lockSubUnit(eq(subUnit.getName()), any())).thenReturn(false);
+        when(subUnitsService.lockSubUnit(eq(subUnit.getName()), any(), any())).thenReturn(null);
 
         // When
-        controller.handleLockSubUnitMessage(new LockSubUnitRequest(subUnit.getName()), accessor);
+        controller.handleLockSubUnitMessage(new LockSubUnitRequest(subUnit.getName(), randomResourceType()), accessor);
 
         // Then
         verifyNoMoreInteractions(notificationService);

@@ -53,7 +53,7 @@ public class SubscribeSubUnitsControllerTest {
 
     private List<SubUnit> prepareSubUnitsInRepository() {
         final List<SubUnit> subUnitsList = new ArrayList<>();
-        subUnitsList.add(new SubUnit("CJ", Arrays.asList(resource()), Arrays.asList(equipment()), Instant.now().toString(), null, true));
+        subUnitsList.add(new SubUnit("CJ", Arrays.asList(resource()), Arrays.asList(equipment()), Instant.now().toString(), null));
         when(this.repository.findAll()).thenReturn(subUnitsList);
         return subUnitsList;
     }

@@ -1,7 +1,7 @@
 {
   "_id": "DET DEJ",
   "lastUpdate": "2018-11-20T10:49:48Z",
-  "isLocked": false,
+  "lockedResourceTypeBySessionId": null,
   "resources": [
     {
       "_id": "CJ64ABI",

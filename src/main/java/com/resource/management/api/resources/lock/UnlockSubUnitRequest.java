@@ -1,5 +1,6 @@
 package com.resource.management.api.resources.lock;
 
+import com.resource.management.resource.model.ResourceType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,4 +13,5 @@ import lombok.ToString;
 public class UnlockSubUnitRequest {
 
     private String subUnitName;
+    private ResourceType resourceType;
 }

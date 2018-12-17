@@ -1,9 +1,14 @@
 package com.resource.management.resource.model;
 
-import lombok.*;
-import org.springframework.data.annotation.Id;
-
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import org.springframework.data.annotation.Id;
 
 @Data
 @ToString
@@ -22,8 +27,5 @@ public class SubUnit {
     private String lastUpdate;
 
     @EqualsAndHashCode.Exclude
-    private String lockedBy;
-
-    @EqualsAndHashCode.Exclude
-    private Boolean isLocked;
+    private Map<String, ResourceType> lockedResourceTypeBySessionId;
 }

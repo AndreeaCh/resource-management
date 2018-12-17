@@ -1,5 +1,7 @@
 package com.resource.management.api.resources.lock;
 
+import com.resource.management.resource.model.ResourceType;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,4 +14,5 @@ import lombok.ToString;
 public class SubUnitUnlockedNotification {
 
     private String subUnitName;
+    private Set<ResourceType> lockedResourceTypes;
 }

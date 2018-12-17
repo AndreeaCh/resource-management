@@ -5,6 +5,8 @@ import com.resource.management.api.resources.crud.notifications.SubUnitDeletedNo
 import com.resource.management.api.resources.crud.notifications.SubUnitUpdatedNotification;
 import com.resource.management.api.resources.lock.SubUnitLockedNotification;
 import com.resource.management.api.resources.lock.SubUnitUnlockedNotification;
+import com.resource.management.resource.model.ResourceType;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -36,17 +38,17 @@ public class NotificationService {
         );
     }
 
-    public void publishUnlockedSubUnitNotification(final String subUnitName) {
+    public void publishUnlockedSubUnitNotification(final String subUnitName, final Set<ResourceType> resourceTypes) {
         messagingTemplate.convertAndSend(
                 "/topic/unlockSubUnitNotification",
-                new SubUnitUnlockedNotification(subUnitName)
+                new SubUnitUnlockedNotification(subUnitName, resourceTypes)
         );
     }
 
-    public void publishSubUnitLockedNotification(final String subUnitName) {
+    public void publishSubUnitLockedNotification(final String subUnitName, final Set<ResourceType> resourceTypes) {
         messagingTemplate.convertAndSend(
                 "/topic/lockSubUnitNotification",
-                new SubUnitLockedNotification(subUnitName)
+                new SubUnitLockedNotification(subUnitName, resourceTypes)
         );
     }
 }

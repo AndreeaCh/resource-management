@@ -4,6 +4,8 @@ import com.resource.management.SubUnits;
 import com.resource.management.resource.model.SubUnit;
 import com.resource.management.resource.service.NotificationService;
 import com.resource.management.resource.service.SubUnitsService;
+import java.util.HashSet;
+import java.util.Optional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +16,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-import java.util.Optional;
-
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -57,6 +59,6 @@ public class SessionDisconnectedControllerTest {
         this.sut.onDisconnectEvent(event);
 
         //then
-        verify(notificationService).publishUnlockedSubUnitNotification(subUnit.getName());
+        verify(notificationService).publishUnlockedSubUnitNotification(subUnit.getName(), null);
     }
 }
