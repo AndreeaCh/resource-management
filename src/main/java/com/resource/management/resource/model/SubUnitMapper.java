@@ -14,7 +14,6 @@ public final class SubUnitMapper {
     public static SubUnit toApi(com.resource.management.resource.model.SubUnit internalSubUnit) {
         SubUnit subUnit = new SubUnit();
         subUnit.setName(internalSubUnit.getName());
-        subUnit.setLockedResourceTypeBySessionId(internalSubUnit.getLockedResourceTypeBySessionId());
         subUnit.setLastUpdate(internalSubUnit.getLastUpdate());
         if (internalSubUnit.getResources() != null) {
             List<Resource> resourceList = internalSubUnit
@@ -42,7 +41,6 @@ public final class SubUnitMapper {
         com.resource.management.resource.model.SubUnit subUnit = new com.resource.management.resource.model.SubUnit();
         subUnit.setName(externalSubUnit.getName());
         subUnit.setLastUpdate(externalSubUnit.getLastUpdate());
-        subUnit.setLockedResourceTypeBySessionId(externalSubUnit.getLockedResourceTypeBySessionId());
         if (externalSubUnit.getResources() != null) {
             List<com.resource.management.resource.model.Resource> resourceList = externalSubUnit
                     .getResources()

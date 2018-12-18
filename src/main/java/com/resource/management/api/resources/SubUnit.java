@@ -23,7 +23,4 @@ public class SubUnit {
 
     @EqualsAndHashCode.Exclude
     private String lastUpdate;
-
-    @EqualsAndHashCode.Exclude
-    private Map<String, ResourceType> lockedResourceTypeBySessionId;
 }
