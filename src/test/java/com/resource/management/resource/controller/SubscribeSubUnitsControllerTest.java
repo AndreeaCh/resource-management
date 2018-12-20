@@ -8,10 +8,8 @@ import com.resource.management.resource.model.SubUnit;
 import com.resource.management.resource.model.SubUnitMapper;
 import com.resource.management.resource.model.SubUnitsRepository;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,7 +51,7 @@ public class SubscribeSubUnitsControllerTest {
 
     private List<SubUnit> prepareSubUnitsInRepository() {
         final List<SubUnit> subUnitsList = new ArrayList<>();
-        subUnitsList.add(new SubUnit("CJ", Arrays.asList(resource()), Arrays.asList(equipment()), Instant.now().toString(), null));
+        subUnitsList.add(new SubUnit("CJ", Arrays.asList(resource()), Arrays.asList(equipment()), Instant.now().toString(), new HashMap<String, ResourceType>()));
         when(this.repository.findAll()).thenReturn(subUnitsList);
         return subUnitsList;
     }
