@@ -7,8 +7,10 @@ import com.resource.management.resource.model.ResourceType;
 import com.resource.management.resource.model.SubUnit;
 import com.resource.management.resource.model.SubUnitMapper;
 import com.resource.management.resource.model.SubUnitsRepository;
+
 import java.time.Instant;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,12 +48,13 @@ public class SubscribeSubUnitsControllerTest {
 
         //then
         assertThat("Expected response to contain the list of sub-units.", response.getSubUnitsList(),
-                   equalTo(SubUnitMapper.toApi(subUnitsList)));
+                equalTo(SubUnitMapper.toApi(subUnitsList)));
     }
 
     private List<SubUnit> prepareSubUnitsInRepository() {
         final List<SubUnit> subUnitsList = new ArrayList<>();
-        subUnitsList.add(new SubUnit("CJ", Arrays.asList(resource()), Arrays.asList(equipment()), Instant.now().toString(), new HashMap<String, ResourceType>()));
+        subUnitsList.add(new SubUnit("CJ", Arrays.asList(resource()), Arrays.asList(equipment()), Instant.now()
+                .toString(), new ConcurrentHashMap<String, ResourceType>()));
         when(this.repository.findAll()).thenReturn(subUnitsList);
         return subUnitsList;
     }

@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -77,7 +80,7 @@ public class SubUnitsService {
         Optional<SubUnit> subUnitOptional = findSubUnitByName(subUnitName);
         if (subUnitOptional.isPresent()) {
             SubUnit subUnit = subUnitOptional.get();
-            HashMap<String, ResourceType> resourceTypeToLockBySessionId = new HashMap<>();
+            ConcurrentHashMap<String, ResourceType> resourceTypeToLockBySessionId = new ConcurrentHashMap<>();
             resourceTypeToLockBySessionId.put(sessionId, resourceType);
             if (subUnit.getLockedResourceTypeBySessionId() == null) {
                 subUnit.setLockedResourceTypeBySessionId(resourceTypeToLockBySessionId);
@@ -87,7 +90,6 @@ public class SubUnitsService {
             lockedResourceTypeBySessionId = subUnit.getLockedResourceTypeBySessionId();
             saveSubUnit(subUnit);
         }
-
         return lockedResourceTypeBySessionId;
     }
 
@@ -101,8 +103,12 @@ public class SubUnitsService {
                        .entrySet()
                        .stream()
                        .filter(entry -> entry.getValue().equals(resourceType))
-                       .forEach(entry -> subUnit.getLockedResourceTypeBySessionId().remove(entry.getKey()));
+                       .forEach(entry -> {
+                           String key = entry.getKey();
+                           subUnit.getLockedResourceTypeBySessionId().remove(entry.getKey());
+                       });
             }
+            saveSubUnit(subUnit);
         }
         return subUnitOptional;
     }
