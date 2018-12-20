@@ -4,6 +4,8 @@ import com.resource.management.api.resources.lock.UnlockSubUnitRequest;
 import com.resource.management.resource.model.SubUnit;
 import com.resource.management.resource.service.NotificationService;
 import com.resource.management.resource.service.SubUnitsService;
+
+import java.util.Collections;
 import java.util.HashSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -25,6 +27,6 @@ public class UnlockSubUnitController {
         Optional<SubUnit> subUnit = subUnitsService.unlockSubUnit(request.getSubUnitName(), request.getResourceType());
         subUnit.ifPresent(subUnit1 -> notificationService.publishUnlockedSubUnitNotification(
                 subUnit1.getName(),
-                new HashSet<>(subUnit1.getLockedResourceTypeBySessionId().values())));
+                new HashSet<>(Collections.singletonList(request.getResourceType()))));
     }
 }
