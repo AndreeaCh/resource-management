@@ -6,6 +6,7 @@ import com.resource.management.resource.model.ResourceStatus;
 import com.resource.management.resource.model.ResourceType;
 import com.resource.management.resource.model.SubUnit;
 import com.resource.management.resource.model.SubUnitsRepository;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,7 +52,7 @@ public class SubUnitsService {
     public Optional<SubUnit> updateSubUnit(final SubUnit subUnit) {
         Query query =
                 new Query().addCriteria(Criteria.where("name").is(subUnit.getName()))
-                           .addCriteria(Criteria.where("resources").ne(subUnit.getResources()));
+                        .addCriteria(Criteria.where("resources").ne(subUnit.getResources()));
         Update update =
                 new Update().set("lastUpdate", Instant.now().toString()).set("resources", subUnit.getResources());
         SubUnit updatedUnitResources =
@@ -59,7 +60,7 @@ public class SubUnitsService {
 
         query =
                 new Query().addCriteria(Criteria.where("name").is(subUnit.getName()))
-                           .addCriteria(Criteria.where("equipment").ne(subUnit.getEquipment()));
+                        .addCriteria(Criteria.where("equipment").ne(subUnit.getEquipment()));
 
         update =
                 new Update().set("lastUpdate", Instant.now().toString()).set("equipment", subUnit.getEquipment());
@@ -93,22 +94,22 @@ public class SubUnitsService {
         return lockedResourceTypeBySessionId;
     }
 
-
     public Optional<SubUnit> unlockSubUnit(final String subUnitName, final ResourceType resourceType) {
         Optional<SubUnit> subUnitOptional = findSubUnitByName(subUnitName);
         if (subUnitOptional.isPresent()) {
             SubUnit subUnit = subUnitOptional.get();
             if (subUnit.getLockedResourceTypeBySessionId() != null) {
-                subUnit.getLockedResourceTypeBySessionId()
-                       .entrySet()
-                       .stream()
-                       .filter(entry -> entry.getValue().equals(resourceType))
-                       .forEach(entry -> {
-                           String key = entry.getKey();
-                           subUnit.getLockedResourceTypeBySessionId().remove(entry.getKey());
-                       });
+                Optional<String> keyToBeRemoved = subUnit.getLockedResourceTypeBySessionId()
+                        .entrySet()
+                        .stream()
+                        .filter(entry -> entry.getValue().equals(resourceType))
+                        .findFirst()
+                        .map(Map.Entry::getKey);
+                if (keyToBeRemoved.isPresent()) {
+                    subUnit.getLockedResourceTypeBySessionId().remove(keyToBeRemoved.get());
+                    saveSubUnit(subUnit);
+                }
             }
-            saveSubUnit(subUnit);
         }
         return subUnitOptional;
     }
@@ -116,14 +117,14 @@ public class SubUnitsService {
 
     public Optional<SubUnit> unlockSubUnitLockedBySession(final String sessionId) {
         Optional<SubUnit> subUnit = repository.findAll()
-                                              .stream()
-                                              .filter(s -> s.getLockedResourceTypeBySessionId().get(sessionId) != null)
-                                              .findFirst();
+                .stream()
+                .filter(s -> s.getLockedResourceTypeBySessionId().get(sessionId) != null)
+                .findFirst();
         subUnit.ifPresent(s ->
-                          {
-                              s.getLockedResourceTypeBySessionId().remove(sessionId);
-                              saveSubUnit(s);
-                          });
+        {
+            s.getLockedResourceTypeBySessionId().remove(sessionId);
+            saveSubUnit(s);
+        });
 
         return subUnit;
     }
@@ -131,10 +132,10 @@ public class SubUnitsService {
 
     public void unlockAllSubUnits() {
         repository.findAll().forEach(s ->
-                                     {
-                                         s.setLockedResourceTypeBySessionId(null);
-                                         saveSubUnit(s);
-                                     });
+        {
+            s.setLockedResourceTypeBySessionId(null);
+            saveSubUnit(s);
+        });
     }
 
 
@@ -153,7 +154,7 @@ public class SubUnitsService {
         List<SubUnit> subUnits = repository.findAll();
         final Optional<Resource> resourceOptional =
                 subUnits.stream().flatMap(subUnit -> subUnit.getResources().stream()
-                                                            .filter(resource -> resource.getPlateNumber().equals(plateNumber))).findFirst();
+                        .filter(resource -> resource.getPlateNumber().equals(plateNumber))).findFirst();
         if (resourceOptional.isPresent()) {
             resourceLog = resourceOptional.get().getResourceLogs();
         }
@@ -193,7 +194,7 @@ public class SubUnitsService {
     private Optional<SubUnit> getSubUnitWithPlateNumber(String plateNumber) {
         List<SubUnit> subUnits = repository.findAll();
         return subUnits.stream()
-                       .filter(s -> s.getResources().stream().anyMatch(r -> r.getPlateNumber().equals(plateNumber)))
-                       .findFirst();
+                .filter(s -> s.getResources().stream().anyMatch(r -> r.getPlateNumber().equals(plateNumber)))
+                .findFirst();
     }
 }

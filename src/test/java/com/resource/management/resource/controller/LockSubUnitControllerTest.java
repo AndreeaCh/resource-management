@@ -19,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static com.resource.management.ResourceTypes.randomResourceType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -46,8 +47,7 @@ public class LockSubUnitControllerTest {
         // Given
         SubUnit subUnit = SubUnits.internal();
         ResourceType resourceType = randomResourceType();
-        HashMap<String, ResourceType> resourceTypeLockedBySessionIdMap = new HashMap<>();
-        resourceTypeLockedBySessionIdMap.put(RandomStringUtils.randomAlphabetic(5), resourceType);
+        HashMap<String, ResourceType> resourceTypeLockedBySessionIdMap = getLockedResourceTypes(resourceType);
         when(subUnitsService.lockSubUnit(eq(subUnit.getName()), eq(resourceType), any())).thenReturn(resourceTypeLockedBySessionIdMap);
 
         // When
@@ -55,11 +55,6 @@ public class LockSubUnitControllerTest {
 
         // Then
         verify(notificationService).publishSubUnitLockedNotification(subUnit.getName(), new HashSet<>(Collections.singletonList(resourceType)));
-    }
-
-    private ResourceType randomResourceType() {
-        Random r = new Random();
-        return ResourceType.values()[r.nextInt(ResourceType.values().length)];
     }
 
     @Test
@@ -73,5 +68,11 @@ public class LockSubUnitControllerTest {
 
         // Then
         verifyNoMoreInteractions(notificationService);
+    }
+
+    private HashMap<String, ResourceType> getLockedResourceTypes(ResourceType resourceType) {
+        HashMap<String, ResourceType> resourceTypeLockedBySessionIdMap = new HashMap<>();
+        resourceTypeLockedBySessionIdMap.put(RandomStringUtils.randomAlphabetic(5), resourceType);
+        return resourceTypeLockedBySessionIdMap;
     }
 }
