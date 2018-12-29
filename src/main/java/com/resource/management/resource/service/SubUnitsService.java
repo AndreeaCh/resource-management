@@ -1,6 +1,22 @@
 package com.resource.management.resource.service;
 
-import com.resource.management.resource.model.*;
+import com.resource.management.resource.model.Resource;
+import com.resource.management.resource.model.ResourceLog;
+import com.resource.management.resource.model.ResourceStatus;
+import com.resource.management.resource.model.ResourceType;
+import com.resource.management.resource.model.SubUnit;
+import com.resource.management.resource.model.SubUnitsRepository;
+
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -9,12 +25,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class SubUnitsService {
@@ -60,41 +70,59 @@ public class SubUnitsService {
 
         if (updatedUnitEquipment != null) { // this returns an updated unit that contains the latest verion of the subunit
             return Optional.of(updatedUnitEquipment);
-        } else
-        return Optional.ofNullable(updatedUnitResources);
+        } else {
+            return Optional.ofNullable(updatedUnitResources);
+        }
     }
 
 
-    public synchronized boolean lockSubUnit(final String subUnitName, final String sessionId) {
-        boolean isLocked = false;
+    public synchronized Map<String, ResourceType> lockSubUnit(final String subUnitName, final ResourceType resourceType, final String sessionId) {
+        Map<String, ResourceType> lockedResourceTypeBySessionId = null;
         Optional<SubUnit> subUnitOptional = findSubUnitByName(subUnitName);
         if (subUnitOptional.isPresent()) {
             SubUnit subUnit = subUnitOptional.get();
-            subUnit.setIsLocked(true);
-            subUnit.setLockedBy(sessionId);
+            ConcurrentHashMap<String, ResourceType> resourceTypeToLockBySessionId = new ConcurrentHashMap<>();
+            resourceTypeToLockBySessionId.put(sessionId, resourceType);
+            if (subUnit.getLockedResourceTypeBySessionId() == null) {
+                subUnit.setLockedResourceTypeBySessionId(resourceTypeToLockBySessionId);
+            } else {
+                subUnit.getLockedResourceTypeBySessionId().putAll(resourceTypeToLockBySessionId);
+            }
+            lockedResourceTypeBySessionId = subUnit.getLockedResourceTypeBySessionId();
             saveSubUnit(subUnit);
-            isLocked = true;
         }
-
-        return isLocked;
+        return lockedResourceTypeBySessionId;
     }
 
-
-    public Optional<SubUnit> unlockSubUnit(final String subUnitName) {
-        Query query = new Query().addCriteria(Criteria.where("name").is(subUnitName));
-        Update update = new Update().set("isLocked", false).set("lockedBy", null);
-        SubUnit unit =
-                template.findAndModify(query, update, new FindAndModifyOptions().returnNew(true), SubUnit.class);
-        return Optional.ofNullable(unit);
+    public Optional<SubUnit> unlockSubUnit(final String subUnitName, final ResourceType resourceType) {
+        Optional<SubUnit> subUnitOptional = findSubUnitByName(subUnitName);
+        if (subUnitOptional.isPresent()) {
+            SubUnit subUnit = subUnitOptional.get();
+            if (subUnit.getLockedResourceTypeBySessionId() != null) {
+                Optional<String> keyToBeRemoved = subUnit.getLockedResourceTypeBySessionId()
+                        .entrySet()
+                        .stream()
+                        .filter(entry -> entry.getValue().equals(resourceType))
+                        .findFirst()
+                        .map(Map.Entry::getKey);
+                if (keyToBeRemoved.isPresent()) {
+                    subUnit.getLockedResourceTypeBySessionId().remove(keyToBeRemoved.get());
+                    saveSubUnit(subUnit);
+                }
+            }
+        }
+        return subUnitOptional;
     }
 
 
     public Optional<SubUnit> unlockSubUnitLockedBySession(final String sessionId) {
-        Optional<SubUnit> subUnit = repository.findByLockedBy(sessionId);
+        Optional<SubUnit> subUnit = repository.findAll()
+                .stream()
+                .filter(s -> s.getLockedResourceTypeBySessionId().get(sessionId) != null)
+                .findFirst();
         subUnit.ifPresent(s ->
         {
-            s.setIsLocked(false);
-            s.setLockedBy(null);
+            s.getLockedResourceTypeBySessionId().remove(sessionId);
             saveSubUnit(s);
         });
 
@@ -105,8 +133,7 @@ public class SubUnitsService {
     public void unlockAllSubUnits() {
         repository.findAll().forEach(s ->
         {
-            s.setIsLocked(false);
-            s.setLockedBy(null);
+            s.setLockedResourceTypeBySessionId(null);
             saveSubUnit(s);
         });
     }
@@ -161,7 +188,6 @@ public class SubUnitsService {
 
     private Optional<Resource> getResourceWithPlateNumber(final SubUnit subUnit, final String plateNumber) {
         return subUnit.getResources().stream().filter(r -> r.getPlateNumber().equals(plateNumber)).findFirst();
-
     }
 
 

@@ -9,7 +9,7 @@ class SubUnitsTestData {
             "{\n" +
                     "  \"_id\": \"RES\",\n" +
                     "  \"lastUpdate\": \"2018-11-20T10:49:48Z\",\n" +
-                    "  \"isLocked\": false,\n" +
+                    "  \"lockedResourceTypeBySessionId\": null,\n" +
                     "  \"resources\": [\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ90DDD\",\n" +
@@ -61,7 +61,7 @@ class SubUnitsTestData {
             "{\n" +
                     "  \"_id\": \"RES\",\n" +
                     "  \"lastUpdate\": \"2018-11-20T10:49:48Z\",\n" +
-                    "  \"isLocked\": false,\n" +
+                    "  \"lockedResourceTypeBySessionId\": null,\n" +
                     "  \"resources\": [\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ90DDD\",\n" +
@@ -113,7 +113,7 @@ class SubUnitsTestData {
             "{\n" +
                     "  \"_id\": \"DET 1 CJN\",\n" +
                     "  \"lastUpdate\": \"2018-11-20T10:49:48Z\",\n" +
-                    "  \"isLocked\": false,\n" +
+                    "  \"lockedResourceTypeBySessionId\": null,\n" +
                     "  \"resources\": [\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ90ABC\",\n" +
@@ -378,7 +378,7 @@ class SubUnitsTestData {
             "{\n" +
                     "  \"_id\": \"DET 2 CJN\",\n" +
                     "  \"lastUpdate\": \"2018-11-20T10:49:48Z\",\n" +
-                    "  \"isLocked\": false,\n" +
+                    "  \"lockedResourceTypeBySessionId\": null,\n" +
                     "  \"resources\": [\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ64ABQ\",\n" +
@@ -572,7 +572,7 @@ class SubUnitsTestData {
             "{\n" +
                     "  \"_id\": \"G2 GIL\",\n" +
                     "  \"lastUpdate\": \"2018-11-20T10:49:48Z\",\n" +
-                    "  \"isLocked\": false,\n" +
+                    "  \"lockedResourceTypeBySessionId\": null,\n" +
                     "  \"resources\": [\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ64ACA\",\n" +
@@ -668,7 +668,7 @@ class SubUnitsTestData {
             "{\n" +
                     "  \"_id\": \"PL FLO\",\n" +
                     "  \"lastUpdate\": \"2018-11-20T10:49:48Z\",\n" +
-                    "  \"isLocked\": false,\n" +
+                    "  \"lockedResourceTypeBySessionId\": null,\n" +
                     "  \"resources\": [\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ64AGA\",\n" +

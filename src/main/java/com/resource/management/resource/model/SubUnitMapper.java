@@ -14,7 +14,6 @@ public final class SubUnitMapper {
     public static SubUnit toApi(com.resource.management.resource.model.SubUnit internalSubUnit) {
         SubUnit subUnit = new SubUnit();
         subUnit.setName(internalSubUnit.getName());
-        subUnit.setIsLocked(internalSubUnit.getIsLocked());
         subUnit.setLastUpdate(internalSubUnit.getLastUpdate());
         if (internalSubUnit.getResources() != null) {
             List<Resource> resourceList = internalSubUnit

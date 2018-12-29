@@ -1,5 +1,8 @@
 package com.resource.management.api.resources;
 
+import com.resource.management.resource.model.ResourceType;
+import java.util.Map;
+import java.util.Set;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 
@@ -20,7 +23,4 @@ public class SubUnit {
 
     @EqualsAndHashCode.Exclude
     private String lastUpdate;
-
-    @EqualsAndHashCode.Exclude
-    private Boolean isLocked;
 }

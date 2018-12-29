@@ -1,5 +1,6 @@
 package com.resource.management.api.resources.crud.notifications;
 
+import com.resource.management.api.resources.LockedSubUnit;
 import com.resource.management.api.resources.SubUnit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,4 +13,5 @@ import java.util.List;
 @ToString
 public class InitialSubUnitsNotification {
     private List<SubUnit> subUnitsList;
+    private List<LockedSubUnit> lockedSubUnits;
 }
