@@ -109,7 +109,7 @@ class SubUnitsTestData {
                     "  ]\n" +
                     "}";
 
-    private static final String SUBUNIT2 =
+    protected static final String SUBUNIT2 =
             "{\n" +
                     "  \"_id\": \"DET 1 CJN\",\n" +
                     "  \"lastUpdate\": \"2018-11-20T10:49:48Z\",\n" +
