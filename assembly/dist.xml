@@ -22,13 +22,13 @@
   </fileSets>
   <files>
     <file>
-      <source>scripts/README.md</source>
+      <source>deploy/README.md</source>
     </file>
     <file>
-      <source>scripts/install.bat</source>
+      <source>deploy/native/install.bat</source>
     </file>
     <file>
-      <source>scripts/setup.bat</source>
+      <source>deploy/native/setup.bat</source>
     </file>
   </files>
 </assembly>
