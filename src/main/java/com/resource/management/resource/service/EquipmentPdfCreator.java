@@ -100,67 +100,118 @@ public class EquipmentPdfCreator {
 
         SubUnitReport raportAllSubUnits = report.getTotals();
         addHeaderCell(table, TOTAL, 0, 1, 3);
-        addUsableResources(table, raportAllSubUnits);
-        addReserveResources(table, raportAllSubUnits);
-        addUnusableResources(table, raportAllSubUnits);
+        addUsableResources(table, raportAllSubUnits, true);
+        addReserveResources(table, raportAllSubUnits, true);
+        addUnusableResources(table, raportAllSubUnits, true);
     }
 
     private void addUnusableResources(PdfPTable table, SubUnitReport subUnitReport) {
+        this.addUnusableResources(table, subUnitReport, false);
+    }
+
+    private void addUnusableResources(PdfPTable table, SubUnitReport subUnitReport, boolean isTotalRow) {
         addHeaderCell(table, NEOPERATIONAL, 0, 1, 1);
         subUnitReport.getFirstInterventionResourceReport()
                 .forEach((type, r) -> {
-                    addSimpleTableCell(table, r.getUnusableAsString());
+                    if (isTotalRow) {
+                        addTotalCell(table, r.getUnusableAsString());
+                    } else {
+                        addSimpleTableCell(table, r.getUnusableAsString());
+                    }
                 });
         addTotalCell(table, subUnitReport.getFirstInterventionTotal().getUnusableAsString());
         subUnitReport.getOtherResourceReport()
                 .forEach((type, r) -> {
-                    addSimpleTableCell(table, r.getUnusableAsString());
+                    if (isTotalRow) {
+                        addTotalCell(table, r.getUnusableAsString());
+                    } else {
+                        addSimpleTableCell(table, r.getUnusableAsString());
+                    }
                 });
         addTotalCell(table, subUnitReport.getOtherResourcesTotal().getUnusableAsString());
         addTotalCell(table, subUnitReport.getAllResourcesTotal().getUnusableAsString());
         subUnitReport.getEquipmentReport()
                 .forEach((type, r) -> {
-                    addSimpleTableCell(table, r.getUnusableAsString());
+                    if (isTotalRow) {
+                        addTotalCell(table, r.getUnusableAsString());
+                    } else {
+                        addSimpleTableCell(table, r.getUnusableAsString());
+                    }
                 });
         addTotalCell(table, subUnitReport.getEquipmentTotal().getUnusableAsString());
     }
 
     private void addReserveResources(PdfPTable table, SubUnitReport subUnitReport) {
+        this.addReserveResources(table, subUnitReport, false);
+    }
+
+    private void addReserveResources(PdfPTable table, SubUnitReport subUnitReport, boolean isTotalRow) {
         addHeaderCell(table, REZERVA, 0, 1, 1);
         subUnitReport.getFirstInterventionResourceReport()
                 .forEach((type, r) -> {
-                    addSimpleTableCell(table, r.getReserveAsString());
+                    if (isTotalRow) {
+                        addTotalCell(table, r.getReserveAsString());
+                    } else {
+                        addSimpleTableCell(table, r.getReserveAsString());
+                    }
                 });
         addTotalCell(table, subUnitReport.getFirstInterventionTotal().getReserveAsString());
         subUnitReport.getOtherResourceReport()
                 .forEach((type, r) -> {
-                    addSimpleTableCell(table, r.getReserveAsString());
+                    if (isTotalRow) {
+                        addTotalCell(table, r.getReserveAsString());
+                    } else {
+                        addSimpleTableCell(table, r.getReserveAsString());
+                    }
                 });
         addTotalCell(table, subUnitReport.getOtherResourcesTotal().getReserveAsString());
         addTotalCell(table, subUnitReport.getAllResourcesTotal().getReserveAsString());
         subUnitReport.getEquipmentReport()
                 .forEach((type, r) -> {
-                    addSimpleTableCell(table, r.getReserveAsString());
+                    if (isTotalRow) {
+                        addTotalCell(table, r.getReserveAsString());
+                    } else {
+                        addSimpleTableCell(table, r.getReserveAsString());
+                    }
                 });
         addTotalCell(table, subUnitReport.getEquipmentTotal().getReserveAsString());
     }
 
     private void addUsableResources(PdfPTable table, SubUnitReport subUnitReport) {
+        this.addUsableResources(table, subUnitReport, false);
+    }
+
+    private void addUsableResources(PdfPTable table, SubUnitReport subUnitReport, boolean isTotalRow) {
         addHeaderCell(table, OPERATIONAL, 0, 1, 1);
         subUnitReport.getFirstInterventionResourceReport()
                 .forEach((type, r) -> {
-                    addSimpleTableCell(table, r.getUsableAsString());
+                    if (isTotalRow) {
+                        addTotalCell(table, r.getUsableAsString());
+                    } else {
+                        addSimpleTableCell(table, r.getUsableAsString());
+                    }
+                    ;
                 });
         addTotalCell(table, subUnitReport.getFirstInterventionTotal().getUsableAsString());
         subUnitReport.getOtherResourceReport()
                 .forEach((type, r) -> {
-                    addSimpleTableCell(table, r.getUsableAsString());
+                    if (isTotalRow) {
+                        addTotalCell(table, r.getUsableAsString());
+                    } else {
+                        addSimpleTableCell(table, r.getUsableAsString());
+                    }
+                    ;
                 });
         addTotalCell(table, subUnitReport.getOtherResourcesTotal().getUsableAsString());
         addTotalCell(table, subUnitReport.getAllResourcesTotal().getUsableAsString());
         subUnitReport.getEquipmentReport()
                 .forEach((type, r) -> {
-                    addSimpleTableCell(table, r.getUsableAsString());
+                    if (isTotalRow) {
+                        addTotalCell(table, r.getUsableAsString());
+                    } else {
+                        addSimpleTableCell(table, r.getUsableAsString());
+                    }
+                    ;
                 });
         addTotalCell(table, subUnitReport.getEquipmentTotal().getUsableAsString());
     }
