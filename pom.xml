@@ -23,11 +23,27 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
+
+        <!--docker build related properties-->
+        <dockerSourceDirectory>${project.basedir}/src/main/docker</dockerSourceDirectory>
+        <dockerOutputDirectory>${project.build.directory}/rootfs</dockerOutputDirectory>
         <win.native.resources>${project.build.directory}/winres</win.native.resources>
+
         <frontend.groupId>${project.groupId}</frontend.groupId>
         <frontend.artifactId>${project.artifactId}-client</frontend.artifactId>
         <frontend.version>${project.version}</frontend.version>
 
+        <backend.image.name>isu/${project.artifactId}-backend</backend.image.name>
+        <backend.image.alias>backend</backend.image.alias>
+
+        <frontend.image.name>isu/${project.artifactId}-frontend</frontend.image.name>
+        <frontend.image.alias>frontend</frontend.image.alias>
+
+        <db.image.name>isu/${project.artifactId}-db</db.image.name>
+        <db.image.alias>mongodb</db.image.alias>
+
+        <version.docker-maven-plugin>0.28.0</version.docker-maven-plugin>
+        <version.buildnumber-maven-plugin>1.4</version.buildnumber-maven-plugin>
     </properties>
 
     <dependencies>
@@ -105,7 +121,46 @@
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>windows native unpack frontend assembly</id>
+                        <id>copy backend assembly</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${dockerOutputDirectory}/backend</outputDirectory>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>${project.artifactId}</artifactId>
+                                    <version>${project.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <type>jar</type>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy frontend assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${dockerOutputDirectory}/frontend</outputDirectory>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>${frontend.groupId}</groupId>
+                                    <artifactId>${frontend.artifactId}</artifactId>
+                                    <version>${frontend.version}</version>
+                                    <classifier>bin</classifier>
+                                    <overWrite>true</overWrite>
+                                    <type>tar.gz</type>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>unpack frontend assembly for windows native deploy</id>
                         <phase>package</phase>
                         <goals>
                             <goal>unpack</goal>
@@ -162,6 +217,233 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!--copy docker files-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>copy docker files</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${dockerOutputDirectory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${dockerSourceDirectory}</directory>
+                                    <targetPath>${dockerOutputDirectory}</targetPath>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>**/*</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${project.build.sourceDirectory}/../resources</directory>
+                                    <targetPath>${dockerOutputDirectory}/db/fillDb</targetPath>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>**/*.json</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!--building docker images-->
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <version>${version.docker-maven-plugin}</version>
+                <extensions>true</extensions>
+                <executions>
+                    <execution>
+                        <id>build backend docker image</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <alias>${backend.image.alias}</alias>
+                                    <name>${backend.image.name}</name>
+                                    <build>
+                                        <skip>false</skip>
+                                        <dockerFileDir>${dockerOutputDirectory}/backend</dockerFileDir>
+                                    </build>
+                                </image>
+                            </images>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>build frontend docker image</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <alias>${frontend.image.alias}</alias>
+                                    <name>${frontend.image.name}</name>
+                                    <build>
+                                        <skip>false</skip>
+                                        <dockerFileDir>${dockerOutputDirectory}/frontend</dockerFileDir>
+                                    </build>
+                                </image>
+                            </images>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>build mongodb docker image</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <alias>${db.image.alias}</alias>
+                                    <name>${db.image.name}</name>
+                                    <build>
+                                        <skip>false</skip>
+                                        <dockerFileDir>${dockerOutputDirectory}/db</dockerFileDir>
+                                    </build>
+                                </image>
+                            </images>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <verbose>true</verbose>
+                    <logStdout>true</logStdout>
+                    <images>
+                        <image>
+                            <build>
+                                <tags>
+                                    <tag>${project.version}</tag>
+                                    <tag>latest</tag>
+                                </tags>
+                            </build>
+                            <run>
+                                <skip>true</skip>
+                            </run>
+                        </image>
+                    </images>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
+
+    <!--profiles for running the container using maven cli-->
+    <profiles>
+        <profile>
+            <id>db</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>${version.docker-maven-plugin}</version>
+                        <configuration>
+                            <verbose>true</verbose>
+                            <logStdout>true</logStdout>
+                            <images>
+                                <image>
+                                    <name>${db.image.name}</name>
+                                    <alias>${db.image.alias}</alias>
+                                    <run>
+                                        <skip>false</skip>
+                                        <namingStrategy>alias</namingStrategy>
+                                        <hostname>${env.HOSTNAME}</hostname>
+                                        <network>
+                                            <mode>host</mode>
+                                        </network>
+                                        <restartPolicy>
+                                            <name>on-failure</name>
+                                            <retry>3</retry>
+                                        </restartPolicy>
+                                        <memory>1024000000</memory>
+                                        <memorySwap>-1</memorySwap>
+                                        <extraHosts>
+                                            <host>localhosts:127.0.0.1</host>
+                                        </extraHosts>
+                                        <cmd>demo</cmd>
+                                    </run>
+                                </image>
+                            </images>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>apps</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>${version.docker-maven-plugin}</version>
+                        <configuration>
+                            <verbose>true</verbose>
+                            <logStdout>true</logStdout>
+                            <images>
+                                <image>
+                                    <name>${backend.image.name}</name>
+                                    <alias>${backend.image.alias}</alias>
+                                    <run>
+                                        <skip>false</skip>
+                                        <namingStrategy>alias</namingStrategy>
+                                        <hostname>${env.HOSTNAME}</hostname>
+                                        <network>
+                                            <mode>host</mode>
+                                        </network>
+                                        <restartPolicy>
+                                            <name>on-failure</name>
+                                            <retry>3</retry>
+                                        </restartPolicy>
+                                        <memory>1024000000</memory>
+                                        <memorySwap>-1</memorySwap>
+                                        <extraHosts>
+                                            <host>localhosts:127.0.0.1</host>
+                                        </extraHosts>
+                                    </run>
+                                </image>
+                                <image>
+                                    <name>${frontend.image.name}</name>
+                                    <alias>${frontend.image.alias}</alias>
+                                    <run>
+                                        <skip>false</skip>
+                                        <namingStrategy>alias</namingStrategy>
+                                        <hostname>${env.HOSTNAME}</hostname>
+                                        <network>
+                                            <mode>host</mode>
+                                        </network>
+                                        <restartPolicy>
+                                            <name>on-failure</name>
+                                            <retry>3</retry>
+                                        </restartPolicy>
+                                        <memory>1024000000</memory>
+                                        <memorySwap>-1</memorySwap>
+                                        <extraHosts>
+                                            <host>localhosts:127.0.0.1</host>
+                                        </extraHosts>
+                                    </run>
+                                </image>
+                            </images>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
