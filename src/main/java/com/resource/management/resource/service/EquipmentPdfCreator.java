@@ -81,6 +81,12 @@ public class EquipmentPdfCreator {
                     addReserveResources(table, subUnitReport);
                     addUnusableResources(table, subUnitReport);
                 });
+
+        SubUnitReport raportAllSubUnits = report.getTotals();
+        addHeaderCell(table, "TOTAL", 0, 1, 3);
+        addUsableResources(table, raportAllSubUnits);
+        addReserveResources(table, raportAllSubUnits);
+        addUnusableResources(table, raportAllSubUnits);
     }
 
     private void addUnusableResources(PdfPTable table, SubUnitReport subUnitReport) {

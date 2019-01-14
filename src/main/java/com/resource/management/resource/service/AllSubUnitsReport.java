@@ -11,4 +11,5 @@ import java.util.Map;
 @EqualsAndHashCode
 public class AllSubUnitsReport {
     private Map<String, SubUnitReport> subUnitReports;
+    private SubUnitReport totals;
 }

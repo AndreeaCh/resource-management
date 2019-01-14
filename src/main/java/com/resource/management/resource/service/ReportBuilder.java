@@ -51,7 +51,72 @@ public class ReportBuilder {
             subUnitReports.put(subUnit.getName(), subUnitReport);
         });
 
+        computeTotals(report);
         return report;
+    }
+
+    private void computeTotals(final AllSubUnitsReport report) {
+        SubUnitReport totals = new SubUnitReport();
+        report.setTotals(totals);
+        Map<String, Report> firstInterventionTotals = report.getSubUnitReports()
+                .values()
+                .stream()
+                .flatMap(r -> r.getFirstInterventionResourceReport().entrySet().stream())
+                .collect(Collectors.toMap(k -> k.getKey(), v -> v.getValue(), (v1, v2) -> addReports(v1, v2)));
+        totals.setFirstInterventionResourceReport(firstInterventionTotals);
+
+        Report firstInterventionTotal = new Report();
+        firstInterventionTotals.values()
+                .forEach(r -> {
+                    firstInterventionTotal.setUsable(firstInterventionTotal.getUsable() + r.getUsable());
+                    firstInterventionTotal.setReserves(firstInterventionTotal.getReserves() + r.getReserves());
+                    firstInterventionTotal.setUnusable(firstInterventionTotal.getUnusable() + r.getUnusable());
+                });
+        totals.setFirstInterventionTotal(firstInterventionTotal);
+
+        Map<String, Report> otherResourcesTotals = report.getSubUnitReports()
+                .values()
+                .stream()
+                .flatMap(r -> r.getOtherResourceReport().entrySet().stream())
+                .collect(Collectors.toMap(k -> k.getKey(), v -> v.getValue(), (v1, v2) -> addReports(v1, v2)));
+        totals.setOtherResourceReport(otherResourcesTotals);
+        Report otherResourcesTotal = new Report();
+        otherResourcesTotals.values()
+                .forEach(r -> {
+                    otherResourcesTotal.setUsable(otherResourcesTotal.getUsable() + r.getUsable());
+                    otherResourcesTotal.setReserves(otherResourcesTotal.getReserves() + r.getReserves());
+                    otherResourcesTotal.setUnusable(otherResourcesTotal.getUnusable() + r.getUnusable());
+                });
+        totals.setOtherResourcesTotal(otherResourcesTotal);
+
+        Report allResourcesTotal = new Report();
+        allResourcesTotal.setUsable(firstInterventionTotal.getUsable() + otherResourcesTotal.getUsable());
+        allResourcesTotal.setReserves(firstInterventionTotal.getReserves() + otherResourcesTotal.getReserves());
+        allResourcesTotal.setUnusable(firstInterventionTotal.getUnusable() + otherResourcesTotal.getUnusable());
+        totals.setAllResourcesTotal(allResourcesTotal);
+
+        Map<String, Report> equipmentTotals = report.getSubUnitReports()
+                .values()
+                .stream()
+                .flatMap(r -> r.getEquipmentReport().entrySet().stream())
+                .collect(Collectors.toMap(k -> k.getKey(), v -> v.getValue(), (v1, v2) -> addReports(v1, v2)));
+        totals.setEquipmentReport(equipmentTotals);
+        Report equipmentsTotal = new Report();
+        equipmentTotals.values()
+                .forEach(r -> {
+                    equipmentsTotal.setUsable(equipmentsTotal.getUsable() + r.getUsable());
+                    equipmentsTotal.setReserves(equipmentsTotal.getReserves() + r.getReserves());
+                    equipmentsTotal.setUnusable(equipmentsTotal.getUnusable() + r.getUnusable());
+                });
+        totals.setEquipmentTotal(equipmentsTotal);
+    }
+
+    private Report addReports(Report r1, Report r2) {
+        Report r = new Report();
+        r.setUsable(r1.getUsable() + r2.getUsable());
+        r.setUnusable(r1.getUnusable() + r2.getUnusable());
+        r.setReserves(r1.getReserves() + r2.getReserves());
+        return r;
     }
 
     private void setAllResourcesTotal(SubUnitReport subUnitReport) {
@@ -63,7 +128,7 @@ public class ReportBuilder {
     }
 
 
-    public void setFirstInterventionTotal(final SubUnitReport subUnitReport) {
+    private void setFirstInterventionTotal(final SubUnitReport subUnitReport) {
         Report report = new Report();
         report.setUsable(subUnitReport.getFirstInterventionResourceReport()
                 .values()
@@ -83,7 +148,7 @@ public class ReportBuilder {
         subUnitReport.setFirstInterventionTotal(report);
     }
 
-    public void setOtherResourcesTotal(final SubUnitReport subUnitReport) {
+    private void setOtherResourcesTotal(final SubUnitReport subUnitReport) {
         Report report = new Report();
         report.setUsable(subUnitReport.getOtherResourceReport()
                 .values()
@@ -103,7 +168,7 @@ public class ReportBuilder {
         subUnitReport.setOtherResourcesTotal(report);
     }
 
-    public void setEquipmentsTotal(final SubUnitReport subUnitReport) {
+    private void setEquipmentsTotal(final SubUnitReport subUnitReport) {
         Report report = new Report();
         report.setUsable(subUnitReport.getEquipmentReport()
                 .values()
