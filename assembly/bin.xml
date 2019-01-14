@@ -26,20 +26,11 @@
       </includes>
     </fileSet>
     <fileSet>
-      <directory>scripts</directory>
+      <directory>deploy</directory>
       <outputDirectory>scripts</outputDirectory>
       <includes>
         <include>chocolatey/*</include>
-        <include>*.bat</include>
-        <include>*.cmd</include>
-        <include>*.ps1</include>
       </includes>
-      <excludes>
-        <exclude>setup.bat</exclude>
-        <exclude>install.bat</exclude>
-        <exclude>start.bat</exclude>
-        <exclude>stop.bat</exclude>
-      </excludes>
     </fileSet>
     <fileSet>
       <directory>.</directory>
@@ -51,13 +42,13 @@
   </fileSets>
   <files>
     <file>
-      <source>scripts/README.md</source>
+      <source>deploy/README.md</source>
     </file>
     <file>
-      <source>scripts/start.bat</source>
+      <source>deploy/native/start.bat</source>
     </file>
     <file>
-      <source>scripts/stop.bat</source>
+      <source>deploy/native/stop.bat</source>
     </file>
     <file>
       <source>deploy.bat</source>
