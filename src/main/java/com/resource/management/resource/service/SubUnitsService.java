@@ -9,13 +9,12 @@ import com.resource.management.resource.model.SubUnitsRepository;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
@@ -43,7 +42,7 @@ public class SubUnitsService {
 
 
     public void addSubUnit(final SubUnit subUnit) {
-        subUnit.setLastUpdate(Instant.now().toString());
+        subUnit.setLastUpdateFirstInterventionResource(Instant.now().toString());
         saveSubUnit(subUnit);
     }
 
@@ -53,8 +52,24 @@ public class SubUnitsService {
         Query query =
                 new Query().addCriteria(Criteria.where("name").is(subUnit.getName()))
                         .addCriteria(Criteria.where("resources").ne(subUnit.getResources()));
-        Update update =
-                new Update().set("lastUpdate", Instant.now().toString()).set("resources", subUnit.getResources());
+        Update update = null;
+
+        SubUnit existingSubUnit = template.findOne(query, SubUnit.class);
+        List<Resource> existingOtherResources = getOtherResources(existingSubUnit);
+        List<Resource> updatedOtherResources = getOtherResources(subUnit);
+
+        List<Resource> existingFirstInterventionResources = getFirstInterventionResources(existingSubUnit);
+        List<Resource> updatedFirstInterventionResources = getFirstInterventionResources(subUnit);
+
+        if(checkIfResourcesUpdated(existingOtherResources, updatedOtherResources)) {
+             update =
+                    new Update().set("lastUpdateOtherResource", Instant.now().toString()).set("resources", subUnit.getResources());
+        } else if (checkIfResourcesUpdated(existingFirstInterventionResources, updatedFirstInterventionResources)) {
+             update =
+                    new Update().set("lastUpdateFirstInterventionResource", Instant.now().toString()).set("resources", subUnit.getResources());
+        }
+
+
         SubUnit updatedUnitResources =
                 template.findAndModify(query, update, new FindAndModifyOptions().returnNew(true), SubUnit.class);
 
@@ -63,7 +78,7 @@ public class SubUnitsService {
                         .addCriteria(Criteria.where("equipment").ne(subUnit.getEquipment()));
 
         update =
-                new Update().set("lastUpdate", Instant.now().toString()).set("equipment", subUnit.getEquipment());
+                new Update().set("lastUpdateEquipment", Instant.now().toString()).set("equipment", subUnit.getEquipment());
 
         SubUnit updatedUnitEquipment =
                 template.findAndModify(query, update, new FindAndModifyOptions().returnNew(true), SubUnit.class);
@@ -73,6 +88,28 @@ public class SubUnitsService {
         } else {
             return Optional.ofNullable(updatedUnitResources);
         }
+    }
+
+    private boolean checkIfResourcesUpdated(List<Resource> existingResources, List<Resource> updatedResources) {
+        boolean response = true;
+        if (existingResources != null && updatedResources != null && existingResources.size() == updatedResources.size()
+                && existingResources.containsAll(updatedResources)) {
+            response = false;
+        } else if (updatedResources == null && existingResources == null) {
+            response = false;
+        }
+
+        return response;
+    }
+
+    private List<Resource> getFirstInterventionResources(SubUnit existingSubUnit) {
+        return existingSubUnit.getResources().stream()
+                .filter(resource -> resource.getType().equals(ResourceType.FIRST_INTERVENTION)).collect(Collectors.toList());
+    }
+
+    private List<Resource> getOtherResources(SubUnit existingSubUnit) {
+        return existingSubUnit.getResources().stream()
+                .filter(resource -> resource.getType().equals(ResourceType.OTHER)).collect(Collectors.toList());
     }
 
 

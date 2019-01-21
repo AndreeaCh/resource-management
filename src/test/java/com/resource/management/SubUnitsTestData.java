@@ -8,7 +8,7 @@ class SubUnitsTestData {
     static final String SUBUNIT1 =
             "{\n" +
                     "  \"_id\": \"RES\",\n" +
-                    "  \"lastUpdate\": \"2018-11-20T10:49:48Z\",\n" +
+                    "  \"lastUpdateFirstInterventionResource\": \"2018-11-20T10:49:48Z\",\n" +
                     "  \"lockedResourceTypeBySessionId\": null,\n" +
                     "  \"resources\": [\n" +
                     "    {\n" +
@@ -60,7 +60,7 @@ class SubUnitsTestData {
     static final String SUBUNIT1_UPDATED =
             "{\n" +
                     "  \"_id\": \"RES\",\n" +
-                    "  \"lastUpdate\": \"2018-11-20T10:49:48Z\",\n" +
+                    "  \"lastUpdateFirstInterventionResource\": \"2018-11-20T10:49:48Z\",\n" +
                     "  \"lockedResourceTypeBySessionId\": null,\n" +
                     "  \"resources\": [\n" +
                     "    {\n" +
@@ -112,7 +112,7 @@ class SubUnitsTestData {
     private static final String SUBUNIT2 =
             "{\n" +
                     "  \"_id\": \"DET 1 CJN\",\n" +
-                    "  \"lastUpdate\": \"2018-11-20T10:49:48Z\",\n" +
+                    "  \"lastUpdateFirstInterventionResource\": \"2018-11-20T10:49:48Z\",\n" +
                     "  \"lockedResourceTypeBySessionId\": null,\n" +
                     "  \"resources\": [\n" +
                     "    {\n" +
@@ -377,7 +377,7 @@ class SubUnitsTestData {
     private static final String SUBUNIT3 =
             "{\n" +
                     "  \"_id\": \"DET 2 CJN\",\n" +
-                    "  \"lastUpdate\": \"2018-11-20T10:49:48Z\",\n" +
+                    "  \"lastUpdateFirstInterventionResource\": \"2018-11-20T10:49:48Z\",\n" +
                     "  \"lockedResourceTypeBySessionId\": null,\n" +
                     "  \"resources\": [\n" +
                     "    {\n" +
@@ -571,7 +571,7 @@ class SubUnitsTestData {
     private static final String SUBUNIT4 =
             "{\n" +
                     "  \"_id\": \"G2 GIL\",\n" +
-                    "  \"lastUpdate\": \"2018-11-20T10:49:48Z\",\n" +
+                    "  \"lastUpdateFirstInterventionResource\": \"2018-11-20T10:49:48Z\",\n" +
                     "  \"lockedResourceTypeBySessionId\": null,\n" +
                     "  \"resources\": [\n" +
                     "    {\n" +
@@ -667,7 +667,7 @@ class SubUnitsTestData {
     private static final String SUBUNIT5 =
             "{\n" +
                     "  \"_id\": \"PL FLO\",\n" +
-                    "  \"lastUpdate\": \"2018-11-20T10:49:48Z\",\n" +
+                    "  \"lastUpdateFirstInterventionResource\": \"2018-11-20T10:49:48Z\",\n" +
                     "  \"lockedResourceTypeBySessionId\": null,\n" +
                     "  \"resources\": [\n" +
                     "    {\n" +
