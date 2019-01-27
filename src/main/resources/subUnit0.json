@@ -1,6 +1,8 @@
 {
   "_id": "RES",
-  "lastUpdate": "2018-11-20T10:49:48Z",
+  "lastUpdateFirstInterventionResource": "2018-11-20T10:49:48Z",
+  "lastUpdateOtherResource": "2018-11-20T10:49:48Z",
+  "lastUpdateEquipment": "2018-11-20T10:49:48Z",
   "lockedResourceTypeBySessionId": null,
   "resources": [
     {
