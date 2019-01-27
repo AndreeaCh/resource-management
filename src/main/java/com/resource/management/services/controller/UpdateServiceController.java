@@ -21,15 +21,16 @@ public class UpdateServiceController {
     @MessageMapping("/updateService")
     @SendTo("/topic/services")
     public ServicesListUpdatedNotification handle(final UpdateServiceRequest request) {
+        String lastUpdate = Instant.now().toString();
         if (request.getService() != null) {
             Optional<Service> serviceOptional = repository.findById(request.getService().getId());
             serviceOptional.ifPresent(service -> {
-                Service updatedService = ServiceMapper.toInternal(request.getService());
-                updatedService.setLastUpdate(Instant.now().toString());
+                Service updatedService = ServiceMapper.toInternal(request.getService(), lastUpdate);
+                updatedService.setLastUpdate(lastUpdate);
                 repository.save(updatedService);
             });
         }
 
-        return new ServicesListUpdatedNotification(repository.findAll(), Instant.now().toString());
+        return new ServicesListUpdatedNotification(repository.findAll(), lastUpdate);
     }
 }

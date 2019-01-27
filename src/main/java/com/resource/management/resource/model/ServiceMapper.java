@@ -4,13 +4,15 @@ import com.resource.management.services.model.Service;
 
 public class ServiceMapper {
 
-    public static final Service toInternal(final com.resource.management.api.resources.Service externalService) {
+    public static final Service toInternal(final com.resource.management.api.resources.Service externalService,
+                                           String lastUpdate) {
         Service internalService = new Service();
         internalService.setId(externalService.getId());
-        internalService.setTitle(externalService.getId());
-        internalService.setRole(externalService.getId());
-        internalService.setContact(externalService.getId());
-
+        internalService.setName(externalService.getName());
+        internalService.setTitle(externalService.getTitle());
+        internalService.setRole(externalService.getRole());
+        internalService.setContact(externalService.getContact());
+        internalService.setLastUpdate(lastUpdate);
         return internalService;
     }
 
