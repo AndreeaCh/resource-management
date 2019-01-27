@@ -11,19 +11,20 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class ResourceLog {
-    private UUID id;
+public class ResourceLog
+{
+   private UUID id;
 
-    private String changedAt;
+   private String changedAt;
 
-    private String changedBy;
+   private String changedBy;
 
-    private ResourceStatus status;
+   private ResourceStatus status;
 
-    @Override
-    public String toString() {
-        return "Data&ora='" + changedAt + '\'' +
-                ", IP='" + changedBy + '\'' +
-                ", " + status;
-    }
+
+   @Override
+   public String toString()
+   {
+      return "Data&ora='" + changedAt + '\'' + ", IP='" + changedBy + '\'' + ", " + status;
+   }
 }
