@@ -30,96 +30,24 @@ public class SubUnitsService {
         return repository.findByName(name);
     }
 
-
     public void addSubUnit(final SubUnit subUnit) {
         subUnit.setLastUpdateFirstInterventionResource(Instant.now().toString());
         saveSubUnit(subUnit);
     }
 
-
     @Transactional
     public Optional<SubUnit> updateSubUnit(final SubUnit subUnit) {
-        Query query =
-                new Query().addCriteria(Criteria.where("name").is(subUnit.getName()))
-                        .addCriteria(Criteria.where("resources").ne(subUnit.getResources()));
-        Update update = null;
+        SubUnit updatedUnit = null;
 
-        SubUnit existingSubUnit = template.findOne(query, SubUnit.class);
-        List<Resource> existingOtherResources = getOtherResources(existingSubUnit);
-        List<Resource> updatedOtherResources = getOtherResources(subUnit);
-
-        List<Resource> existingFirstInterventionResources = getFirstInterventionResources(existingSubUnit);
-        List<Resource> updatedFirstInterventionResources = getFirstInterventionResources(subUnit);
-
-        if (checkIfResourcesUpdated(existingOtherResources, updatedOtherResources)) {
-            update =
-                    new Update().set("lastUpdateOtherResource", Instant.now().toString()).set("resources", subUnit.getResources());
-        } else if (checkIfResourcesUpdated(existingFirstInterventionResources, updatedFirstInterventionResources)) {
-            update =
-                    new Update().set("lastUpdateFirstInterventionResource", Instant.now().toString()).set("resources", subUnit.getResources());
+        Optional<SubUnit> existingSubUnitOptional = findSubUnitByName(subUnit.getName());
+        if (existingSubUnitOptional.isPresent()) {
+            SubUnit existingSubUnit = existingSubUnitOptional.get();
+            updatedUnit = updateFirstInterventionResources(subUnit, existingSubUnit);
+            updateOtherResources(subUnit, updatedUnit, existingSubUnit);
+            updateEquipment(subUnit, updatedUnit, existingSubUnit);
         }
 
-
-        SubUnit updatedUnitResources =
-                template.findAndModify(query, update, new FindAndModifyOptions().returnNew(true), SubUnit.class);
-
-        List<Equipment> existingEquipment = getEquipment(existingSubUnit);
-        List<Equipment> updatedEquipment = getEquipment(subUnit);
-        SubUnit updatedUnitEquipment = null;
-
-        if (checkIfEquipmentUpdated(existingEquipment, updatedEquipment)) {
-            query =
-                    new Query().addCriteria(Criteria.where("name").is(subUnit.getName()))
-                            .addCriteria(Criteria.where("equipment").ne(subUnit.getEquipment()));
-            update =
-                    new Update().set("lastUpdateEquipment", Instant.now().toString()).set("equipment", subUnit.getEquipment());
-            updatedUnitEquipment =
-                    template.findAndModify(query, update, new FindAndModifyOptions().returnNew(true), SubUnit.class);
-        }
-
-        if (updatedUnitEquipment != null) { // this returns an updated unit that contains the latest verion of the subunit
-            return Optional.of(updatedUnitEquipment);
-        } else {
-            return Optional.ofNullable(updatedUnitResources);
-        }
-    }
-
-    private boolean checkIfEquipmentUpdated(List<Equipment> existingEquipment, List<Equipment> updatedEquipment) {
-        boolean updated = true;
-        if (existingEquipment != null && updatedEquipment != null && existingEquipment.size() == updatedEquipment.size()
-                && existingEquipment.containsAll(updatedEquipment)) {
-            updated = false;
-        } else if (updatedEquipment == null && existingEquipment == null) {
-            updated = false;
-        }
-
-        return updated;
-    }
-
-    private boolean checkIfResourcesUpdated(List<Resource> existingResources, List<Resource> updatedResources) {
-        boolean response = true;
-        if (existingResources != null && updatedResources != null && existingResources.size() == updatedResources.size()
-                && existingResources.containsAll(updatedResources)) {
-            response = false;
-        } else if (updatedResources == null && existingResources == null) {
-            response = false;
-        }
-
-        return response;
-    }
-
-    private List<Resource> getFirstInterventionResources(SubUnit existingSubUnit) {
-        return existingSubUnit.getResources().stream()
-                .filter(resource -> resource.getType().equals(ResourceType.FIRST_INTERVENTION)).collect(Collectors.toList());
-    }
-
-    private List<Resource> getOtherResources(SubUnit existingSubUnit) {
-        return existingSubUnit.getResources().stream()
-                .filter(resource -> resource.getType().equals(ResourceType.OTHER)).collect(Collectors.toList());
-    }
-
-    private List<Equipment> getEquipment(SubUnit existingSubUnit) {
-        return existingSubUnit.getEquipment();
+        return Optional.ofNullable(updatedUnit);
     }
 
     public synchronized Map<String, ResourceType> lockSubUnit(final String subUnitName, final ResourceType resourceType, final String sessionId) {
@@ -160,7 +88,6 @@ public class SubUnitsService {
         return subUnitOptional;
     }
 
-
     public Optional<SubUnit> unlockSubUnitLockedBySession(final String sessionId) {
         Optional<SubUnit> subUnit = repository.findAll()
                 .stream()
@@ -175,7 +102,6 @@ public class SubUnitsService {
         return subUnit;
     }
 
-
     public void unlockAllSubUnits() {
         repository.findAll().forEach(s ->
         {
@@ -184,16 +110,13 @@ public class SubUnitsService {
         });
     }
 
-
     public void deleteSubUnit(final String name) {
         repository.deleteById(name);
     }
 
-
     private synchronized void saveSubUnit(final SubUnit subUnit) {
         repository.save(subUnit);
     }
-
 
     public List<ResourceLog> getLogForResource(final String plateNumber) {
         List<ResourceLog> resourceLog = new ArrayList<>();
@@ -207,7 +130,6 @@ public class SubUnitsService {
 
         return resourceLog;
     }
-
 
     public Optional<SubUnit> updateResourceStatus(String plateNumber, ResourceStatus resourceStatus, String ipAddress) {
         final Optional<SubUnit> subUnitOptional = getSubUnitWithPlateNumber(plateNumber);
@@ -229,6 +151,88 @@ public class SubUnitsService {
         }
 
         return subUnitOptional;
+    }
+
+    private SubUnit updateEquipment(SubUnit subUnit, SubUnit updatedUnit, SubUnit existingSubUnit) {
+        List<Equipment> existingEquipment = getEquipment(existingSubUnit);
+        List<Equipment> updatedEquipment = getEquipment(subUnit);
+        if (checkIfEquipmentUpdated(existingEquipment, updatedEquipment)) {
+            Query query = new Query().addCriteria(Criteria.where("name").is(subUnit.getName()));
+            Update update =
+                    new Update().set("lastUpdateEquipment", Instant.now().toString()).set("equipment", subUnit.getEquipment());
+            updatedUnit =
+                    template.findAndModify(query, update, new FindAndModifyOptions().returnNew(true), SubUnit.class);
+        }
+        return updatedUnit;
+    }
+
+    private SubUnit updateOtherResources(SubUnit subUnit, SubUnit updatedUnit, SubUnit existingSubUnit) {
+        List<Resource> existingOtherResources = getOtherResources(existingSubUnit);
+        List<Resource> updatedOtherResources = getOtherResources(subUnit);
+
+        if (checkIfResourcesUpdated(existingOtherResources, updatedOtherResources)) {
+            Query query = new Query().addCriteria(Criteria.where("name").is(subUnit.getName()));
+            Update update =
+                    new Update().set("lastUpdateOtherResource", Instant.now().toString()).set("resources", subUnit.getResources());
+            updatedUnit =
+                    template.findAndModify(query, update, new FindAndModifyOptions().returnNew(true), SubUnit.class);
+
+        }
+        return updatedUnit;
+    }
+
+    private SubUnit updateFirstInterventionResources(SubUnit subUnit, SubUnit existingSubUnit) {
+        SubUnit updatedUnit = null;
+        List<Resource> existingFirstInterventionResources = getFirstInterventionResources(existingSubUnit);
+        List<Resource> updatedFirstInterventionResources = getFirstInterventionResources(subUnit);
+
+        if (checkIfResourcesUpdated(existingFirstInterventionResources, updatedFirstInterventionResources)) {
+            Query query = new Query().addCriteria(Criteria.where("name").is(subUnit.getName()));
+            Update update =
+                    new Update().set("lastUpdateFirstInterventionResource", Instant.now().toString()).set("resources", subUnit.getResources());
+            updatedUnit =
+                    template.findAndModify(query, update, new FindAndModifyOptions().returnNew(true), SubUnit.class);
+        }
+
+        return updatedUnit;
+    }
+
+    private boolean checkIfEquipmentUpdated(List<Equipment> existingEquipment, List<Equipment> updatedEquipment) {
+        boolean updated = true;
+        if (existingEquipment != null && updatedEquipment != null && existingEquipment.size() == updatedEquipment.size()
+                && existingEquipment.containsAll(updatedEquipment)) {
+            updated = false;
+        } else if (updatedEquipment == null && existingEquipment == null) {
+            updated = false;
+        }
+
+        return updated;
+    }
+
+    private boolean checkIfResourcesUpdated(List<Resource> existingResources, List<Resource> updatedResources) {
+        boolean response = true;
+        if (existingResources != null && updatedResources != null && existingResources.size() == updatedResources.size()
+                && existingResources.containsAll(updatedResources)) {
+            response = false;
+        } else if (updatedResources == null && existingResources == null) {
+            response = false;
+        }
+
+        return response;
+    }
+
+    private List<Resource> getFirstInterventionResources(SubUnit existingSubUnit) {
+        return existingSubUnit.getResources().stream()
+                .filter(resource -> resource.getType().equals(ResourceType.FIRST_INTERVENTION)).collect(Collectors.toList());
+    }
+
+    private List<Resource> getOtherResources(SubUnit existingSubUnit) {
+        return existingSubUnit.getResources().stream()
+                .filter(resource -> resource.getType().equals(ResourceType.OTHER)).collect(Collectors.toList());
+    }
+
+    private List<Equipment> getEquipment(SubUnit existingSubUnit) {
+        return existingSubUnit.getEquipment();
     }
 
 
