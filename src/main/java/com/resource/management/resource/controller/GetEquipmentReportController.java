@@ -3,6 +3,7 @@ package com.resource.management.resource.controller;
 import com.resource.management.resource.model.SubUnit;
 import com.resource.management.resource.model.SubUnitsRepository;
 import com.resource.management.resource.service.EquipmentPdfCreator;
+import com.resource.management.resource.service.EquipmentXlsCreator;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static com.resource.management.resource.service.EquipmentPdfCreator.EQUIPMENT_REPORT_FILE_NAME;
+import static com.resource.management.resource.service.EquipmentXlsCreator.EQUIPMENT_REPORT_FILE_NAME;
 
 @Controller
 public class GetEquipmentReportController {
@@ -27,15 +28,19 @@ public class GetEquipmentReportController {
     @Autowired
     private EquipmentPdfCreator pdfCreator;
 
+    @Autowired
+    private EquipmentXlsCreator xlsCreator;
+
     @MessageMapping("/getEquipmentReport")
     @SendTo("/topic/equipmentReport")
     public String getFile() {
         List<SubUnit> subUnits = repository.findAll();
         pdfCreator.createPdf(subUnits);
-        return getPDFFileContentAsBase64();
+        xlsCreator.createXls(subUnits);
+        return getXLSFileContentAsBase64();
     }
 
-    private String getPDFFileContentAsBase64() {
+    private String getXLSFileContentAsBase64() {
         try {
             byte[] input_file = Files.readAllBytes(Paths.get(EQUIPMENT_REPORT_FILE_NAME));
             byte[] encodedBytes = Base64.encodeBase64(input_file);

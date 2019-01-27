@@ -207,14 +207,8 @@ public class ReportBuilder {
 
     private Report buildReportForResource(final List<Resource> resourcesOfType) {
         Report report = new Report();
-        long available = resourcesOfType.stream()
-                .filter(r -> r.getStatus() != null)
-                .filter(r -> !Objects.equals(r.getStatus().getStatus(), ResourceStatus.Status.UNAVAILABLE))
-                .count();
-        long unavailable = resourcesOfType.stream()
-                .filter(r -> r.getStatus() != null)
-                .filter(r -> Objects.equals(r.getStatus().getStatus(), ResourceStatus.Status.UNAVAILABLE))
-                .count();
+        long available = resourcesOfType.size();
+        long unavailable = 0L;
         report.setUsable(available);
         report.setUnusable(unavailable);
         return report;
