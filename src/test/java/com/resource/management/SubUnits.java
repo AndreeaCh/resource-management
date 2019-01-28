@@ -7,6 +7,10 @@ public class SubUnits {
         return JsonUtils.loadFromJsonString(SubUnit.class, SubUnitsTestData.SUBUNIT1);
     }
 
+    public static SubUnit otherInternal() {
+        return JsonUtils.loadFromJsonString(SubUnit.class, SubUnitsTestData.SUBUNIT2);
+    }
+
     public static SubUnit updatedInternal() {
         return JsonUtils.loadFromJsonString(SubUnit.class, SubUnitsTestData.SUBUNIT1_UPDATED);
     }
