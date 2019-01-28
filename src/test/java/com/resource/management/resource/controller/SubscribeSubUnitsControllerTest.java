@@ -65,7 +65,7 @@ public class SubscribeSubUnitsControllerTest {
     private List<SubUnit> prepareSubUnitListInRepository(HashMap<String, ResourceType> resourceTypeLockedBySessionIdMap) {
         final List<SubUnit> subUnitsList = new ArrayList<>();
         subUnitsList.add(new SubUnit("CJ", Arrays.asList(resource()), Arrays.asList(equipment()), Instant.now()
-                .toString(), resourceTypeLockedBySessionIdMap));
+                .toString(), Instant.now().toString(), Instant.now().toString(), resourceTypeLockedBySessionIdMap));
         when(this.repository.findAll()).thenReturn(subUnitsList);
         return subUnitsList;
     }

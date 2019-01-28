@@ -22,5 +22,11 @@ public class SubUnit {
     private List<Equipment> equipment;
 
     @EqualsAndHashCode.Exclude
-    private String lastUpdate;
+    private String lastUpdateFirstInterventionResource;
+
+    @EqualsAndHashCode.Exclude
+    private String lastUpdateOtherResource;
+
+    @EqualsAndHashCode.Exclude
+    private String lastUpdateEquipment;
 }

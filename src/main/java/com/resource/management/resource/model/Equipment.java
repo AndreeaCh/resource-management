@@ -1,12 +1,6 @@
 package com.resource.management.resource.model;
 
-import java.util.UUID;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.springframework.data.annotation.Id;
+import lombok.*;
 
 @Data
 @ToString
@@ -15,7 +9,6 @@ import org.springframework.data.annotation.Id;
 @EqualsAndHashCode
 public class Equipment {
 
-    @Id
     private String equipmentId;
 
     private ResourceType resourceType;
