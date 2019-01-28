@@ -54,8 +54,8 @@ public class SubUnitsService {
         if (existingSubUnitOptional.isPresent()) {
             SubUnit existingSubUnit = existingSubUnitOptional.get();
             updatedUnit = updateFirstInterventionResources(subUnit, existingSubUnit);
-            updateOtherResources(subUnit, updatedUnit, existingSubUnit);
-            updateEquipment(subUnit, updatedUnit, existingSubUnit);
+            updatedUnit = updateOtherResources(subUnit, updatedUnit, existingSubUnit);
+            updatedUnit = updateEquipment(subUnit, updatedUnit, existingSubUnit);
         }
 
         if (updatedUnit != null && existingSubUnitOptional.isPresent()) {
