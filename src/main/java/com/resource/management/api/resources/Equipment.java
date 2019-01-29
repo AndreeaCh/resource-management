@@ -14,7 +14,7 @@ import org.springframework.data.annotation.Id;
 @AllArgsConstructor
 public class Equipment {
     @Id
-    private String equipmentId;
+    private String id;
 
     private ResourceType resourceType;
 
