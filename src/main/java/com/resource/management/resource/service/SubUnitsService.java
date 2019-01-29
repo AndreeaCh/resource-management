@@ -1,20 +1,6 @@
 package com.resource.management.resource.service;
 
-import com.resource.management.resource.model.Equipment;
-import com.resource.management.resource.model.Resource;
-import com.resource.management.resource.model.ResourceLog;
-import com.resource.management.resource.model.ResourceStatus;
-import com.resource.management.resource.model.ResourceType;
-import com.resource.management.resource.model.SubUnit;
-import com.resource.management.resource.model.SubUnitsRepository;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
+import com.resource.management.resource.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -23,6 +9,11 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Instant;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 @Service
 public class SubUnitsService {
@@ -90,11 +81,11 @@ public class SubUnitsService {
             SubUnit subUnit = subUnitOptional.get();
             if (subUnit.getLockedResourceTypeBySessionId() != null) {
                 Optional<String> keyToBeRemoved = subUnit.getLockedResourceTypeBySessionId()
-                                                         .entrySet()
-                                                         .stream()
-                                                         .filter(entry -> entry.getValue().equals(resourceType))
-                                                         .findFirst()
-                                                         .map(Map.Entry::getKey);
+                        .entrySet()
+                        .stream()
+                        .filter(entry -> entry.getValue().equals(resourceType))
+                        .findFirst()
+                        .map(Map.Entry::getKey);
                 if (keyToBeRemoved.isPresent()) {
                     subUnit.getLockedResourceTypeBySessionId().remove(keyToBeRemoved.get());
                     saveSubUnit(subUnit);
@@ -104,26 +95,29 @@ public class SubUnitsService {
         return subUnitOptional;
     }
 
-    public Optional<SubUnit> unlockSubUnitLockedBySession(final String sessionId) {
-        Optional<SubUnit> subUnit = repository.findAll()
-                                              .stream()
-                                              .filter(s -> s.getLockedResourceTypeBySessionId().get(sessionId) != null)
-                                              .findFirst();
-        subUnit.ifPresent(s ->
-                          {
-                              s.getLockedResourceTypeBySessionId().remove(sessionId);
-                              saveSubUnit(s);
-                          });
+    public Map<SubUnit, ResourceType> unlockSubUnitsLockedBySession(final String sessionId) {
+        List<SubUnit> lockedSubUnits = repository.findAll()
+                .stream()
+                .filter(s -> s.getLockedResourceTypeBySessionId() != null
+                        && s.getLockedResourceTypeBySessionId().get(sessionId) != null)
+                .collect(Collectors.toList());
 
-        return subUnit;
+        Map<SubUnit, ResourceType> lockedResourceTypes = new HashMap<>();
+        lockedSubUnits.forEach(s -> {
+            lockedResourceTypes.put(s, s.getLockedResourceTypeBySessionId().get(sessionId));
+            s.getLockedResourceTypeBySessionId().remove(sessionId);
+            saveSubUnit(s);
+        });
+
+        return lockedResourceTypes;
     }
 
     public void unlockAllSubUnits() {
         repository.findAll().forEach(s ->
-                                     {
-                                         s.setLockedResourceTypeBySessionId(null);
-                                         saveSubUnit(s);
-                                     });
+        {
+            s.setLockedResourceTypeBySessionId(null);
+            saveSubUnit(s);
+        });
     }
 
     public void deleteSubUnit(final String name) {
@@ -139,7 +133,7 @@ public class SubUnitsService {
         List<SubUnit> subUnits = repository.findAll();
         final Optional<Resource> resourceOptional =
                 subUnits.stream().flatMap(subUnit -> subUnit.getResources().stream()
-                                                            .filter(resource -> resource.getPlateNumber().equals(plateNumber))).findFirst();
+                        .filter(resource -> resource.getPlateNumber().equals(plateNumber))).findFirst();
         if (resourceOptional.isPresent()) {
             resourceLog = resourceOptional.get().getResourceLogs();
         }
@@ -240,12 +234,12 @@ public class SubUnitsService {
 
     private List<Resource> getFirstInterventionResources(SubUnit existingSubUnit) {
         return existingSubUnit.getResources().stream()
-                              .filter(resource -> resource.getType().equals(ResourceType.FIRST_INTERVENTION)).collect(Collectors.toList());
+                .filter(resource -> resource.getType().equals(ResourceType.FIRST_INTERVENTION)).collect(Collectors.toList());
     }
 
     private List<Resource> getOtherResources(SubUnit existingSubUnit) {
         return existingSubUnit.getResources().stream()
-                              .filter(resource -> resource.getType().equals(ResourceType.OTHER)).collect(Collectors.toList());
+                .filter(resource -> resource.getType().equals(ResourceType.OTHER)).collect(Collectors.toList());
     }
 
     private List<Equipment> getEquipment(SubUnit existingSubUnit) {
@@ -261,8 +255,8 @@ public class SubUnitsService {
     private Optional<SubUnit> getSubUnitWithPlateNumber(String plateNumber) {
         List<SubUnit> subUnits = repository.findAll();
         return subUnits.stream()
-                       .filter(s -> s.getResources().stream().anyMatch(r -> r.getPlateNumber().equals(plateNumber)))
-                       .findFirst();
+                .filter(s -> s.getResources().stream().anyMatch(r -> r.getPlateNumber().equals(plateNumber)))
+                .findFirst();
     }
 
 
@@ -288,13 +282,13 @@ public class SubUnitsService {
                         initalResourcesMap.get(s))).collect(Collectors.toList());
 
         updatedResources.forEach(plateNumber ->
-                                 {
-                                     final Resource resource = initalResourcesMap.get(plateNumber);
-                                     String resourceIdentifier = resource.getPlateNumber() + " - " + resource.getIdentificationNumber();
-                                     historyWriter.addLogToFile(
-                                             resourceIdentifier,
-                                             "Data&ora='" + Instant.now() + '\'' + ", IP='" + ipAddress + '\'' + ", " + "Resursa editata!");
-                                 });
+        {
+            final Resource resource = initalResourcesMap.get(plateNumber);
+            String resourceIdentifier = resource.getPlateNumber() + " - " + resource.getIdentificationNumber();
+            historyWriter.addLogToFile(
+                    resourceIdentifier,
+                    "Data&ora='" + Instant.now() + '\'' + ", IP='" + ipAddress + '\'' + ", " + "Resursa editata!");
+        });
     }
 
 
@@ -305,13 +299,13 @@ public class SubUnitsService {
                 s -> !initalResourcesMap.keySet().contains(s)).collect(Collectors.toList());
 
         addedResources.forEach(plateNumber ->
-                               {
-                                   final Resource resource = updatedResourcesMap.get(plateNumber);
-                                   String resourceIdentifier = resource.getPlateNumber() + " - " + resource.getIdentificationNumber();
-                                   historyWriter.addLogToFile(
-                                           resourceIdentifier,
-                                           "Data&ora='" + Instant.now() + '\'' + ", IP='" + ipAddress + '\'' + ", " + "Resursa adaugata!");
-                               });
+        {
+            final Resource resource = updatedResourcesMap.get(plateNumber);
+            String resourceIdentifier = resource.getPlateNumber() + " - " + resource.getIdentificationNumber();
+            historyWriter.addLogToFile(
+                    resourceIdentifier,
+                    "Data&ora='" + Instant.now() + '\'' + ", IP='" + ipAddress + '\'' + ", " + "Resursa adaugata!");
+        });
     }
 
 
@@ -322,12 +316,12 @@ public class SubUnitsService {
                 s -> !updatedResourcesMap.keySet().contains(s)).collect(Collectors.toList());
 
         deletedResources.forEach(plateNumber ->
-                                 {
-                                     final Resource resource = initalResourcesMap.get(plateNumber);
-                                     String resourceIdentifier = resource.getPlateNumber() + " - " + resource.getIdentificationNumber();
-                                     historyWriter.addLogToFile(
-                                             resourceIdentifier,
-                                             "Data&ora='" + Instant.now() + '\'' + ", IP='" + ipAddress + '\'' + ", " + "Resursa stearsa!");
-                                 });
+        {
+            final Resource resource = initalResourcesMap.get(plateNumber);
+            String resourceIdentifier = resource.getPlateNumber() + " - " + resource.getIdentificationNumber();
+            historyWriter.addLogToFile(
+                    resourceIdentifier,
+                    "Data&ora='" + Instant.now() + '\'' + ", IP='" + ipAddress + '\'' + ", " + "Resursa stearsa!");
+        });
     }
 }

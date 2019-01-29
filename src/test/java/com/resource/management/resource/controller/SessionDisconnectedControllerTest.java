@@ -1,11 +1,16 @@
 package com.resource.management.resource.controller;
 
 import com.resource.management.SubUnits;
+import com.resource.management.resource.model.ResourceType;
 import com.resource.management.resource.model.SubUnit;
 import com.resource.management.resource.service.NotificationService;
 import com.resource.management.resource.service.SubUnitsService;
+
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +42,14 @@ public class SessionDisconnectedControllerTest {
         //given
         SubUnit subUnit = SubUnits.internal();
         String sessionId = "SessionId";
-        when(subUnitsService.unlockSubUnitLockedBySession(sessionId)).thenReturn(Optional.of(subUnit));
+        when(subUnitsService.unlockSubUnitsLockedBySession(sessionId)).thenReturn(Collections.singletonMap(subUnit, ResourceType.FIRST_INTERVENTION));
         SessionDisconnectEvent event = new SessionDisconnectEvent(mock(Object.class), mock(Message.class), sessionId, CloseStatus.GOING_AWAY);
 
         //when
         this.sut.onDisconnectEvent(event);
 
         //then
-        verify(subUnitsService).unlockSubUnitLockedBySession(sessionId);
+        verify(subUnitsService).unlockSubUnitsLockedBySession(sessionId);
     }
 
     @Test
@@ -52,13 +57,13 @@ public class SessionDisconnectedControllerTest {
         //given
         SubUnit subUnit = SubUnits.internal();
         String sessionId = "SessionId";
-        when(subUnitsService.unlockSubUnitLockedBySession(sessionId)).thenReturn(Optional.of(subUnit));
+        when(subUnitsService.unlockSubUnitsLockedBySession(sessionId)).thenReturn(Collections.singletonMap(subUnit, ResourceType.OTHER));
         SessionDisconnectEvent event = new SessionDisconnectEvent(mock(Object.class), mock(Message.class), sessionId, CloseStatus.GOING_AWAY);
 
         //when
         this.sut.onDisconnectEvent(event);
 
         //then
-        verify(notificationService).publishUnlockedSubUnitNotification(subUnit.getName(), null);
+        verify(notificationService).publishUnlockedSubUnitNotification(subUnit.getName(), Collections.singleton(ResourceType.OTHER));
     }
 }
