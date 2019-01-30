@@ -1,21 +1,27 @@
 package com.resource.management.services.controller;
 
-import com.resource.management.api.services.AddServiceRequest;
-import com.resource.management.api.services.ServicesListUpdatedNotification;
-import com.resource.management.services.model.Service;
-import com.resource.management.services.model.ServiceRepository;
+import java.time.Instant;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
-import java.time.Instant;
-import java.util.UUID;
+import com.resource.management.api.services.AddServiceRequest;
+import com.resource.management.api.services.ServicesListUpdatedNotification;
+import com.resource.management.services.model.LastUpdatedTimestamp;
+import com.resource.management.services.model.LastUpdatedTimestampRepository;
+import com.resource.management.services.model.Service;
+import com.resource.management.services.model.ServiceRepository;
 
 @Controller
 public class AddServiceController {
     @Autowired
     private ServiceRepository repository;
+
+    @Autowired
+    private LastUpdatedTimestampRepository timestampRepository;
 
     @MessageMapping("/addService")
     @SendTo("/topic/services")
@@ -27,6 +33,11 @@ public class AddServiceController {
                 request.getContact(),
                 Instant.now().toString());
         repository.save(service);
-        return new ServicesListUpdatedNotification(repository.findAll(), service.getLastUpdate());
+
+        final LastUpdatedTimestamp lastUpdatedTimestamp = new LastUpdatedTimestamp( "timeStamp",
+              Instant.now().toString() );
+        timestampRepository.save( lastUpdatedTimestamp );
+
+        return new ServicesListUpdatedNotification( repository.findAll(), lastUpdatedTimestamp.getTimeStamp() );
     }
 }
