@@ -1,45 +1,16 @@
 <assembly>
-  <id>bin</id>
+  <id>dist</id>
   <formats>
     <format>zip</format>
   </formats>
+  <includeBaseDirectory>false</includeBaseDirectory>
   <fileSets>
     <fileSet>
         <directory>${project.build.directory}</directory>
-        <!-- TODO: change to bin after modifying deploy script-->
-        <outputDirectory>target</outputDirectory>
+        <outputDirectory>dist</outputDirectory>
         <includes>
-            <include>*.jar</include>
+            <include>*.tar.gz</include>
         </includes>
-    </fileSet>
-    <fileSet>
-      <directory>src/main/resources</directory>
-      <!-- TODO: change to import after modifying fillDb script-->
-      <outputDirectory>import/src/main/resources</outputDirectory>
-      <includes>
-        <include>*.json</include>
-      </includes>
-    </fileSet>
-    <fileSet>
-      <directory>../isu-resource-management-client/dist</directory>
-      <outputDirectory>dist</outputDirectory>
-      <includes>
-        <include>*/**</include>
-      </includes>
-    </fileSet>
-    <fileSet>
-      <directory>scripts</directory>
-      <outputDirectory>scripts</outputDirectory>
-      <includes>
-        <include>chocolatey/*</include>
-        <include>*.bat</include>
-        <include>*.cmd</include>
-        <include>*.ps1</include>
-      </includes>
-      <excludes>
-        <exclude>install.bat</exclude>
-        <exclude>start.bat</exclude>
-      </excludes>
     </fileSet>
     <fileSet>
       <directory>.</directory>
@@ -57,15 +28,7 @@
       <source>scripts/install.bat</source>
     </file>
     <file>
-      <source>scripts/start.bat</source>
-    </file>
-    <file>
-      <source>deploy.bat</source>
-      <destName>run-backend.bat</destName>
-    </file>
-    <file>
-      <source>fillDB.bat</source>
-      <outputDirectory>import</outputDirectory>
+      <source>scripts/setup.bat</source>
     </file>
   </files>
 </assembly>
