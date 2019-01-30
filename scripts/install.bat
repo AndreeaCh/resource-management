@@ -16,6 +16,20 @@ powershell Set-ExecutionPolicy Unrestricted
 
 : set-path-constants
 
+:: resource management install path
+SET _ARCHIVE_PATH=%1
+SET _INSTALL_PATH=%2
+
+IF "%_ARCHIVE_PATH%"=="" (
+    ECHO Archive path is NOT defined
+    GOTO :cleaning
+)
+
+IF "%_INSTALL_PATH%"=="" (
+    ECHO Install path is NOT defined
+    GOTO :cleaning
+)
+
 :: chocolatey constants
 SET _CHOCO_VER=0.10.11
 
@@ -125,11 +139,27 @@ powershell -command npm install -g http-server
 :http_server_configure
 ECHO INSTALL_3.4 Configure http server... skipping
 
+
+::::::::::::::::::::::::::::::: INSTALL RESOURCE MANAGEMENT APP :::::::::::::::::::::::::::::
+
+:: TODO: find if application is already installed and remove all files
+
+:isu_install
+ECHO INSTALL_4.0 Creating install folder
+mkdir "%_INSTALL_PATH%" 2>nul
+IF NOT EXIST "%_INSTALL_PATH%\*" (
+    ECHO Failed to create directory "%_INSTALL_PATH%"
+    GOTO :cleaning
+)
+
+ECHO INSTALL_4.1 Extracting archive...
+tar -xf %_ARCHIVE_PATH% -C %_INSTALL_PATH% --strip-components=1
+
 :::::::::::::::::::::::::::::::::::: POST PROCESSING ::::::::::::::::::::::::::::::::::::::::
 
 :cleaning
 :powershell-deactivation
-ECHO INSTALL_4.0 De-activate powershell...
+ECHO INSTALL_5.0 De-activate powershell...
 powershell Set-ExecutionPolicy Restricted
 
 ECHO ON
