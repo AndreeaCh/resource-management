@@ -22,6 +22,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+
+        <win.native.resources>${project.build.directory}/winres</win.native.resources>
+        <frontend.groupId>${project.groupId}</frontend.groupId>
+        <frontend.artifactId>${project.artifactId}-client</frontend.artifactId>
+        <frontend.version>${project.version}</frontend.version>
+
     </properties>
 
     <dependencies>
@@ -92,6 +98,38 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+
+            <!--fetch backend and frontend distributables from maven repository-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>windows native unpack frontend assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${win.native.resources}</outputDirectory>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>${frontend.groupId}</groupId>
+                                    <artifactId>${frontend.artifactId}</artifactId>
+                                    <version>${frontend.version}</version>
+                                    <classifier>bin</classifier>
+                                    <overWrite>true</overWrite>
+                                    <type>tar.gz</type>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <stripVersion>true</stripVersion>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
