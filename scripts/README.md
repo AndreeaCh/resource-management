@@ -1,4 +1,11 @@
-## Resource Management 
+## Resource Management Application 
+
+### TODO
+
+- use client bin dist for windows native installer
+- modify fillDb.bat and deploy.bat to take different arguments
+ 
+
 
 ### Installation
 
@@ -7,6 +14,3 @@ setup.bat <install_directory> <path_to_archive>
 ```
 
 ### Release notes
-
-TODO
-- chocolatey to install directly from web link?
