@@ -6,16 +6,14 @@
   <fileSets>
     <fileSet>
         <directory>${project.build.directory}</directory>
-        <!-- TODO: change to bin after modifying deploy script-->
-        <outputDirectory>target</outputDirectory>
+        <outputDirectory>bin</outputDirectory>
         <includes>
             <include>*.jar</include>
         </includes>
     </fileSet>
     <fileSet>
       <directory>src/main/resources</directory>
-      <!-- TODO: change to import after modifying fillDb script-->
-      <outputDirectory>import/src/main/resources</outputDirectory>
+      <outputDirectory>import</outputDirectory>
       <includes>
         <include>*.json</include>
       </includes>
