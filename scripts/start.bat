@@ -7,6 +7,7 @@ ECHO OFF
 SET _DEMO_MODE=%1
 SET _SCRIPTS_DIR=.\scripts
 SET _IMPORT_DIR=.\import
+SET _BIN_DIR=.\bin
 
 ::::::::::::::::::::::::::::::::: PATH CONSTANTS ::::::::::::::::::::::::::::::::::::::
 
@@ -32,7 +33,6 @@ FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq mongod.exe" /fo table /n
 :start_mongod
 ECHO START_1.1 Start mongo
 powershell -command "Start-Process powershell -ArgumentList 'mongod --config %_MONGO_BIN_PATH%\mongod.cfg  >> logs\mongod-%_DATETIME%.log 2>&1' -WindowStyle hidden"
-::START /B %_MONGO_BIN_PATH%\mongod.exe --config %_MONGO_BIN_PATH%\mongod.cfg
 
 ECHO Waiting for the daemon to start...
 timeout 15
@@ -43,7 +43,7 @@ IF NOT "%_DEMO_MODE%" == "demo" (
 )
 
 ECHO START_1.2 Fill database with predefined data
-%_IMPORT_DIR%\fillDb.bat %_MONGO_BIN_PATH%
+%_IMPORT_DIR%\fillDb.bat %_MONGO_BIN_PATH% %_IMPORT_DIR%
 
 :::::::::::::::::::::::::::::::::::::: START BACKEND ::::::::::::::::::::::::::::::::::::::
 
@@ -56,7 +56,7 @@ FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq java.exe" /fo table /nh'
 )
 
 ECHO START_2.2 Starting new server instance...
-powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\run-backend.bat >> logs\backend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
+powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\run-backend.bat %_BIN_DIR% >> logs\backend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
 
 :::::::::::::::::::::::::::::::::::::: START FRONTEND ::::::::::::::::::::::::::::::::::::::
