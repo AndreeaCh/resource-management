@@ -42,13 +42,17 @@
   </fileSets>
   <files>
     <file>
-      <source>deploy/README.md</source>
+      <source>deploy/windows-native/run-instructions.md</source>
+      <destName>README.md</destName>
     </file>
     <file>
-      <source>deploy/native/start.bat</source>
+      <source>deploy/windows-native/start.bat</source>
     </file>
     <file>
-      <source>deploy/native/stop.bat</source>
+      <source>deploy/windows-native/stop.bat</source>
+    </file>
+    <file>
+      <source>deploy/windows-native/uninstall.bat</source>
     </file>
     <file>
       <source>deploy.bat</source>
