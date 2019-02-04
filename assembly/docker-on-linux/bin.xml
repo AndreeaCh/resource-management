@@ -1,0 +1,33 @@
+<assembly>
+  <id>bin</id>
+  <formats>
+    <format>tar.gz</format>
+  </formats>
+  <fileSets>
+    <fileSet>
+      <directory>.</directory>
+      <outputDirectory>logs</outputDirectory>
+      <excludes>
+        <exclude>*/**</exclude>
+      </excludes>
+    </fileSet>
+  </fileSets>
+  <files>
+    <file>
+      <source>deploy/docker-on-linux/run-instructions.md</source>
+      <destName>README.md</destName>
+    </file>
+    <file>
+      <source>deploy/docker-on-linux/start.sh</source>
+      <fileMode>0744</fileMode>
+    </file>
+    <file>
+      <source>deploy/docker-on-linux/stop.sh</source>
+      <fileMode>0744</fileMode>
+    </file>
+    <file>
+      <source>deploy/docker-on-linux/uninstall.sh</source>
+      <fileMode>0744</fileMode>
+    </file>
+  </files>
+</assembly>

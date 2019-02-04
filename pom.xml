@@ -190,28 +190,28 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>create application bundle</id>
+                        <id>create windows native application bundle</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
                         <configuration>
                             <descriptors>
-                                <descriptor>assembly/bin.xml</descriptor>
+                                <descriptor>assembly/windows-native/bin.xml</descriptor>
                             </descriptors>
                             <finalName>resource-management-bin</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                         </configuration>
                     </execution>
                     <execution>
-                        <id>create install kit</id>
+                        <id>create windows native install kit</id>
                         <phase>install</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
                         <configuration>
                             <descriptors>
-                                <descriptor>assembly/dist.xml</descriptor>
+                                <descriptor>assembly/windows-native/dist.xml</descriptor>
                             </descriptors>
                         </configuration>
                     </execution>
@@ -265,7 +265,7 @@
                 <extensions>true</extensions>
                 <executions>
                     <execution>
-                        <id>build backend docker image</id>
+                        <id>build docker images</id>
                         <phase>install</phase>
                         <goals>
                             <goal>build</goal>
@@ -280,17 +280,6 @@
                                         <dockerFileDir>${dockerOutputDirectory}/backend</dockerFileDir>
                                     </build>
                                 </image>
-                            </images>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>build frontend docker image</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                        <configuration>
-                            <images>
                                 <image>
                                     <alias>${frontend.image.alias}</alias>
                                     <name>${frontend.image.name}</name>
@@ -299,17 +288,6 @@
                                         <dockerFileDir>${dockerOutputDirectory}/frontend</dockerFileDir>
                                     </build>
                                 </image>
-                            </images>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>build mongodb docker image</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                        <configuration>
-                            <images>
                                 <image>
                                     <alias>${db.image.alias}</alias>
                                     <name>${db.image.name}</name>
@@ -321,6 +299,74 @@
                             </images>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>save backend docker image</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>save</goal>
+                        </goals>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <alias>${backend.image.alias}</alias>
+                                    <name>${backend.image.name}</name>
+                                </image>
+                            </images>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>save frontend docker image</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>save</goal>
+                        </goals>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <alias>${frontend.image.alias}</alias>
+                                    <name>${frontend.image.name}</name>
+                                </image>
+                            </images>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>save db docker image</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>save</goal>
+                        </goals>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <alias>${db.image.alias}</alias>
+                                    <name>${db.image.name}</name>
+                                </image>
+                            </images>
+                        </configuration>
+                    </execution>
+                    <!--<execution>-->
+                        <!--<id>save docker image</id>-->
+                        <!--<phase>install</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>save</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<images>-->
+                                <!--<image>-->
+                                    <!--<alias>${backend.image.alias}</alias>-->
+                                    <!--<name>${backend.image.name}</name>-->
+                                <!--</image>-->
+                                <!--<image>-->
+                                    <!--<alias>${frontend.image.alias}</alias>-->
+                                    <!--<name>${frontend.image.name}</name>-->
+                                <!--</image>-->
+                                <!--<image>-->
+                                    <!--<alias>${db.image.alias}</alias>-->
+                                    <!--<name>${db.image.name}</name>-->
+                                <!--</image>-->
+                            <!--</images>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
                 </executions>
                 <configuration>
                     <verbose>true</verbose>
@@ -329,8 +375,8 @@
                         <image>
                             <build>
                                 <tags>
-                                    <tag>${project.version}</tag>
                                     <tag>latest</tag>
+                                    <tag>${project.version}</tag>
                                 </tags>
                             </build>
                             <run>
