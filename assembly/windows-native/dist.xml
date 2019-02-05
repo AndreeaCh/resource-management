@@ -9,7 +9,7 @@
         <directory>${project.build.directory}</directory>
         <outputDirectory>dist</outputDirectory>
         <includes>
-            <include>*.tar.gz</include>
+            <include>resource-management-bin.tar.gz</include>
         </includes>
     </fileSet>
     <fileSet>

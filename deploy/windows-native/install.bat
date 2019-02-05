@@ -155,6 +155,9 @@ IF NOT EXIST "%_INSTALL_PATH%\*" (
 ECHO INSTALL_4.1 Extracting archive...
 tar -xf %_ARCHIVE_PATH% -C %_INSTALL_PATH% --strip-components=1
 
+ECHO INSTALL 4.2 Change folder permissions to allow normal user access
+icacls %_INSTALL_PATH% /q /c /t /grant Users:F
+
 :::::::::::::::::::::::::::::::::::: POST PROCESSING ::::::::::::::::::::::::::::::::::::::::
 
 :cleaning

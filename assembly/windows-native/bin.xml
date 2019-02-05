@@ -42,7 +42,7 @@
   </fileSets>
   <files>
     <file>
-      <source>deploy/windows-native/run-instructions.md</source>
+      <source>deploy/windows-native/run_instructions.md</source>
       <destName>README.md</destName>
     </file>
     <file>
