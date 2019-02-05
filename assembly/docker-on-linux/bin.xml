@@ -14,7 +14,7 @@
   </fileSets>
   <files>
     <file>
-      <source>deploy/docker-on-linux/run-instructions.md</source>
+      <source>deploy/docker-on-linux/run_instructions.md</source>
       <destName>README.md</destName>
     </file>
     <file>
