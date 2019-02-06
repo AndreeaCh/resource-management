@@ -214,6 +214,7 @@
                             <descriptors>
                                 <descriptor>assembly/windows-native/dist.xml</descriptor>
                             </descriptors>
+                            <finalName>resource-management-windows-native</finalName>
                         </configuration>
                     </execution>
                 </executions>
