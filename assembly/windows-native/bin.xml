@@ -1,7 +1,7 @@
 <assembly>
   <id>bin</id>
   <formats>
-    <format>tar.gz</format>
+    <format>zip</format>
   </formats>
   <fileSets>
     <fileSet>
@@ -23,13 +23,6 @@
       <outputDirectory>dist</outputDirectory>
       <includes>
         <include>*/**</include>
-      </includes>
-    </fileSet>
-    <fileSet>
-      <directory>deploy</directory>
-      <outputDirectory>scripts</outputDirectory>
-      <includes>
-        <include>chocolatey/*</include>
       </includes>
     </fileSet>
     <fileSet>

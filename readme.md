@@ -16,10 +16,18 @@
 * [Deleting a Sub-unit](/src/main/doc/delete.md)
 
 # Deployment for Windows environments
-* Place resource-management and isu-resource-management-client in the same parent folder
-* Build isu-resource-management-client ( mvn clean install ) - builds frontend for production 
-* Build resource-management (mvn clean install) - creates assembly archive for deployment
-* Run the setup.bat script - installs from archive and starts the application
+* build frontend distributable
+``` bash
+    :isu-resource-management-client$ mvn clean install
+```
+* build application distributable
+``` bash
+    :resource-management$ mvn clean install -DskipTests
+```
+The generated bundle can be found at target/'resource-management-windows-native-*.zip' 
+
+* extract target/resource-management-windows-native-*.zip
+* continue with the instructions found in the extracted file named README.md
 
 ## Deployment for Unix(Linux) environments
 * build frontend distributable
