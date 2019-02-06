@@ -9,8 +9,15 @@
         <directory>${project.build.directory}</directory>
         <outputDirectory>dist</outputDirectory>
         <includes>
-            <include>resource-management-bin.tar.gz</include>
+            <include>resource-management-bin.zip</include>
         </includes>
+    </fileSet>
+    <fileSet>
+      <directory>deploy</directory>
+      <outputDirectory>scripts</outputDirectory>
+      <includes>
+        <include>chocolatey/*</include>
+      </includes>
     </fileSet>
     <fileSet>
       <directory>.</directory>

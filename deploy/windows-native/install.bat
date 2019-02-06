@@ -30,6 +30,8 @@ IF "%_INSTALL_PATH%"=="" (
     GOTO :cleaning
 )
 
+SET _SCRIPTS_DIR=.\scripts
+
 :: chocolatey constants
 SET _CHOCO_VER=0.10.11
 
@@ -64,6 +66,7 @@ START %_SCRIPTS_DIR%\chocolatey\installChocolatey.cmd
 
 :choco_configure
 ECHO INSTALL_0.6 Configure chocolatey... skipping
+:: TODO: the rest of the script shall not inherit this shell state, choco will not be available in the same shell session
 
 :::::::::::::::::::::::::::::::::::::: INSTALL JAVA ::::::::::::::::::::::::::::::::::::::
 
@@ -138,6 +141,7 @@ powershell -command npm install -g http-server
 
 :http_server_configure
 ECHO INSTALL_3.4 Configure http server... skipping
+:: TODO : npm won't be available imediately upon install
 
 
 ::::::::::::::::::::::::::::::: INSTALL RESOURCE MANAGEMENT APP :::::::::::::::::::::::::::::
@@ -153,7 +157,8 @@ IF NOT EXIST "%_INSTALL_PATH%\*" (
 )
 
 ECHO INSTALL_4.1 Extracting archive...
-tar -xf %_ARCHIVE_PATH% -C %_INSTALL_PATH% --strip-components=1
+powershell -command Expand-Archive -LiteralPath %_ARCHIVE_PATH% -DestinationPath %_INSTALL_PATH%
+::tar -xf %_ARCHIVE_PATH% -C %_INSTALL_PATH% --strip-components=1
 
 ECHO INSTALL 4.2 Change folder permissions to allow normal user access
 icacls %_INSTALL_PATH% /q /c /t /grant Users:F
