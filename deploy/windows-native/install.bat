@@ -30,8 +30,6 @@ IF "%_INSTALL_PATH%"=="" (
     GOTO :cleaning
 )
 
-SET _SCRIPTS_DIR=.\scripts
-
 :: chocolatey constants
 SET _CHOCO_VER=0.10.11
 
@@ -42,13 +40,20 @@ SET _MONGO_LOG_PATH=C:\mongodb\log
 SET _MONGO_VER=4.0.4
 
 :: openjdk path constants - modify this as needed
-SET _JAVA_INSTALL_PATH=C:\Progra~1\Zulu\zulu
-SET _JAVA_VER=11.0.1
+SET _JAVA_INSTALL_OPTION=zulu
+SET _JAVA_VER=11.29.3
 
 :: nodejs path constants - modify this as needed
 SET _NODE_INSTALL_PATH=C:\Progra~1\nodejs
 SET _NODE_VER=10.15.0
 SET _HTTP_SERVER_VER=0.11.1
+
+:: local paths
+SET _SCRIPTS_DIR=.\scripts
+SET _TEMP_DIR=.\tmp
+
+ECHO INSTALL_0.1 : Create temp folder...
+IF NOT EXIST %_TEMP_DIR% MD %_TEMP_DIR%
 
 :::::::::::::::::::::::::::::::::::::: INSTALL CHOCOLATEY ::::::::::::::::::::::::::::::::::::::
 
@@ -80,7 +85,7 @@ FOR /f "tokens=3" %%G IN ('java -version 2^>^&1 ^| findstr /i "version"') DO (
 
 :java_install
 ECHO INSTALL_1.2 Installing java if not already installed...
-powershell -command choco install zulu -y --version %_JAVA_VER%
+powershell -command choco install %_JAVA_INSTALL_OPTION% -y --version %_JAVA_VER%
 
 :java_configure
 ECHO INSTALL_1.3 Configure java... skipping
@@ -144,30 +149,43 @@ ECHO INSTALL_3.4 Configure http server... skipping
 :: TODO : npm won't be available imediately upon install
 
 
+:::::::::::::::::::::::::::::::::: INSTALL COMPRESSION APP ::::::::::::::::::::::::::::::::::
+
+:7z_setup
+ECHO INSTALL_4.1 Installing 7-zip
+powershell -command choco install 7zip -y
+
 ::::::::::::::::::::::::::::::: INSTALL RESOURCE MANAGEMENT APP :::::::::::::::::::::::::::::
 
 :: TODO: find if application is already installed and remove all files
 
 :isu_install
-ECHO INSTALL_4.0 Creating install folder
-mkdir "%_INSTALL_PATH%" 2>nul
+ECHO INSTALL_5.0 Creating install folder
+MKDIR "%_INSTALL_PATH%" 2>nul
 IF NOT EXIST "%_INSTALL_PATH%\*" (
     ECHO Failed to create directory "%_INSTALL_PATH%"
     GOTO :cleaning
 )
 
-ECHO INSTALL_4.1 Extracting archive...
-powershell -command Expand-Archive -LiteralPath %_ARCHIVE_PATH% -DestinationPath %_INSTALL_PATH%
+ECHO INSTALL_5.1 Extracting archive...
+7z x %_ARCHIVE_PATH% -o%_TEMP_DIR% -aoa -y -r
+
+ECHO INSTALL_5.2 : Move extracted files to instalation directory ...
+FOR /f %%G IN ('dir /A:D /B %_TEMP_DIR%') DO xcopy .\%_TEMP_DIR%\%%G %_INSTALL_PATH% /e /y /i
+::powershell -command Expand-Archive -LiteralPath %_ARCHIVE_PATH% -DestinationPath %_INSTALL_PATH%
 ::tar -xf %_ARCHIVE_PATH% -C %_INSTALL_PATH% --strip-components=1
 
-ECHO INSTALL 4.2 Change folder permissions to allow normal user access
+ECHO INSTALL 5.3 Change folder permissions to allow normal user access
 icacls %_INSTALL_PATH% /q /c /t /grant Users:F
 
 :::::::::::::::::::::::::::::::::::: POST PROCESSING ::::::::::::::::::::::::::::::::::::::::
 
 :cleaning
 :powershell-deactivation
-ECHO INSTALL_5.0 De-activate powershell...
+ECHO INSTALL_6.0 De-activate powershell...
 powershell Set-ExecutionPolicy Restricted
+
+ECHO INSTALL_6.1 : Remove any temporary files ...
+RD /S /Q %_TEMP_DIR%
 
 ECHO ON
