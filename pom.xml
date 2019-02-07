@@ -36,14 +36,17 @@
 
         <backend.image.name>isu/${project.artifactId}-backend</backend.image.name>
         <backend.image.alias>backend</backend.image.alias>
+        <backend.docker.image.filename>${backend.image.alias}-docker-image.tar.gz</backend.docker.image.filename>
 
         <frontend.image.name>isu/${project.artifactId}-frontend</frontend.image.name>
         <frontend.image.alias>frontend</frontend.image.alias>
+        <frontend.docker.image.filename>${frontend.image.alias}-docker-image.tar.gz</frontend.docker.image.filename>
 
         <db.image.name>isu/${project.artifactId}-db</db.image.name>
         <db.image.alias>mongodb</db.image.alias>
+        <db.docker.image.filename>${db.image.alias}-docker-image.tar.gz</db.docker.image.filename>
 
-        <version.docker-maven-plugin>0.28.0</version.docker-maven-plugin>
+        <version.docker-maven-plugin>0.25.0</version.docker-maven-plugin>
         <version.buildnumber-maven-plugin>1.4</version.buildnumber-maven-plugin>
     </properties>
 
@@ -186,40 +189,6 @@
                 </configuration>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>create windows native application bundle</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>assembly/windows-native/bin.xml</descriptor>
-                            </descriptors>
-                            <finalName>resource-management-bin</finalName>
-                            <appendAssemblyId>false</appendAssemblyId>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>create windows native install kit</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                        <configuration>
-                            <descriptors>
-                                <descriptor>assembly/windows-native/dist.xml</descriptor>
-                            </descriptors>
-                            <finalName>resource-management-windows-native</finalName>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
             <!--copy docker files-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -305,6 +274,7 @@
                             <goal>save</goal>
                         </goals>
                         <configuration>
+                            <saveFile>${project.build.directory}/${backend.docker.image.filename}</saveFile>
                             <images>
                                 <image>
                                     <alias>${backend.image.alias}</alias>
@@ -320,6 +290,7 @@
                             <goal>save</goal>
                         </goals>
                         <configuration>
+                            <saveFile>${project.build.directory}/${frontend.docker.image.filename}</saveFile>
                             <images>
                                 <image>
                                     <alias>${frontend.image.alias}</alias>
@@ -335,6 +306,7 @@
                             <goal>save</goal>
                         </goals>
                         <configuration>
+                            <saveFile>${project.build.directory}/${db.docker.image.filename}</saveFile>
                             <images>
                                 <image>
                                     <alias>${db.image.alias}</alias>
@@ -360,6 +332,69 @@
                     </images>
                 </configuration>
             </plugin>
+
+            <!--building distributables-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>create windows native application bundle</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>assembly/windows-native/bin.xml</descriptor>
+                            </descriptors>
+                            <finalName>resource-management-windows-native-bin</finalName>
+                            <appendAssemblyId>false</appendAssemblyId>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>create windows native install kit</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>assembly/windows-native/dist.xml</descriptor>
+                            </descriptors>
+                            <finalName>resource-management-windows-native</finalName>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>create docker on linux application bundle</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>assembly/docker-on-linux/bin.xml</descriptor>
+                            </descriptors>
+                            <finalName>resource-management-docker-on-linux-bin</finalName>
+                            <appendAssemblyId>false</appendAssemblyId>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>create docker on linux install kit</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>assembly/docker-on-linux/dist.xml</descriptor>
+                            </descriptors>
+                            <finalName>resource-management-docker-on-linux</finalName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
