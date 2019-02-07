@@ -5,13 +5,20 @@
   </formats>
   <fileSets>
     <fileSet>
-        <directory>${project.build.directory}</directory>
+      <directory>${project.build.directory}</directory>
+      <outputDirectory>dist</outputDirectory>
+      <includes>
+        <include>resource-management-docker-on-linux-bin.tar.gz</include>
+      </includes>
+    </fileSet>
+    <fileSet>
+      <directory>${project.build.directory}</directory>
         <outputDirectory>images</outputDirectory>
         <includes>
-            <include>resource-management-backend-*.tar.gz</include>
-            <include>resource-management-frontend-*.tar.gz</include>
-            <include>resource-management-db-*.tar.gz</include>
-        </includes>
+          <include>backend-docker-image.tar.gz</include>
+          <include>${frontend.docker.image.filename}</include>
+          <include>${db.docker.image.filename}</include>
+      </includes>
     </fileSet>
     <fileSet>
       <directory>.</directory>
