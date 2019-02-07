@@ -7,7 +7,7 @@ ECHO OFF
 SET _INSTALL_PATH=%1
 IF "%_INSTALL_PATH%"=="" SET _INSTALL_PATH=C:\Progra~1\resource-management
 
-SET _ARCHIVE_PATH=.\dist\resource-management-bin.zip
+SET _ARCHIVE_PATH=.\dist\resource-management-windows-native-bin.zip
 SET _LOGS_PATH=%CD%\logs
 
 
