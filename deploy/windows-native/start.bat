@@ -44,7 +44,7 @@ IF NOT "%_DEMO_MODE%" == "demo" (
 )
 
 ECHO START_1.2 Fill database with predefined data
-%_IMPORT_DIR%\fillDb.bat %_MONGO_BIN_PATH% %_IMPORT_DIR%
+powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\import.bat %_MONGO_BIN_PATH% %_IMPORT_DIR% >> %_LOGS_DIR%\import-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
 :::::::::::::::::::::::::::::::::::::: START BACKEND ::::::::::::::::::::::::::::::::::::::
 
