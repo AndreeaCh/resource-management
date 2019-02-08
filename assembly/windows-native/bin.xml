@@ -48,6 +48,9 @@
       <source>deploy/windows-native/uninstall.bat</source>
     </file>
     <file>
+      <source>deploy/windows-native/application.properties</source>
+    </file>
+    <file>
       <source>deploy.bat</source>
       <destName>run-backend.bat</destName>
     </file>
