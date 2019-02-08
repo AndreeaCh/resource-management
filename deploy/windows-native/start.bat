@@ -9,6 +9,7 @@ SET _SCRIPTS_DIR=.\scripts
 SET _IMPORT_DIR=.\import
 SET _BIN_DIR=.\bin
 SET _LOGS_DIR=.\logs
+SET _CONFIG_PATH=.\application.properties
 
 ::::::::::::::::::::::::::::::::: PATH CONSTANTS ::::::::::::::::::::::::::::::::::::::
 
@@ -57,7 +58,7 @@ FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq java.exe" /fo table /nh'
 )
 
 ECHO START_2.2 Starting new server instance...
-powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\run-backend.bat %_BIN_DIR% >> %_LOGS_DIR%\backend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
+powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\run-backend.bat %_BIN_DIR% %_CONFIG_PATH% >> %_LOGS_DIR%\backend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
 
 :::::::::::::::::::::::::::::::::::::: START FRONTEND ::::::::::::::::::::::::::::::::::::::
