@@ -53,7 +53,7 @@
     </file>
     <file>
       <source>fillDb.bat</source>
-      <outputDirectory>import</outputDirectory>
+      <destName>import.bat</destName>
     </file>
   </files>
 </assembly>
