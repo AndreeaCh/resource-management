@@ -2,13 +2,17 @@
 
 ### TODO
 
-- rename bin and dist archives to reflect the target platform
-- support for building distributable under windows
+- configurable server url in env.js
+- configurable backend port in application.properties
+- finalize uninstall script
+- remove install path hardcoding  
 - installers to be copied predefined location at maven deploy phase
+- support for building distributables (including docker) under windows
 - organize dist building with the use of build profiles
 
 ### DONE
 
+- rename bin and dist archives to reflect the target platform
 - rename scripts directory to 'deploy' and create 'native' and 'docker' subfolders
 - use client bin dist for windows native installer
 - modify fillDb.bat and deploy.bat to take different arguments

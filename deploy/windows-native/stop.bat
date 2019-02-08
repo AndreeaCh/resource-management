@@ -1,18 +1,19 @@
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:: Batch start.bat - Stops ISU Resource Management backend and frontend services
+:: Batch stop.bat - Stops ISU Resource Management backend and frontend services
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ECHO OFF
 
 :: TODO: processes neeed to be identified precisely, otherwise we end up stopping other processes
 
-ECHO STOP_1 Stop frontend server
+ECHO STOP_1 Stopping frontend server ...
 TASKKILL /IM node.exe /F
 
-ECHO STOP_2 Stop backend server
+ECHO STOP_2 Stopping backend server ...
 TASKKILL /IM java.exe /F
 
-:cleaning
+ECHO STOP_2 Stopping backend server ...
+TASKKILL /IM mongod.exe /F
 
+:cleaning
 ECHO ON
-PAUSE
