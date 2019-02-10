@@ -26,14 +26,14 @@ public class NotificationService {
 
     public void publishSubUnitAddedNotification(final SubUnit subUnit) {
         messagingTemplate.convertAndSend(
-                "/topic/subunit",
+                "/topic/unitAddedNotification",
                 new SubUnitUpdatedNotification(subUnit)
         );
     }
 
     public void publishSubUnitDeletedNotification(final String name) {
         messagingTemplate.convertAndSend(
-                "/topic/subunit",
+                "/topic/unitDeletedNotification",
                 new SubUnitDeletedNotification(name)
         );
     }

@@ -21,7 +21,7 @@ public class AddSubUnitController {
     private NotificationService notificationService;
 
     @MessageMapping("/addSubUnit")
-    @SendTo("/topic/subunits")
+    @SendTo("/topic/unitAddedNotification")
     public AddSubUnitResponse handle(final AddSubUnitRequest request) {
         SubUnit subUnit = SubUnitMapper.toInternal(request.getSubUnit());
         service.addSubUnit(subUnit);
