@@ -178,6 +178,15 @@ FOR /f %%G IN ('dir /A:D /B %_TEMP_DIR%') DO xcopy .\%_TEMP_DIR%\%%G %_INSTALL_P
 ECHO INSTALL 5.3 Change folder permissions to allow normal user access
 icacls %_INSTALL_PATH% /q /c /t /grant Users:F
 
+ECHO INSTALL 5.4 Set custom environment variables
+SETX EASYMAN_HOME %_INSTALL_PATH% -m
+
+:add_app_bin_to_path
+ECHO INSTALL 5.5 Setting PATH env variable
+ECHO %PATH%|find /i "%EASYMAN_HOME%\bin">nul || SETX PATH "%PATH%;%EASYMAN_HOME%\bin" -m
+
+::SET _new_path=%PATH%;%_INSTALL_PATH%\bin
+
 :::::::::::::::::::::::::::::::::::: POST PROCESSING ::::::::::::::::::::::::::::::::::::::::
 
 :cleaning

@@ -7,8 +7,9 @@ ECHO OFF
 SET _DEMO_MODE=%1
 SET _SCRIPTS_DIR=.\scripts
 SET _IMPORT_DIR=.\import
-SET _BIN_DIR=.\bin
 SET _LOGS_DIR=.\logs
+SET _BACKEND_PATH=.\jars\resource-management.jar
+SET _FRONTEND_PATH=.\dist
 SET _CONFIG_PATH=.\application.properties
 
 ::::::::::::::::::::::::::::::::: PATH CONSTANTS ::::::::::::::::::::::::::::::::::::::
@@ -58,7 +59,7 @@ FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq java.exe" /fo table /nh'
 )
 
 ECHO START_2.2 Starting new server instance...
-powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\run-backend.bat %_BIN_DIR% %_CONFIG_PATH% >> %_LOGS_DIR%\backend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
+powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\run-backend.bat %_BACKEND_PATH% %_CONFIG_PATH% >> %_LOGS_DIR%\backend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
 
 :::::::::::::::::::::::::::::::::::::: START FRONTEND ::::::::::::::::::::::::::::::::::::::
@@ -72,7 +73,7 @@ FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq node.exe" /fo table /nh'
 )
 
 ECHO START_3.2 Starting new client instance...
-powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & http-server dist -p 8080 >> %_LOGS_DIR%\frontend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
+powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & http-server %_FRONTEND_PATH% -p 8080 >> %_LOGS_DIR%\frontend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
 :::::::::::::::::::::::::::::::::::: POST PROCESSING ::::::::::::::::::::::::::::::::::::::::
 
