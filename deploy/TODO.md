@@ -12,6 +12,7 @@
 
 ### DONE
 
+- define application env var to be used in scripts
 - rename bin and dist archives to reflect the target platform
 - rename scripts directory to 'deploy' and create 'native' and 'docker' subfolders
 - use client bin dist for windows native installer
