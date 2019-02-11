@@ -16,8 +16,11 @@ SET _CONFIG_PATH=.\application.properties
 
 : set-path-constants
 
-:: mongodb constants - modify this as needed
-SET _MONGO_BIN_PATH=C:\Progra~1\MongoDB\Server\4.0\bin
+IF "%_MONGO_HOME%"=="" (
+    ECHO MongoDb install path is NOT defined
+    GOTO :cleaning
+)
+SET _MONGO_BIN_PATH=%_MONGO_HOME%/bin
 
 : set-timestamp
 FOR /f "tokens=2 delims==" %%I IN ('wmic os get localdatetime /format:list') DO SET _DATETIME=%%I
@@ -35,7 +38,7 @@ FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq mongod.exe" /fo table /n
 
 :start_mongod
 ECHO START_1.1 Start mongo
-powershell -command "Start-Process powershell -ArgumentList 'mongod --config %_MONGO_BIN_PATH%\mongod.cfg  >> %_LOGS_DIR%\mongod-%_DATETIME%.log 2>&1' -WindowStyle hidden"
+powershell -command "Start-Process powershell -ArgumentList '%_MONGO_BIN_PATH%\mongod --config %_MONGO_BIN_PATH%\mongod.cfg  >> %_LOGS_DIR%\mongod-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
 ECHO Waiting for the daemon to start...
 timeout 15

@@ -1,12 +1,12 @@
 ECHO OFF
 
 if "%~1%"=="" (
-   ECHO Please specify the path to the /bin folder of your mongoDB installation
-   GOTO :cleaning
+   echo Please specify the path to the /bin folder of your mongoDB installation
+   goto :cleaning
 )
 
-SET _IMPORT_PATH=%2
-IF "%_IMPORT_PATH%"=="" SET _IMPORT_PATH=%~dp0\src\main\resources
+set _IMPORT_PATH=%2
+if "%_IMPORT_PATH%"=="" SET _IMPORT_PATH=%~dp0\src\main\resources
 
 set MONGOADDR=%~1%\mongo.exe
 set MONGOIMPORTADDR=%~1%\mongoimport.exe
