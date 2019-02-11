@@ -2,16 +2,19 @@
 
 ### TODO
 
+- make sure chocolatey and npm commands are available to the commands depending on them
+- finalize uninstall script - extract uninstalling tools in a separate script (and run as administrator)
 - configurable server url in env.js
 - configurable backend port in application.properties
-- finalize uninstall script
-- remove install path hardcoding  
 - installers to be copied predefined location at maven deploy phase
 - support for building distributables (including docker) under windows
 - organize dist building with the use of build profiles
+- precisely identify processes to be stopped
+- remove any env path at uninstall
 
 ### DONE
 
+- remove install path hardcoding  
 - define application env var to be used in scripts
 - rename bin and dist archives to reflect the target platform
 - rename scripts directory to 'deploy' and create 'native' and 'docker' subfolders

@@ -4,65 +4,49 @@
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ECHO OFF
+ECHO UNINSTALL_START Started uninstall
 
-:powershell_activation
-ECHO UNINSTALL_0.1 Activate powershell...
-FOR /f %%G IN ('powershell Get-ExecutionPolicy') DO (IF "%%G" == "Unrestricted" (GOTO set-path-constants))
-powershell Set-ExecutionPolicy Unrestricted
-
-::::::::::::::::::::::::::::::::: PATH CONSTANTS ::::::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::: PATH CONSTANTS ::::::::::::::::::::::::::::::::::::
 
 : set-path-constants
+SET _UNINSTALL_OPTION=%1
 
-SET _JAVA_INSTALL_OPTION=zulu
+IF "%EASYMAN_HOME%"=="" (
+    ECHO Install path is NOT defined
+    GOTO :cleaning
+)
 
-:: TODO : INSTALL_PATH resolved at runtime
 :: resource management install path
-SET _INSTALL_PATH=C:\Progra~1\resource-management
+SET _INSTALL_PATH=%EASYMAN_HOME%
 
-:::::::::::::::::::::::::::::::::::::: STOP APPLICATION ::::::::::::::::::::::::::::::::::::::
+: set-timestamp
+FOR /f "tokens=2 delims==" %%I IN ('wmic os get localdatetime /format:list') DO SET _DATETIME=%%I
+SET _DATETIME=%_DATETIME:~0,8%-%_DATETIME:~8,6%
+
+:::::::::::::::::::::::::::::::::: STOP APPLICATION :::::::::::::::::::::::::::::::::::
 
 :stop_services
-powershell -command .\stop.bat
+ECHO UNINSTALL_0.1 Stopping applications
+powershell -command easyman stop
 
-:::::::::::::::::::::::::::::::::::::: UNINSTALL JAVA ::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::: OPTIONALLY UNINSTALL DEPENDENCIES ::::::::::::::::::::::
 
-:java_uninstall
-ECHO UNINSTALL_1.2 Uninstalling java
-::powershell -command choco uninstall %_JAVA_INSTALL_OPTION% -y
+IF "%_UNINSTALL_OPTION%"=="all" (
+    ECHO UNINSTALL_1.0 Uninstalling dependencies
+    powershell -command "Start-Process powershell -ArgumentList 'cd \"%_INSTALL_PATH%\"; & .\uninstall_tools.bat >> %_LOGS_PATH%\uninstall-%_DATETIME%.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
+)
 
-::::::::::::::::::::::::::::::::::: UNINSTALL MONGODB ::::::::::::::::::::::::::::::::::::::::
-
-:: TODO : check if the policy change is really necessary at uninstall time
-
-:mongo_uninstall
-ECHO UNINSTALL_2.2.1 Briefly set execution policy to 'bypass' so that the uninstallation process doesn't get stuck
-powershell Set-ExecutionPolicy Bypass
-
-ECHO UNINSTALL_2.2.2 Uninstalling mongodb...
-::powershell -command choco uninstall mongodb -y
-
-ECHO UNINSTALL_2.2.3 Restore execution policy to 'unrestricted'
-powershell Set-ExecutionPolicy Unrestricted
-
-:::::::::::::::::::::::::::::::::::::: UNIINSTALL NODEJS ::::::::::::::::::::::::::::::::::::::
-
-:node_uninstall
-ECHO UNINSTALL_3.1 Uninstalling nodejs...
-::powershell -command choco uninstall nodejs -y
-
-
-::::::::::::::::::::::::::::::: INSTALL RESOURCE MANAGEMENT APP :::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::: INSTALL RESOURCE MANAGEMENT APP ::::::::::::::::::::::::::
 
 :isu_uninstall
 ECHO UNINSTALL_4.1 Removing app files...
 powershell "Get-ChildItem -Path  '%_INSTALL_PATH%' -Recurse -exclude '%_INSTALL_PATH%\unistall.bat' | Remove-Item -force -recurse"
 
-:::::::::::::::::::::::::::::::::::: POST PROCESSING ::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::: POST PROCESSING ::::::::::::::::::::::::::::::::::
 
 :cleaning
-:powershell-deactivation
-ECHO UNINSTALL_5.0 De-activate powershell...
-powershell Set-ExecutionPolicy Restricted
 
+ECHO UNINSTALL_END Finished uninstalling
 ECHO ON
+
+PAUSE

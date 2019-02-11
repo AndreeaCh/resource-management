@@ -16,6 +16,10 @@ if "%1%"=="uninstall" (
    set COMMAND=uninstall.bat
 )
 
+if "%1%"=="uninstall-all" (
+   set COMMAND=uninstall.bat all
+)
+
 
 if "%COMMAND%"=="" (
    echo Usage: easyman "[start|stop|import|uninstall|help]"
