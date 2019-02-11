@@ -19,13 +19,15 @@ SET _DATETIME=%_DATETIME:~0,8%-%_DATETIME:~8,6%
 ECHO SETUP_1 Installing application and its dependencies...
 powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\install.bat %_ARCHIVE_PATH% %_INSTALL_PATH% >> %_LOGS_PATH%\setup-%_DATETIME%.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
 
+:: TODO: disabling for now until we find a way to pass installation paths (either as parameters or env vars)
 :start_application
-ECHO SETUP_2 Launching application and its dependencies...
-powershell -command "Start-Process powershell -ArgumentList 'cd \"%_INSTALL_PATH%\"; & .\start.bat >> %_LOGS_PATH%\setup-%_DATETIME%.log 2>&1' -WindowStyle hidden"
+:: ECHO SETUP_2 Launching application and its dependencies...
+:: powershell -command "Start-Process powershell -ArgumentList 'cd \"%_INSTALL_PATH%\"; & .\start.bat >> %_LOGS_PATH%\setup-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
 :cleaning
 
-ECHO SETUP_END Finished setup...
+ECHO SETUP_END Finished setup
+ECHO To start the application open a new console and type 'easyman start'
 
 ECHO ON
 PAUSE
