@@ -23,7 +23,7 @@ SET _MONGO_BIN_PATH=C:\Progra~1\MongoDB\Server\4.0\bin
 FOR /f "tokens=2 delims==" %%I IN ('wmic os get localdatetime /format:list') DO SET _DATETIME=%%I
 SET _DATETIME=%_DATETIME:~0,8%-%_DATETIME:~8,6%
 
-:::::::::::::::::::::::::::::::::::::: START DB SERVER ::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::: START DB SERVER ::::::::::::::::::::::::::::::::::
 
 :check_mongod
 ECHO START_1.0 Verify if mongod has already started
@@ -48,7 +48,7 @@ IF NOT "%_DEMO_MODE%" == "demo" (
 ECHO START_1.2 Fill database with predefined data
 powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\import.bat %_MONGO_BIN_PATH% %_IMPORT_DIR% >> %_LOGS_DIR%\import-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
-:::::::::::::::::::::::::::::::::::::: START BACKEND ::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::: START BACKEND :::::::::::::::::::::::::::::::::::::
 
 :start_backend
 ECHO START_2.1 Verify if backend application has already started
@@ -62,7 +62,7 @@ ECHO START_2.2 Starting new server instance...
 powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\run-backend.bat %_BACKEND_PATH% %_CONFIG_PATH% >> %_LOGS_DIR%\backend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
 
-:::::::::::::::::::::::::::::::::::::: START FRONTEND ::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::: START FRONTEND :::::::::::::::::::::::::::::::::::::
 
 :start_frontend
 ECHO START_3.1 Verify if frontend application has already started
@@ -75,7 +75,7 @@ FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq node.exe" /fo table /nh'
 ECHO START_3.2 Starting new client instance...
 powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & http-server %_FRONTEND_PATH% -p 8080 >> %_LOGS_DIR%\frontend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
-:::::::::::::::::::::::::::::::::::: POST PROCESSING ::::::::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::: POST PROCESSING :::::::::::::::::::::::::::::::::::::
 
 :cleaning
 ECHO ON

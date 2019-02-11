@@ -50,6 +50,9 @@
       <source>deploy/windows-native/uninstall.bat</source>
     </file>
     <file>
+      <source>deploy/windows-native/uninstall_tools.bat</source>
+    </file>
+    <file>
       <source>deploy/windows-native/application.properties</source>
     </file>
     <file>
