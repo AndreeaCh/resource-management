@@ -36,7 +36,7 @@ IF "%_UNINSTALL_OPTION%"=="all" (
     powershell -command "Start-Process powershell -ArgumentList 'cd \"%_INSTALL_PATH%\"; & .\uninstall_tools.bat >> %_LOGS_PATH%\uninstall-%_DATETIME%.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
 )
 
-:::::::::::::::::::::::::::: INSTALL RESOURCE MANAGEMENT APP ::::::::::::::::::::::::::
+:::::::::::::::::::::::::: UNINSTALL RESOURCE MANAGEMENT APP ::::::::::::::::::::::::::
 
 :isu_uninstall
 ECHO UNINSTALL_4.1 Removing app files...

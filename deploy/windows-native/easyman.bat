@@ -2,27 +2,30 @@
 
 set COMMAND=
 if "%1%"=="start" (
-   set COMMAND=start.bat
+    cd %EASYMAN_HOME% & .\start.bat
 )
 if "%1%"=="stop" (
-   set COMMAND=stop.bat
+   cd %EASYMAN_HOME% & .\stop.bat
 )
 
 if "%1%"=="import" (
-   set COMMAND=import.bat
+   cd %EASYMAN_HOME% & .\import.bat %MONGO_HOME% %EASYMAN_HOME%\import
 )
 
 if "%1%"=="uninstall" (
-   set COMMAND=uninstall.bat
+   cd %EASYMAN_HOME% & .\uninstall.bat
 )
 
 if "%1%"=="uninstall-all" (
-   set COMMAND=uninstall.bat all
+   cd %EASYMAN_HOME% & .\uninstall.bat all
 )
 
-
-if "%COMMAND%"=="" (
+if "%1%"=="help" (
    echo Usage: easyman "[start|stop|import|uninstall|help]"
-) else (
-   cd %EASYMAN_HOME% & .\%COMMAND%
 )
+
+if "%~1%"=="" (
+   echo Usage: easyman "[start|stop|import|uninstall|help]"
+)
+
+:: TODO : the help menu should be printed for any unrecognized option
