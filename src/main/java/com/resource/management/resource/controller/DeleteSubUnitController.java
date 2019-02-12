@@ -19,10 +19,10 @@ public class DeleteSubUnitController {
     private NotificationService notificationService;
 
     @MessageMapping("/deleteSubUnit")
-    @SendTo("/topic/subunits")
+    @SendTo("/topic/unitDeletedNotification")
     public DeleteSubUnitResponse handle(final DeleteSubUnitRequest request) {
         service.deleteSubUnit(request.getName());
-        notificationService.publishSubUnitDeletedNotification(request.getName());
+        notificationService.publishInitialSubUnitsNotification();
         return new DeleteSubUnitResponse(StatusCode.OK);
     }
 }
