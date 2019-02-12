@@ -1,33 +1,58 @@
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:: Deploys and starts the ISU Resource Management application bundle
+:: Setup scipt for ISU Resource Management application bundle
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-ECHO OFF
+@echo off
 
-SET _INSTALL_PATH=%1
-IF "%_INSTALL_PATH%"=="" SET _INSTALL_PATH=C:\Progra~1\resource-management
-
+SET _INSTALL_PATH=C:\Progra~1\resource-management
 SET _ARCHIVE_PATH=.\dist\resource-management-windows-native-bin.zip
 SET _LOGS_PATH=%CD%\logs
-
 
 : set-timestamp
 FOR /f "tokens=2 delims==" %%I IN ('wmic os get localdatetime /format:list') DO SET _DATETIME=%%I
 SET _DATETIME=%_DATETIME:~0,8%-%_DATETIME:~8,6%
 
-:run_install_script
-ECHO SETUP_1 Installing application and its dependencies...
-powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\install.bat %_ARCHIVE_PATH% %_INSTALL_PATH% >> %_LOGS_PATH%\setup-%_DATETIME%.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
+if "%1%"=="prereq" (
+   ECHO SETUP Installing chocolatey package manager...
+    powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\install_chocolatey.bat >> %_LOGS_PATH%\%_DATETIME%-setup-chocolatey.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
+)
+if "%1%"=="db" (
+   ECHO SETUP Installing db...
+   powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\install_db.bat >> %_LOGS_PATH%\%_DATETIME%-setup-db.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
+)
 
-:: TODO: disabling for now until we find a way to pass installation paths (either as parameters or env vars)
-:start_application
-:: ECHO SETUP_2 Launching application and its dependencies...
-:: powershell -command "Start-Process powershell -ArgumentList 'cd \"%_INSTALL_PATH%\"; & .\start.bat >> %_LOGS_PATH%\setup-%_DATETIME%.log 2>&1' -WindowStyle hidden"
+if "%1%"=="java" (
+   ECHO SETUP Installing java...
+   powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\install_java.bat >> %_LOGS_PATH%\%_DATETIME%-setup-java.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
+)
+
+if "%1%"=="node" (
+   ECHO SETUP Installing node...
+   powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\install_node.bat >> %_LOGS_PATH%\%_DATETIME%-setup-node.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
+)
+
+if "%1%"=="app" (
+   ECHO SETUP Installing application...
+   powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\install_app.bat %_ARCHIVE_PATH% %_INSTALL_PATH% >> %_LOGS_PATH%\%_DATETIME%-setup-app.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
+   ECHO To start the application open a new console and type 'easyman start'
+)
+
+if "%1%"=="launch" (
+   ECHO SETUP Launching application and its dependencies...
+   powershell -command "Start-Process powershell -ArgumentList 'cd \"%_INSTALL_PATH%\"; & .\start.bat >> %_LOGS_PATH%\%_DATETIME%-launch.log 2>&1' -WindowStyle hidden"
+)
+
+if "%1%"=="help" (
+   echo Usage: setup.bat "[prerequisite|db|runners|app|help]"
+)
+
+if "%~1%"=="" (
+   echo Usage: setup.bat "[prerequisite|db|runners|app|help]"
+)
 
 :cleaning
 
-ECHO SETUP_END Finished setup
-ECHO To start the application open a new console and type 'easyman start'
+ECHO SETUP_END Finished setup, press any key to exit
 
 ECHO ON
 PAUSE

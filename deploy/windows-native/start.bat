@@ -11,16 +11,17 @@ SET _LOGS_DIR=.\logs
 SET _BACKEND_PATH=.\jars\resource-management.jar
 SET _FRONTEND_PATH=.\dist
 SET _CONFIG_PATH=.\application.properties
+SET _HTTP_SERVER_VER=0.11.1
 
 ::::::::::::::::::::::::::::::::: PATH CONSTANTS ::::::::::::::::::::::::::::::::::::::
 
 : set-path-constants
 
-IF "%_MONGO_HOME%"=="" (
+IF "%MONGO_HOME%"=="" (
     ECHO MongoDb install path is NOT defined
     GOTO :cleaning
 )
-SET _MONGO_BIN_PATH=%_MONGO_HOME%/bin
+SET _MONGO_BIN_PATH=%MONGO_HOME%/bin
 
 : set-timestamp
 FOR /f "tokens=2 delims==" %%I IN ('wmic os get localdatetime /format:list') DO SET _DATETIME=%%I
@@ -68,6 +69,22 @@ powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\ru
 :::::::::::::::::::::::::::::::::::: START FRONTEND :::::::::::::::::::::::::::::::::::::
 
 :start_frontend
+
+:node_configure
+ECHO START_3.0.1 check if http-server is installed
+FOR /f "tokens=2" %%G IN ('npm list -g --depth=0 2^>^&1 ^| findstr /i "http-server"') DO (
+    IF %%G == http-server@%_HTTP_SERVER_VER% (
+        GOTO http_server_configure
+    )
+)
+
+:http_server_install
+ECHO START_3.0.2 Installing http server
+powershell -command npm install -g http-server
+
+:http_server_configure
+ECHO START_3.0.3 Configure http server... skipping
+
 ECHO START_3.1 Verify if frontend application has already started
 FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq node.exe" /fo table /nh') DO (
     IF %%H NEQ No (

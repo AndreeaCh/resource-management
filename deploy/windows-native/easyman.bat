@@ -9,7 +9,7 @@ if "%1%"=="stop" (
 )
 
 if "%1%"=="import" (
-   cd %EASYMAN_HOME% & .\import.bat %MONGO_HOME% %EASYMAN_HOME%\import
+   cd %EASYMAN_HOME% & .\import.bat %MONGO_HOME%\bin %EASYMAN_HOME%\import
 )
 
 if "%1%"=="uninstall" (
