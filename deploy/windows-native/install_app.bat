@@ -17,6 +17,7 @@ powershell Set-ExecutionPolicy Unrestricted
 :: resource management install path
 SET _ARCHIVE_PATH=%1
 SET _INSTALL_PATH=%2
+SET _SERVER_ADDRESS=%3
 
 IF "%_ARCHIVE_PATH%"=="" (
     ECHO Archive path is NOT defined
@@ -25,6 +26,11 @@ IF "%_ARCHIVE_PATH%"=="" (
 
 IF "%_INSTALL_PATH%"=="" (
     ECHO Install path is NOT defined
+    GOTO :cleanup
+)
+
+IF "%_SERVER_ADDRESS%"=="" (
+    ECHO Server address is NOT defined
     GOTO :cleanup
 )
 
@@ -64,6 +70,9 @@ SETX EASYMAN_HOME %_INSTALL_PATH% -m
 :add_app_bin_to_path
 ECHO INSTALL 5 Setting PATH env variable
 ECHO %PATH%|find /i "%_INSTALL_PATH%\bin">nul || SETX PATH "%PATH%;%_INSTALL_PATH%\bin" -m
+
+:modify backend address in the frontend environment configuration
+powershell -command "(gc %_INSTALL_PATH%\dist\static\env.js) -replace 'localhost', '%_SERVER_ADDRESS%' | Out-File %_INSTALL_PATH%\dist\static\env.js"
 
 :::::::::::::::::::::::::::::::::::: POST PROCESSING ::::::::::::::::::::::::::::::::::::::::
 
