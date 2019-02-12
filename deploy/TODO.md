@@ -2,7 +2,6 @@
 
 ### TODO
 
-- configurable server url in env.js
 - configurable backend port in application.properties
 - installers to be copied at predefined location at maven deploy phase
 - support for building distributables (including docker) under windows
@@ -13,6 +12,7 @@
 
 ### DONE
 
+- configurable server url in env.js
 - finalize uninstall script - extract uninstalling tools in a separate script (and run as administrator)
 - make sure chocolatey and npm commands are available to the commands depending on them
 - remove install path hardcoding  
