@@ -43,11 +43,25 @@ if "%1%"=="launch" (
 )
 
 if "%1%"=="help" (
-   echo Usage: setup.bat "[prerequisite|db|runners|app|help]"
+    echo Usage: setup.bat "[option]"
+    echo Options:
+    echo    prereq  - install chocolatey
+    echo    db      - install database tool
+    echo    java    - install runtime
+    echo    node    - install nodejs
+    echo    app     - install application
+    echo    help    - show help
 )
 
 if "%~1%"=="" (
-   echo Usage: setup.bat "[prerequisite|db|runners|app|help]"
+    echo Usage: setup.bat "[option]"
+    echo Options:
+    echo    prereq  - install chocolatey
+    echo    db      - install database tool
+    echo    java    - install runtime
+    echo    node    - install nodejs
+    echo    app     - install application
+    echo    help    - show help
 )
 
 :cleaning
