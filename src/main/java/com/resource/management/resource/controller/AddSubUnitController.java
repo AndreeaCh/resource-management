@@ -25,7 +25,7 @@ public class AddSubUnitController {
     public AddSubUnitResponse handle(final AddSubUnitRequest request) {
         SubUnit subUnit = SubUnitMapper.toInternal(request.getSubUnit());
         service.addSubUnit(subUnit);
-        notificationService.publishSubUnitAddedNotification(request.getSubUnit());
+        notificationService.publishInitialSubUnitsNotification();
         return new AddSubUnitResponse(StatusCode.OK);
     }
 }
