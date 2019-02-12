@@ -4,11 +4,12 @@
 
 - configurable server url in env.js
 - configurable backend port in application.properties
-- installers to be copied predefined location at maven deploy phase
+- installers to be copied at predefined location at maven deploy phase
 - support for building distributables (including docker) under windows
 - organize dist building with the use of build profiles
 - precisely identify processes to be stopped
-- remove any env path at uninstall
+- resolve path overwriting issue 
+- remove any env paths at uninstall (EASYMAN_HOME, JAVA_HOME, MONGO_HOME), cleanup PATH
 
 ### DONE
 
