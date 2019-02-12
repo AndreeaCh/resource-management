@@ -2,8 +2,6 @@
 
 ### TODO
 
-- make sure chocolatey and npm commands are available to the commands depending on them
-- finalize uninstall script - extract uninstalling tools in a separate script (and run as administrator)
 - configurable server url in env.js
 - configurable backend port in application.properties
 - installers to be copied predefined location at maven deploy phase
@@ -14,6 +12,8 @@
 
 ### DONE
 
+- finalize uninstall script - extract uninstalling tools in a separate script (and run as administrator)
+- make sure chocolatey and npm commands are available to the commands depending on them
 - remove install path hardcoding  
 - define application env var to be used in scripts
 - rename bin and dist archives to reflect the target platform

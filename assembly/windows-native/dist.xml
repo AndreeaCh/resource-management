@@ -33,7 +33,19 @@
       <destName>README.md</destName>
     </file>
     <file>
-      <source>deploy/windows-native/install.bat</source>
+      <source>deploy/windows-native/install_chocolatey.bat</source>
+    </file>
+    <file>
+      <source>deploy/windows-native/install_db.bat</source>
+    </file>
+    <file>
+      <source>deploy/windows-native/install_node.bat</source>
+    </file>
+    <file>
+      <source>deploy/windows-native/install_java.bat</source>
+    </file>
+    <file>
+      <source>deploy/windows-native/install_app.bat</source>
     </file>
     <file>
       <source>deploy/windows-native/setup.bat</source>
