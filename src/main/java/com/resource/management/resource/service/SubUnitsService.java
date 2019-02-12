@@ -62,17 +62,25 @@ public class SubUnitsService {
         Optional<SubUnit> subUnitOptional = findSubUnitByName(subUnitName);
         if (subUnitOptional.isPresent()) {
             SubUnit subUnit = subUnitOptional.get();
-            ConcurrentHashMap<String, ResourceType> resourceTypeToLockBySessionId = new ConcurrentHashMap<>();
-            resourceTypeToLockBySessionId.put(sessionId, resourceType);
-            if (subUnit.getLockedResourceTypeBySessionId() == null) {
-                subUnit.setLockedResourceTypeBySessionId(resourceTypeToLockBySessionId);
-            } else {
-                subUnit.getLockedResourceTypeBySessionId().putAll(resourceTypeToLockBySessionId);
+            if (!isResourceAlreadyLocked(subUnit, resourceType)) {
+                ConcurrentHashMap<String, ResourceType> resourceTypeToLockBySessionId = new ConcurrentHashMap<>();
+                resourceTypeToLockBySessionId.put(sessionId, resourceType);
+                if (subUnit.getLockedResourceTypeBySessionId() == null) {
+                    subUnit.setLockedResourceTypeBySessionId(resourceTypeToLockBySessionId);
+                } else {
+                    subUnit.getLockedResourceTypeBySessionId().putAll(resourceTypeToLockBySessionId);
+                }
+
+                lockedResourceTypeBySessionId = subUnit.getLockedResourceTypeBySessionId();
+                saveSubUnit(subUnit);
             }
-            lockedResourceTypeBySessionId = subUnit.getLockedResourceTypeBySessionId();
-            saveSubUnit(subUnit);
         }
+
         return lockedResourceTypeBySessionId;
+    }
+
+    private boolean isResourceAlreadyLocked(SubUnit subUnit, ResourceType resourceType) {
+        return subUnit.getLockedResourceTypeBySessionId() != null && subUnit.getLockedResourceTypeBySessionId().values().contains(resourceType);
     }
 
     public Optional<SubUnit> unlockSubUnit(final String subUnitName, final ResourceType resourceType) {
