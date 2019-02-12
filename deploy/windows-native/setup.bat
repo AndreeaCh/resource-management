@@ -6,6 +6,7 @@
 
 SET _INSTALL_PATH=C:\Progra~1\resource-management
 SET _ARCHIVE_PATH=.\dist\resource-management-windows-native-bin.zip
+SET _SERVER_PATH=%~2
 SET _LOGS_PATH=%CD%\logs
 
 : set-timestamp
@@ -33,7 +34,7 @@ if "%1%"=="node" (
 
 if "%1%"=="app" (
    ECHO SETUP Installing application...
-   powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\install_app.bat %_ARCHIVE_PATH% %_INSTALL_PATH% >> %_LOGS_PATH%\%_DATETIME%-setup-app.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
+   powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\install_app.bat %_ARCHIVE_PATH% %_INSTALL_PATH% %_SERVER_PATH% >> %_LOGS_PATH%\%_DATETIME%-setup-app.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
    ECHO To start the application open a new console and type 'easyman start'
 )
 
