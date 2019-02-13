@@ -1,23 +1,35 @@
-### HOWTO (Windows)
+### Run instructions
 
-#### Starting the application
+A command line utility is available in system's Path.
+To use it open windows **cmd** tool and run:
 
-``` bash
-start.bat
+``` cmd
+easyman <option>
 ```
 
-#### Stopping the application
+#### Options
 
-``` bash
-stop.bat
-```
+**start**
+: starts the application (db, frontend, backend) if not already started
 
-#### Uninstalling the application
+**stop**
+: stops the application (frontend, backend)
 
-``` bash
-uninstall.bat
-```
+**import**
+: imports initial data into the db server
 
+**uninstall**
+: uninstalls application (frontend, backend)
+
+**uninstall-all**
+: uninstalls application and its dependencies (db, java, nodejs)
+
+**help**
+: show help
+
+#### Examples
+
+**easyman start**
 
 #### Release notes
 

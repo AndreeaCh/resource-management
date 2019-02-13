@@ -1,4 +1,4 @@
-## Resource Management Application
+## Install instructions
 
 ### Requirements : 
 
@@ -8,12 +8,37 @@
 
 ### Installation instructions (Windows)
 
-``` bash
-setup.bat <install_directory>
+``` cmd
+setup.bat <option>
 ```
 
-Install directory is optional, defaults to C:\Program Files\resource-management
-Install logs can be found in the 'logs' directory.
+Install directory defaults to C:\Program Files\resource-management
+Install logs can be found in the 'logs' subdirectory.
+
+#### Options
+
+prereq
+: install chocolatey (windows package manager)
+
+db
+: install database server (mongodb)
+
+java
+: install java runtime
+
+node
+: install nodejs and package manager
+
+app [server_address]
+: install application, server address must be specified
+
+help
+: show help
+
+#### Examples
+
+**setup.bat app 192.169.0.112**
+: installs application using exposed server IP address
 
 ### Release notes
 
