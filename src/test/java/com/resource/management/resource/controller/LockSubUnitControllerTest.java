@@ -6,10 +6,6 @@ import com.resource.management.resource.model.ResourceType;
 import com.resource.management.resource.model.SubUnit;
 import com.resource.management.resource.service.NotificationService;
 import com.resource.management.resource.service.SubUnitsService;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Random;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,12 +15,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+
 import static com.resource.management.ResourceTypes.randomResourceType;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -65,7 +63,6 @@ public class LockSubUnitControllerTest {
 
         // When
         controller.handleLockSubUnitMessage(new LockSubUnitRequest(subUnit.getName(), randomResourceType()), accessor);
-
         // Then
         verifyNoMoreInteractions(notificationService);
     }
