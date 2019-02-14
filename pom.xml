@@ -25,8 +25,8 @@
 
         <disable.docker.plugin>true</disable.docker.plugin>
 
-        <!--docker build related properties-->
-        <dockerSourceDirectory>${project.basedir}/src/main/docker</dockerSourceDirectory>
+       <!--docker build related properties-->
+       <dockerSourceDirectory>${project.basedir}/src/main/docker</dockerSourceDirectory>
         <dockerOutputDirectory>${project.build.directory}/rootfs</dockerOutputDirectory>
         <win.native.resources>${project.build.directory}/winres</win.native.resources>
 
@@ -68,12 +68,12 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-        <!--        <dependency>
-                    <groupId>de.flapdoodle.embed</groupId>
-                    <artifactId>de.flapdoodle.embed.mongo</artifactId>
-                    <scope>test</scope>
-                </dependency>-->
-        <dependency>
+       <!--        <dependency>
+                   <groupId>de.flapdoodle.embed</groupId>
+                   <artifactId>de.flapdoodle.embed.mongo</artifactId>
+                   <scope>test</scope>
+               </dependency>-->
+       <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
@@ -119,8 +119,8 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
-            <!--fetch backend and frontend distributables from maven repository-->
-            <plugin>
+           <!--fetch backend and frontend distributables from maven repository-->
+           <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
@@ -189,8 +189,8 @@
                 </configuration>
             </plugin>
 
-            <!--copy docker files-->
-            <plugin>
+           <!--copy docker files-->
+           <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <configuration>
@@ -228,8 +228,8 @@
                 </executions>
             </plugin>
 
-            <!--building docker images-->
-            <plugin>
+           <!--building docker images-->
+           <plugin>
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>${version.docker-maven-plugin}</version>
@@ -333,8 +333,8 @@
                 </configuration>
             </plugin>
 
-            <!--building distributables-->
-            <plugin>
+           <!--building distributables-->
+           <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <executions>
@@ -348,7 +348,7 @@
                             <descriptors>
                                 <descriptor>assembly/windows-native/bin.xml</descriptor>
                             </descriptors>
-                            <finalName>resource-management-windows-native-bin</finalName>
+                            <finalName>easy-manage-windows-native-bin</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                         </configuration>
                     </execution>
@@ -362,7 +362,7 @@
                             <descriptors>
                                 <descriptor>assembly/windows-native/dist.xml</descriptor>
                             </descriptors>
-                            <finalName>resource-management-windows-native</finalName>
+                            <finalName>easy-manage-windows-native</finalName>
                         </configuration>
                     </execution>
                     <execution>
@@ -375,7 +375,7 @@
                             <descriptors>
                                 <descriptor>assembly/docker-on-linux/bin.xml</descriptor>
                             </descriptors>
-                            <finalName>resource-management-docker-on-linux-bin</finalName>
+                            <finalName>easy-manage-docker-on-linux-bin</finalName>
                             <appendAssemblyId>false</appendAssemblyId>
                         </configuration>
                     </execution>
@@ -389,7 +389,7 @@
                             <descriptors>
                                 <descriptor>assembly/docker-on-linux/dist.xml</descriptor>
                             </descriptors>
-                            <finalName>resource-management-docker-on-linux</finalName>
+                            <finalName>easy-manage-docker-on-linux</finalName>
                         </configuration>
                     </execution>
                 </executions>
@@ -398,8 +398,8 @@
         </plugins>
     </build>
 
-    <!--profiles for running the container using maven cli-->
-    <profiles>
+   <!--profiles for running the container using maven cli-->
+   <profiles>
         <profile>
             <id>db</id>
             <build>
