@@ -11,7 +11,7 @@
 setup.sh <install_directory>
 ```
 
-Install directory is optional, defaults to ~/apps/resource-management.
+Install directory is optional, defaults to ~/apps/easy-manage.
 Install logs can be found in the 'logs' directory.
 
 ### Release notes

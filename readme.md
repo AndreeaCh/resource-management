@@ -24,9 +24,9 @@
 ``` bash
     :resource-management$ mvn clean install -DskipTests
 ```
-The generated bundle can be found at target/'resource-management-windows-native-*.zip' 
+The generated bundle can be found at target/'easy-manage-windows-native-*.zip'
 
-* extract target/resource-management-windows-native-*.zip
+* extract target/easy-manage-windows-native-*.zip
 * continue with the instructions found in the extracted file named README.md
 
 ## Deployment for Unix(Linux) environments

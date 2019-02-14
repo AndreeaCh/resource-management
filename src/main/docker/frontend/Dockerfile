@@ -7,7 +7,7 @@ RUN addgroup -S container && adduser -S container -g container \
     && chown -R container:container ${SCRIPTS} ${BIN} ${LOGS} \
     && npm install -g http-server
 
-ADD resource-management-client-bin.tar.gz ${BIN}
+ADD easy-manage-client-bin.tar.gz ${BIN}
 COPY start-service.sh ${SCRIPTS}
 
 RUN chown -R container:container ${SCRIPTS}/start-service.sh ${BIN}/dist \

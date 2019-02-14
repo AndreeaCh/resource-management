@@ -9,7 +9,7 @@
         <directory>${project.build.directory}</directory>
         <outputDirectory>dist</outputDirectory>
         <includes>
-            <include>resource-management-windows-native-bin.zip</include>
+            <include>easy-manage-windows-native-bin.zip</include>
         </includes>
     </fileSet>
     <fileSet>

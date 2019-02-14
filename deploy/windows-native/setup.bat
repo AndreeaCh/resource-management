@@ -4,8 +4,8 @@
 
 @echo off
 
-SET _INSTALL_PATH=C:\Progra~1\resource-management
-SET _ARCHIVE_PATH=.\dist\resource-management-windows-native-bin.zip
+SET _INSTALL_PATH=C:\Progra~1\easy-manage
+SET _ARCHIVE_PATH=.\dist\easy-manage-windows-native-bin.zip
 SET _SERVER_PATH=%~2
 SET _LOGS_PATH=%CD%\logs
 
