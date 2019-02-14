@@ -8,7 +8,7 @@
       <directory>${project.build.directory}</directory>
       <outputDirectory>dist</outputDirectory>
       <includes>
-        <include>resource-management-docker-on-linux-bin.tar.gz</include>
+        <include>easy-manage-docker-on-linux-bin.tar.gz</include>
       </includes>
     </fileSet>
     <fileSet>

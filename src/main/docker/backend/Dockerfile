@@ -6,11 +6,11 @@ RUN addgroup -S container && adduser -S container -g container \
     && mkdir ${SCRIPTS} ${BIN} ${LOGS} \
     && chown -R container:container ${SCRIPTS} ${BIN} ${LOGS}
 
-COPY resource-management.jar ${BIN}
+COPY easy-manage.jar ${BIN}
 COPY start-service.sh ${SCRIPTS}
 
 RUN chown -R container:container ${SCRIPTS}/start-service.sh && chmod u+rx ${SCRIPTS}/start-service.sh \
-&& chown -R container:container ${BIN}/resource-management.jar
+&& chown -R container:container ${BIN}/easy-manage.jar
 
 USER container
 

@@ -12,7 +12,7 @@
 setup.bat <option>
 ```
 
-Install directory defaults to C:\Program Files\resource-management
+Install directory defaults to C:\Program Files\easy-manage
 Install logs can be found in the 'logs' subdirectory.
 
 #### Options
