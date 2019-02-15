@@ -4,10 +4,12 @@
 
 @echo off
 
-SET _INSTALL_PATH=C:\Progra~1\easy-manage
-SET _ARCHIVE_PATH=.\dist\easy-manage-windows-native-bin.zip
+SET _INSTALL_PATH=C:\easy-manage
+SET _INSTALL_KIT_PATH=%~dp0
+SET _ARCHIVE_PATH=%_INSTALL_KIT_PATH%\dist\easy-manage-windows-native-bin.zip
 SET _SERVER_PATH=%~2
 SET _LOGS_PATH=%CD%\logs
+SET _SCRIPTS_PATH=%CD%\scripts
 
 : set-timestamp
 FOR /f "tokens=2 delims==" %%I IN ('wmic os get localdatetime /format:list') DO SET _DATETIME=%%I
@@ -15,26 +17,26 @@ SET _DATETIME=%_DATETIME:~0,8%-%_DATETIME:~8,6%
 
 if "%1%"=="prereq" (
    ECHO SETUP Installing chocolatey package manager...
-    powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\install_chocolatey.bat >> %_LOGS_PATH%\%_DATETIME%-setup-chocolatey.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
+    powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_PATH%\"; & .\install_chocolatey.bat >> %_LOGS_PATH%\%_DATETIME%-setup-chocolatey.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
 )
 if "%1%"=="db" (
    ECHO SETUP Installing db...
-   powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\install_db.bat >> %_LOGS_PATH%\%_DATETIME%-setup-db.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
+   powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_PATH%\"; & .\install_db.bat >> %_LOGS_PATH%\%_DATETIME%-setup-db.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
 )
 
 if "%1%"=="java" (
    ECHO SETUP Installing java...
-   powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\install_java.bat >> %_LOGS_PATH%\%_DATETIME%-setup-java.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
+   powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_PATH%\"; & .\install_java.bat >> %_LOGS_PATH%\%_DATETIME%-setup-java.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
 )
 
 if "%1%"=="node" (
    ECHO SETUP Installing node...
-   powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\install_node.bat >> %_LOGS_PATH%\%_DATETIME%-setup-node.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
+   powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_PATH%\"; & .\install_node.bat >> %_LOGS_PATH%\%_DATETIME%-setup-node.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
 )
 
 if "%1%"=="app" (
    ECHO SETUP Installing application...
-   powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\install_app.bat %_ARCHIVE_PATH% %_INSTALL_PATH% %_SERVER_PATH% >> %_LOGS_PATH%\%_DATETIME%-setup-app.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
+   powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_PATH%\"; & .\install_app.bat %_ARCHIVE_PATH% %_INSTALL_PATH% %_SERVER_PATH% >> %_LOGS_PATH%\%_DATETIME%-setup-app.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
    ECHO To start the application open a new console and type 'easyman start'
 )
 

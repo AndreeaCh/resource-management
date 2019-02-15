@@ -31,7 +31,7 @@ if "%_COMMAND%"=="" (
     echo    uninstall-all         - uninstalls application and its dependencies
     echo    help                  - show help
 ) else  (
-    cd %EASYMAN_HOME% & .\%_COMMAND%
+    %EASYMAN_HOME%\scripts\%_COMMAND%
 )
 
 :: TODO : the help menu should be printed for any unrecognized option

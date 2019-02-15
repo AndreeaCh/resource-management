@@ -34,18 +34,23 @@
     </file>
     <file>
       <source>deploy/windows-native/install_chocolatey.bat</source>
+      <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
       <source>deploy/windows-native/install_db.bat</source>
+      <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
       <source>deploy/windows-native/install_node.bat</source>
+      <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
       <source>deploy/windows-native/install_java.bat</source>
+      <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
       <source>deploy/windows-native/install_app.bat</source>
+      <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
       <source>deploy/windows-native/setup.bat</source>
