@@ -1,0 +1,5 @@
+SET _ARCHIVE_PATH=%1
+SET _EXTRACT_PATH=C:\easy-install
+
+RD /S /Q %_EXTRACT_PATH%
+7z x %_ARCHIVE_PATH% -o%_EXTRACT_PATH% -aoa -y -r

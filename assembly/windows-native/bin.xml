@@ -42,26 +42,32 @@
     </file>
     <file>
       <source>deploy/windows-native/start.bat</source>
+      <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
       <source>deploy/windows-native/stop.bat</source>
+      <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
       <source>deploy/windows-native/uninstall.bat</source>
+      <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
       <source>deploy/windows-native/uninstall_tools.bat</source>
-    </file>
-    <file>
-      <source>deploy/windows-native/application.properties</source>
+      <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
       <source>deploy.bat</source>
       <destName>run-backend.bat</destName>
+      <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
       <source>fillDb.bat</source>
       <destName>import.bat</destName>
+      <outputDirectory>scripts</outputDirectory>
+    </file>
+    <file>
+      <source>deploy/windows-native/application.properties</source>
     </file>
   </files>
 </assembly>
