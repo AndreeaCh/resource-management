@@ -4,14 +4,20 @@
 
 ECHO OFF
 
-SET _DEMO_MODE=%1
-SET _SCRIPTS_DIR=.\scripts
-SET _IMPORT_DIR=.\import
-SET _LOGS_DIR=.\logs
-SET _BACKEND_PATH=.\jars\easy-manage.jar
-SET _FRONTEND_PATH=.\dist
-SET _CONFIG_PATH=.\application.properties
+SET _INSTALL_PATH=%EASYMAN_HOME%
+IF "%_INSTALL_PATH%"=="" (
+    ECHO Install path is NOT defined
+    GOTO :cleaning
+)
+
+SET _SCRIPTS_DIR=%_INSTALL_PATH%\scripts
+SET _LOGS_DIR=%_INSTALL_PATH%\logs
+
+SET _BACKEND_PATH=%_INSTALL_PATH%\jars\easy-manage.jar
+SET _FRONTEND_PATH=%_INSTALL_PATH%\dist
 SET _HTTP_SERVER_VER=0.11.1
+
+SET _CONFIG_PATH=%_INSTALL_PATH%\application.properties
 
 ::::::::::::::::::::::::::::::::: PATH CONSTANTS ::::::::::::::::::::::::::::::::::::::
 
@@ -33,7 +39,7 @@ SET _DATETIME=%_DATETIME:~0,8%-%_DATETIME:~8,6%
 ECHO START_1.0 Verify if mongod has already started
 FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq mongod.exe" /fo table /nh') DO (
     IF %%H NEQ No (
-        GOTO fill_db
+        GOTO start_backend
     )
 )
 
@@ -41,16 +47,8 @@ FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq mongod.exe" /fo table /n
 ECHO START_1.1 Start mongo
 powershell -command "Start-Process powershell -ArgumentList '%_MONGO_BIN_PATH%\mongod --config %_MONGO_BIN_PATH%\mongod.cfg  >> %_LOGS_DIR%\mongod-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
-ECHO Waiting for the daemon to start...
+ECHO START_1.2 Waiting for the daemon to start...
 timeout 15
-
-:fill_db
-IF NOT "%_DEMO_MODE%" == "demo" (
-    GOTO start_backend
-)
-
-ECHO START_1.2 Fill database with predefined data
-powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\import.bat %_MONGO_BIN_PATH% %_IMPORT_DIR% >> %_LOGS_DIR%\import-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
 :::::::::::::::::::::::::::::::::::: START BACKEND :::::::::::::::::::::::::::::::::::::
 
@@ -63,7 +61,7 @@ FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq java.exe" /fo table /nh'
 )
 
 ECHO START_2.2 Starting new server instance...
-powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & .\run-backend.bat %_BACKEND_PATH% %_CONFIG_PATH% >> %_LOGS_DIR%\backend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
+powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_DIR%\"; & .\run-backend.bat %_BACKEND_PATH% %_CONFIG_PATH% >> %_LOGS_DIR%\backend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
 
 :::::::::::::::::::::::::::::::::::: START FRONTEND :::::::::::::::::::::::::::::::::::::
@@ -93,7 +91,7 @@ FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq node.exe" /fo table /nh'
 )
 
 ECHO START_3.2 Starting new client instance...
-powershell -command "Start-Process powershell -ArgumentList 'cd \"%CD%\"; & http-server %_FRONTEND_PATH% -p 8080 >> %_LOGS_DIR%\frontend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
+powershell -command "Start-Process powershell -ArgumentList 'http-server %_FRONTEND_PATH% -p 8080 >> %_LOGS_DIR%\frontend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
 ::::::::::::::::::::::::::::::::::: POST PROCESSING :::::::::::::::::::::::::::::::::::::
 
