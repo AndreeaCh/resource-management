@@ -15,7 +15,7 @@ powershell Set-ExecutionPolicy Unrestricted
 SET _CHOCO_VER=0.10.11
 
 :: local paths
-SET _SCRIPTS_DIR=.\scripts
+SET _SCRIPTS_DIR=%~dp0
 
 :choco_setup
 ECHO CHOCO_INSTALL_1 Find if 'chocolatey' is already installed
