@@ -67,7 +67,8 @@
       <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
-      <source>deploy/windows-native/application.properties</source>
+      <source>deploy/windows-native/production.application.properties</source>
+      <destName>application.properties</destName>
     </file>
   </files>
 </assembly>

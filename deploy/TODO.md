@@ -2,6 +2,7 @@
 
 ### TODO
 
+- verbosity option for install scripts
 - configurable backend port in application.properties
 - installers to be copied at predefined location at maven deploy phase
 - support for building distributables (including docker) under windows
@@ -9,14 +10,20 @@
 - precisely identify processes to be stopped(used port?)
 - resolve path overwriting issue
 - at uninstall cleanup PATH env var
-- fix uninstall error  
+- fix uninstall error (path to script not found)
+- install shall not remove archive tools(7z)
+- uninstall does not remove node and mongod for some reason
+- proper log levels for production use
+- application log is missing .log extension after switching to log4j
 
 ### TO BE TESTED
 
-- move helper scripts under .scripts directory, keep main in the root directory
 
 ### DONE
 
+- maven convergence plugin
+- move helper scripts under .scripts directory, keep main in the root directory
+- slf4j binding - exclude logback dependency
 - remove any env paths at uninstall (EASYMAN_HOME)
 - configurable server url in env.js
 - finalize uninstall script - extract uninstalling tools in a separate script (and run as administrator)
