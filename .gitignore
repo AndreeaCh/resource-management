@@ -23,6 +23,7 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+/logs/
 
 ### Custom dev settings ###
 maven.config
