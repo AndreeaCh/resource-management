@@ -29,5 +29,9 @@
       <source>deploy/docker-on-linux/uninstall.sh</source>
       <fileMode>0744</fileMode>
     </file>
+    <file>
+      <source>deploy/windows-native/production.application.properties</source>
+      <destName>application.properties</destName>
+    </file>
   </files>
 </assembly>
