@@ -539,6 +539,12 @@
                                         <extraHosts>
                                             <host>localhosts:127.0.0.1</host>
                                         </extraHosts>
+                                        <volumes>
+                                            <bind>
+                                                <volume>${project.basedir}/logs:/home/container/logs</volume>
+                                                <volume>${project.basedir}/deploy/docker-on-linux/production.application.properties:/home/container/config/application.properties</volume>
+                                            </bind>
+                                        </volumes>
                                     </run>
                                 </image>
                                 <image>
@@ -561,8 +567,13 @@
                                             <host>localhosts:127.0.0.1</host>
                                         </extraHosts>
                                        <env>
-                                           <SERVER_ADDRESS>gugustiuc.go.ro</SERVER_ADDRESS>
+                                           <SERVER_ADDRESS>localhost</SERVER_ADDRESS>
                                        </env>
+                                        <volumes>
+                                            <bind>
+                                                <volume>${project.basedir}/logs:/home/container/logs</volume>
+                                            </bind>
+                                        </volumes>
                                     </run>
                                 </image>
                             </images>
