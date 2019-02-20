@@ -4,7 +4,7 @@ ENV LANG=C.UTF-8 SCRIPTS=/home/container/scripts BIN=/home/container/bin LOGS=/h
 
 RUN addgroup -S container && adduser -S container -g container \
     && mkdir ${SCRIPTS} ${BIN} ${LOGS} ${CFG} \
-    && chown -R container:container ${SCRIPTS} ${BIN} ${LOGS}
+    && chown -R container:container ${SCRIPTS} ${BIN} ${LOGS} ${CFG}
 
 COPY resource-management.jar ${BIN}/easy-manage.jar
 COPY start-service.sh ${SCRIPTS}

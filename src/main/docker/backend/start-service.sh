@@ -6,6 +6,6 @@ CFG_DIR=~/config
 
 DATE_WITH_TIME=`date "+%Y%m%d-%H%M%S"`
 
-java -Dspring.config.location=$CFG_DIR/application.properties -jar $APP_DIR/easy-manage.jar
+java -Dspring.config.location=$CFG_DIR/application.properties -jar $APP_DIR/easy-manage.jar > $LOG_DIR/backend-$DATE_WITH_TIME.log 2>&1
 
-# TODO: redirect log > $LOG_DIR/backend-$DATE_WITH_TIME.log 2>&1
+tail -f $LOG_DIR/backend-$DATE_WITH_TIME.log
