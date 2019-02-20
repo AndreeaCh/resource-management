@@ -453,9 +453,22 @@
         </plugins>
     </build>
 
-   <!--profiles for running the container using maven cli-->
+
    <profiles>
-        <profile>
+       <!--profiles for running docker build when docker is available on the system-->
+      <profile>
+            <id>linux</id>
+           <properties>
+               <disable.docker.plugin>false</disable.docker.plugin>
+           </properties>
+           <activation>
+                <os>
+                    <family>unix</family>
+                </os>
+            </activation>
+       </profile>
+      <!--profiles for running the container using maven cli-->
+      <profile>
             <id>db</id>
             <build>
                 <plugins>
@@ -547,6 +560,9 @@
                                         <extraHosts>
                                             <host>localhosts:127.0.0.1</host>
                                         </extraHosts>
+                                       <env>
+                                           <SERVER_ADDRESS>gugustiuc.go.ro</SERVER_ADDRESS>
+                                       </env>
                                     </run>
                                 </image>
                             </images>
