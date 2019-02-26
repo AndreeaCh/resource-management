@@ -1,4 +1,4 @@
-package com.resource.management.management.functions.model;
+package com.resource.management.management.trucks.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -8,8 +8,9 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Function {
+public class Truck {
     @Id
     private String id;
-    private String name;
+    private String shortName;
+    private String longName;
 }

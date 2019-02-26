@@ -2,33 +2,24 @@ package com.resource.management.management.functions.controller;
 
 import com.resource.management.api.management.functions.FunctionsListUpdatedNotification;
 import com.resource.management.api.management.functions.UpdateFunctionRequest;
-import com.resource.management.api.services.ServicesListUpdatedNotification;
 import com.resource.management.management.functions.model.Function;
-import com.resource.management.management.functions.model.FunctionRepository;
+import com.resource.management.management.functions.service.FunctionsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.util.List;
 
 @Controller
 public class UpdateFunctionController {
     @Autowired
-    private FunctionRepository repository;
+    private FunctionsService service;
 
     @MessageMapping("/updateFunction")
     @SendTo("/topic/functions")
     public FunctionsListUpdatedNotification handle(final UpdateFunctionRequest request) {
-        if (request.getId() != null) {
-            Optional<Function> functionOptional = repository.findById(request.getId());
-            functionOptional.ifPresent(service -> {
-                Function updatedFunction = new Function(UUID.fromString(request.getId()), request.getName());
-                repository.save(updatedFunction);
-            });
-        }
-
-        return new FunctionsListUpdatedNotification(repository.findAll());
+        List<Function> functionList = service.findAndUpdate(new Function(request.getId(), request.getName()));
+        return new FunctionsListUpdatedNotification(functionList);
     }
 }
