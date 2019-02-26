@@ -1,4 +1,4 @@
-package com.resource.management.api.resources.crud;
+package com.resource.management.api.management.subunits;
 
 import com.resource.management.api.resources.StatusCode;
 import lombok.AllArgsConstructor;

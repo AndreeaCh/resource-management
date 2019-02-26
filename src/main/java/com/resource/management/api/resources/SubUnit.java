@@ -15,6 +15,8 @@ import java.util.List;
 @EqualsAndHashCode
 public class SubUnit {
     @Id
+    private String id;
+
     private String name;
 
     private List<Resource> resources;

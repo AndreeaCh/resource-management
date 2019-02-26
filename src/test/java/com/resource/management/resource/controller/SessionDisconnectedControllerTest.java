@@ -64,6 +64,6 @@ public class SessionDisconnectedControllerTest {
         this.sut.onDisconnectEvent(event);
 
         //then
-        verify(notificationService).publishUnlockedSubUnitNotification(subUnit.getName(), Collections.singleton(ResourceType.OTHER));
+        verify(notificationService).publishUnlockedSubUnitNotification(subUnit.getId(), Collections.singleton(ResourceType.OTHER));
     }
 }

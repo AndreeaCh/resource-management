@@ -26,8 +26,8 @@ public class SubUnitsService {
     @Autowired
     private LogEntryWriter historyWriter;
 
-    public Optional<SubUnit> findSubUnitByName(final String name) {
-        return repository.findByName(name);
+    public Optional<SubUnit> findSubUnitById(final String id) {
+        return repository.findById(id);
     }
 
 
@@ -41,7 +41,7 @@ public class SubUnitsService {
     public Optional<SubUnit> updateSubUnit(final SubUnit subUnit, final String ipAddress) {
         SubUnit updatedUnit = null;
 
-        Optional<SubUnit> existingSubUnitOptional = findSubUnitByName(subUnit.getName());
+        Optional<SubUnit> existingSubUnitOptional = findSubUnitById(subUnit.getId());
         if (existingSubUnitOptional.isPresent()) {
             SubUnit existingSubUnit = existingSubUnitOptional.get();
             updatedUnit = updateFirstInterventionResources(subUnit, existingSubUnit);
@@ -57,9 +57,9 @@ public class SubUnitsService {
     }
 
 
-    public synchronized Map<String, ResourceType> lockSubUnit(final String subUnitName, final ResourceType resourceType, final String sessionId) {
+    public synchronized Map<String, ResourceType> lockSubUnit(final String subUnitId, final ResourceType resourceType, final String sessionId) {
         Map<String, ResourceType> lockedResourceTypeBySessionId = null;
-        Optional<SubUnit> subUnitOptional = findSubUnitByName(subUnitName);
+        Optional<SubUnit> subUnitOptional = findSubUnitById(subUnitId);
         if (subUnitOptional.isPresent()) {
             SubUnit subUnit = subUnitOptional.get();
             if (!isResourceAlreadyLocked(subUnit, resourceType)) {
@@ -84,7 +84,7 @@ public class SubUnitsService {
     }
 
     public Optional<SubUnit> unlockSubUnit(final String subUnitName, final ResourceType resourceType) {
-        Optional<SubUnit> subUnitOptional = findSubUnitByName(subUnitName);
+        Optional<SubUnit> subUnitOptional = findSubUnitById(subUnitName);
         if (subUnitOptional.isPresent()) {
             SubUnit subUnit = subUnitOptional.get();
             if (subUnit.getLockedResourceTypeBySessionId() != null) {
@@ -128,8 +128,8 @@ public class SubUnitsService {
         });
     }
 
-    public void deleteSubUnit(final String name) {
-        repository.deleteById(name);
+    public void deleteSubUnit(final String id) {
+        repository.deleteById(id);
     }
 
     private synchronized void saveSubUnit(final SubUnit subUnit) {

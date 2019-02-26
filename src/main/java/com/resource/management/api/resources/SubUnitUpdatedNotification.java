@@ -1,6 +1,5 @@
-package com.resource.management.api.resources.crud.notifications;
+package com.resource.management.api.resources;
 
-import com.resource.management.api.resources.SubUnit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;

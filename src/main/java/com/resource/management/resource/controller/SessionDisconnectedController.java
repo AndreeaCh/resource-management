@@ -26,7 +26,7 @@ public class SessionDisconnectedController {
         Map<SubUnit, ResourceType> lockedTypes = service.unlockSubUnitsLockedBySession(sessionId);
         lockedTypes.forEach((subUnit, type) -> {
             notificationService.publishUnlockedSubUnitNotification(
-                    subUnit.getName(), Collections.singleton(type));
+                    subUnit.getId(), Collections.singleton(type));
         });
     }
 }

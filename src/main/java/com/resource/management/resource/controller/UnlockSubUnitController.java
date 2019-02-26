@@ -24,9 +24,9 @@ public class UnlockSubUnitController {
 
     @MessageMapping("/unlockSubUnit")
     public void handleUnlockSubUnitMessage(final UnlockSubUnitRequest request) {
-        Optional<SubUnit> subUnit = subUnitsService.unlockSubUnit(request.getSubUnitName(), request.getResourceType());
+        Optional<SubUnit> subUnit = subUnitsService.unlockSubUnit(request.getSubUnitId(), request.getResourceType());
         subUnit.ifPresent(subUnit1 -> notificationService.publishUnlockedSubUnitNotification(
-                subUnit1.getName(),
+                subUnit1.getId(),
                 new HashSet<>(Collections.singletonList(request.getResourceType()))));
     }
 }

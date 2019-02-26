@@ -1,4 +1,4 @@
-package com.resource.management.api.resources.crud;
+package com.resource.management.api.management.subunits;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +9,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class DeleteSubUnitRequest {
+public class AddSubUnitRequest {
     private String name;
 }

@@ -12,6 +12,26 @@
     {
       "_id": "a8a6c6ef-9f9e-4812-ab64-66cb64094323",
       "name": "Sef de tura"
+    },
+    {
+      "_id": "a8a6c6ef-9f9e-4812-ab64-66cb64094324",
+      "name": "Astronaut"
+    },
+    {
+      "_id": "a8a6c6ef-9f9e-4812-ab64-66cb64094325",
+      "name": "Meteorolog"
+    },
+    {
+      "_id": "a8a6c6ef-9f9e-4812-ab64-66cb64094326",
+      "name": "Ghicitor in cafea"
+    },
+    {
+      "_id": "a8a6c6ef-9f9e-4812-ab64-66cb64094327",
+      "name": "Programator"
+    },
+    {
+      "_id": "a8a6c6ef-9f9e-4812-ab64-66cb64094328",
+      "name": "Magician"
     }
   ]
 }

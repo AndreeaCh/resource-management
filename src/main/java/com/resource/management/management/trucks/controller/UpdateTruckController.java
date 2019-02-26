@@ -24,8 +24,8 @@ public class UpdateTruckController {
         if (request.getId() != null) {
             Optional<Truck> functionOptional = repository.findById(request.getId());
             functionOptional.ifPresent(service -> {
-                Truck updatedFunction = new Truck(request.getId(), request.getShortName(), request.getLongName());
-                repository.save(updatedFunction);
+                Truck updatedTruck = new Truck(request.getId(), request.getShortName(), request.getLongName());
+                repository.save(updatedTruck);
             });
         }
 

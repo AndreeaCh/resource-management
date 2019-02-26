@@ -1,10 +1,9 @@
 package com.resource.management.resource.service;
 
 import com.resource.management.api.resources.LockedSubUnit;
+import com.resource.management.api.resources.InitialSubUnitsNotification;
 import com.resource.management.api.resources.SubUnit;
-import com.resource.management.api.resources.crud.notifications.InitialSubUnitsNotification;
-import com.resource.management.api.resources.crud.notifications.SubUnitDeletedNotification;
-import com.resource.management.api.resources.crud.notifications.SubUnitUpdatedNotification;
+import com.resource.management.api.resources.SubUnitUpdatedNotification;
 import com.resource.management.api.resources.lock.SubUnitLockedNotification;
 import com.resource.management.api.resources.lock.SubUnitUnlockedNotification;
 import com.resource.management.resource.model.ResourceType;
@@ -26,7 +25,6 @@ public class NotificationService {
 
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
-
     public void publishSubUnitNotification(final SubUnit subUnit) {
         messagingTemplate.convertAndSend(
                 "/topic/unitUpdatedNotification",
@@ -34,31 +32,17 @@ public class NotificationService {
         );
     }
 
-    public void publishSubUnitAddedNotification(final SubUnit subUnit) {
-        messagingTemplate.convertAndSend(
-                "/topic/unitAddedNotification",
-                new SubUnitUpdatedNotification(subUnit)
-        );
-    }
-
-    public void publishSubUnitDeletedNotification(final String name) {
-        messagingTemplate.convertAndSend(
-                "/topic/unitDeletedNotification",
-                new SubUnitDeletedNotification(name)
-        );
-    }
-
-    public void publishUnlockedSubUnitNotification(final String subUnitName, final Set<ResourceType> resourceTypes) {
+    public void publishUnlockedSubUnitNotification(final String subUnitId, final Set<ResourceType> resourceTypes) {
         messagingTemplate.convertAndSend(
                 "/topic/unlockSubUnitNotification",
-                new SubUnitUnlockedNotification(subUnitName, resourceTypes)
+                new SubUnitUnlockedNotification(subUnitId, resourceTypes)
         );
     }
 
-    public void publishSubUnitLockedNotification(final String subUnitName, final Set<ResourceType> resourceTypes) {
+    public void publishSubUnitLockedNotification(final String subUnitId, final Set<ResourceType> resourceTypes) {
         messagingTemplate.convertAndSend(
                 "/topic/lockSubUnitNotification",
-                new SubUnitLockedNotification(subUnitName, resourceTypes)
+                new SubUnitLockedNotification(subUnitId, resourceTypes)
         );
     }
 
