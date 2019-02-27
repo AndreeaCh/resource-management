@@ -6,13 +6,6 @@
   <fileSets>
     <fileSet>
       <directory>${project.build.directory}</directory>
-      <outputDirectory>dist</outputDirectory>
-      <includes>
-        <include>easy-manage-docker-on-linux-bin.tar.gz</include>
-      </includes>
-    </fileSet>
-    <fileSet>
-      <directory>${project.build.directory}</directory>
         <outputDirectory>images</outputDirectory>
         <includes>
           <include>backend-docker-image.tar.gz</include>
@@ -29,6 +22,11 @@
     </fileSet>
   </fileSets>
   <files>
+    <file>
+      <source>${project.build.directory}/easy-manage-docker-on-linux-bin.tar.gz</source>
+      <outputDirectory>dist</outputDirectory>
+      <fileMode>0744</fileMode>
+    </file>
     <file>
       <source>deploy/docker-on-linux/install_instructions.md</source>
       <destName>README.md</destName>
