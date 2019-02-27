@@ -11,6 +11,6 @@ import java.util.Set;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class LockedSubUnit {
-    private String subUnitName;
+    private String subUnitId;
     private Set<ResourceType> lockedResourceTypes;
 }

@@ -59,7 +59,7 @@ public class NotificationService {
         List<LockedSubUnit> lockedSubUnits = new ArrayList<>();
         subUnits.forEach(subUnit -> {
             if (subUnit.getLockedResourceTypeBySessionId() != null && !subUnit.getLockedResourceTypeBySessionId().isEmpty()) {
-                LockedSubUnit lockedSubUnit = new LockedSubUnit(subUnit.getName(),
+                LockedSubUnit lockedSubUnit = new LockedSubUnit(subUnit.getId(),
                         new HashSet<>(subUnit.getLockedResourceTypeBySessionId().values()));
                 lockedSubUnits.add(lockedSubUnit);
             }
