@@ -1,15 +1,16 @@
-package com.resource.management.api.resources.crud;
+package com.resource.management.api.management.subunits;
 
-import com.resource.management.api.resources.SubUnit;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class AddSubUnitRequest {
-    private SubUnit subUnit;
+public class UpdateSubUnitsOrderRequest {
+    private List<String> subUnitIds;
 }

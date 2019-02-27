@@ -1,6 +1,4 @@
-package com.resource.management.resource.model;
-
-import com.resource.management.services.model.Service;
+package com.resource.management.services.model;
 
 public class ServiceMapper {
 

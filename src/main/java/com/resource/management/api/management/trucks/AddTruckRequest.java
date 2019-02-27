@@ -1,4 +1,4 @@
-package com.resource.management.api.resources.crud;
+package com.resource.management.api.management.trucks;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,6 +9,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class DeleteSubUnitRequest {
-    private String name;
+public class AddTruckRequest {
+    private String shortName;
+    private String longName;
 }

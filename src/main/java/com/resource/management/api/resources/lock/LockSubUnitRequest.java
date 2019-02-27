@@ -12,6 +12,6 @@ import lombok.ToString;
 @ToString
 public class LockSubUnitRequest {
 
-    private String subUnitName;
+    private String subUnitId;
     private ResourceType resourceType;
 }

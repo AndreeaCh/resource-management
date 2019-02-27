@@ -1,8 +1,8 @@
 package com.resource.management.resource.controller;
 
 import com.resource.management.SubUnits;
-import com.resource.management.api.resources.crud.AddSubUnitRequest;
-import com.resource.management.api.resources.crud.AddSubUnitResponse;
+import com.resource.management.api.management.subunits.AddSubUnitRequest;
+import com.resource.management.api.management.subunits.AddSubUnitResponse;
 import com.resource.management.resource.service.NotificationService;
 import com.resource.management.resource.service.SubUnitsService;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class AddSubUnitControllerTest {
     @Test
     public void handleAddSubUnitRequest_sut_respondsWithSuccess() {
         //given
-        AddSubUnitRequest request = new AddSubUnitRequest(SubUnits.api());
+        AddSubUnitRequest request = new AddSubUnitRequest("name");
 
         //when
         AddSubUnitResponse response = this.sut.handle(request);
@@ -48,17 +48,5 @@ public class AddSubUnitControllerTest {
                 "Expected status code to be OK.",
                 response.getStatusCode(),
                 equalTo(OK));
-    }
-
-    @Test
-    public void handleAddSubUnitRequest_sut_publishesNewSubUnit() {
-        //given
-        AddSubUnitRequest request = new AddSubUnitRequest(SubUnits.api());
-
-        //when
-        this.sut.handle(request);
-
-        //then
-        verify(notificationService).publishSubUnitAddedNotification(request.getSubUnit());
     }
 }

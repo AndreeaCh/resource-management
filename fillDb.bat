@@ -8,7 +8,7 @@ set MONGOIMPORTADDR=%~1%\mongoimport.exe
 
 "%MONGOADDR%" --eval db.dropDatabase(^)
 for /l %%x in (0, 1, 10) do (
-   echo Adding element number: %%x
+   echo Adding subunit number: %%x
    "%MONGOIMPORTADDR%" -d test -c subUnit --file "%~dp0\src\main\resources\subUnit%%x.json"
    )
 )
@@ -16,5 +16,17 @@ for /l %%x in (0, 1, 10) do (
 for /l %%x in (0, 1, 2) do (
    echo Adding service number: %%x
    "%MONGOIMPORTADDR%" -d test -c service --file "%~dp0\src\main\resources\service%%x.json"
+   )
+)
+
+for /l %%x in (0, 1, 0) do (
+   echo Adding function number: %%x
+   "%MONGOIMPORTADDR%" -d test -c functions --file "%~dp0\src\main\resources\function%%x.json"
+   )
+)
+
+for /l %%x in (0, 1, 0) do (
+   echo Adding truck number: %%x
+   "%MONGOIMPORTADDR%" -d test -c trucks --file "%~dp0\src\main\resources\truck%%x.json"
    )
 )

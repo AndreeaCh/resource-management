@@ -1,4 +1,4 @@
-package com.resource.management.api.resources.crud.notifications;
+package com.resource.management.api.resources;
 
 import com.resource.management.api.resources.LockedSubUnit;
 import com.resource.management.api.resources.SubUnit;

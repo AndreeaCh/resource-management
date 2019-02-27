@@ -12,7 +12,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class SubUnitLockedNotification {
-
-    private String subUnitName;
+    private String subUnitId;
     private Set<ResourceType> lockedResourceTypes;
 }

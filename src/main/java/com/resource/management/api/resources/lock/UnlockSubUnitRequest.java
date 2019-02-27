@@ -11,6 +11,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class UnlockSubUnitRequest {
-    private String subUnitName;
+    private String subUnitId;
     private ResourceType resourceType;
 }

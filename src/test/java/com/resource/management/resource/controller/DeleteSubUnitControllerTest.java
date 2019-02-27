@@ -1,7 +1,7 @@
 package com.resource.management.resource.controller;
 
-import com.resource.management.api.resources.crud.DeleteSubUnitRequest;
-import com.resource.management.api.resources.crud.DeleteSubUnitResponse;
+import com.resource.management.api.management.subunits.DeleteSubUnitRequest;
+import com.resource.management.api.management.subunits.DeleteSubUnitResponse;
 import com.resource.management.resource.service.NotificationService;
 import com.resource.management.resource.service.SubUnitsService;
 import org.junit.Test;
@@ -32,19 +32,6 @@ public class DeleteSubUnitControllerTest {
     @Test
     public void contextLoads() throws Exception {
         assertThat(this.sut, notNullValue());
-    }
-
-    @Test
-    public void handleAddSubUnitRequest_sut_publishesDeletedSubUnit() {
-        //given
-        String name = "CJ";
-        DeleteSubUnitRequest request = new DeleteSubUnitRequest(name);
-
-        //when
-        this.sut.handle(request);
-
-        //then
-        verify(notificationService).publishSubUnitDeletedNotification(name);
     }
 
     @Test
