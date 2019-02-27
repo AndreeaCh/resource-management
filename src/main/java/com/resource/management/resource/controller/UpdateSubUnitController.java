@@ -7,7 +7,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 
-import com.resource.management.api.management.subunits.UpdateSubUnitRequest;
+import com.resource.management.api.resources.UpdateSubUnitRequest;
 import com.resource.management.resource.model.SubUnit;
 import com.resource.management.resource.model.SubUnitMapper;
 import com.resource.management.resource.service.NotificationService;

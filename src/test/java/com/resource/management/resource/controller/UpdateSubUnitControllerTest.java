@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.resource.management.SubUnits;
 import com.resource.management.api.resources.SubUnit;
-import com.resource.management.api.management.subunits.UpdateSubUnitRequest;
+import com.resource.management.api.resources.UpdateSubUnitRequest;
 import com.resource.management.resource.model.SubUnitMapper;
 import com.resource.management.resource.service.NotificationService;
 import com.resource.management.resource.service.SubUnitsService;
