@@ -2,6 +2,12 @@
 
 ### TODO
 
+- docker-on-linux install script
+    -> proper docker image names
+    -> proper file permissions for bin archive
+    -> simplify paths
+    -> verbosity
+    -> use release version instead of latest
 - verbosity option for install scripts
 - configurable backend port in application.properties
 - installers to be copied at predefined location at maven deploy phase
