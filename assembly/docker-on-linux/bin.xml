@@ -5,6 +5,13 @@
   </formats>
   <fileSets>
     <fileSet>
+      <directory>src/main/resources</directory>
+      <outputDirectory>import</outputDirectory>
+      <includes>
+        <include>*.json</include>
+      </includes>
+    </fileSet>
+    <fileSet>
       <directory>.</directory>
       <outputDirectory>logs</outputDirectory>
       <excludes>
@@ -18,19 +25,11 @@
       <destName>README.md</destName>
     </file>
     <file>
-      <source>deploy/docker-on-linux/start.sh</source>
+      <source>deploy/docker-on-linux/easyman</source>
       <fileMode>0744</fileMode>
     </file>
     <file>
-      <source>deploy/docker-on-linux/stop.sh</source>
-      <fileMode>0744</fileMode>
-    </file>
-    <file>
-      <source>deploy/docker-on-linux/uninstall.sh</source>
-      <fileMode>0744</fileMode>
-    </file>
-    <file>
-      <source>deploy/windows-native/production.application.properties</source>
+      <source>deploy/docker-on-linux/production.application.properties</source>
       <destName>application.properties</destName>
     </file>
   </files>
