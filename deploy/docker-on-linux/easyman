@@ -1,0 +1,113 @@
+#!/bin/bash
+
+function cmd_start() {
+
+    LOGS_DIR=$INSTALL_PATH/logs
+    IMPORT_DIR=$INSTALL_PATH/import
+
+    # add write permission for container
+    chmod o+w $LOGS_DIR
+
+    DATETIME=$(date +"%Y-%m-%d_%H-%M-%S")
+    LOGFILE=$LOGS_DIR/start-$DATETIME.log
+
+    echo "START_1/3 Start db container"
+	docker run --name mongodb \
+	    --network host \
+	    --hostname $HOSTNAME \
+	    --restart on-failure:3 \
+	    --memory 1024000000 \
+	    --memory-swap -1 \
+	    --volume $LOGS_DIR:/home/container/logs \
+	    --volume $IMPORT_DIR:/root/import \
+	    isu/resource-management-db 2>&1 > $LOGFILE &
+
+    echo "START_2/3 Start backend container"
+	docker run --name backend \
+	    --network host \
+	    --hostname $HOSTNAME \
+	    --restart on-failure:3 \
+	    --memory 1024000000 \
+	    --memory-swap -1 \
+	    --volume $LOGS_DIR:/home/container/logs \
+	    --volume $INSTALL_PATH/application.properties:/home/container/config/application.properties \
+	isu/resource-management-backend 2>&1 >> $LOGFILE &
+
+    echo "START_3/3 Start frontend container, connected to ${server_address}"
+    docker run --name frontend \
+        --network host \
+	    --hostname $HOSTNAME \
+	    --restart on-failure:3 \
+	    --memory 1024000000 \
+	    --memory-swap -1 \
+	    --volume $LOGS_DIR:/home/container/logs \
+	    --env SERVER_ADDRESS=${server_address} \
+    isu/resource-management-frontend 2>&1 >> $LOGFILE &
+
+    echo "Containers are started"
+}
+
+function cmd_stop() {
+
+    echo "STOP_1/3 Stopping frontend"
+    docker stop frontend
+
+    echo "STOP_2/3 Stopping backend"
+    docker stop backend
+
+    echo "STOP_3/3 Stopping database"
+    docker stop mongodb
+}
+
+function cmd_list() {
+    # filter docker container list, show status
+    docker ps -a --no-trunc --filter name="^/(frontend|backend|mongodb)$"
+}
+
+function cmd_uninstall() {
+
+    echo "UNINSTALL Uninstall the application at the location '$INSTALL_PATH'"
+
+    echo "UNINSTALL_1/3 Stopping any running application container"
+    docker rm -f $(docker ps -a -q --no-trunc --filter name="^/(frontend|backend|mongodb)$)")
+
+    echo "UNINSTALL_2/3 Removing images"
+    docker rmi -f $(docker images -q "isu/resource-management-*")
+
+    echo "UNINSTALL_3/3 Removing application files"
+    # rm -rf $INSTALL_PATH/
+}
+
+function cmd_help()
+{
+     echo -e "\teasyman start [domain name | machine IP]"
+     echo -e "\teasyman stop"
+     echo -e "\teasyman list"
+     echo -e "\teasyman uninstall"
+     echo -e "\teasyman help"
+}
+
+target="${1}"
+INSTALL_PATH=$HOME/apps/easy-manage
+
+case "${target}" in
+ start )
+  server_address=${2:-localhost}
+  cmd_start
+  ;;
+ stop )
+  cmd_stop
+  ;;
+ list | -l )
+  cmd_list
+  ;;
+ uninstall )
+  cmd_uninstall
+  ;;
+  help | -h )
+  cmd_help
+  ;;
+ * )
+  cmd_help
+  ;;
+esac

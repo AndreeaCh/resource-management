@@ -5,16 +5,16 @@ IMPORT_DIR=~/import
 
 import_data ()
 {
-    for i in `seq 0 10`;
-    do
-        echo "Adding element number: $i"
-        mongoimport -d test -c subUnit --file $IMPORT_DIR/subUnit$i.json
-    done
+    for entry in "$IMPORT_DIR"/subUnit*\.json
+	do
+  		echo "Adding subunit: $entry"
+        mongoimport -d test -c subUnit --file $entry
+	done
 
-    for i in `seq 0 2`;
+    for entry in "$IMPORT_DIR"/service*\.json
     do
-        echo "Adding service number: $i"
-        mongoimport -d test -c service --file $IMPORT_DIR/service$i.json
+        echo "Adding service: $entry"
+        mongoimport -d test -c service --file $entry
     done
 }
 
@@ -24,10 +24,7 @@ nohup mongod > $LOG_DIR/mongod-$DATE_WITH_TIME.log 2>&1 &
 echo "Waiting for mongodb to start"
 sleep 10
 
-if [ ! -z $1 ]
-then
-    echo "Demo mode is on. Importing data."
-    import_data
-fi
+echo "Importing data if available"
+import_data
 
 tail -f $LOG_DIR/mongod-$DATE_WITH_TIME.log
