@@ -4,10 +4,11 @@
 
 - docker-on-linux install script
     -> proper docker image names
-    -> proper file permissions for bin archive
     -> simplify paths
     -> verbosity
     -> use release version instead of latest
+    -> merge setup.sh and install.sh
+    -> show help when invalid variables
 - verbosity option for install scripts
 - configurable backend port in application.properties
 - installers to be copied at predefined location at maven deploy phase
