@@ -2,10 +2,16 @@
 
 function cmd_start() {
 
-    LOGS_DIR=$INSTALL_PATH/logs
-    IMPORT_DIR=$INSTALL_PATH/import
+    if [ -z ${easyman_home} ]; then
+        echo "Installation directory is unknown. It should be configured in ${HOME}/.easyman"
+        exit 1
+    fi
+
+    IMPORT_DIR=$easyman_home/import
+    APPLICATION_PROPERTIES=$easyman_home/application.properties
 
     # add write permission for container
+    LOGS_DIR=$easyman_home/logs
     chmod o+w $LOGS_DIR
 
     DATETIME=$(date +"%Y-%m-%d_%H-%M-%S")
@@ -16,7 +22,7 @@ function cmd_start() {
 	    --network host \
 	    --hostname $HOSTNAME \
 	    --restart on-failure:3 \
-	    --memory 1024000000 \
+	    --memory ${db_memory} \
 	    --memory-swap -1 \
 	    --volume $LOGS_DIR:/home/container/logs \
 	    --volume $IMPORT_DIR:/root/import \
@@ -27,21 +33,21 @@ function cmd_start() {
 	    --network host \
 	    --hostname $HOSTNAME \
 	    --restart on-failure:3 \
-	    --memory 1024000000 \
+	    --memory ${backend_memory} \
 	    --memory-swap -1 \
 	    --volume $LOGS_DIR:/home/container/logs \
-	    --volume $INSTALL_PATH/application.properties:/home/container/config/application.properties \
+	    --volume $APPLICATION_PROPERTIES:/home/container/config/application.properties \
 	isu/resource-management-backend 2>&1 >> $LOGFILE &
 
-    echo "START_3/3 Start frontend container, connected to ${server_address}"
+    echo "START_3/3 Start frontend container, connected to ${backend_address}"
     docker run --name frontend \
         --network host \
 	    --hostname $HOSTNAME \
 	    --restart on-failure:3 \
-	    --memory 1024000000 \
+	    --memory ${frontend_memory} \
 	    --memory-swap -1 \
 	    --volume $LOGS_DIR:/home/container/logs \
-	    --env SERVER_ADDRESS=${server_address} \
+	    --env SERVER_ADDRESS=${backend_address} \
     isu/resource-management-frontend 2>&1 >> $LOGFILE &
 
     echo "Containers are started"
@@ -64,9 +70,23 @@ function cmd_list() {
     docker ps -a --no-trunc --filter name="^/(frontend|backend|mongodb)$"
 }
 
+function cmd_list_config() {
+     echo -e "Listing .easyman config file located in $HOME directory :"
+     echo -e "INSTALL_PATH=$INSTALL_PATH"
+     echo -e "SERVER_ADDRESS=$SERVER_ADDRESS"
+     echo -e "FRONTEND_RAM=$FRONTEND_RAM"
+     echo -e "BACKEND_RAM=$BACKEND_RAM"
+     echo -e "DB_RAM=$DB_RAM"
+}
+
 function cmd_uninstall() {
 
-    echo "UNINSTALL Uninstall the application at the location '$INSTALL_PATH'"
+    if [ -z ${easyman_home} ]; then
+        echo "Installation directory is unknown. It should be configured in ${HOME}/.easyman"
+        exit 1
+    fi
+
+    echo "UNINSTALL Uninstall the application at the location '$easyman_home'"
 
     echo "UNINSTALL_1/3 Stopping any running application container"
     docker rm -f $(docker ps -a -q --no-trunc --filter name="^/(frontend|backend|mongodb)$)")
@@ -75,24 +95,34 @@ function cmd_uninstall() {
     docker rmi -f $(docker images -q "isu/resource-management-*")
 
     echo "UNINSTALL_3/3 Removing application files"
-    # rm -rf $INSTALL_PATH/
+    rm -rf easyman_home/
 }
 
 function cmd_help()
 {
-     echo -e "\teasyman start [domain name | machine IP]"
+     echo -e "\teasyman start"
      echo -e "\teasyman stop"
      echo -e "\teasyman list"
+     echo -e "\teasyman config"
      echo -e "\teasyman uninstall"
      echo -e "\teasyman help"
 }
 
+# INSTALL_PATH=$HOME/apps/easy-manage
+CONFIG_PATH=$HOME/.easyman
+
+# load configuration
+source $CONFIG_PATH
+
 target="${1}"
-INSTALL_PATH=$HOME/apps/easy-manage
 
 case "${target}" in
  start )
-  server_address=${2:-localhost}
+  easyman_home=$INSTALL_PATH
+  backend_address=${SERVER_ADDRESS:-localhost}
+  backend_memory=${BACKEND_RAM:-1024000000}
+  frontend_memory=${FRONTEND_RAM:-1024000000}
+  db_memory=${DB_RAM:-1024000000}
   cmd_start
   ;;
  stop )
@@ -100,6 +130,9 @@ case "${target}" in
   ;;
  list | -l )
   cmd_list
+  ;;
+ config )
+  cmd_list_config
   ;;
  uninstall )
   cmd_uninstall
