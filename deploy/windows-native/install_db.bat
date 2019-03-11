@@ -19,7 +19,7 @@ powershell Set-ExecutionPolicy Unrestricted
 SET _MONGO_SERVER_PATH=C:\Progra~1\MongoDB\Server\4.0
 SET _MONGO_DATA_PATH=C:\mongodb\data\db
 SET _MONGO_LOG_PATH=C:\mongodb\log
-SET _MONGO_VER=4.0.4
+SET _MONGO_VER=4.0.6
 
 ::::::::::::::::::::::::::::::::::: MONGODB SETUP ::::::::::::::::::::::::::::::::::::::
 
