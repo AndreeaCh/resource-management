@@ -26,8 +26,13 @@
         <disable.docker.plugin>true</disable.docker.plugin>
 
        <!--docker build related properties-->
-       <dockerSourceDirectory>${project.basedir}/src/main/docker</dockerSourceDirectory>
+        <dockerSourceDirectory>${project.basedir}/src/main/docker</dockerSourceDirectory>
         <dockerOutputDirectory>${project.build.directory}/rootfs</dockerOutputDirectory>
+        <nsisSourceDirectory>${project.basedir}/src/main/nsis</nsisSourceDirectory>
+
+        <win.native.source>${project.basedir}/deploy/windows-native</win.native.source>
+        <win.native.build.directory>${project.build.directory}/win-native</win.native.build.directory>
+
         <win.native.resources>${project.build.directory}/winres</win.native.resources>
 
         <frontend.groupId>${project.groupId}</frontend.groupId>
@@ -49,6 +54,19 @@
         <version.docker-maven-plugin>0.25.0</version.docker-maven-plugin>
         <version.buildnumber-maven-plugin>1.4</version.buildnumber-maven-plugin>
     </properties>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>MojoHaus</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+           <!--<snapshots>-->
+           <!--<enabled>true</enabled>-->
+           <!--</snapshots>-->
+           <!--<releases>-->
+           <!--<enabled>true</enabled>  &lt;!&ndash; Workaround for MNG-2974, see note below &ndash;&gt;-->
+           <!--</releases>-->
+        </pluginRepository>
+    </pluginRepositories>
 
     <dependencies>
         <dependency>
@@ -179,6 +197,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
+                    <!--scope:docker-->
                     <execution>
                         <id>copy backend assembly</id>
                         <phase>install</phase>
@@ -218,6 +237,26 @@
                             </artifactItems>
                         </configuration>
                     </execution>
+                    <!--scope:windows-native-->
+                    <execution>
+                        <id>copy backend assembly for windows native deploy</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${win.native.build.directory}/bin</outputDirectory>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>${project.groupId}</groupId>
+                                    <artifactId>${project.artifactId}</artifactId>
+                                    <version>${project.version}</version>
+                                    <overWrite>true</overWrite>
+                                    <type>jar</type>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
                     <execution>
                         <id>unpack frontend assembly for windows native deploy</id>
                         <phase>package</phase>
@@ -225,7 +264,7 @@
                             <goal>unpack</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${win.native.resources}</outputDirectory>
+                            <outputDirectory>${win.native.build.directory}</outputDirectory>
                             <artifactItems>
                                 <artifactItem>
                                     <groupId>${frontend.groupId}</groupId>
@@ -244,7 +283,7 @@
                 </configuration>
             </plugin>
 
-           <!--copy docker files-->
+           <!--copy resource files-->
            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -252,6 +291,7 @@
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
                 <executions>
+                    <!--scope:docker-->
                     <execution>
                         <id>copy docker files</id>
                         <phase>generate-resources</phase>
@@ -272,6 +312,82 @@
                                 <resource>
                                     <directory>${project.build.sourceDirectory}/../resources</directory>
                                     <targetPath>${dockerOutputDirectory}/db/fillDb</targetPath>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>**/*.json</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <!--scope:windows-native-->
+                    <execution>
+                        <id>copy windows native resource files</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${win.native.build.directory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${win.native.source}</directory>
+                                    <targetPath>${win.native.build.directory}/setup</targetPath>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>install_instructions.md</include>
+                                        <include>setup.bat</include>
+                                        <include>install_chocolatey.bat</include>
+                                        <include>install_java.bat</include>
+                                        <include>install_db.bat</include>
+                                        <include>install_node.bat</include>
+                                        <include>install_app.bat</include>
+                                        <include>uninstall.bat</include>
+                                        <include>uninstall_tools.bat</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${win.native.source}</directory>
+                                    <targetPath>${win.native.build.directory}/run</targetPath>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>production.application.properties</include>
+                                        <include>run_instructions.md</include>
+                                        <include>easyman.bat</include>
+                                        <include>start.bat</include>
+                                        <include>stop.bat</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${nsisSourceDirectory}</directory>
+                                    <targetPath>${win.native.build.directory}</targetPath>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>**/*.nsi</include>
+                                        <include>**/*.nsh</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${project.basedir}</directory>
+                                    <targetPath>${win.native.build.directory}/run</targetPath>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>fillDb.bat</include>
+                                        <include>deploy.bat</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${project.basedir}/deploy/chocolatey</directory>
+                                    <targetPath>${win.native.build.directory}/chocolatey</targetPath>
+                                    <filtering>true</filtering>
+                                    <includes>
+                                        <include>*.ps1</include>
+                                        <include>*.cmd</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${project.build.sourceDirectory}/../resources</directory>
+                                    <targetPath>${win.native.build.directory}/fillDb</targetPath>
                                     <filtering>true</filtering>
                                     <includes>
                                         <include>**/*.json</include>
@@ -450,6 +566,26 @@
                 </executions>
             </plugin>
 
+           <!-- NSIS plugin for producing nsis installer -->
+           <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>nsis-maven-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>generate-project</goal>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                           <setupScript>${win.native.build.directory}/easymanage.nsi</setupScript>
+                           <outputFile>${project.build.directory}/EasyManage-${project.version}.exe</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
@@ -459,7 +595,7 @@
       <profile>
             <id>linux</id>
            <properties>
-               <disable.docker.plugin>false</disable.docker.plugin>
+               <disable.docker.plugin>true</disable.docker.plugin>
            </properties>
            <activation>
                 <os>

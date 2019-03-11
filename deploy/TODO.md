@@ -2,6 +2,14 @@
 
 ### TODO
 
+- nsis installer
+    -> as an intermediate step, call install scripts directly instead of using setup.bat
+    -> configure installer file logging, no need for intermediate log files 
+    -> migrate batch scripts to nsis instructions if possible
+    -> make nsis script configurable, remove hardcoding
+    -> language settings
+    -> uninstall to remove installed files but keep logs and data 
+    
 - docker-on-linux install script
     -> proper docker image names
     -> simplify paths
@@ -42,6 +50,10 @@
 - use client bin dist for windows native installer
 - modify fillDb.bat and deploy.bat to take different arguments
  
+ 
+# ISSUES
+- nsis installer
+    -> setup.bat file not playing well with install path containing spaces
 
 ### Installation
 

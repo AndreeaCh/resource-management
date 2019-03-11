@@ -5,14 +5,14 @@
   </formats>
   <fileSets>
     <fileSet>
-      <directory>src/main/resources</directory>
+      <directory>${win.native.build.directory}/fillDb</directory>
       <outputDirectory>import</outputDirectory>
       <includes>
         <include>*.json</include>
       </includes>
     </fileSet>
     <fileSet>
-      <directory>${win.native.resources}/dist</directory>
+      <directory>${win.native.build.directory}/dist</directory>
       <outputDirectory>dist</outputDirectory>
       <includes>
         <include>*/**</include>
@@ -28,7 +28,7 @@
   </fileSets>
   <files>
     <file>
-      <source>deploy/windows-native/run_instructions.md</source>
+      <source>${win.native.build.directory}/run/run_instructions.md</source>
       <destName>README.md</destName>
     </file>
     <file>
@@ -37,37 +37,37 @@
       <destName>easy-manage.jar</destName>
     </file>
     <file>
-      <source>deploy/windows-native/easyman.bat</source>
+      <source>${win.native.build.directory}/run/easyman.bat</source>
       <outputDirectory>bin</outputDirectory>
     </file>
     <file>
-      <source>deploy/windows-native/start.bat</source>
+      <source>${win.native.build.directory}/run/start.bat</source>
       <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
-      <source>deploy/windows-native/stop.bat</source>
+      <source>${win.native.build.directory}/run/stop.bat</source>
       <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
-      <source>deploy/windows-native/uninstall.bat</source>
+      <source>${win.native.build.directory}/setup/uninstall.bat</source>
       <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
-      <source>deploy/windows-native/uninstall_tools.bat</source>
+      <source>${win.native.build.directory}/setup/uninstall_tools.bat</source>
       <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
-      <source>deploy.bat</source>
+      <source>${win.native.build.directory}/run/deploy.bat</source>
       <destName>run-backend.bat</destName>
       <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
-      <source>fillDb.bat</source>
+      <source>${win.native.build.directory}/run/fillDb.bat</source>
       <destName>import.bat</destName>
       <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
-      <source>deploy/windows-native/production.application.properties</source>
+      <source>${win.native.build.directory}/run/production.application.properties</source>
       <destName>application.properties</destName>
     </file>
   </files>
