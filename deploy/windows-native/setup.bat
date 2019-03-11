@@ -17,7 +17,7 @@ SET _DATETIME=%_DATETIME:~0,8%-%_DATETIME:~8,6%
 
 if "%1%"=="prereq" (
    ECHO SETUP Installing chocolatey package manager...
-    powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_PATH%\"; & .\install_chocolatey.bat >> %_LOGS_PATH%\%_DATETIME%-setup-chocolatey.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
+   powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_PATH%\"; & .\install_chocolatey.bat >> %_LOGS_PATH%\%_DATETIME%-setup-chocolatey.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
 )
 if "%1%"=="db" (
    ECHO SETUP Installing db...
@@ -72,4 +72,7 @@ if "%~1%"=="" (
 ECHO SETUP_END Finished setup, press any key to exit
 
 ECHO ON
-PAUSE
+
+if "%2%" NEQ "/S" (
+ PAUSE
+)

@@ -19,6 +19,17 @@ SET _HTTP_SERVER_VER=0.11.1
 
 SET _CONFIG_PATH=%_INSTALL_PATH%\application.properties
 
+
+For /F "tokens=1* delims==" %%A IN (%UserProfile%\easyman.conf) DO (
+    ECHO "READING CONFIG"
+
+    IF "%%A"=="INSTALL_PATH" set _INSTALL_PATH=%%B
+    # ECHO "INSTALL_PATH is '%_INSTALL_PATH%'"
+
+    IF "%%A"=="SERVER_ADDRESS" set _SERVER_ADDRESS=%%B
+    # ECHO "SERVER_ADDRESS is '%_SERVER_ADDRESS%'"
+)
+
 ::::::::::::::::::::::::::::::::: PATH CONSTANTS ::::::::::::::::::::::::::::::::::::::
 
 : set-path-constants
@@ -81,7 +92,7 @@ ECHO START_3.0.2 Installing http server
 powershell -command npm install -g http-server
 
 :http_server_configure
-ECHO START_3.0.3 Configure http server... skipping
+ECHO START_3.0.3 Configure http server
 
 ECHO START_3.1 Verify if frontend application has already started
 FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq node.exe" /fo table /nh') DO (
@@ -90,7 +101,10 @@ FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq node.exe" /fo table /nh'
     )
 )
 
-ECHO START_3.2 Starting new client instance...
+ECHO START_3.2.1 Update backend address in the frontend environment configuration
+powershell -command "(gc %_INSTALL_PATH%\dist\static\env.js) -replace 'localhost', '%_SERVER_ADDRESS%' | Out-File %_INSTALL_PATH%\dist\static\env.js"
+
+ECHO START_3.2.3 Starting new client instance...
 powershell -command "Start-Process powershell -ArgumentList 'http-server %_FRONTEND_PATH% -p 8080 >> %_LOGS_DIR%\frontend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
 ::::::::::::::::::::::::::::::::::: POST PROCESSING :::::::::::::::::::::::::::::::::::::

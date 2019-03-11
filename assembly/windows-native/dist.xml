@@ -13,7 +13,7 @@
         </includes>
     </fileSet>
     <fileSet>
-      <directory>deploy</directory>
+      <directory>deploy/windows-native</directory>
       <outputDirectory>scripts</outputDirectory>
       <includes>
         <include>chocolatey/*</include>
