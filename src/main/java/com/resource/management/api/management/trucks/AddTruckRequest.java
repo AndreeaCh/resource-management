@@ -10,6 +10,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class AddTruckRequest {
+    private String id;
     private String shortName;
     private String longName;
 }

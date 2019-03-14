@@ -25,7 +25,7 @@ public class AddSubUnitController {
     @MessageMapping("/addSubUnit")
     @SendTo("/topic/unitAddedNotification")
     public AddSubUnitResponse handle(final AddSubUnitRequest request) {
-        service.addSubUnit(request.getName());
+        service.addSubUnit(request.getId(), request.getName());
         notificationService.publishInitialSubUnitsNotification();
         return new AddSubUnitResponse(StatusCode.OK);
     }

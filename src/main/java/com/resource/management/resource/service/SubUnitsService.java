@@ -39,8 +39,8 @@ public class SubUnitsService {
     }
 
 
-    public void addSubUnit(final String subUnitName) {
-        SubUnit subUnit = createSubUnit(subUnitName);
+    public void addSubUnit(final String id, final String subUnitName) {
+        SubUnit subUnit = createSubUnit(id, subUnitName);
         saveSubUnit(subUnit);
 
         Optional<SubUnitsConfiguration> subUnitsConfiguration = configurationRepository.findById(ID);
@@ -376,10 +376,10 @@ public class SubUnitsService {
         return Comparator.comparingInt(v -> subUnitIds.indexOf(v.getId()));
     }
 
-    private SubUnit createSubUnit(String subUnitName) {
+    private SubUnit createSubUnit(String id, String subUnitName) {
         String lastUpdate = Instant.now().toString();
         SubUnit subUnit = new SubUnit();
-        subUnit.setId(UUID.randomUUID().toString());
+        subUnit.setId(id);
         subUnit.setName(subUnitName);
         subUnit.setLastUpdateFirstInterventionResource(lastUpdate);
         subUnit.setLastUpdateEquipment(lastUpdate);
