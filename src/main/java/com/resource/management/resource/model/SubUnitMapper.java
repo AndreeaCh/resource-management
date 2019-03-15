@@ -13,6 +13,7 @@ public final class SubUnitMapper {
 
     public static SubUnit toApi(com.resource.management.resource.model.SubUnit internalSubUnit) {
         SubUnit subUnit = new SubUnit();
+        subUnit.setId(internalSubUnit.getId());
         subUnit.setName(internalSubUnit.getName());
         subUnit.setLastUpdateFirstInterventionResource(internalSubUnit.getLastUpdateFirstInterventionResource());
         subUnit.setLastUpdateOtherResource(internalSubUnit.getLastUpdateOtherResource());
@@ -41,6 +42,7 @@ public final class SubUnitMapper {
 
     public static com.resource.management.resource.model.SubUnit toInternal(final SubUnit externalSubUnit) {
         com.resource.management.resource.model.SubUnit subUnit = new com.resource.management.resource.model.SubUnit();
+        subUnit.setId(externalSubUnit.getId());
         subUnit.setName(externalSubUnit.getName());
         subUnit.setLastUpdateFirstInterventionResource(externalSubUnit.getLastUpdateFirstInterventionResource());
         subUnit.setLastUpdateOtherResource(externalSubUnit.getLastUpdateOtherResource());

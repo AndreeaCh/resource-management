@@ -1,6 +1,8 @@
 package com.resource.management.resource.service;
 
 import com.resource.management.resource.model.*;
+import com.resource.management.resource.model.configuration.SubUnitsConfiguration;
+import com.resource.management.resource.model.configuration.SubUnitsConfigurationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -15,10 +17,16 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import static com.resource.management.resource.model.configuration.SubUnitsConfiguration.ID;
+
 @Service
 public class SubUnitsService {
+
     @Autowired
     private SubUnitsRepository repository;
+
+    @Autowired
+    private SubUnitsConfigurationRepository configurationRepository;
 
     @Autowired
     private MongoTemplate template;
@@ -26,22 +34,50 @@ public class SubUnitsService {
     @Autowired
     private LogEntryWriter historyWriter;
 
-    public Optional<SubUnit> findSubUnitByName(final String name) {
-        return repository.findByName(name);
+    public Optional<SubUnit> findSubUnitById(final String id) {
+        return repository.findById(id);
     }
 
 
-    public void addSubUnit(final SubUnit subUnit) {
-        subUnit.setLastUpdateFirstInterventionResource(Instant.now().toString());
+    public void addSubUnit(final String subUnitName) {
+        SubUnit subUnit = createSubUnit(subUnitName);
         saveSubUnit(subUnit);
+
+        Optional<SubUnitsConfiguration> subUnitsConfiguration = configurationRepository.findById(ID);
+        subUnitsConfiguration.ifPresent(configuration -> {
+            configuration.getOrderedSubUnitIds().add(subUnit.getId());
+            configurationRepository.save(configuration);
+        });
     }
 
+    @Transactional
+    public List<SubUnit> updateSubUnitsOrder(final List<String> subUnitIds) {
+        List<SubUnit> subUnits = repository.findAll();
+        configurationRepository.save(new SubUnitsConfiguration(ID, subUnitIds));
+        return subUnits.stream()
+                .sorted(subUnitsOrdering(subUnitIds))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Optional<SubUnit> updateSubUnitName(String id, String name) {
+        SubUnit updatedUnit = null;
+
+        Optional<SubUnit> existingSubUnitOptional = findSubUnitById(id);
+        if (existingSubUnitOptional.isPresent()) {
+            updatedUnit = existingSubUnitOptional.get();
+            updatedUnit.setName(name);
+            repository.save(updatedUnit);
+        }
+
+        return Optional.ofNullable(updatedUnit);
+    }
 
     @Transactional
     public Optional<SubUnit> updateSubUnit(final SubUnit subUnit, final String ipAddress) {
         SubUnit updatedUnit = null;
 
-        Optional<SubUnit> existingSubUnitOptional = findSubUnitByName(subUnit.getName());
+        Optional<SubUnit> existingSubUnitOptional = findSubUnitById(subUnit.getId());
         if (existingSubUnitOptional.isPresent()) {
             SubUnit existingSubUnit = existingSubUnitOptional.get();
             updatedUnit = updateFirstInterventionResources(subUnit, existingSubUnit);
@@ -57,9 +93,10 @@ public class SubUnitsService {
     }
 
 
-    public synchronized Map<String, ResourceType> lockSubUnit(final String subUnitName, final ResourceType resourceType, final String sessionId) {
+    public synchronized Map<String, ResourceType> lockSubUnit(final String subUnitId,
+                                                              final ResourceType resourceType, final String sessionId) {
         Map<String, ResourceType> lockedResourceTypeBySessionId = null;
-        Optional<SubUnit> subUnitOptional = findSubUnitByName(subUnitName);
+        Optional<SubUnit> subUnitOptional = findSubUnitById(subUnitId);
         if (subUnitOptional.isPresent()) {
             SubUnit subUnit = subUnitOptional.get();
             if (!isResourceAlreadyLocked(subUnit, resourceType)) {
@@ -84,7 +121,7 @@ public class SubUnitsService {
     }
 
     public Optional<SubUnit> unlockSubUnit(final String subUnitName, final ResourceType resourceType) {
-        Optional<SubUnit> subUnitOptional = findSubUnitByName(subUnitName);
+        Optional<SubUnit> subUnitOptional = findSubUnitById(subUnitName);
         if (subUnitOptional.isPresent()) {
             SubUnit subUnit = subUnitOptional.get();
             if (subUnit.getLockedResourceTypeBySessionId() != null) {
@@ -128,8 +165,8 @@ public class SubUnitsService {
         });
     }
 
-    public void deleteSubUnit(final String name) {
-        repository.deleteById(name);
+    public void deleteSubUnit(final String id) {
+        repository.deleteById(id);
     }
 
     private synchronized void saveSubUnit(final SubUnit subUnit) {
@@ -149,7 +186,8 @@ public class SubUnitsService {
         return resourceLog;
     }
 
-    public Optional<SubUnit> updateResourceStatus(String plateNumber, ResourceStatus resourceStatus, String ipAddress) {
+    public Optional<SubUnit> updateResourceStatus(String plateNumber, ResourceStatus resourceStatus, String
+            ipAddress) {
         final Optional<SubUnit> subUnitOptional = getSubUnitWithPlateNumber(plateNumber);
         if (subUnitOptional.isPresent()) {
             final Optional<Resource> resourceOptional = getResourceWithPlateNumber(subUnitOptional.get(), plateNumber);
@@ -216,7 +254,8 @@ public class SubUnitsService {
         return updatedUnit;
     }
 
-    private boolean checkIfEquipmentUpdated(List<Equipment> existingEquipment, List<Equipment> updatedEquipment) {
+    private boolean checkIfEquipmentUpdated
+            (List<Equipment> existingEquipment, List<Equipment> updatedEquipment) {
         boolean updated = true;
         if (existingEquipment != null && updatedEquipment != null && existingEquipment.size() == updatedEquipment.size()
                 && existingEquipment.containsAll(updatedEquipment)) {
@@ -331,5 +370,23 @@ public class SubUnitsService {
                     resourceIdentifier,
                     "Data&ora='" + Instant.now() + '\'' + ", IP='" + ipAddress + '\'' + ", " + "Resursa stearsa!");
         });
+    }
+
+    private static Comparator<SubUnit> subUnitsOrdering(List<String> subUnitIds) {
+        return Comparator.comparingInt(v -> subUnitIds.indexOf(v.getId()));
+    }
+
+    private SubUnit createSubUnit(String subUnitName) {
+        String lastUpdate = Instant.now().toString();
+        SubUnit subUnit = new SubUnit();
+        subUnit.setId(UUID.randomUUID().toString());
+        subUnit.setName(subUnitName);
+        subUnit.setLastUpdateFirstInterventionResource(lastUpdate);
+        subUnit.setLastUpdateEquipment(lastUpdate);
+        subUnit.setLastUpdateOtherResource(lastUpdate);
+        subUnit.setResources(new ArrayList<>());
+        subUnit.setEquipment(new ArrayList<>());
+        subUnit.setLockedResourceTypeBySessionId(new HashMap<>());
+        return subUnit;
     }
 }

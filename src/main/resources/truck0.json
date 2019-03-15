@@ -1,0 +1,20 @@
+{
+  "_id": "Trucks",
+  "trucks": [
+    {
+      "_id": "a8a6c6ef-9f9e-4812-ab64-66cb64094330",
+      "shortName": "APCA",
+      "longName": "Autospeciala de stins incendii cu apa si spuma de capacitate mare"
+    },
+    {
+      "_id": "a8a6c6ef-9f9e-4812-ab64-66cb64094332",
+      "shortName": "EPA",
+      "longName": "Echipaj de prim-ajutor"
+    },
+    {
+      "_id": "a8a6c6ef-9f9e-4812-ab64-66cb64094333",
+      "shortName": "MU",
+      "longName": "Medicină de urgență"
+    }
+  ]
+}

@@ -32,9 +32,9 @@ public class LockSubUnitController {
                                          final SimpMessageHeaderAccessor headerAccessor) {
         LockSubUnitResponse response;
         String sessionId = headerAccessor.getSessionId();
-        Map<String, ResourceType> sessionIdResourceTypeMap = service.lockSubUnit(request.getSubUnitName(), request.getResourceType(), sessionId);
+        Map<String, ResourceType> sessionIdResourceTypeMap = service.lockSubUnit(request.getSubUnitId(), request.getResourceType(), sessionId);
         if (sessionIdResourceTypeMap != null) {
-            notificationService.publishSubUnitLockedNotification(request.getSubUnitName(), new HashSet<>(sessionIdResourceTypeMap.values()));
+            notificationService.publishSubUnitLockedNotification(request.getSubUnitId(), new HashSet<>(sessionIdResourceTypeMap.values()));
             response = new LockSubUnitResponse(StatusCode.OK);
         } else {
             response = new LockSubUnitResponse(StatusCode.ERROR);

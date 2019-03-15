@@ -2,7 +2,7 @@ package com.resource.management.resource.service;
 
 import com.resource.management.SubUnits;
 import com.resource.management.api.resources.SubUnit;
-import com.resource.management.api.resources.crud.notifications.SubUnitUpdatedNotification;
+import com.resource.management.api.resources.SubUnitUpdatedNotification;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collections;
@@ -36,6 +37,9 @@ public class LockSubUnitControllerTest {
 
     @Autowired
     private LockSubUnitController controller;
+
+    @MockBean
+    private SimpMessagingTemplate messagingTemplate;
 
     @MockBean
     private SimpMessageHeaderAccessor accessor;
