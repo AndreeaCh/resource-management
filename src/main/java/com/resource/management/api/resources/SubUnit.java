@@ -31,4 +31,7 @@ public class SubUnit {
 
     @EqualsAndHashCode.Exclude
     private String lastUpdateEquipment;
+
+    @EqualsAndHashCode.Exclude
+    private String lastUpdateReserveResource;
 }

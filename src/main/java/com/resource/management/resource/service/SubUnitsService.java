@@ -83,6 +83,7 @@ public class SubUnitsService {
             updatedUnit = updateFirstInterventionResources(subUnit, existingSubUnit);
             updatedUnit = updateOtherResources(subUnit, updatedUnit, existingSubUnit);
             updatedUnit = updateEquipment(subUnit, updatedUnit, existingSubUnit);
+            updatedUnit = updateReserves(subUnit, updatedUnit, existingSubUnit);
         }
 
         if (updatedUnit != null && existingSubUnitOptional.isPresent()) {
@@ -91,7 +92,6 @@ public class SubUnitsService {
 
         return Optional.ofNullable(updatedUnit);
     }
-
 
     public synchronized Map<String, ResourceType> lockSubUnit(final String subUnitId,
                                                               final ResourceType resourceType, final String sessionId) {
@@ -198,7 +198,7 @@ public class SubUnitsService {
                     resource.setResourceLogs(new ArrayList<>());
                 }
 
-                ResourceLog resourceLog = new ResourceLog(UUID.randomUUID(), Instant.now().toString(), ipAddress, resourceStatus);
+                ResourceLog resourceLog = new ResourceLog(UUID.randomUUID(), Instant.now().toString(), ipAddress, null, resourceStatus);
                 resource.getResourceLogs()
                         .add(resourceLog);
                 saveSubUnit(subUnitOptional.get());
@@ -208,6 +208,33 @@ public class SubUnitsService {
             }
         }
 
+        return subUnitOptional;
+    }
+
+    public Optional<SubUnit> updateResourceType(String plateNumber, ResourceType resourceType, String ipAddress) {
+        final Optional<SubUnit> subUnitOptional = getSubUnitWithPlateNumber(plateNumber);
+        if (subUnitOptional.isPresent()) {
+            final Optional<Resource> resourceOptional = getResourceWithPlateNumber(subUnitOptional.get(), plateNumber);
+            if (resourceOptional.isPresent()) {
+                Resource resource = resourceOptional.get();
+                resource.setType(resourceType);
+                if(resourceType.equals(ResourceType.RESERVE)) {
+                    resource.setStatus(new ResourceStatus(ResourceStatus.Status.OPERATIONAL));
+                } else {
+                    resource.setStatus(new ResourceStatus(ResourceStatus.Status.AVAILABLE));
+                }
+                if (resource.getResourceLogs() == null) {
+                    resource.setResourceLogs(new ArrayList<>());
+                }
+                ResourceLog resourceLog = new ResourceLog(UUID.randomUUID(), Instant.now().toString(), ipAddress, resourceType, resource.getStatus());
+                resource.getResourceLogs()
+                        .add(resourceLog);
+                saveSubUnit(subUnitOptional.get());
+                historyWriter.addLogToFile(
+                        plateNumber + " - " + resource.getIdentificationNumber(),
+                        resourceLog.toString());
+            }
+        }
         return subUnitOptional;
     }
 
@@ -254,6 +281,20 @@ public class SubUnitsService {
         return updatedUnit;
     }
 
+    private SubUnit updateReserves(SubUnit subUnit, SubUnit updatedUnit, SubUnit existingSubUnit) {
+        List<Resource> existingReserveResources = getReserveResources(existingSubUnit);
+        List<Resource> updatedReserveResources = getReserveResources(subUnit);
+
+        if (checkIfResourcesUpdated(existingReserveResources, updatedReserveResources)) {
+            Query query = new Query().addCriteria(Criteria.where("name").is(subUnit.getName()));
+            Update update =
+                    new Update().set("lastUpdateReserveResource", Instant.now().toString()).set("resources", subUnit.getResources());
+            updatedUnit =
+                    template.findAndModify(query, update, new FindAndModifyOptions().returnNew(true), SubUnit.class);
+        }
+        return updatedUnit;
+    }
+
     private boolean checkIfEquipmentUpdated
             (List<Equipment> existingEquipment, List<Equipment> updatedEquipment) {
         boolean updated = true;
@@ -282,6 +323,11 @@ public class SubUnitsService {
     private List<Resource> getFirstInterventionResources(SubUnit existingSubUnit) {
         return existingSubUnit.getResources().stream()
                 .filter(resource -> resource.getType().equals(ResourceType.FIRST_INTERVENTION)).collect(Collectors.toList());
+    }
+
+    private List<Resource> getReserveResources(SubUnit existingSubUnit) {
+        return existingSubUnit.getResources().stream()
+                .filter(resource -> resource.getType().equals(ResourceType.RESERVE)).collect(Collectors.toList());
     }
 
     private List<Resource> getOtherResources(SubUnit existingSubUnit) {
@@ -384,9 +430,11 @@ public class SubUnitsService {
         subUnit.setLastUpdateFirstInterventionResource(lastUpdate);
         subUnit.setLastUpdateEquipment(lastUpdate);
         subUnit.setLastUpdateOtherResource(lastUpdate);
+        subUnit.setLastUpdateReserveResource(lastUpdate);
         subUnit.setResources(new ArrayList<>());
         subUnit.setEquipment(new ArrayList<>());
         subUnit.setLockedResourceTypeBySessionId(new HashMap<>());
         return subUnit;
     }
+
 }

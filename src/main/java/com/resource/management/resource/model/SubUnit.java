@@ -37,5 +37,8 @@ public class SubUnit {
     private String lastUpdateEquipment;
 
     @EqualsAndHashCode.Exclude
+    private String lastUpdateReserveResource;
+
+    @EqualsAndHashCode.Exclude
     private Map<String, ResourceType> lockedResourceTypeBySessionId;
 }

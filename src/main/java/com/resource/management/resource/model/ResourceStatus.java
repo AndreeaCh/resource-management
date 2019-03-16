@@ -25,15 +25,25 @@ public class ResourceStatus {
     }
 
     public enum Status {
-        IN_MISSION, UNAVAILABLE, AVAILABLE
+        IN_MISSION, UNAVAILABLE, AVAILABLE, OPERATIONAL, NONOPERATIONAL;
+
+        @Override
+        public String toString() {
+            switch (this){
+                case IN_MISSION: return "Misiune";
+                case AVAILABLE: return "Disponibil";
+                case UNAVAILABLE: return "Indisponibil";
+                case OPERATIONAL: return "Operațional";
+                case NONOPERATIONAL: return "Neoperațional";
+                default: return this.name();
+            }
+        }
     }
 
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        String statusAsString
-                = status.equals(Status.IN_MISSION) ? "Misiune" : status.equals(Status.AVAILABLE) ? "Disponibil" : "Indisponibil";
-        stringBuilder.append("status='").append(statusAsString).append("'");
+        stringBuilder.append("status='").append(status).append("'");
         if (key != null && !key.isEmpty()) {
             stringBuilder.append(", cheie='").append(key).append("'");
         }

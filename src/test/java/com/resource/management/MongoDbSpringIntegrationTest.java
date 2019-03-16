@@ -2,8 +2,10 @@ package com.resource.management;
 
 import com.resource.management.resource.model.SubUnit;
 import com.resource.management.resource.model.SubUnitsRepository;
+
 import java.time.Instant;
 import java.util.Collections;
+
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -22,7 +24,8 @@ public class MongoDbSpringIntegrationTest {
 
     @Test
     public void test() {
-        final SubUnit subUnit = new SubUnit("CJ","CJ", Collections.emptyList(), Collections.emptyList(), Instant.now().toString(), Instant.now().toString(), Instant.now().toString(), null);
+        final SubUnit subUnit = new SubUnit("CJ", "CJ", Collections.emptyList(), Collections.emptyList(), Instant.now
+                ().toString(), Instant.now().toString(), Instant.now().toString(), Instant.now().toString(), null);
         this.repository.save(subUnit);
 
         Assert.assertEquals("CJ", this.repository.findAll().get(0).getName());

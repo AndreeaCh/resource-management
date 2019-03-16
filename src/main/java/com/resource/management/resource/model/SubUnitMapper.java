@@ -18,6 +18,7 @@ public final class SubUnitMapper {
         subUnit.setLastUpdateFirstInterventionResource(internalSubUnit.getLastUpdateFirstInterventionResource());
         subUnit.setLastUpdateOtherResource(internalSubUnit.getLastUpdateOtherResource());
         subUnit.setLastUpdateEquipment(internalSubUnit.getLastUpdateEquipment());
+        subUnit.setLastUpdateReserveResource(internalSubUnit.getLastUpdateReserveResource());
         if (internalSubUnit.getResources() != null) {
             List<Resource> resourceList = internalSubUnit
                     .getResources()
@@ -47,6 +48,7 @@ public final class SubUnitMapper {
         subUnit.setLastUpdateFirstInterventionResource(externalSubUnit.getLastUpdateFirstInterventionResource());
         subUnit.setLastUpdateOtherResource(externalSubUnit.getLastUpdateOtherResource());
         subUnit.setLastUpdateEquipment(externalSubUnit.getLastUpdateEquipment());
+        subUnit.setLastUpdateReserveResource(externalSubUnit.getLastUpdateReserveResource());
         if (externalSubUnit.getResources() != null) {
             List<com.resource.management.resource.model.Resource> resourceList = externalSubUnit
                     .getResources()
