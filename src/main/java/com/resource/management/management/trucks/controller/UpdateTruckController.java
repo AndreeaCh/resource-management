@@ -37,6 +37,8 @@ public class UpdateTruckController {
                 truckList.add(updatedTruck);
             });
 
+            repository.save(trucks);
+
             truckList.sort(getTrucksComparator());
             trucksListUpdatedNotification.set(new TrucksListUpdatedNotification(truckList));
         });
