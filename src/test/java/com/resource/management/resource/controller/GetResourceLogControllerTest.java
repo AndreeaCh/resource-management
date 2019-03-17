@@ -62,7 +62,8 @@ public class GetResourceLogControllerTest {
 
     private List<ResourceLog> prepareResourceLogsInRepository() {
         ResourceLog resourceLog =
-                new ResourceLog(UUID.randomUUID(), Instant.now().toString(), "10.12.12.12", new ResourceStatus(ResourceStatus.Status.AVAILABLE));
+                new ResourceLog(UUID.randomUUID(), Instant.now().toString(), "10.12.12.12", null, new ResourceStatus
+                        (ResourceStatus.Status.AVAILABLE));
         List<ResourceLog> resourceLogs = Collections.singletonList(resourceLog);
         Resource resource = new Resource();
         resource.setIdentificationNumber("1");

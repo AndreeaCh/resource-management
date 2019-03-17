@@ -1,8 +1,8 @@
 package com.resource.management.resource.controller;
 
 import com.resource.management.api.resources.StatusCode;
-import com.resource.management.api.management.subunits.AddSubUnitRequest;
-import com.resource.management.api.management.subunits.AddSubUnitResponse;
+import com.resource.management.api.resources.crud.AddSubUnitRequest;
+import com.resource.management.api.resources.crud.AddSubUnitResponse;
 import com.resource.management.resource.model.SubUnit;
 import com.resource.management.resource.model.SubUnitMapper;
 import com.resource.management.resource.service.NotificationService;
