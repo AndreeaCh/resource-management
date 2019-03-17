@@ -50,7 +50,28 @@ public class SubUnitsService {
         });
     }
 
-      subUnit.setLastUpdateReserveResource(lastUpdate);
+    @Transactional
+    public List<SubUnit> updateSubUnitsOrder(final List<String> subUnitIds) {
+        List<SubUnit> subUnits = repository.findAll();
+        configurationRepository.save(new SubUnitsConfiguration(ID, subUnitIds));
+        return subUnits.stream()
+                .sorted(subUnitsOrdering(subUnitIds))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Optional<SubUnit> updateSubUnitName(String id, String name) {
+        SubUnit updatedUnit = null;
+
+        Optional<SubUnit> existingSubUnitOptional = findSubUnitById(id);
+        if (existingSubUnitOptional.isPresent()) {
+            updatedUnit = existingSubUnitOptional.get();
+            updatedUnit.setName(name);
+            repository.save(updatedUnit);
+        }
+
+        return Optional.ofNullable(updatedUnit);
+    }
 
     @Transactional
     public Optional<SubUnit> updateSubUnit(final SubUnit subUnit, final String ipAddress) {
@@ -100,8 +121,8 @@ public class SubUnitsService {
         return subUnit.getLockedResourceTypeBySessionId() != null && subUnit.getLockedResourceTypeBySessionId().values().contains(resourceType);
     }
 
-    public Optional<SubUnit> unlockSubUnit(final String subUnitName, final ResourceType resourceType) {
-        Optional<SubUnit> subUnitOptional = findSubUnitByName(subUnitName);
+    public Optional<SubUnit> unlockSubUnit(final String subUnitId, final ResourceType resourceType) {
+        Optional<SubUnit> subUnitOptional = findSubUnitById(subUnitId);
         if (subUnitOptional.isPresent()) {
             SubUnit subUnit = subUnitOptional.get();
             if (subUnit.getLockedResourceTypeBySessionId() != null) {
@@ -198,7 +219,7 @@ public class SubUnitsService {
             if (resourceOptional.isPresent()) {
                 Resource resource = resourceOptional.get();
                 resource.setType(resourceType);
-                if(resourceType.equals(ResourceType.RESERVE)) {
+                if (resourceType.equals(ResourceType.RESERVE)) {
                     resource.setStatus(new ResourceStatus(ResourceStatus.Status.OPERATIONAL));
                 } else {
                     resource.setStatus(new ResourceStatus(ResourceStatus.Status.AVAILABLE));
