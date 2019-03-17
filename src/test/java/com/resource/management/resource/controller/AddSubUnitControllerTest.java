@@ -38,7 +38,7 @@ public class AddSubUnitControllerTest {
     @Test
     public void handleAddSubUnitRequest_sut_respondsWithSuccess() {
         //given
-        AddSubUnitRequest request = new AddSubUnitRequest("name");
+        AddSubUnitRequest request = new AddSubUnitRequest("id", "name");
 
         //when
         AddSubUnitResponse response = this.sut.handle(request);

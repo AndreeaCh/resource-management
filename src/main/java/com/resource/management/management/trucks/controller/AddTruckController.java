@@ -24,7 +24,7 @@ public class AddTruckController {
     @SendTo("/topic/trucks")
     public TrucksListUpdatedNotification handle(final AddTruckRequest request) {
         AtomicReference<TrucksListUpdatedNotification> trucksListUpdatedNotification = new AtomicReference<>(new TrucksListUpdatedNotification(new ArrayList<>()));
-        Truck truck = new Truck(UUID.randomUUID().toString(), request.getShortName(), request.getLongName());
+        Truck truck = new Truck(request.getId(), request.getShortName(), request.getLongName());
         Optional<Trucks> trucksOptional = repository.findById(ID);
         trucksOptional.ifPresent(trucks ->
         {

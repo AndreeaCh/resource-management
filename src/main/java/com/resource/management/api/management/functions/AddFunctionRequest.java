@@ -10,5 +10,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class AddFunctionRequest {
+    private String id;
     private String name;
 }

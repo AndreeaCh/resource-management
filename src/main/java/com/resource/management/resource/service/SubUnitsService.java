@@ -39,8 +39,8 @@ public class SubUnitsService {
     }
 
 
-    public void addSubUnit(final String subUnitName) {
-        SubUnit subUnit = createSubUnit(subUnitName);
+    public void addSubUnit(final String id, final String subUnitName) {
+        SubUnit subUnit = createSubUnit(id, subUnitName);
         saveSubUnit(subUnit);
 
         Optional<SubUnitsConfiguration> subUnitsConfiguration = configurationRepository.findById(ID);
@@ -93,6 +93,7 @@ public class SubUnitsService {
         return Optional.ofNullable(updatedUnit);
     }
 
+
     public synchronized Map<String, ResourceType> lockSubUnit(final String subUnitId,
                                                               final ResourceType resourceType, final String sessionId) {
         Map<String, ResourceType> lockedResourceTypeBySessionId = null;
@@ -120,8 +121,8 @@ public class SubUnitsService {
         return subUnit.getLockedResourceTypeBySessionId() != null && subUnit.getLockedResourceTypeBySessionId().values().contains(resourceType);
     }
 
-    public Optional<SubUnit> unlockSubUnit(final String subUnitName, final ResourceType resourceType) {
-        Optional<SubUnit> subUnitOptional = findSubUnitById(subUnitName);
+    public Optional<SubUnit> unlockSubUnit(final String subUnitId, final ResourceType resourceType) {
+        Optional<SubUnit> subUnitOptional = findSubUnitById(subUnitId);
         if (subUnitOptional.isPresent()) {
             SubUnit subUnit = subUnitOptional.get();
             if (subUnit.getLockedResourceTypeBySessionId() != null) {
@@ -218,7 +219,7 @@ public class SubUnitsService {
             if (resourceOptional.isPresent()) {
                 Resource resource = resourceOptional.get();
                 resource.setType(resourceType);
-                if(resourceType.equals(ResourceType.RESERVE)) {
+                if (resourceType.equals(ResourceType.RESERVE)) {
                     resource.setStatus(new ResourceStatus(ResourceStatus.Status.OPERATIONAL));
                 } else {
                     resource.setStatus(new ResourceStatus(ResourceStatus.Status.AVAILABLE));
@@ -422,10 +423,10 @@ public class SubUnitsService {
         return Comparator.comparingInt(v -> subUnitIds.indexOf(v.getId()));
     }
 
-    private SubUnit createSubUnit(String subUnitName) {
+    private SubUnit createSubUnit(String id, String subUnitName) {
         String lastUpdate = Instant.now().toString();
         SubUnit subUnit = new SubUnit();
-        subUnit.setId(UUID.randomUUID().toString());
+        subUnit.setId(id);
         subUnit.setName(subUnitName);
         subUnit.setLastUpdateFirstInterventionResource(lastUpdate);
         subUnit.setLastUpdateEquipment(lastUpdate);
@@ -436,5 +437,4 @@ public class SubUnitsService {
         subUnit.setLockedResourceTypeBySessionId(new HashMap<>());
         return subUnit;
     }
-
 }

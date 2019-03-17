@@ -23,7 +23,7 @@ public class AddFunctionController {
     @MessageMapping("/addFunction")
     @SendTo("/topic/functions")
     public FunctionsListUpdatedNotification handle(final AddFunctionRequest request) {
-        Function function = new Function(UUID.randomUUID().toString(), request.getName());
+        Function function = new Function(request.getId(), request.getName());
         Optional<Functions> functions = repository.findById(Functions.ID);
         functions.ifPresent(f -> {
             f.getFunctions().add(function);

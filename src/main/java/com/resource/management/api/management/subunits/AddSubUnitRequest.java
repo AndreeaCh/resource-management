@@ -10,5 +10,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class AddSubUnitRequest {
+    private String id;
     private String name;
 }
