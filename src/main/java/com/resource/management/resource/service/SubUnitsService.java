@@ -1,8 +1,18 @@
 package com.resource.management.resource.service;
 
-import com.resource.management.resource.model.*;
-import com.resource.management.resource.model.configuration.SubUnitsConfiguration;
-import com.resource.management.resource.model.configuration.SubUnitsConfigurationRepository;
+import static com.resource.management.resource.model.configuration.SubUnitsConfiguration.ID;
+
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -12,12 +22,15 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-
-import static com.resource.management.resource.model.configuration.SubUnitsConfiguration.ID;
+import com.resource.management.resource.model.Equipment;
+import com.resource.management.resource.model.Resource;
+import com.resource.management.resource.model.ResourceLog;
+import com.resource.management.resource.model.ResourceStatus;
+import com.resource.management.resource.model.ResourceType;
+import com.resource.management.resource.model.SubUnit;
+import com.resource.management.resource.model.SubUnitsRepository;
+import com.resource.management.resource.model.configuration.SubUnitsConfiguration;
+import com.resource.management.resource.model.configuration.SubUnitsConfigurationRepository;
 
 @Service
 public class SubUnitsService {
@@ -194,6 +207,7 @@ public class SubUnitsService {
             final Optional<Resource> resourceOptional = getResourceWithPlateNumber(subUnitOptional.get(), plateNumber);
             if (resourceOptional.isPresent()) {
                 Resource resource = resourceOptional.get();
+                ResourceStatus oldStatus = resource.getStatus();
                 resource.setStatus(resourceStatus);
                 if (resource.getResourceLogs() == null) {
                     resource.setResourceLogs(new ArrayList<>());
@@ -203,9 +217,13 @@ public class SubUnitsService {
                 resource.getResourceLogs()
                         .add(resourceLog);
                 saveSubUnit(subUnitOptional.get());
+
+                String resourceIdentifier = resource.getPlateNumber() + " - " + resource.getIdentificationNumber();
                 historyWriter.addLogToFile(
-                        plateNumber + " - " + resource.getIdentificationNumber(),
-                        resourceLog.toString());
+                      resourceIdentifier,
+                      "Data&ora='" + Instant.now() + '\'' + ", IP='" + ipAddress + '\'' + ", "
+                            + "Schimbare status resursă: " + oldStatus.getStatus() + " -> " + resourceStatus
+                            .getStatus() );
             }
         }
 
@@ -218,6 +236,7 @@ public class SubUnitsService {
             final Optional<Resource> resourceOptional = getResourceWithPlateNumber(subUnitOptional.get(), plateNumber);
             if (resourceOptional.isPresent()) {
                 Resource resource = resourceOptional.get();
+                ResourceType oldType = resource.getType();
                 resource.setType(resourceType);
                 if (resourceType.equals(ResourceType.RESERVE)) {
                     resource.setStatus(new ResourceStatus(ResourceStatus.Status.OPERATIONAL));
@@ -231,9 +250,12 @@ public class SubUnitsService {
                 resource.getResourceLogs()
                         .add(resourceLog);
                 saveSubUnit(subUnitOptional.get());
+
+                String resourceIdentifier = resource.getPlateNumber() + " - " + resource.getIdentificationNumber();
                 historyWriter.addLogToFile(
-                        plateNumber + " - " + resource.getIdentificationNumber(),
-                        resourceLog.toString());
+                      resourceIdentifier,
+                      "Data&ora='" + Instant.now() + '\'' + ", IP='" + ipAddress + '\'' + ", " + "Resursă mutată: "
+                            + oldType + " -> " + resourceType );
             }
         }
         return subUnitOptional;
