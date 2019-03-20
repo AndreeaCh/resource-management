@@ -25,6 +25,12 @@ Var _BIN_DIR
 Var _BACKEND_DIR
 Var _FRONTEND_DIR
 
+; application constants
+Var _BACKEND_PORT
+Var _BACKEND_LOG_FILE
+Var _BACKEND_LOG_LEVEL
+Var _BACKEND_RESOURCE_STATUS_FILE
+
 ; chocolatey constants
 Var _CHOCO_VERSION
 Var _CHOCO_INSTALL_PATH
@@ -81,7 +87,13 @@ Section "-Meta setup"
    StrCpy $_IMPORT_DIR $INSTDIR\import
    StrCpy $_LOGS_DIR $INSTDIR\logs
    StrCpy $_BIN_DIR $INSTDIR\bin
+
    StrCpy $_BACKEND_DIR $INSTDIR\jars
+   StrCpy $_BACKEND_PORT "8345"
+   StrCpy $_BACKEND_LOG_FILE "application.log"
+   StrCpy $_BACKEND_LOG_LEVEL "DEBUG"
+   StrCpy $_BACKEND_RESOURCE_STATUS_FILE "resource-status-history.txt"
+
    StrCpy $_FRONTEND_DIR $INSTDIR\dist
 
    StrCpy $_CHOCO_VERSION '0.10.13'
@@ -95,11 +107,11 @@ Section "-Meta setup"
    StrCpy $_MONGO_DATA_PATH 'C:\mongodb\data\db'
    StrCpy $_MONGO_LOG_PATH 'C:\mongodb\log'
 
-   StrCpy $_DB_INSTALL_OPTION 'mongodb.install'
-   StrCpy $_DB_VERSION '4.0.6'
+   StrCpy $_DB_INSTALL_OPTION mongodb
+   StrCpy $_DB_VERSION '4.0.4'
    StrCpy $_DB_INSTALL_PARAMS '/dataPath:$_MONGO_DATA_PATH /logPath:$_MONGO_LOG_PATH'
 
-   StrCpy $_NODE_INSTALL_OPTION 'nodejs'
+   StrCpy $_NODE_INSTALL_OPTION nodejs
    StrCpy $_NODE_INSTALL_PATH 'C:\Progra~1\nodejs'
    StrCpy $_NODE_VERSION '10.15.0'
 
@@ -199,7 +211,7 @@ Section "Mongodb (required)"
    SetOutPath $INSTDIR
 
    ;ExecWait '"$INSTDIR\setup.bat" db /S' $0
-   nsExec::ExecToLog 'powershell -inputformat none -ExecutionPolicy Bypass -command choco install $_DB_INSTALL_OPTION -y --version $_DB_VERSION --params="$_DB_INSTALL_PARAMS"'
+   nsExec::ExecToLog 'powershell -inputformat none -ExecutionPolicy Bypass -command choco install $_DB_INSTALL_OPTION -y --version $_DB_VERSION'
    Pop $0
 
    ${If} $0 == 0
@@ -288,7 +300,20 @@ Section "!EasyManage (required)"
    File /oname=README.md run/run_instructions.md
    SetFileAttributes README.md READONLY
 
+   ; copy and customize backend configuration
    File /oname=application.properties run/production.application.properties
+
+   Var /Global BackendLogFileAbsolutePath
+   ${StrRep} '$BackendLogFileAbsolutePath' '$_LOGS_DIR\$_BACKEND_LOG_FILE' '\' '\\'
+
+   Var /Global BackendResourceStatusFileAbsolutePath
+   ${StrRep} '$BackendResourceStatusFileAbsolutePath' '$_LOGS_DIR\$_BACKEND_RESOURCE_STATUS_FILE' '\' '\\'
+
+
+   ${ConfigWrite} "application.properties" "server.port=" "$_BACKEND_PORT" $R0
+   ${ConfigWrite} "application.properties" "logging.level.root=" "$_BACKEND_LOG_LEVEL" $R0
+   ${ConfigWrite} "application.properties" "logging.file=" "$BackendLogFileAbsolutePath" $R0
+   ${ConfigWrite} "application.properties" "resource.status.file=" "$BackendResourceStatusFileAbsolutePath" $R0
 
    SetOutPath $_BIN_DIR
 
@@ -302,6 +327,7 @@ Section "!EasyManage (required)"
    FileClose $0
 
    ${ConfigWrite} "$PROFILE\easymanage.conf" "INSTALL_PATH=" "$INSTDIR" $R0
+   ${ConfigWrite} "$PROFILE\easymanage.conf" "MONGO_HOME=" "$_MONGO_SERVER_PATH" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "SERVER_ADDRESS=" "$_SERVER_ADDRESS" $R0
 
    ; set environment variables
@@ -317,8 +343,15 @@ SectionEnd
 Section /o "Start Menu Shortcuts"
 
    CreateDirectory "$SMPROGRAMS\EasyManage"
-   CreateShortcut "$SMPROGRAMS\EasyManage\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-   CreateShortcut "$SMPROGRAMS\EasyManage\EasyManage (MakeNSISW).lnk" "$_BIN_DIR\easymanage.bat" "" "$_BIN_DIR\easymanage.bat" 0
+   CreateShortCut "$SMPROGRAMS\EasyManage\Uninstall EasyManage.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
+
+   CreateShortCut "$SMPROGRAMS\EasyManage\EasyManage Start.lnk" "$_BIN_DIR\easymanage.bat" \
+        "start" "$_BIN_DIR\easymanage.bat" 0 SW_SHOWNORMAL \
+        "" "Start EasyManage"
+
+   CreateShortCut "$SMPROGRAMS\EasyManage\EasyManage Stop.lnk" "$_BIN_DIR\easymanage.bat" \
+           "stop" "$_BIN_DIR\easymanage.bat" 0 SW_SHOWNORMAL \
+           "" "Stop EasyManage"
 
 SectionEnd
 
@@ -327,11 +360,11 @@ Section /o "Desktop Shortcut" SectionX
 
     SetOutPath $DESKTOP
     CreateShortCut "Start EasyManage.lnk" "$INSTDIR\bin\easymanage.bat" \
-        "start" "" "" SW_SHOWNORMAL \
+        "start" "$_BIN_DIR\easymanage.bat" 0 SW_SHOWNORMAL \
         "" "Start EasyManage"
 
     CreateShortCut "Stop EasyManage.lnk" "$INSTDIR\bin\easymanage.bat" \
-        "stop" "" "" SW_SHOWNORMAL \
+        "stop" "$_BIN_DIR\easymanage.bat" 0 SW_SHOWNORMAL \
         "" "Stop EasyManage"
 SectionEnd
 
