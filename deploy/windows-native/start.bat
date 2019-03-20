@@ -20,25 +20,29 @@ SET _HTTP_SERVER_VER=0.11.1
 SET _CONFIG_PATH=%_INSTALL_PATH%\application.properties
 
 
+ECHO Reading configuration '%UserProfile%\easymanage.conf'
 For /F "tokens=1* delims==" %%A IN (%UserProfile%\easymanage.conf) DO (
-    ECHO "READING CONFIG"
 
     IF "%%A"=="INSTALL_PATH" set _INSTALL_PATH=%%B
-    # ECHO "INSTALL_PATH is '%_INSTALL_PATH%'"
 
     IF "%%A"=="SERVER_ADDRESS" set _SERVER_ADDRESS=%%B
-    # ECHO "SERVER_ADDRESS is '%_SERVER_ADDRESS%'"
+
+    IF "%%A"=="MONGO_HOME" set _MONGO_HOME=%%B
 )
+
+ECHO Configured INSTALL_PATH is '%_INSTALL_PATH%'
+ECHO Configured MONGO_HOME is '%_MONGO_HOME%'
+ECHO Configured SERVER_ADDRESS is '%_SERVER_ADDRESS%'
 
 ::::::::::::::::::::::::::::::::: PATH CONSTANTS ::::::::::::::::::::::::::::::::::::::
 
 : set-path-constants
 
-IF "%MONGO_HOME%"=="" (
+IF "%_MONGO_HOME%"=="" (
     ECHO MongoDb install path is NOT defined
     GOTO :cleaning
 )
-SET _MONGO_BIN_PATH=%MONGO_HOME%/bin
+SET _MONGO_BIN_PATH=%_MONGO_HOME%/bin
 
 : set-timestamp
 FOR /f "tokens=2 delims==" %%I IN ('wmic os get localdatetime /format:list') DO SET _DATETIME=%%I
