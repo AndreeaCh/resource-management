@@ -37,7 +37,7 @@
       <destName>easy-manage.jar</destName>
     </file>
     <file>
-      <source>${win.native.build.directory}/run/easyman.bat</source>
+      <source>${win.native.build.directory}/run/easymanage.bat</source>
       <outputDirectory>bin</outputDirectory>
     </file>
     <file>

@@ -37,7 +37,7 @@ if "%1%"=="node" (
 if "%1%"=="app" (
    ECHO SETUP Installing application...
    powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_PATH%\"; & .\install_app.bat %_ARCHIVE_PATH% %_INSTALL_PATH% %_SERVER_PATH% >> %_LOGS_PATH%\%_DATETIME%-setup-app.log 2>&1' -Verb runas -Wait -WindowStyle hidden"
-   ECHO To start the application open a new console and type 'easyman start'
+   ECHO To start the application open a new console and type 'easymanage start'
 )
 
 if "%1%"=="launch" (

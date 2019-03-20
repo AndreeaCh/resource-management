@@ -20,7 +20,7 @@ SET _HTTP_SERVER_VER=0.11.1
 SET _CONFIG_PATH=%_INSTALL_PATH%\application.properties
 
 
-For /F "tokens=1* delims==" %%A IN (%UserProfile%\easyman.conf) DO (
+For /F "tokens=1* delims==" %%A IN (%UserProfile%\easymanage.conf) DO (
     ECHO "READING CONFIG"
 
     IF "%%A"=="INSTALL_PATH" set _INSTALL_PATH=%%B
