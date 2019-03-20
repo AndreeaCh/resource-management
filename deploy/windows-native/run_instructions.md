@@ -4,7 +4,7 @@ A command line utility is available in system's Path.
 To use it open windows **cmd** tool and run:
 
 ``` cmd
-easyman <option>
+easymanage <option>
 ```
 
 #### Options
@@ -29,7 +29,7 @@ easyman <option>
 
 #### Examples
 
-**easyman start**
+**easymanage start**
 
 #### Release notes
 

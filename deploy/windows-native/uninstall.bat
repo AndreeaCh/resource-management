@@ -28,7 +28,7 @@ SET _DATETIME=%_DATETIME:~0,8%-%_DATETIME:~8,6%
 
 :stop_services
 ECHO UNINSTALL_0.1 Stopping applications
-powershell -command easyman stop
+powershell -command easymanage stop
 
 :::::::::::::::::::::::::::::: OPTIONALLY UNINSTALL DEPENDENCIES ::::::::::::::::::::::
 

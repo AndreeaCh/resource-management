@@ -337,6 +337,7 @@
                                     <includes>
                                         <include>install_instructions.md</include>
                                         <include>setup.bat</include>
+                                        <include>set_execution_policy.bat</include>
                                         <include>install_chocolatey.bat</include>
                                         <include>install_java.bat</include>
                                         <include>install_db.bat</include>
@@ -353,7 +354,7 @@
                                     <includes>
                                         <include>production.application.properties</include>
                                         <include>run_instructions.md</include>
-                                        <include>easyman.bat</include>
+                                        <include>easymanage.bat</include>
                                         <include>start.bat</include>
                                         <include>stop.bat</include>
                                     </includes>
