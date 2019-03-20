@@ -339,6 +339,7 @@
                                         <include>setup.bat</include>
                                         <include>set_execution_policy.bat</include>
                                         <include>install_chocolatey.bat</include>
+                                        <include>install_chocolatey.ps1</include>
                                         <include>install_java.bat</include>
                                         <include>install_db.bat</include>
                                         <include>install_node.bat</include>
