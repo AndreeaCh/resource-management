@@ -22,7 +22,7 @@ if "%1%"=="uninstall-all" (
 
 
 if "%_COMMAND%"=="" (
-    echo Usage: easyman "[option]"
+    echo Usage: easymanage "[option]"
     echo Options:
     echo    start                 - start application( frontend, backend, db)
     echo    stop                  - stops application( frontend, backend)

@@ -2,7 +2,9 @@
 
 !include "nsDialogs.nsh"
 !include "TextFunc.nsh"
+!include "WordFunc.nsh"
 !include "EnvVarUpdate.nsh"
+!include 'LogicLib.nsh'
 !include "psexec.nsh"
 
 ;--------------------------------
@@ -22,6 +24,9 @@ Var _LOGS_DIR
 Var _BIN_DIR
 Var _BACKEND_DIR
 Var _FRONTEND_DIR
+
+; chocolatey path constants
+Var _CHOCO_VERSION
 
 ; java path constants
 Var _JAVA_INSTALL_OPTION
@@ -75,6 +80,8 @@ Section "-Meta setup"
    StrCpy $_BACKEND_DIR $INSTDIR\jars
    StrCpy $_FRONTEND_DIR $INSTDIR\dist
 
+   StrCpy $_CHOCO_VERSION '0.10.11'
+
    StrCpy $_JAVA_INSTALL_OPTION zulu
    StrCpy $_JAVA_VERSION '11.29.3'
 
@@ -115,6 +122,7 @@ Section "-Meta setup"
    File setup/install_node.bat
    File setup/uninstall.bat
    File setup/uninstall_tools.bat
+   File setup/set_execution_policy.bat
    File /r *.cmd
    File /r *.ps1
 
@@ -122,11 +130,36 @@ Section "-Meta setup"
 
 SectionEnd
 
-Section "Chocolatey (required)"
+Section "!Chocolatey (required)"
 
    SetOutPath $INSTDIR
 
-   ExecWait '"$INSTDIR\setup.bat" prereq /S' $0
+   nsExec::ExecToStack 'powershell -inputformat none -command choco -V'
+   Pop $0
+   Pop $1
+
+   Var /Global _INSTALLED_CHOCO_VERSION
+   StrCpy $_INSTALLED_CHOCO_VERSION "$1"
+
+   DetailPrint "Verify if 'chocolatey' is installed. Required version is $\"$_CHOCO_VERSION$\""
+
+   ${VersionCompare} "$_INSTALLED_CHOCO_VERSION" "$_CHOCO_VERSION" $R0
+
+   ${If} $R0 == 0
+       DetailPrint "Chocolatey is installed ( v. $_INSTALLED_CHOCO_VERSION )"
+   ${Else}
+       DetailPrint "Choco is not installed : Output was $\"$_INSTALLED_CHOCO_VERSION$\""
+
+       SetOutPath $_SCRIPTS_DIR\chocolatey
+
+       ; todo: hide windows
+       ;nsExec::ExecToLog 'powershell -inputformat none -ExecutionPolicy Bypass -command "Invoke-Item -Path $_SCRIPTS_DIR\chocolatey\installChocolatey.cmd"'
+       ExecWait '"$_SCRIPTS_DIR\set_execution_policy.bat" Unrestricted' $0
+       ExecWait '"$_SCRIPTS_DIR\chocolatey\installChocolatey.cmd"'
+       ExecWait '"$_SCRIPTS_DIR\set_execution_policy.bat" Restricted' $0
+   ${EndIf}
+
+   ;ExecWait '"$INSTDIR\setup.bat" prereq /S' $0
    DetailPrint "Install prerequisites returned $0"
 
 SectionEnd
@@ -205,17 +238,17 @@ Section "!EasyManage (required)"
 
    SetOutPath $_BIN_DIR
 
-   File /oname=easymanage.bat run/easyman.bat
+   File /oname=easymanage.bat run/easymanage.bat
    SetFileAttributes easymanage.bat READONLY
 
    ; write config file
    DetailPrint "Writing config file in user profile folder ($PROFILE)"
 
-   FileOpen $0 "$PROFILE\easyman.conf" w
+   FileOpen $0 "$PROFILE\easymanage.conf" w
    FileClose $0
 
-   ${ConfigWrite} "$PROFILE\easyman.conf" "INSTALL_PATH=" "$INSTDIR" $R0
-   ${ConfigWrite} "$PROFILE\easyman.conf" "SERVER_ADDRESS=" "$_SERVER_ADDRESS" $R0
+   ${ConfigWrite} "$PROFILE\easymanage.conf" "INSTALL_PATH=" "$INSTDIR" $R0
+   ${ConfigWrite} "$PROFILE\easymanage.conf" "SERVER_ADDRESS=" "$_SERVER_ADDRESS" $R0
 
    ; set environment variables
    DetailPrint "Set EASYMAN_HOME environment variable"
@@ -233,6 +266,19 @@ Section /o "Start Menu Shortcuts"
    CreateShortcut "$SMPROGRAMS\EasyManage\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
    CreateShortcut "$SMPROGRAMS\EasyManage\EasyManage (MakeNSISW).lnk" "$_BIN_DIR\easymanage.bat" "" "$_BIN_DIR\easymanage.bat" 0
 
+SectionEnd
+
+Section /o "Desktop Shortcut" SectionX
+    SetShellVarContext current
+
+    SetOutPath $DESKTOP
+    CreateShortCut "Start EasyManage.lnk" "$INSTDIR\bin\easymanage.bat" \
+        "start" "" "" SW_SHOWNORMAL \
+        "" "Start EasyManage"
+
+    CreateShortCut "Stop EasyManage.lnk" "$INSTDIR\bin\easymanage.bat" \
+            "stop" "" "" SW_SHOWNORMAL \
+            "" "Stop EasyManage"
 SectionEnd
 
 ; contents should be moved to a separate function
@@ -279,30 +325,30 @@ Section "Uninstall"
 
    ; Remove files
 
-   ;Delete "$_SCRIPTS_DIR\uninstall.bat"
-   ;Delete "$_SCRIPTS_DIR\uninstall_tools.bat"
-   ;Delete "$_SCRIPTS_DIR\*.*"
-   ;RMDir $_SCRIPTS_DIR
-
-   ;Delete "$_IMPORT_DIR\*.*"
-   ;RMDir $_IMPORT_DIR
-
-   ;Delete "$_BACKEND_DIR\*.*"
-   ;RMDir $_BACKEND_DIR
-
-   ;Delete "$_FRONTEND_DIR\*.*"
-   ;RMDir $_FRONTEND_DIR
+   ;RMDir /r $_SCRIPTS_DIR
+   ;RMDir /r $_IMPORT_DIR
+   ;RMDir /r $_BACKEND_DIR
+   ;RMDir /r $_FRONTEND_DIR
 
    ;Delete "$_LOGS_DIR\*.*"
    ;Delete $_LOGS_DIR
 
    ;Delete $_BIN_DIR\easymanage.bat
-   ;Delete "$_BIN_DIR\*.*"
-   ;Delete $_BIN_DIR
+   ;Delete /r $_BIN_DIR
 
    ; Remove shortcuts, if any
    Delete "$SMPROGRAMS\EasyManage\*.*"
    RMDir "$SMPROGRAMS\EasyManage"
+   Delete "$DESKTOP\*EasyManage.lnk"
+
+   ;Remove 'chocolatey'
+   DetailPrint "Unset ChocolateyInstall environment variable $\"$APPDATA\chocolatey$\""
+   ${un.EnvVarUpdate} $0 "ChocolateyInstall" "R" "HKLM" "$APPDATA\chocolatey"
+   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$APPDATA\chocolatey\bin"
+
+   SetShellVarContext all
+   DetailPrint "Deleting $APPDATA\chocolatey"
+   RMDir /r "$APPDATA\chocolatey"
 
    ; Remove uninstall and install folder
    ;Delete $INSTDIR\uninstall.exe
@@ -338,7 +384,7 @@ Function serverAddressPageLeave
 
 	${NSD_GetText} $ServerAddressText $0
 	StrCpy $_SERVER_ADDRESS $0
-	MessageBox MB_OK "The server will be reachable under the domain name:$\n$\n$_SERVER_ADDRESS"
+	;MessageBox MB_OK "The server will be reachable under the domain name:$\n$\n$_SERVER_ADDRESS"
 
 FunctionEnd
 
