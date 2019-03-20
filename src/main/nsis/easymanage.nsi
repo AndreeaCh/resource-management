@@ -25,14 +25,16 @@ Var _BIN_DIR
 Var _BACKEND_DIR
 Var _FRONTEND_DIR
 
-; chocolatey path constants
+; chocolatey constants
 Var _CHOCO_VERSION
+Var _CHOCO_INSTALL_PATH
 
-; java path constants
+; java constants
 Var _JAVA_INSTALL_OPTION
+Var _JAVA_INSTALL_PATH
 Var _JAVA_VERSION
 
-; db path constants
+; db constants
 Var _MONGO_SERVER_PATH
 Var _MONGO_DATA_PATH
 Var _MONGO_LOG_PATH
@@ -40,7 +42,9 @@ Var _DB_VERSION
 Var _DB_INSTALL_OPTION
 Var _DB_INSTALL_PARAMS
 
-; node path constants
+; node constants
+Var _NODE_INSTALL_OPTION
+Var _NODE_INSTALL_PATH
 Var _NODE_VERSION
 
 ; dynamic variables
@@ -80,20 +84,44 @@ Section "-Meta setup"
    StrCpy $_BACKEND_DIR $INSTDIR\jars
    StrCpy $_FRONTEND_DIR $INSTDIR\dist
 
-   StrCpy $_CHOCO_VERSION '0.10.11'
+   StrCpy $_CHOCO_VERSION '0.10.13'
+   StrCpy $_CHOCO_INSTALL_PATH 'C:\ProgramData\chocolatey\bin'
 
    StrCpy $_JAVA_INSTALL_OPTION zulu
+   StrCpy $_JAVA_INSTALL_PATH 'C:\Progra~1\Zulu\zulu'
    StrCpy $_JAVA_VERSION '11.29.3'
 
    StrCpy $_MONGO_SERVER_PATH 'C:\Progra~1\MongoDB\Server\4.0'
    StrCpy $_MONGO_DATA_PATH 'C:\mongodb\data\db'
    StrCpy $_MONGO_LOG_PATH 'C:\mongodb\log'
 
-   StrCpy $_DB_INSTALL_OPTION 'mongodb'
+   StrCpy $_DB_INSTALL_OPTION 'mongodb.install'
    StrCpy $_DB_VERSION '4.0.6'
    StrCpy $_DB_INSTALL_PARAMS '/dataPath:$_MONGO_DATA_PATH /logPath:$_MONGO_LOG_PATH'
 
+   StrCpy $_NODE_INSTALL_OPTION 'nodejs'
+   StrCpy $_NODE_INSTALL_PATH 'C:\Progra~1\nodejs'
    StrCpy $_NODE_VERSION '10.15.0'
+
+   ; save install constants to ini file to be used at uninstall
+   WriteINIStr "$PROFILE\\easymanage.ini" "paths" "BIN_PATH" $_BIN_DIR
+   WriteINIStr "$PROFILE\\easymanage.ini" "paths" "SCRIPTS_PATH" $_SCRIPTS_DIR
+   WriteINIStr "$PROFILE\\easymanage.ini" "paths" "IMPORT_PATH" $_IMPORT_DIR
+   WriteINIStr "$PROFILE\\easymanage.ini" "paths" "LOGS_PATH" $_LOGS_DIR
+   WriteINIStr "$PROFILE\\easymanage.ini" "paths" "BACKEND_PATH" $_BACKEND_DIR
+   WriteINIStr "$PROFILE\\easymanage.ini" "paths" "FRONTEND_PATH" $_FRONTEND_DIR
+
+   WriteINIStr "$PROFILE\\easymanage.ini" "paths" "CHOCO_INSTALL_PATH" $_CHOCO_INSTALL_PATH
+   WriteINIStr "$PROFILE\\easymanage.ini" "paths" "JAVA_INSTALL_PATH" $_JAVA_INSTALL_PATH
+   WriteINIStr "$PROFILE\\easymanage.ini" "paths" "NODE_INSTALL_PATH" $_NODE_INSTALL_PATH
+   WriteINIStr "$PROFILE\\easymanage.ini" "paths" "MONGO_SERVER_PATH" $_MONGO_SERVER_PATH
+   WriteINIStr "$PROFILE\\easymanage.ini" "paths" "MONGO_DATA_PATH" $_MONGO_DATA_PATH
+   WriteINIStr "$PROFILE\\easymanage.ini" "paths" "MONGO_LOG_PATH" $_MONGO_LOG_PATH
+
+   WriteINIStr "$PROFILE\\easymanage.ini" "dependencies" "JAVA_INSTALL_OPTION" $_JAVA_INSTALL_OPTION
+   WriteINIStr "$PROFILE\\easymanage.ini" "dependencies" "DB_INSTALL_OPTION" $_DB_INSTALL_OPTION
+   WriteINIStr "$PROFILE\\easymanage.ini" "dependencies" "NODE_INSTALL_OPTION" $_NODE_INSTALL_OPTION
+
 
    SetRegView 64
 
@@ -117,6 +145,7 @@ Section "-Meta setup"
    SetOutPath $_SCRIPTS_DIR
 
    File setup/install_chocolatey.bat
+   File setup/install_chocolatey.ps1
    File setup/install_db.bat
    File setup/install_java.bat
    File setup/install_node.bat
@@ -154,9 +183,10 @@ Section "!Chocolatey (required)"
 
        ; todo: hide windows
        ;nsExec::ExecToLog 'powershell -inputformat none -ExecutionPolicy Bypass -command "Invoke-Item -Path $_SCRIPTS_DIR\chocolatey\installChocolatey.cmd"'
-       ExecWait '"$_SCRIPTS_DIR\set_execution_policy.bat" Unrestricted' $0
-       ExecWait '"$_SCRIPTS_DIR\chocolatey\installChocolatey.cmd"'
-       ExecWait '"$_SCRIPTS_DIR\set_execution_policy.bat" Restricted' $0
+       ;ExecWait '"$_SCRIPTS_DIR\set_execution_policy.bat" Unrestricted' $0
+       ;ExecWait '"$_SCRIPTS_DIR\chocolatey\installChocolatey.cmd"'
+       ;ExecWait '"$_SCRIPTS_DIR\set_execution_policy.bat" Restricted' $0
+       ${PowerShellExecFileLog} "$_SCRIPTS_DIR\install_chocolatey.ps1"
    ${EndIf}
 
    ;ExecWait '"$INSTDIR\setup.bat" prereq /S' $0
@@ -171,14 +201,18 @@ Section "Mongodb (required)"
    ;ExecWait '"$INSTDIR\setup.bat" db /S' $0
    nsExec::ExecToLog 'powershell -inputformat none -ExecutionPolicy Bypass -command choco install $_DB_INSTALL_OPTION -y --version $_DB_VERSION --params="$_DB_INSTALL_PARAMS"'
    Pop $0
-   DetailPrint "Install mongodb returned $0"
 
-   ; set environment variables
-   DetailPrint "Set MONGO_HOME environment variable"
-   ${EnvVarUpdate} $0 "MONGO_HOME" "A" "HKLM" "$_MONGO_SERVER_PATH"
+   ${If} $0 == 0
+      DetailPrint "Database installed successfully. Setting environment variables"
 
-   DetailPrint "Add mongo bin to PATH environment variable"
-   ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$_MONGO_SERVER_PATH\bin"
+      DetailPrint "Set MONGO_HOME environment variable"
+      ${EnvVarUpdate} $0 "MONGO_HOME" "A" "HKLM" "$_MONGO_SERVER_PATH"
+
+      DetailPrint "Add mongo bin to PATH environment variable"
+      ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$_MONGO_SERVER_PATH\bin"
+   ${Else}
+      DetailPrint "Database install failed. Return code is $0"
+   ${EndIf}
 
 SectionEnd
 
@@ -190,7 +224,17 @@ Section "Java (required)"
    nsExec::ExecToLog 'choco install $_JAVA_INSTALL_OPTION -y --version $_JAVA_VERSION'
    Pop $0
 
-   DetailPrint "Install java returned $0"
+   ${If} $0 == 0
+     DetailPrint "Java installed successfully. Setting environment variables"
+
+     DetailPrint "Set JAVA_HOME environment variable"
+     ${EnvVarUpdate} $0 "JAVA_HOME" "A" "HKLM" "$_JAVA_INSTALL_PATH"
+
+     DetailPrint "Add java bin to PATH environment variable"
+     ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$_JAVA_INSTALL_PATH\bin"
+   ${Else}
+      DetailPrint "Java install failed. Return code is $0"
+   ${EndIf}
 
 SectionEnd
 
@@ -199,10 +243,20 @@ Section "NodeJs (required)"
    SetOutPath $INSTDIR
 
    ; ExecWait '"$INSTDIR\setup.bat" node' $0
-   nsExec::ExecToLog 'choco install nodejs -y --version $_NODE_VERSION'
+   nsExec::ExecToLog 'choco install $_NODE_INSTALL_OPTION -y --version $_NODE_VERSION'
    Pop $0
 
-   DetailPrint "Install nodejs returned $0"
+   ${If} $0 == 0
+     DetailPrint "NodeJs installed successfully. Setting environment variables"
+
+    DetailPrint "Set NODE_HOME environment variable"
+    ${EnvVarUpdate} $0 "NODE_HOME" "A" "HKLM" "$_NODE_INSTALL_PATH"
+
+    DetailPrint "Add nodejs bin to PATH environment variable"
+    ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$_NODE_INSTALL_PATH"
+   ${Else}
+      DetailPrint "NodeJs install failed. Return code is $0"
+   ${EndIf}
 
 SectionEnd
 
@@ -277,8 +331,8 @@ Section /o "Desktop Shortcut" SectionX
         "" "Start EasyManage"
 
     CreateShortCut "Stop EasyManage.lnk" "$INSTDIR\bin\easymanage.bat" \
-            "stop" "" "" SW_SHOWNORMAL \
-            "" "Stop EasyManage"
+        "stop" "" "" SW_SHOWNORMAL \
+        "" "Stop EasyManage"
 SectionEnd
 
 ; contents should be moved to a separate function
@@ -286,7 +340,7 @@ Section "-Cleanup"
 
     ; Remove files and uninstaller
     Delete $_SCRIPTS_DIR\install_chocolatey.bat
-    Delete $_SCRIPTS_DIR\install_chocolatey.bat
+    Delete $_SCRIPTS_DIR\install_chocolatey.ps1
     Delete $_SCRIPTS_DIR\install_db.bat
     Delete $_SCRIPTS_DIR\install_java.bat
     Delete $_SCRIPTS_DIR\install_node.bat
@@ -300,16 +354,78 @@ SectionEnd
 
 Section "Uninstall"
 
-   ; TODO : do the actual uninstall steps
-   ExecWait '"$INSTDIR\bin\easymanage.bat" uninstall' $0
-   DetailPrint "Uninstall script returned $0"
+   ; Read variables configured at install time
 
-    ; unset environment variables
+   ReadINIStr $_BIN_DIR "$PROFILE\\easymanage.ini" "paths" "BIN_PATH"
+   ReadINIStr $_SCRIPTS_DIR "$PROFILE\\easymanage.ini" "paths" "SCRIPTS_PATH"
+   ReadINIStr $_IMPORT_DIR "$PROFILE\\easymanage.ini" "paths" "IMPORT_PATH"
+   ReadINIStr $_LOGS_DIR "$PROFILE\\easymanage.ini" "paths" "LOGS_PATH"
+   ReadINIStr $_BACKEND_DIR "$PROFILE\\easymanage.ini" "paths" "BACKEND_PATH"
+   ReadINIStr $_FRONTEND_DIR "$PROFILE\\easymanage.ini" "paths" "FRONTEND_PATH"
+
+   ; Stop the application
+
+   ExecWait '"$_BIN_DIR\easymanage.bat" stop' $0
+   DetailPrint "EasyManage stop script returned $0"
+
+   ; Unset environment variables
+
    DetailPrint "Unset EASYMAN_HOME environment variable"
    ${un.EnvVarUpdate} $0 "EASYMAN_HOME" "R" "HKLM" "$INSTDIR"
 
    DetailPrint "Remove easymanage bin dir from PATH environment variable"
    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$_BIN_DIR"
+
+   SetRegView 64
+
+   ; Remove registry keys
+
+   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EasyManage"
+   DeleteRegKey HKLM SOFTWARE\NSIS_EasyManage
+
+   ; Remove shortcuts, if any
+
+   RMDir /r "$SMPROGRAMS\EasyManage"
+   Delete "$DESKTOP\*EasyManage.lnk"
+
+   ; Remove files
+
+   RMDir /r $_SCRIPTS_DIR
+   RMDir /r $_IMPORT_DIR
+   RMDir /r $_BACKEND_DIR
+   RMDir /r $_FRONTEND_DIR
+   RMDir /r $_BIN_DIR
+
+   ;Delete "$_LOGS_DIR\*.*"
+   ;Delete $_LOGS_DIR
+
+   ;Delete $_BIN_DIR\easymanage.bat
+
+   ; uninstall Java
+
+   ReadINIStr $_JAVA_INSTALL_OPTION "$PROFILE\\easymanage.ini" "dependencies" "JAVA_INSTALL_OPTION"
+   ReadINIStr $_JAVA_INSTALL_PATH "$PROFILE\\easymanage.ini" "paths" "JAVA_INSTALL_PATH"
+   nsExec::ExecToLog 'choco uninstall $_JAVA_INSTALL_OPTION -y'
+   Pop $0
+
+   DetailPrint "Uninstall java returned $0"
+
+   DetailPrint "Unset JAVA_HOME environment variable"
+   ${un.EnvVarUpdate} $0 "JAVA_HOME" "R" "HKLM" "$_JAVA_INSTALL_PATH"
+
+   DetailPrint "Remove java bin dir from PATH environment variable"
+   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$_JAVA_INSTALL_PATH\bin"
+
+   ; uninstall Db
+
+   ReadINIStr $_DB_INSTALL_OPTION "$PROFILE\\easymanage.ini" "dependencies" "DB_INSTALL_OPTION"
+   ReadINIStr $_MONGO_SERVER_PATH "$PROFILE\\easymanage.ini" "paths" "MONGO_SERVER_PATH"
+   ReadINIStr $_MONGO_DATA_PATH "$PROFILE\\easymanage.ini" "paths" "MONGO_DATA_PATH"
+   ReadINIStr $_MONGO_LOG_PATH "$PROFILE\\easymanage.ini" "paths" "MONGO_LOG_PATH"
+
+   nsExec::ExecToLog 'choco uninstall $_DB_INSTALL_OPTION -y'
+   Pop $0
+   DetailPrint "Uninstall db returned $0"
 
    DetailPrint "Unset MONGO_HOME environment variable"
    ${un.EnvVarUpdate} $0 "MONGO_HOME" "R" "HKLM" "$_MONGO_SERVER_PATH"
@@ -317,41 +433,35 @@ Section "Uninstall"
    DetailPrint "Remove mongo bin dir from PATH environment variable"
    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$_MONGO_SERVER_PATH\bin"
 
-   SetRegView 64
+   ; Uninstall NodeJs
 
-   ; Remove registry keys
-   DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EasyManage"
-   DeleteRegKey HKLM SOFTWARE\NSIS_EasyManage
+   ReadINIStr $_NODE_INSTALL_OPTION "$PROFILE\\easymanage.ini" "dependencies" "NODE_INSTALL_OPTION"
+   ReadINIStr $_NODE_INSTALL_PATH "$PROFILE\\easymanage.ini" "paths" "NODE_INSTALL_PATH"
 
-   ; Remove files
+   nsExec::ExecToLog 'choco uninstall $_NODE_INSTALL_OPTION -y'
+   Pop $0
+   DetailPrint "Uninstall node returned $0"
 
-   ;RMDir /r $_SCRIPTS_DIR
-   ;RMDir /r $_IMPORT_DIR
-   ;RMDir /r $_BACKEND_DIR
-   ;RMDir /r $_FRONTEND_DIR
+   DetailPrint "Unset NODE_HOME environment variable"
+   ${un.EnvVarUpdate} $0 "NODE_HOME" "R" "HKLM" "$_NODE_INSTALL_PATH"
 
-   ;Delete "$_LOGS_DIR\*.*"
-   ;Delete $_LOGS_DIR
+   DetailPrint "Remove node bin dir from PATH environment variable"
+   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$_NODE_INSTALL_PATH"
 
-   ;Delete $_BIN_DIR\easymanage.bat
-   ;Delete /r $_BIN_DIR
+   ; Uninstall 'Chocolatey'
+   ReadINIStr $_CHOCO_INSTALL_PATH "$PROFILE\\easymanage.ini" "paths" "CHOCO_INSTALL_PATH"
 
-   ; Remove shortcuts, if any
-   Delete "$SMPROGRAMS\EasyManage\*.*"
-   RMDir "$SMPROGRAMS\EasyManage"
-   Delete "$DESKTOP\*EasyManage.lnk"
+   DetailPrint "Deleting $_CHOCO_INSTALL_PATH"
+   RMDir /r "$_CHOCO_INSTALL_PATH"
 
-   ;Remove 'chocolatey'
-   DetailPrint "Unset ChocolateyInstall environment variable $\"$APPDATA\chocolatey$\""
-   ${un.EnvVarUpdate} $0 "ChocolateyInstall" "R" "HKLM" "$APPDATA\chocolatey"
-   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$APPDATA\chocolatey\bin"
-
-   SetShellVarContext all
-   DetailPrint "Deleting $APPDATA\chocolatey"
-   RMDir /r "$APPDATA\chocolatey"
+   DetailPrint "Unset ChocolateyInstall environment variable pointing to $\"$_CHOCO_INSTALL_PATH$\""
+   ${un.EnvVarUpdate} $0 "ChocolateyInstall" "R" "HKLM" "$_CHOCO_INSTALL_PATH"
+   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$_CHOCO_INSTALL_PATH\bin"
 
    ; Remove uninstall and install folder
-   ;Delete $INSTDIR\uninstall.exe
+   Delete $INSTDIR\uninstall.exe
+   Delete $INSTDIR\*.md
+   Delete $INSTDIR\*.properties
    ;RMDir "$INSTDIR"
 
 SectionEnd
