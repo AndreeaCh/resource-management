@@ -17,4 +17,5 @@ public class Service {
     private String title;
     private String role;
     private String contact;
+    private String day;
 }

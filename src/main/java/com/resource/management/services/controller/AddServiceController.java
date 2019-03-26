@@ -16,28 +16,28 @@ import com.resource.management.services.model.Service;
 import com.resource.management.services.model.ServiceRepository;
 
 @Controller
-public class AddServiceController {
-    @Autowired
-    private ServiceRepository repository;
+public class AddServiceController
+{
+   @Autowired
+   private ServiceRepository repository;
 
-    @Autowired
-    private LastUpdatedTimestampRepository timestampRepository;
+   @Autowired
+   private LastUpdatedTimestampRepository timestampRepository;
 
-    @MessageMapping("/addService")
-    @SendTo("/topic/services")
-    public ServicesListUpdatedNotification handle(final AddServiceRequest request) {
-        Service service = new Service(UUID.randomUUID().toString(),
-                request.getName(),
-                request.getTitle(),
-                request.getRole(),
-                request.getContact(),
-                Instant.now().toString());
-        repository.save(service);
 
-        final LastUpdatedTimestamp lastUpdatedTimestamp = new LastUpdatedTimestamp( "timeStamp",
-              Instant.now().toString() );
-        timestampRepository.save( lastUpdatedTimestamp );
+   @MessageMapping("/addService")
+   @SendTo("/topic/services")
+   public ServicesListUpdatedNotification handle( final AddServiceRequest request )
+   {
+      final Service service =
+            new Service( UUID.randomUUID().toString(), request.getName(), request.getTitle(), request.getRole(),
+                  request.getContact(), Instant.now().toString(), request.getDay() );
+      this.repository.save( service );
 
-        return new ServicesListUpdatedNotification( repository.findAll(), lastUpdatedTimestamp.getTimeStamp() );
-    }
+      final LastUpdatedTimestamp lastUpdatedTimestamp =
+            new LastUpdatedTimestamp( "timeStamp", Instant.now().toString() );
+      this.timestampRepository.save( lastUpdatedTimestamp );
+
+      return new ServicesListUpdatedNotification( this.repository.findAll(), lastUpdatedTimestamp.getTimeStamp() );
+   }
 }
