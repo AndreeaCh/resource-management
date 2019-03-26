@@ -14,4 +14,5 @@ public class AddServiceRequest {
     private String title;
     private String role;
     private String contact;
+    private String day;
 }
