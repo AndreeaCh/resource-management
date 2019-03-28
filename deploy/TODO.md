@@ -3,12 +3,9 @@
 ### TODO
 
 - nsis installer
-    -> as an intermediate step, call install scripts directly instead of using setup.bat
-    -> configure installer file logging, no need for intermediate log files 
-    -> migrate batch scripts to nsis instructions if possible
+    -> configure installer file logging, no need for intermediate log files
     -> make nsis script configurable, remove hardcoding
-    -> language settings
-    -> uninstall to remove installed files but keep logs and data 
+    -> language settings 
     
 - docker-on-linux install script
     -> proper docker image names
@@ -35,6 +32,11 @@
 
 
 ### DONE
+
+- nsis installer
+    -> as an intermediate step, call install scripts directly instead of using setup.bat
+    -> migrate batch scripts to nsis instructions if possible
+    -> uninstall to remove installed files but keep logs and data
 
 - maven convergence plugin
 - move helper scripts under .scripts directory, keep main in the root directory
