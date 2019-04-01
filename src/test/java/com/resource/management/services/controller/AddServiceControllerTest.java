@@ -27,84 +27,90 @@ import com.resource.management.services.model.ServiceRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AddServiceControllerTest {
-    @MockBean
-    private ServiceRepository repository;
+public class AddServiceControllerTest
+{
+   @MockBean
+   private ServiceRepository repository;
 
-    @MockBean
-    private LastUpdatedTimestampRepository timestampRepository;
+   @MockBean
+   private LastUpdatedTimestampRepository timestampRepository;
 
-    @Autowired
-    private AddServiceController sut;
-
-    @Test
-    public void contextLoads() throws Exception {
-        assertThat(this.sut, notNullValue());
-    }
-
-    @Test
-    public void handleAddServiceRequest_sut_callsSaveOnRepository() {
-        //given
-        Service existingService = Services.api();
-        Service addedService = Services.api();
-        when(repository.findAll()).thenReturn(Arrays.asList(existingService, addedService));
-        AddServiceRequest request
-                = new AddServiceRequest(addedService.getName(), addedService.getTitle(), addedService.getRole(), addedService.getContact());
-
-        //when
-        this.sut.handle(request);
-
-        //then
-        ArgumentCaptor<Service> captor = ArgumentCaptor.forClass(Service.class);
-        verify(repository).save(captor.capture());
-        Service actualService = captor.getValue();
-        assertThat(actualService.getName(), equalTo(addedService.getName()));
-        assertThat(actualService.getTitle(), equalTo(addedService.getTitle()));
-        assertThat(actualService.getRole(), equalTo(addedService.getRole()));
-        assertThat(actualService.getContact(), equalTo(addedService.getContact()));
-    }
+   @Autowired
+   private AddServiceController sut;
 
 
-    @Test
-    public void handleAddServiceRequest_sut_publishesNotification() {
-        //given
-        Service existingService = Services.api();
-        Service addedService = Services.api();
-        when(repository.findAll()).thenReturn(Arrays.asList(existingService, addedService));
-        AddServiceRequest request
-                = new AddServiceRequest(addedService.getName(), addedService.getTitle(), addedService.getRole(), addedService.getContact());
+   @Test
+   public void contextLoads() throws Exception
+   {
+      assertThat( this.sut, notNullValue() );
+   }
 
 
-        //when
-        ServicesListUpdatedNotification notification = this.sut.handle(request);
+   @Test
+   public void handleAddServiceRequest_sut_callsSaveOnRepository()
+   {
+      //given
+      final Service existingService = Services.api();
+      final Service addedService = Services.api();
+      when( this.repository.findAll() ).thenReturn( Arrays.asList( existingService, addedService ) );
+      final AddServiceRequest request =
+            new AddServiceRequest( addedService.getName(), addedService.getTitle(), addedService.getRole(),
+                  addedService.getContact(), addedService.getDay() );
 
-        //then
-        assertThat(
-                "Expected service to be added.",
-                notification.getServices(),
-                containsInAnyOrder(existingService, addedService));
-    }
+      //when
+      this.sut.handle( request );
 
-    @Test
-    public void handleAddServiceRequest_sut_callsSaveOnTimestampRepositoryAndPublishesTimestampInNotification()
-    {
-        //given
-        Service existingService = Services.api();
-        Service addedService = Services.api();
-        when( repository.findAll() ).thenReturn( Arrays.asList( existingService, addedService ) );
-        AddServiceRequest request
-              = new AddServiceRequest( addedService.getName(), addedService.getTitle(), addedService.getRole(),
-              addedService.getContact() );
+      //then
+      final ArgumentCaptor<Service> captor = ArgumentCaptor.forClass( Service.class );
+      verify( this.repository ).save( captor.capture() );
+      final Service actualService = captor.getValue();
+      assertThat( actualService.getName(), equalTo( addedService.getName() ) );
+      assertThat( actualService.getTitle(), equalTo( addedService.getTitle() ) );
+      assertThat( actualService.getRole(), equalTo( addedService.getRole() ) );
+      assertThat( actualService.getContact(), equalTo( addedService.getContact() ) );
+   }
 
-        //when
-        final ServicesListUpdatedNotification notification = this.sut.handle( request );
 
-        //then
-        ArgumentCaptor<LastUpdatedTimestamp> captor = ArgumentCaptor.forClass( LastUpdatedTimestamp.class );
-        verify( timestampRepository ).save( captor.capture() );
-        LastUpdatedTimestamp timestamp = captor.getValue();
-        assertThat( timestamp.getId(), equalTo( "timeStamp" ) );
-        assertThat( timestamp.getTimeStamp(), notNullValue() );
-        assertThat( notification.getLastUpdate(), equalTo( timestamp.getTimeStamp() ) );
-    }
+   @Test
+   public void handleAddServiceRequest_sut_publishesNotification()
+   {
+      //given
+      final Service existingService = Services.api();
+      final Service addedService = Services.api();
+      when( this.repository.findAll() ).thenReturn( Arrays.asList( existingService, addedService ) );
+      final AddServiceRequest request =
+            new AddServiceRequest( addedService.getName(), addedService.getTitle(), addedService.getRole(),
+                  addedService.getContact(), addedService.getDay() );
+
+      //when
+      final ServicesListUpdatedNotification notification = this.sut.handle( request );
+
+      //then
+      assertThat( "Expected service to be added.", notification.getServices(),
+            containsInAnyOrder( existingService, addedService ) );
+   }
+
+
+   @Test
+   public void handleAddServiceRequest_sut_callsSaveOnTimestampRepositoryAndPublishesTimestampInNotification()
+   {
+      //given
+      final Service existingService = Services.api();
+      final Service addedService = Services.api();
+      when( this.repository.findAll() ).thenReturn( Arrays.asList( existingService, addedService ) );
+      final AddServiceRequest request =
+            new AddServiceRequest( addedService.getName(), addedService.getTitle(), addedService.getRole(),
+                  addedService.getContact(), addedService.getDay() );
+
+      //when
+      final ServicesListUpdatedNotification notification = this.sut.handle( request );
+
+      //then
+      final ArgumentCaptor<LastUpdatedTimestamp> captor = ArgumentCaptor.forClass( LastUpdatedTimestamp.class );
+      verify( this.timestampRepository ).save( captor.capture() );
+      final LastUpdatedTimestamp timestamp = captor.getValue();
+      assertThat( timestamp.getId(), equalTo( "timeStamp" ) );
+      assertThat( timestamp.getTimeStamp(), notNullValue() );
+      assertThat( notification.getLastUpdate(), equalTo( timestamp.getTimeStamp() ) );
+   }
 }
