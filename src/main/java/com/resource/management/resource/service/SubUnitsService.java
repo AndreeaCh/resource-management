@@ -179,7 +179,18 @@ public class SubUnitsService {
         });
     }
 
-    public void deleteSubUnit(final String id) {
+
+    public void deleteSubUnit( final String id, final String ipAddress )
+    {
+        Optional<SubUnit> existingSubUnitOptional = findSubUnitById( id );
+        existingSubUnitOptional.ifPresent( subUnit -> subUnit.getResources().forEach( resource ->
+        {
+            String resourceIdentifier = resource.getPlateNumber() + " - " + resource.getIdentificationNumber();
+            historyWriter.addLogToFile(
+                  resourceIdentifier,
+                  "Data&ora='" + Instant.now() + '\'' + ", IP='" + ipAddress + '\'' + ", " + "Resursa stearsa!" );
+        } ) );
+
         repository.deleteById(id);
     }
 
