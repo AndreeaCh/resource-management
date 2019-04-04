@@ -1,7 +1,6 @@
 package com.resource.management.services.controller;
 
 import java.time.Instant;
-import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -22,13 +21,15 @@ public class DeleteAllServicesController {
     @Autowired
     private LastUpdatedTimestampRepository timestampRepository;
 
-    @MessageMapping("/deleteAllServices")
-    @SendTo("/topic/services")
-    public ServicesListUpdatedNotification handle(final DeleteAllServicesRequest request) {
-        repository.deleteAll();
-        final LastUpdatedTimestamp lastUpdatedTimestamp = new LastUpdatedTimestamp( "timeStamp",
-              Instant.now().toString() );
-        timestampRepository.save( lastUpdatedTimestamp );
-        return new ServicesListUpdatedNotification( new ArrayList<>(), lastUpdatedTimestamp.getTimeStamp() );
-    }
+
+   @MessageMapping("/deleteAllServices")
+   @SendTo("/topic/services")
+   public ServicesListUpdatedNotification handle( final DeleteAllServicesRequest request )
+   {
+      this.repository.deleteByDay( request.getServicesDay() );
+      final LastUpdatedTimestamp lastUpdatedTimestamp =
+            new LastUpdatedTimestamp( "timeStamp", Instant.now().toString() );
+      this.timestampRepository.save( lastUpdatedTimestamp );
+      return new ServicesListUpdatedNotification( this.repository.findAll(), lastUpdatedTimestamp.getTimeStamp() );
+   }
 }

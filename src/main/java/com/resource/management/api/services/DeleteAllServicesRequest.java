@@ -10,5 +10,5 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class DeleteAllServicesRequest {
-    private String anyAttributeToSatisfySpring;
+    private String servicesDay;
 }
