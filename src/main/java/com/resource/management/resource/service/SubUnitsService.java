@@ -223,7 +223,7 @@ public class SubUnitsService {
                 if (resource.getResourceLogs() == null) {
                     resource.setResourceLogs(new ArrayList<>());
                 }
-
+                updateLastUpdatedTimestamp(subUnitOptional.get(), resource.getType());
                 ResourceLog resourceLog = new ResourceLog(UUID.randomUUID(), Instant.now().toString(), ipAddress, null, resourceStatus);
                 resource.getResourceLogs()
                         .add(resourceLog);
