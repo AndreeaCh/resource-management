@@ -25,68 +25,74 @@ import com.resource.management.services.model.ServiceRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class DeleteAllServicesControllerTest {
-    @MockBean
-    private ServiceRepository repository;
+public class DeleteAllServicesControllerTest
+{
+   @MockBean
+   private ServiceRepository repository;
 
-    @MockBean
-    private LastUpdatedTimestampRepository timestampRepository;
+   @MockBean
+   private LastUpdatedTimestampRepository timestampRepository;
 
-    @Autowired
-    private DeleteAllServicesController sut;
+   @Autowired
+   private DeleteAllServicesController sut;
 
-    @Test
-    public void contextLoads() throws Exception {
-        assertThat(this.sut, notNullValue());
-    }
 
-    @Test
-    public void handleDeleteServiceRequest_sut_callsDeleteOnRepository() {
-        //given
-        when(repository.findAll()).thenReturn(Collections.emptyList());
-        DeleteAllServicesRequest request = new DeleteAllServicesRequest();
+   @Test
+   public void contextLoads() throws Exception
+   {
+      assertThat( this.sut, notNullValue() );
+   }
 
-        //when
-        this.sut.handle(request);
 
-        //then
-        verify(repository).deleteAll();
-    }
+   @Test
+   public void handleDeleteServiceRequest_sut_callsDeleteOnRepository()
+   {
+      //given
+      when( this.repository.findAll() ).thenReturn( Collections.emptyList() );
+      final String day = "TODAY";
+      final DeleteAllServicesRequest request = new DeleteAllServicesRequest( day );
 
-    @Test
-    public void handleDeleteServiceRequest_sut_publishesNotification() {
-        //given
-        when(repository.findAll()).thenReturn(Collections.emptyList());
+      //when
+      this.sut.handle( request );
 
-        DeleteAllServicesRequest request = new DeleteAllServicesRequest();
+      //then
+      verify( this.repository ).deleteByDay( day );
+   }
 
-        //when
-        ServicesListUpdatedNotification notification = this.sut.handle(request);
 
-        //then
-        assertThat(
-              "Expected service to be deleted.",
-              notification.getServices(),
-              empty());
-    }
+   @Test
+   public void handleDeleteServiceRequest_sut_publishesNotification()
+   {
+      //given
+      when( this.repository.findAll() ).thenReturn( Collections.emptyList() );
 
-    @Test
-    public void handleDeleteServiceRequest_sut_callsSaveOnTimestampRepositoryAndPublishesTimestampInNotification()
-    {
-        //given
-        when( repository.findAll() ).thenReturn( Collections.emptyList() );
+      final DeleteAllServicesRequest request = new DeleteAllServicesRequest();
 
-        DeleteAllServicesRequest request = new DeleteAllServicesRequest();
+      //when
+      final ServicesListUpdatedNotification notification = this.sut.handle( request );
 
-        //when
-        ServicesListUpdatedNotification notification = this.sut.handle( request );
+      //then
+      assertThat( "Expected service to be deleted.", notification.getServices(), empty() );
+   }
 
-        //then
-        ArgumentCaptor<LastUpdatedTimestamp> captor = ArgumentCaptor.forClass( LastUpdatedTimestamp.class );
-        verify( timestampRepository ).save( captor.capture() );
-        LastUpdatedTimestamp timestamp = captor.getValue();
-        assertThat( timestamp.getId(), equalTo( "timeStamp" ) );
-        assertThat( timestamp.getTimeStamp(), notNullValue() );
-        assertThat( notification.getLastUpdate(), equalTo( timestamp.getTimeStamp() ) );
-    }
+
+   @Test
+   public void handleDeleteServiceRequest_sut_callsSaveOnTimestampRepositoryAndPublishesTimestampInNotification()
+   {
+      //given
+      when( this.repository.findAll() ).thenReturn( Collections.emptyList() );
+
+      final DeleteAllServicesRequest request = new DeleteAllServicesRequest();
+
+      //when
+      final ServicesListUpdatedNotification notification = this.sut.handle( request );
+
+      //then
+      final ArgumentCaptor<LastUpdatedTimestamp> captor = ArgumentCaptor.forClass( LastUpdatedTimestamp.class );
+      verify( this.timestampRepository ).save( captor.capture() );
+      final LastUpdatedTimestamp timestamp = captor.getValue();
+      assertThat( timestamp.getId(), equalTo( "timeStamp" ) );
+      assertThat( timestamp.getTimeStamp(), notNullValue() );
+      assertThat( notification.getLastUpdate(), equalTo( timestamp.getTimeStamp() ) );
+   }
 }

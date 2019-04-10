@@ -31,7 +31,7 @@ public class AddServiceController
    {
       final Service service =
             new Service( UUID.randomUUID().toString(), request.getName(), request.getTitle(), request.getRole(),
-                  request.getContact(), Instant.now().toString(), request.getDay() );
+                  request.getContact(), request.getDay(), Instant.now().toString() );
       this.repository.save( service );
 
       final LastUpdatedTimestamp lastUpdatedTimestamp =
