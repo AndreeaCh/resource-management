@@ -248,7 +248,9 @@ public class SubUnitsService {
             if (resourceOptional.isPresent()) {
                 Resource resource = resourceOptional.get();
                 ResourceType oldType = resource.getType();
+                updateLastUpdatedTimestamp(subUnitOptional.get(), oldType);
                 resource.setType(resourceType);
+                updateLastUpdatedTimestamp(subUnitOptional.get(), resource.getType());
                 if (resourceType.equals(ResourceType.RESERVE)) {
                     resource.setStatus(new ResourceStatus(ResourceStatus.Status.OPERATIONAL));
                 } else {
@@ -270,6 +272,26 @@ public class SubUnitsService {
             }
         }
         return subUnitOptional;
+    }
+
+    private void updateLastUpdatedTimestamp(SubUnit subunit, ResourceType resourceType) {
+        String lastUpdate = Instant.now().toString();
+        switch (resourceType){
+            case FIRST_INTERVENTION:
+                subunit.setLastUpdateFirstInterventionResource(lastUpdate);
+                break;
+            case EQUIPMENT:
+                subunit.setLastUpdateEquipment(lastUpdate);
+                break;
+            case OTHER:
+                subunit.setLastUpdateOtherResource(lastUpdate);
+                break;
+            case RESERVE:
+                subunit.setLastUpdateReserveResource(lastUpdate);
+                break;
+            default:
+                throw new RuntimeException("resource type not supported");
+        }
     }
 
     private SubUnit updateEquipment(SubUnit subUnit, SubUnit updatedUnit, SubUnit existingSubUnit) {
