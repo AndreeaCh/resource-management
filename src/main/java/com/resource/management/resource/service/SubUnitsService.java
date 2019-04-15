@@ -274,6 +274,20 @@ public class SubUnitsService {
         return subUnitOptional;
     }
 
+    public List<SubUnit> updateAllResourcesWithVehicleType(final String newVehicleShortName, final String oldVehicleShortName) {
+        return repository.findAll().stream().filter( subUnit -> {
+            final List<Resource> resourcesWithVehicleType = getResourcesWithVehicleType( subUnit,
+                  oldVehicleShortName );
+            resourcesWithVehicleType.forEach( resource -> {
+                resource.setVehicleType( newVehicleShortName );
+            } );
+
+            saveSubUnit( subUnit );
+
+            return !resourcesWithVehicleType.isEmpty();
+        } ).collect( Collectors.toList() );
+    }
+
     private void updateLastUpdatedTimestamp(SubUnit subunit, ResourceType resourceType) {
         String lastUpdate = Instant.now().toString();
         switch (resourceType){
@@ -395,11 +409,15 @@ public class SubUnitsService {
         return existingSubUnit.getEquipment();
     }
 
-
     private Optional<Resource> getResourceWithPlateNumber(final SubUnit subUnit, final String plateNumber) {
         return subUnit.getResources().stream().filter(r -> r.getPlateNumber().equals(plateNumber)).findFirst();
     }
 
+    private List<Resource> getResourcesWithVehicleType( final SubUnit subUnit, final String vehicleType )
+    {
+        return subUnit.getResources().stream().filter( r -> r.getVehicleType().equals( vehicleType ) ).collect(
+              Collectors.toList() );
+    }
 
     private Optional<SubUnit> getSubUnitWithPlateNumber(String plateNumber) {
         List<SubUnit> subUnits = repository.findAll();
