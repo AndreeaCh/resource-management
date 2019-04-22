@@ -4,44 +4,67 @@
 
 ECHO OFF
 
-SET _INSTALL_PATH=%EASYMAN_HOME%
-IF "%_INSTALL_PATH%"=="" (
-    ECHO Install path is NOT defined
-    GOTO :cleaning
-)
-
-SET _SCRIPTS_DIR=%_INSTALL_PATH%\scripts
-SET _LOGS_DIR=%_INSTALL_PATH%\logs
-
-SET _BACKEND_PATH=%_INSTALL_PATH%\jars\easy-manage.jar
-SET _FRONTEND_PATH=%_INSTALL_PATH%\dist
-SET _HTTP_SERVER_VER=0.11.1
-
-SET _CONFIG_PATH=%_INSTALL_PATH%\application.properties
-
-
 ECHO Reading configuration '%UserProfile%\easymanage.conf'
 For /F "tokens=1* delims==" %%A IN (%UserProfile%\easymanage.conf) DO (
 
     IF "%%A"=="INSTALL_PATH" set _INSTALL_PATH=%%B
 
+    IF "%%A"=="INSTALLED_VERSION" set _INSTALLED_VERSION=%%B
+
     IF "%%A"=="SERVER_ADDRESS" set _SERVER_ADDRESS=%%B
 
     IF "%%A"=="MONGO_HOME" set _MONGO_HOME=%%B
+
+    IF "%%A"=="NODE_HOME" set _NODE_HOME=%%B
+
+    IF "%%A"=="JAVA_HOME" set _JAVA_HOME=%%B
+
+    IF "%%A"=="HTTP_SERVER_VERSION" set _HTTP_SERVER_VER=%%B
 )
 
 ECHO Configured INSTALL_PATH is '%_INSTALL_PATH%'
+ECHO Configured INSTALLED_VERSION is '%_INSTALLED_VERSION%'
 ECHO Configured MONGO_HOME is '%_MONGO_HOME%'
+ECHO Configured JAVA_HOME is '%_JAVA_HOME%'
+ECHO Configured NODE_HOME is '%_NODE_HOME%'
 ECHO Configured SERVER_ADDRESS is '%_SERVER_ADDRESS%'
+ECHO Configured HTTP_SERVER_VERSION is '%_HTTP_SERVER_VER%'
 
 ::::::::::::::::::::::::::::::::: PATH CONSTANTS ::::::::::::::::::::::::::::::::::::::
 
 : set-path-constants
 
+IF "%_INSTALL_PATH%"=="" (
+    ECHO Install path is NOT defined
+    GOTO :cleaning
+)
+
 IF "%_MONGO_HOME%"=="" (
     ECHO MongoDb install path is NOT defined
     GOTO :cleaning
 )
+
+IF "%_JAVA_HOME%"=="" (
+    ECHO Java install path is NOT defined
+    GOTO :cleaning
+)
+
+IF "%_NODE_HOME%"=="" (
+    ECHO NodeJs install path is NOT defined
+    GOTO :cleaning
+)
+
+IF "%_HTTP_SERVER_VER%"=="" (
+    ECHO Http server version is not defined, using default
+    SET _HTTP_SERVER_VER=0.11.1
+)
+
+SET _SCRIPTS_DIR=%_INSTALL_PATH%\scripts
+SET _LOGS_DIR=%_INSTALL_PATH%\logs
+SET _CONFIG_PATH=%_INSTALL_PATH%\application.properties
+SET _BACKEND_PATH=%_INSTALL_PATH%\jars\easy-manage.jar
+SET _FRONTEND_PATH=%_INSTALL_PATH%\dist
+
 SET _MONGO_BIN_PATH=%_MONGO_HOME%/bin
 
 : set-timestamp
@@ -85,7 +108,7 @@ powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_DIR%
 
 :node_configure
 ECHO START_3.0.1 check if http-server is installed
-FOR /f "tokens=2" %%G IN ('npm list -g --depth=0 2^>^&1 ^| findstr /i "http-server"') DO (
+FOR /f "tokens=2" %%G IN ('%_NODE_HOME%\npm list -g --depth=0 2^>^&1 ^| findstr /i "http-server"') DO (
     IF %%G == http-server@%_HTTP_SERVER_VER% (
         GOTO http_server_configure
     )
@@ -93,7 +116,7 @@ FOR /f "tokens=2" %%G IN ('npm list -g --depth=0 2^>^&1 ^| findstr /i "http-serv
 
 :http_server_install
 ECHO START_3.0.2 Installing http server
-powershell -command npm install -g http-server
+powershell -command %_NODE_HOME%\npm install -g http-server
 
 :http_server_configure
 ECHO START_3.0.3 Configure http server
