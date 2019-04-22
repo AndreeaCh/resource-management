@@ -18,12 +18,14 @@ AllowRootDirInstall true
 ;TODO Install to $PROGRAMFILES64\EasyManage should be possible when paths containing spaces are handled correctly
 InstallDir C:\EasyManage
 
+Var _INSTALL_VERSION
 Var _SCRIPTS_DIR
 Var _IMPORT_DIR
 Var _LOGS_DIR
 Var _BIN_DIR
 Var _BACKEND_DIR
 Var _FRONTEND_DIR
+Var _HTTP_SERVER_VERSION
 
 ; application constants
 Var _BACKEND_PORT
@@ -82,6 +84,9 @@ UninstPage instfiles
 Section "-Meta setup"
 
    SectionIn RO
+
+   StrCpy $_INSTALL_VERSION '0.0.1-SNAPSHOT'
+   StrCpy $_HTTP_SERVER_VERSION '0.11.1'
 
    StrCpy $_SCRIPTS_DIR $INSTDIR\scripts
    StrCpy $_IMPORT_DIR $INSTDIR\import
@@ -333,8 +338,12 @@ Section "!EasyManage (required)"
    FileClose $0
 
    ${ConfigWrite} "$PROFILE\easymanage.conf" "INSTALL_PATH=" "$INSTDIR" $R0
+   ${ConfigWrite} "$PROFILE\easymanage.conf" "INSTALLED_VERSION=" "$_INSTALL_VERSION" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "MONGO_HOME=" "$_MONGO_SERVER_PATH" $R0
+   ${ConfigWrite} "$PROFILE\easymanage.conf" "JAVA_HOME=" "$_JAVA_INSTALL_PATH" $R0
+   ${ConfigWrite} "$PROFILE\easymanage.conf" "NODE_HOME=" "$_NODE_INSTALL_PATH" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "SERVER_ADDRESS=" "$_SERVER_ADDRESS" $R0
+   ${ConfigWrite} "$PROFILE\easymanage.conf" "HTTP_SERVER_VERSION=" "$_HTTP_SERVER_VERSION" $R0
 
    ; set environment variables
    DetailPrint "Set EASYMAN_HOME environment variable"
