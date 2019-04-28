@@ -26,7 +26,7 @@ for /l %%x in (0, 1, 0) do (
 )
 
 for /l %%x in (0, 1, 0) do (
-   echo Adding truck number: %%x
-   "%MONGOIMPORTADDR%" -d test -c trucks --file "%~dp0\src\main\resources\truck%%x.json"
+   echo Adding vehicle number: %%x
+   "%MONGOIMPORTADDR%" -d test -c vehicleTypes --file "%~dp0\src\main\resources\vehicle%%x.json"
    )
 )
