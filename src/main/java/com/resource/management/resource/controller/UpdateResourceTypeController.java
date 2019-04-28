@@ -26,7 +26,7 @@ public class UpdateResourceTypeController {
     @MessageMapping("/updateResourceType")
     public void handle(@Payload final UpdateResourceTypeRequest request, final SimpMessageHeaderAccessor headerAccessor) {
         String ipAddress = headerAccessor.getSessionAttributes().get("ip").toString();
-        Optional<SubUnit> subUnitOptional = subUnitsService.updateResourceType(request.getPlateNumber(), request.getResourceType(), ipAddress);
+        Optional<SubUnit> subUnitOptional = subUnitsService.updateResourceType(request.getId(), request.getResourceType(), ipAddress);
         subUnitOptional.ifPresent(subUnit -> notificationService.publishSubUnitNotification(SubUnitMapper.toApi(subUnit)));
     }
 

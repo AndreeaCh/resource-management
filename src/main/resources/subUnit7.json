@@ -8,7 +8,8 @@
   "lockedResourceTypeBySessionId": null,
   "resources": [
     {
-      "_id": "CJ64ABI",
+      "_id": "2070009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABI",
       "identificationNumber": "3354",
       "vehicleType": "APCA",
       "captain": "Douglas Shepherd",
@@ -51,7 +52,8 @@
       ]
     },
     {
-      "_id": "CJ64ABJ",
+      "_id": "2170009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABJ",
       "identificationNumber": "5199",
       "vehicleType": "EPA",
       "captain": "Davis Coffey",

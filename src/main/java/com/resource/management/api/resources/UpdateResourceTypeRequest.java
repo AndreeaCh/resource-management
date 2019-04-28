@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateResourceTypeRequest {
 
-    private String plateNumber;
+    private String id;
 
     private ResourceType resourceType;
 }

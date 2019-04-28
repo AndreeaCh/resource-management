@@ -8,7 +8,8 @@
   "lockedResourceTypeBySessionId": null,
   "resources": [
     {
-      "_id": "CJ64ABK",
+      "_id": "1570009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABK",
       "identificationNumber": "6301",
       "vehicleType": "APCA",
       "captain": "Gilbert Houston",
@@ -51,7 +52,8 @@
       ]
     },
     {
-      "_id": "CJ64ABL",
+      "_id": "1670009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABL",
       "identificationNumber": "9158",
       "vehicleType": "APCA",
       "captain": "Harrison Watson",
@@ -95,7 +97,8 @@
       ]
     },
     {
-      "_id": "CJ64ABM",
+      "_id": "1770009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABM",
       "identificationNumber": "9936",
       "vehicleType": "EPA",
       "captain": "Constance Greene",

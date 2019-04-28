@@ -8,7 +8,8 @@
   "lockedResourceTypeBySessionId": null,
   "resources": [
     {
-      "_id": "CJ64ABY",
+      "_id": "1870009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABY",
       "identificationNumber": "4721",
       "vehicleType": "APCA",
       "captain": "Debora Peck",
@@ -51,7 +52,8 @@
       ]
     },
     {
-      "_id": "CJ64ABZ",
+      "_id": "1970009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABZ",
       "identificationNumber": "5931",
       "vehicleType": "EPA",
       "captain": "Doris Serrano",

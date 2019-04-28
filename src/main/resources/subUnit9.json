@@ -8,7 +8,8 @@
   "lockedResourceTypeBySessionId": null,
   "resources": [
     {
-      "_id": "CJ64ABN",
+      "_id": "2470009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABN",
       "identificationNumber": "5646",
       "vehicleType": "APCA",
       "captain": "Hammond Marks",
@@ -51,7 +52,8 @@
       ]
     },
     {
-      "_id": "CJ64ABO",
+      "_id": "2570009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABO",
       "identificationNumber": "2489",
       "vehicleType": "SCARA",
       "captain": "Tara Maxwell",
@@ -94,7 +96,8 @@
       ]
     },
     {
-      "_id": "CJ64ABP",
+      "_id": "2670009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABP",
       "identificationNumber": "4034",
       "vehicleType": "EPA",
       "captain": "Young Finch",

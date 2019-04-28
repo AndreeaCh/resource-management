@@ -11,7 +11,7 @@ import com.resource.management.resource.model.ResourceStatus;
 @NoArgsConstructor
 public class UpdateResourceStatusRequest
 {
-   private String plateNumber;
+   private String id;
 
    private ResourceStatus resourceStatus;
 }

@@ -8,7 +8,8 @@
   "lockedResourceTypeBySessionId": null,
   "resources": [
     {
-      "_id": "CJ64AGA",
+      "_id": "1470009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64AGA",
       "identificationNumber": "5931",
       "vehicleType": "EPA",
       "captain": "Doris Serrano",

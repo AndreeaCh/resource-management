@@ -29,7 +29,7 @@ import com.resource.management.resource.service.SubUnitsService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class GetResourceLogControllerTest {
-    private static final String PLATE_NUMBER = "1234";
+    private static final String RESOURCE_ID = "1234";
 
     @MockBean
     private SubUnitsService subUnitsService;
@@ -50,7 +50,7 @@ public class GetResourceLogControllerTest {
         final List<ResourceLog> resourceLogsList = prepareResourceLogsInRepository();
 
         //when
-        final GetResourceLogResponse getRes = this.controller.handle(new GetResourceLogRequest(PLATE_NUMBER));
+        final GetResourceLogResponse getRes = this.controller.handle(new GetResourceLogRequest(RESOURCE_ID));
 
         //then
         List<com.resource.management.api.resources.ResourceLog> expected =
@@ -67,9 +67,10 @@ public class GetResourceLogControllerTest {
         List<ResourceLog> resourceLogs = Collections.singletonList(resourceLog);
         Resource resource = new Resource();
         resource.setIdentificationNumber("1");
-        resource.setPlateNumber(PLATE_NUMBER);
+        resource.setId(RESOURCE_ID);
+        resource.setPlateNumber(RESOURCE_ID);
         resource.setResourceLogs(resourceLogs);
-        when(this.subUnitsService.getLogForResource(PLATE_NUMBER)).thenReturn(resourceLogs);
+        when(this.subUnitsService.getLogForResource(RESOURCE_ID)).thenReturn(resourceLogs);
         return resourceLogs;
     }
 }
