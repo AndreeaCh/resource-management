@@ -6,6 +6,11 @@
     -> configure installer file logging, no need for intermediate log files
     -> make nsis script configurable, remove hardcoding
     -> language settings 
+    -> modern look and feel
+    -> configurable path for resource status history -> add file dialog
+    -> consistency checks, verify things installed properly
+    -> remove obsolete script files
+    -> stop setting obsolete environment variables
     
 - docker-on-linux install script
     -> proper docker image names
@@ -23,10 +28,12 @@
 - resolve path overwriting issue
 - at uninstall cleanup PATH env var
 - fix uninstall error (path to script not found)
-- install shall not remove archive tools(7z)
 - uninstall does not remove node and mongod for some reason
 - proper log levels for production use
+- change log pattern format to be more readable
+- reduce log verbosity
 - application log is missing .log extension after switching to log4j
+
 
 ### TO BE TESTED
 
