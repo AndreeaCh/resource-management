@@ -1,20 +1,22 @@
 package com.resource.management.resource.service;
 
+import com.lowagie.text.Chunk;
+import com.lowagie.text.Document;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Element;
 import com.lowagie.text.Font;
-import com.lowagie.text.*;
+import com.lowagie.text.PageSize;
+import com.lowagie.text.Paragraph;
+import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
+import com.resource.management.management.vehicles.model.VehicleType;
 import com.resource.management.resource.model.Equipment;
 import com.resource.management.resource.model.Resource;
 import com.resource.management.resource.model.ResourceType;
 import com.resource.management.resource.model.SubUnit;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.awt.*;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,6 +25,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class EquipmentPdfCreator {
@@ -58,9 +64,9 @@ public class EquipmentPdfCreator {
     public EquipmentPdfCreator() throws IOException, DocumentException {
     }
 
-    public void createPdf(final List<SubUnit> subUnits) {
+    public void createPdf(final List<SubUnit> subUnits, final List<VehicleType> vehicleTypes) {
         try {
-            AllSubUnitsReport report = reportBuilder.buildReport(subUnits);
+            AllSubUnitsReport report = reportBuilder.buildReport(subUnits, vehicleTypes);
 
             recreateReportFile();
             Document document = new Document(PageSize.A3.rotate(), 0, 0, 40, 20);
@@ -91,12 +97,12 @@ public class EquipmentPdfCreator {
 
     private void addDetailsToTable(PdfPTable table, AllSubUnitsReport report) {
         report.getSubUnitReports()
-                .forEach((subUnitName, subUnitReport) -> {
-                    addHeaderCell(table, subUnitName, 0, 1, 3);
-                    addUsableResources(table, subUnitReport);
-                    addReserveResources(table, subUnitReport);
-                    addUnusableResources(table, subUnitReport);
-                });
+              .forEach((subUnitName, subUnitReport) -> {
+                  addHeaderCell(table, subUnitName, 0, 1, 3);
+                  addUsableResources(table, subUnitReport);
+                  addReserveResources(table, subUnitReport);
+                  addUnusableResources(table, subUnitReport);
+              });
 
         SubUnitReport raportAllSubUnits = report.getTotals();
         addHeaderCell(table, TOTAL, 0, 1, 3);
@@ -112,32 +118,32 @@ public class EquipmentPdfCreator {
     private void addUnusableResources(PdfPTable table, SubUnitReport subUnitReport, boolean isTotalRow) {
         addHeaderCell(table, NEOPERATIONAL, 0, 1, 1);
         subUnitReport.getFirstInterventionResourceReport()
-                .forEach((type, r) -> {
-                    if (isTotalRow) {
-                        addTotalCell(table, r.getUnusableAsString());
-                    } else {
-                        addSimpleTableCell(table, r.getUnusableAsString());
-                    }
-                });
+                     .forEach((type, r) -> {
+                         if (isTotalRow) {
+                             addTotalCell(table, r.getUnusableAsString());
+                         } else {
+                             addSimpleTableCell(table, r.getUnusableAsString());
+                         }
+                     });
         addTotalCell(table, subUnitReport.getFirstInterventionTotal().getUnusableAsString());
         subUnitReport.getOtherResourceReport()
-                .forEach((type, r) -> {
-                    if (isTotalRow) {
-                        addTotalCell(table, r.getUnusableAsString());
-                    } else {
-                        addSimpleTableCell(table, r.getUnusableAsString());
-                    }
-                });
+                     .forEach((type, r) -> {
+                         if (isTotalRow) {
+                             addTotalCell(table, r.getUnusableAsString());
+                         } else {
+                             addSimpleTableCell(table, r.getUnusableAsString());
+                         }
+                     });
         addTotalCell(table, subUnitReport.getOtherResourcesTotal().getUnusableAsString());
         addTotalCell(table, subUnitReport.getAllResourcesTotal().getUnusableAsString());
         subUnitReport.getEquipmentReport()
-                .forEach((type, r) -> {
-                    if (isTotalRow) {
-                        addTotalCell(table, r.getUnusableAsString());
-                    } else {
-                        addSimpleTableCell(table, r.getUnusableAsString());
-                    }
-                });
+                     .forEach((type, r) -> {
+                         if (isTotalRow) {
+                             addTotalCell(table, r.getUnusableAsString());
+                         } else {
+                             addSimpleTableCell(table, r.getUnusableAsString());
+                         }
+                     });
         addTotalCell(table, subUnitReport.getEquipmentTotal().getUnusableAsString());
     }
 
@@ -148,32 +154,32 @@ public class EquipmentPdfCreator {
     private void addReserveResources(PdfPTable table, SubUnitReport subUnitReport, boolean isTotalRow) {
         addHeaderCell(table, REZERVA, 0, 1, 1);
         subUnitReport.getFirstInterventionResourceReport()
-                .forEach((type, r) -> {
-                    if (isTotalRow) {
-                        addTotalCell(table, r.getReserveAsString());
-                    } else {
-                        addSimpleTableCell(table, r.getReserveAsString());
-                    }
-                });
+                     .forEach((type, r) -> {
+                         if (isTotalRow) {
+                             addTotalCell(table, r.getReserveAsString());
+                         } else {
+                             addSimpleTableCell(table, r.getReserveAsString());
+                         }
+                     });
         addTotalCell(table, subUnitReport.getFirstInterventionTotal().getReserveAsString());
         subUnitReport.getOtherResourceReport()
-                .forEach((type, r) -> {
-                    if (isTotalRow) {
-                        addTotalCell(table, r.getReserveAsString());
-                    } else {
-                        addSimpleTableCell(table, r.getReserveAsString());
-                    }
-                });
+                     .forEach((type, r) -> {
+                         if (isTotalRow) {
+                             addTotalCell(table, r.getReserveAsString());
+                         } else {
+                             addSimpleTableCell(table, r.getReserveAsString());
+                         }
+                     });
         addTotalCell(table, subUnitReport.getOtherResourcesTotal().getReserveAsString());
         addTotalCell(table, subUnitReport.getAllResourcesTotal().getReserveAsString());
         subUnitReport.getEquipmentReport()
-                .forEach((type, r) -> {
-                    if (isTotalRow) {
-                        addTotalCell(table, r.getReserveAsString());
-                    } else {
-                        addSimpleTableCell(table, r.getReserveAsString());
-                    }
-                });
+                     .forEach((type, r) -> {
+                         if (isTotalRow) {
+                             addTotalCell(table, r.getReserveAsString());
+                         } else {
+                             addSimpleTableCell(table, r.getReserveAsString());
+                         }
+                     });
         addTotalCell(table, subUnitReport.getEquipmentTotal().getReserveAsString());
     }
 
@@ -184,35 +190,35 @@ public class EquipmentPdfCreator {
     private void addUsableResources(PdfPTable table, SubUnitReport subUnitReport, boolean isTotalRow) {
         addHeaderCell(table, OPERATIONAL, 0, 1, 1);
         subUnitReport.getFirstInterventionResourceReport()
-                .forEach((type, r) -> {
-                    if (isTotalRow) {
-                        addTotalCell(table, r.getUsableAsString());
-                    } else {
-                        addSimpleTableCell(table, r.getUsableAsString());
-                    }
-                    ;
-                });
+                     .forEach((type, r) -> {
+                         if (isTotalRow) {
+                             addTotalCell(table, r.getUsableAsString());
+                         } else {
+                             addSimpleTableCell(table, r.getUsableAsString());
+                         }
+                         ;
+                     });
         addTotalCell(table, subUnitReport.getFirstInterventionTotal().getUsableAsString());
         subUnitReport.getOtherResourceReport()
-                .forEach((type, r) -> {
-                    if (isTotalRow) {
-                        addTotalCell(table, r.getUsableAsString());
-                    } else {
-                        addSimpleTableCell(table, r.getUsableAsString());
-                    }
-                    ;
-                });
+                     .forEach((type, r) -> {
+                         if (isTotalRow) {
+                             addTotalCell(table, r.getUsableAsString());
+                         } else {
+                             addSimpleTableCell(table, r.getUsableAsString());
+                         }
+                         ;
+                     });
         addTotalCell(table, subUnitReport.getOtherResourcesTotal().getUsableAsString());
         addTotalCell(table, subUnitReport.getAllResourcesTotal().getUsableAsString());
         subUnitReport.getEquipmentReport()
-                .forEach((type, r) -> {
-                    if (isTotalRow) {
-                        addTotalCell(table, r.getUsableAsString());
-                    } else {
-                        addSimpleTableCell(table, r.getUsableAsString());
-                    }
-                    ;
-                });
+                     .forEach((type, r) -> {
+                         if (isTotalRow) {
+                             addTotalCell(table, r.getUsableAsString());
+                         } else {
+                             addSimpleTableCell(table, r.getUsableAsString());
+                         }
+                         ;
+                     });
         addTotalCell(table, subUnitReport.getEquipmentTotal().getUsableAsString());
     }
 
@@ -288,32 +294,32 @@ public class EquipmentPdfCreator {
 
     private List<String> getOtherResourcesTypes(List<SubUnit> subUnits) {
         return subUnits.stream()
-                .filter(s -> s.getResources() != null)
-                .flatMap(s -> s.getResources().stream())
-                .filter(resource -> resource.getType().equals(ResourceType.OTHER))
-                .map(Resource::getVehicleType)
-                .distinct()
-                .sorted()
-                .collect(Collectors.toList());
+                       .filter(s -> s.getResources() != null)
+                       .flatMap(s -> s.getResources().stream())
+                       .filter(resource -> resource.getType().equals(ResourceType.OTHER))
+                       .map(Resource::getVehicleType)
+                       .distinct()
+                       .sorted()
+                       .collect(Collectors.toList());
     }
 
     private List<String> getFirstInterventionResourcesTypes(List<SubUnit> subUnits) {
         return subUnits.stream()
-                .flatMap(s -> s.getResources().stream())
-                .filter(resource -> resource.getType().equals(ResourceType.FIRST_INTERVENTION))
-                .map(Resource::getVehicleType)
-                .distinct()
-                .sorted()
-                .collect(Collectors.toList());
+                       .flatMap(s -> s.getResources().stream())
+                       .filter(resource -> resource.getType().equals(ResourceType.FIRST_INTERVENTION))
+                       .map(Resource::getVehicleType)
+                       .distinct()
+                       .sorted()
+                       .collect(Collectors.toList());
     }
 
     private List<String> getEquipmentTypes(List<SubUnit> subUnits) {
         return subUnits.stream()
-                .filter(s -> s.getEquipment() != null)
-                .flatMap(s -> s.getEquipment().stream())
-                .map(Equipment::getEquipmentType)
-                .distinct()
-                .sorted()
-                .collect(Collectors.toList());
+                       .filter(s -> s.getEquipment() != null)
+                       .flatMap(s -> s.getEquipment().stream())
+                       .map(Equipment::getEquipmentType)
+                       .distinct()
+                       .sorted()
+                       .collect(Collectors.toList());
     }
 }

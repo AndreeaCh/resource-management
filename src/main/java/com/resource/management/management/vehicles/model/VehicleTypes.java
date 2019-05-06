@@ -1,4 +1,4 @@
-package com.resource.management.management.trucks.model;
+package com.resource.management.management.vehicles.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -10,9 +10,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Trucks {
-    public static final String ID = "Trucks";
+public class VehicleTypes {
+    public static final String ID = "vehicleTypes";
     @Id
     private String id;
-    private List<Truck> trucks;
+    private List<VehicleType> vehicleTypes;
 }

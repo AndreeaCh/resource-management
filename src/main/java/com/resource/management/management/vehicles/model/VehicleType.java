@@ -1,4 +1,4 @@
-package com.resource.management.management.trucks.model;
+package com.resource.management.management.vehicles.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class Truck {
+public class VehicleType {
     @Id
     private String id;
     private String shortName;

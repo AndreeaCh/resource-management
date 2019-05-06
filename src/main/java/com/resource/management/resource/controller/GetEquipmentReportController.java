@@ -1,9 +1,18 @@
 package com.resource.management.resource.controller;
 
+import com.resource.management.management.vehicles.model.VehicleType;
+import com.resource.management.management.vehicles.model.VehicleRepository;
+import com.resource.management.management.vehicles.model.VehicleTypes;
 import com.resource.management.resource.model.SubUnit;
 import com.resource.management.resource.model.SubUnitsRepository;
 import com.resource.management.resource.service.EquipmentPdfCreator;
 import com.resource.management.resource.service.EquipmentXlsCreator;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,18 +21,17 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
-
+import static com.resource.management.management.vehicles.model.VehicleTypes.ID;
 import static com.resource.management.resource.service.EquipmentXlsCreator.EQUIPMENT_REPORT_FILE_NAME;
 
 @Controller
 public class GetEquipmentReportController {
     private static final Logger LOG = LoggerFactory.getLogger(GetEquipmentReportController.class);
     @Autowired
-    private SubUnitsRepository repository;
+    private SubUnitsRepository subUnitsRepository;
+
+    @Autowired
+    private VehicleRepository vehicleRepository;
 
     @Autowired
     private EquipmentPdfCreator pdfCreator;
@@ -34,9 +42,10 @@ public class GetEquipmentReportController {
     @MessageMapping("/getEquipmentReport")
     @SendTo("/topic/equipmentReport")
     public String getFile() {
-        List<SubUnit> subUnits = repository.findAll();
-        pdfCreator.createPdf(subUnits);
-        xlsCreator.createXls(subUnits);
+        List<SubUnit> subUnits = subUnitsRepository.findAll();
+        Optional<VehicleTypes> vehiclesOptional = vehicleRepository.findById(ID);
+        List<VehicleType> vehicleTypeList = vehiclesOptional.map(vehicleTypes -> new ArrayList<>(vehicleTypes.getVehicleTypes())).orElseGet(ArrayList::new);
+        xlsCreator.createXls(subUnits, vehicleTypeList);
         return getXLSFileContentAsBase64();
     }
 

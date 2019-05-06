@@ -9,8 +9,6 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class AddTruckRequest {
+public class DeleteVehicleTypeRequest {
     private String id;
-    private String shortName;
-    private String longName;
 }
