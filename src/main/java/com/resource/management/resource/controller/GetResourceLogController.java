@@ -22,7 +22,7 @@ public class GetResourceLogController {
     @MessageMapping("/getResourceLog")
     @SendTo("/topic/resourceLogs")
     public GetResourceLogResponse handle(final GetResourceLogRequest request) {
-        List<com.resource.management.resource.model.ResourceLog> logs = service.getLogForResource(request.getPlateNumber());
+        List<com.resource.management.resource.model.ResourceLog> logs = service.getLogForResource(request.getId());
         List<ResourceLog> resourceLogs = logs.stream().map(ResourceLogMapper::toApi).collect(Collectors.toList());
         return new GetResourceLogResponse(resourceLogs);
     }

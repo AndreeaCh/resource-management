@@ -8,7 +8,8 @@
   "lockedResourceTypeBySessionId": null,
   "resources": [
     {
-      "_id": "CJ64ABQ",
+      "_id": "0770009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABQ",
       "identificationNumber": "4721",
       "vehicleType": "APCA",
       "captain": "Debora Peck",
@@ -45,7 +46,8 @@
       ]
     },
     {
-      "_id": "CJ64ABR",
+      "_id": "0870009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABR",
       "identificationNumber": "5931",
       "vehicleType": "SCAF",
       "captain": "Doris Serrano",
@@ -82,7 +84,8 @@
       ]
     },
     {
-      "_id": "CJ64ABS",
+      "_id": "0970009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABS",
       "identificationNumber": "2207",
       "vehicleType": "EPA",
       "captain": "Courtney Leonard",
@@ -119,7 +122,8 @@
       ]
     },
     {
-      "_id": "CJ64ABT",
+      "_id": "1070009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABT",
       "identificationNumber": "2047",
       "vehicleType": "EPA",
       "captain": "Gale Gates",
@@ -156,7 +160,8 @@
       ]
     },
     {
-      "_id": "CJ64ABU",
+      "_id": "1170009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABU",
       "identificationNumber": "9197",
       "vehicleType": "MU",
       "captain": "Villarreal James",

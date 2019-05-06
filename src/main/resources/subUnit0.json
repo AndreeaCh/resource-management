@@ -8,7 +8,8 @@
   "lockedResourceTypeBySessionId": null,
   "resources": [
     {
-      "_id": "CJ90DDD",
+      "_id": "0070009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ90DDD",
       "identificationNumber": "21312",
       "vehicleType": "APCA",
       "captain": "Dorsey Gutierrez",

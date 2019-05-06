@@ -25,7 +25,7 @@ public class UpdateResourceStatusController {
     @MessageMapping("/updateStatus")
     public void handle(@Payload final UpdateResourceStatusRequest request, final SimpMessageHeaderAccessor headerAccessor) {
         String ipAddress = headerAccessor.getSessionAttributes().get("ip").toString();
-        Optional<SubUnit> subUnitOptional = subUnitsService.updateResourceStatus(request.getPlateNumber(), request.getResourceStatus(), ipAddress);
+        Optional<SubUnit> subUnitOptional = subUnitsService.updateResourceStatus(request.getId(), request.getResourceStatus(), ipAddress);
         subUnitOptional.ifPresent(subUnit -> notificationService.publishSubUnitNotification(SubUnitMapper.toApi(subUnit)));
     }
 }

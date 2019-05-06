@@ -8,7 +8,8 @@
   "lockedResourceTypeBySessionId": null,
   "resources": [
     {
-      "_id": "CJ90ABC",
+      "_id": "0170009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ90ABC",
       "identificationNumber": "8945",
       "vehicleType": "APCA",
       "captain": "Dorsey Gutierrez",
@@ -57,7 +58,8 @@
       ]
     },
     {
-      "_id": "CJ29ABD",
+      "_id": "0270009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ29ABD",
       "identificationNumber": "3253",
       "vehicleType": "SCAF",
       "captain": "Stokes Graves",
@@ -99,7 +101,8 @@
       ]
     },
     {
-      "_id": "CJ64ABE",
+      "_id": "0370009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABE",
       "identificationNumber": "3192",
       "vehicleType": "BM",
       "captain": "Dionne Morales",
@@ -142,7 +145,8 @@
       ]
     },
     {
-      "_id": "CJ64ABF",
+      "_id": "0470009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABF",
       "identificationNumber": "6791",
       "vehicleType": "PIRO",
       "captain": "Dena Avila",
@@ -185,7 +189,8 @@
       ]
     },
     {
-      "_id": "CJ64ABG",
+      "_id": "0570009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABG",
       "identificationNumber": "3261",
       "vehicleType": "EPA",
       "captain": "Mcfadden Moss",
@@ -227,7 +232,8 @@
       ]
     },
     {
-      "_id": "CJ64ABH",
+      "_id": "0670009c-27be-450f-8412-7825e5fabda16",
+      "plateNumber": "CJ64ABH",
       "identificationNumber": "3263",
       "vehicleType": "EPA",
       "captain": "Mcfadden Moss",

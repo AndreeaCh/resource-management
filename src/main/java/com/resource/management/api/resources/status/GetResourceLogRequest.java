@@ -10,5 +10,5 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class GetResourceLogRequest {
-    private String plateNumber;
+    private String id;
 }

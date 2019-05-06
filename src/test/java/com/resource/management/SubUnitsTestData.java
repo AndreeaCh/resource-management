@@ -13,6 +13,7 @@ class SubUnitsTestData {
                     "  \"resources\": [\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ90DDD\",\n" +
+                    "      \"plateNumber\": \"CJ90DDD\",\n" +
                     "      \"identificationNumber\": \"21312\",\n" +
                     "      \"vehicleType\": \"APCA\",\n" +
                     "      \"captain\": \"Dorsey Gutierrez\",\n" +
@@ -64,7 +65,8 @@ class SubUnitsTestData {
                     "  \"lockedResourceTypeBySessionId\": null,\n" +
                     "  \"resources\": [\n" +
                     "    {\n" +
-                    "      \"_id\": \"CJ90DDD\",\n" +
+                    "      \"_id\": \"ewqewq-321321-dsa23\",\n" +
+                    "\"plateNumber\": \"CJ90DDD\",\n" +
                     "      \"identificationNumber\": \"21312\",\n" +
                     "      \"vehicleType\": \"APCA\",\n" +
                     "      \"captain\": \"Dorsey Gutierrez\",\n" +
@@ -116,7 +118,8 @@ class SubUnitsTestData {
                     "  \"lockedResourceTypeBySessionId\": null,\n" +
                     "  \"resources\": [\n" +
                     "    {\n" +
-                    "      \"_id\": \"CJ90ABC\",\n" +
+                    "      \"_id\": \"ewqewq-321321-dsa23\",\n" +
+                    "      \"plateNumber\": \"CJ90fdr\",\n" +
                     "      \"identificationNumber\": \"8945\",\n" +
                     "      \"vehicleType\": \"APCA\",\n" +
                     "      \"captain\": \"Dorsey Gutierrez\",\n" +
@@ -166,6 +169,7 @@ class SubUnitsTestData {
                     "    },\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ29ABD\",\n" +
+                    "      \"plateNumber\": \"CJ29ABD\",\n" +
                     "      \"identificationNumber\": \"3253\",\n" +
                     "      \"vehicleType\": \"SCAF\",\n" +
                     "      \"captain\": \"Stokes Graves\",\n" +
@@ -208,6 +212,7 @@ class SubUnitsTestData {
                     "    },\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ64ABE\",\n" +
+                    "      \"plateNumber\": \"CJ64ABE\",\n" +
                     "      \"identificationNumber\": \"3192\",\n" +
                     "      \"vehicleType\": \"BM\",\n" +
                     "      \"captain\": \"Dionne Morales\",\n" +
@@ -251,6 +256,7 @@ class SubUnitsTestData {
                     "    },\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ64ABF\",\n" +
+                    "      \"plateNumber\": \"CJ64ABF\",\n" +
                     "      \"identificationNumber\": \"6791\",\n" +
                     "      \"vehicleType\": \"PIRO\",\n" +
                     "      \"captain\": \"Dena Avila\",\n" +
@@ -294,6 +300,7 @@ class SubUnitsTestData {
                     "    },\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ64ABG\",\n" +
+                    "      \"plateNumber\": \"CJ64ABG\",\n" +
                     "      \"identificationNumber\": \"3261\",\n" +
                     "      \"vehicleType\": \"EPA\",\n" +
                     "      \"captain\": \"Mcfadden Moss\",\n" +
@@ -336,6 +343,7 @@ class SubUnitsTestData {
                     "    },\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ64ABH\",\n" +
+                    "      \"plateNumber\": \"CJ64ABH\",\n" +
                     "      \"identificationNumber\": \"3263\",\n" +
                     "      \"vehicleType\": \"EPA\",\n" +
                     "      \"captain\": \"Mcfadden Moss\",\n" +
@@ -382,6 +390,7 @@ class SubUnitsTestData {
                     "  \"resources\": [\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ64ABQ\",\n" +
+                    "      \"plateNumber\": \"CJ64ABQ\",\n" +
                     "      \"identificationNumber\": \"4721\",\n" +
                     "      \"vehicleType\": \"APCA\",\n" +
                     "      \"captain\": \"Debora Peck\",\n" +
@@ -419,6 +428,7 @@ class SubUnitsTestData {
                     "    },\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ64ABR\",\n" +
+                    "      \"plateNumber\": \"CJ64ABR\",\n" +
                     "      \"identificationNumber\": \"5931\",\n" +
                     "      \"vehicleType\": \"SCAF\",\n" +
                     "      \"captain\": \"Doris Serrano\",\n" +
@@ -456,6 +466,7 @@ class SubUnitsTestData {
                     "    },\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ64ABS\",\n" +
+                    "      \"plateNumber\": \"CJ64ABS\",\n" +
                     "      \"identificationNumber\": \"2207\",\n" +
                     "      \"vehicleType\": \"EPA\",\n" +
                     "      \"captain\": \"Courtney Leonard\",\n" +
@@ -493,6 +504,7 @@ class SubUnitsTestData {
                     "    },\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ64ABT\",\n" +
+                    "      \"plateNumber\": \"CJ64ABT\",\n" +
                     "      \"identificationNumber\": \"2047\",\n" +
                     "      \"vehicleType\": \"EPA\",\n" +
                     "      \"captain\": \"Gale Gates\",\n" +
@@ -530,6 +542,7 @@ class SubUnitsTestData {
                     "    },\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ64ABU\",\n" +
+                    "      \"plateNumber\": \"CJ64ABU\",\n" +
                     "      \"identificationNumber\": \"9197\",\n" +
                     "      \"vehicleType\": \"MU\",\n" +
                     "      \"captain\": \"Villarreal James\",\n" +
@@ -576,6 +589,7 @@ class SubUnitsTestData {
                     "  \"resources\": [\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ64ACA\",\n" +
+                    "      \"plateNumber\": \"CJ64ACA\",\n" +
                     "      \"identificationNumber\": \"4721\",\n" +
                     "      \"vehicleType\": \"APCA\",\n" +
                     "      \"captain\": \"Debora Peck\",\n" +
@@ -621,6 +635,7 @@ class SubUnitsTestData {
                     "    },\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ64ADA\",\n" +
+                    "      \"plateNumber\": \"CJ64ADA\",\n" +
                     "      \"identificationNumber\": \"5931\",\n" +
                     "      \"vehicleType\": \"EPA\",\n" +
                     "      \"captain\": \"Doris Serrano\",\n" +
@@ -672,6 +687,7 @@ class SubUnitsTestData {
                     "  \"resources\": [\n" +
                     "    {\n" +
                     "      \"_id\": \"CJ64AGA\",\n" +
+                    "      \"plateNumber\": \"CJ64AGA\",\n" +
                     "      \"identificationNumber\": \"5931\",\n" +
                     "      \"vehicleType\": \"EPA\",\n" +
                     "      \"captain\": \"Doris Serrano\",\n" +

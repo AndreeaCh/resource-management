@@ -61,7 +61,7 @@ public class UpdateResourceStatusControllerTest {
         controller.handle(request, headerAccessor);
 
         // then
-        verify(subUnitsService).updateResourceStatus(request.getPlateNumber(), resourceStatus, IP_ADDRESS);
+        verify(subUnitsService).updateResourceStatus(request.getId(), resourceStatus, IP_ADDRESS);
     }
 
 
@@ -72,7 +72,7 @@ public class UpdateResourceStatusControllerTest {
         final String plateNumber = subUnit.getResources().stream().findFirst().get().getPlateNumber();
         final ResourceStatus resourceStatus = new ResourceStatus(ResourceStatus.Status.AVAILABLE);
         UpdateResourceStatusRequest request = new UpdateResourceStatusRequest(plateNumber, resourceStatus);
-        when(subUnitsService.updateResourceStatus(request.getPlateNumber(), resourceStatus, IP_ADDRESS))
+        when(subUnitsService.updateResourceStatus(request.getId(), resourceStatus, IP_ADDRESS))
                 .thenReturn(java.util.Optional.of(subUnit));
 
         // when
