@@ -176,8 +176,9 @@ Section "-Meta setup"
 
 SectionEnd
 
-Section "!Chocolatey (required)"
+Section "Chocolatey (required)"
 
+   SectionIn RO
    SetOutPath $INSTDIR
 
    nsExec::ExecToStack 'powershell -inputformat none -command choco -V'
@@ -213,10 +214,11 @@ SectionEnd
 
 Section "Mongodb (required)"
 
+   SectionIn RO
    SetOutPath $INSTDIR
 
    ;ExecWait '"$INSTDIR\setup.bat" db /S' $0
-   nsExec::ExecToLog 'powershell -inputformat none -ExecutionPolicy Bypass -command choco install $_DB_INSTALL_OPTION -y --version $_DB_VERSION'
+   nsExec::ExecToLog 'powershell -inputformat none -ExecutionPolicy Bypass -command $_CHOCO_INSTALL_PATH\choco install $_DB_INSTALL_OPTION -y --version $_DB_VERSION'
    Pop $0
 
    ${If} $0 == 0
@@ -237,10 +239,11 @@ SectionEnd
 
 Section "Java (required)"
 
+   SectionIn RO
    SetOutPath $INSTDIR
 
    ; ExecWait '"$INSTDIR\setup.bat" java' $0
-   nsExec::ExecToLog 'choco install $_JAVA_INSTALL_OPTION -y --version $_JAVA_VERSION'
+   nsExec::ExecToLog '$_CHOCO_INSTALL_PATH\choco install $_JAVA_INSTALL_OPTION -y --version $_JAVA_VERSION'
    Pop $0
 
    ${If} $0 == 0
@@ -261,10 +264,11 @@ SectionEnd
 
 Section "NodeJs (required)"
 
+   SectionIn RO
    SetOutPath $INSTDIR
 
    ; ExecWait '"$INSTDIR\setup.bat" node' $0
-   nsExec::ExecToLog 'choco install $_NODE_INSTALL_OPTION -y --version $_NODE_VERSION'
+   nsExec::ExecToLog '$_CHOCO_INSTALL_PATH\choco install $_NODE_INSTALL_OPTION -y --version $_NODE_VERSION'
    Pop $0
 
    ${If} $0 == 0
@@ -284,6 +288,8 @@ Section "NodeJs (required)"
 SectionEnd
 
 Section "!EasyManage (required)"
+
+   SectionIn RO
 
    ; extract run script files
    SetOutPath $_SCRIPTS_DIR
@@ -355,7 +361,7 @@ Section "!EasyManage (required)"
 SectionEnd
 
 ; Optional section (can be disabled by the user)
-Section /o "Start Menu Shortcuts"
+Section "Start Menu Shortcuts"
 
    CreateDirectory "$SMPROGRAMS\EasyManage"
    CreateShortCut "$SMPROGRAMS\EasyManage\Uninstall EasyManage.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
