@@ -30,7 +30,7 @@ The generated bundle can be found at target/'easy-manage-windows-native-*.zip'
 * continue with the instructions found in the extracted file named README.md
 
 ## Deployment for Unix(Linux) environments
-* build frontend distributable
+* build frontend distributabler
 ``` bash
     :isu-resource-management-client$ mvn clean install
 ```
