@@ -155,20 +155,20 @@ Section "-Meta setup"
    ; extract setup script
    SetOutPath $INSTDIR
 
-   File setup/setup.bat
-   File /oname=install.md setup/install_instructions.md
+   File setup\setup.bat
+   File /oname=install.md setup\install_instructions.md
 
    ; extract install script files
    SetOutPath $_SCRIPTS_DIR
 
-   File setup/install_chocolatey.bat
-   File setup/install_chocolatey.ps1
-   File setup/install_db.bat
-   File setup/install_java.bat
-   File setup/install_node.bat
-   File setup/uninstall.bat
-   File setup/uninstall_tools.bat
-   File setup/set_execution_policy.bat
+   File setup\install_chocolatey.bat
+   File setup\install_chocolatey.ps1
+   File setup\install_db.bat
+   File setup\install_java.bat
+   File setup\install_node.bat
+   File setup\uninstall.bat
+   File setup\uninstall_tools.bat
+   File setup\set_execution_policy.bat
    File /r *.cmd
    File /r *.ps1
 
@@ -294,10 +294,10 @@ Section "!EasyManage (required)"
    ; extract run script files
    SetOutPath $_SCRIPTS_DIR
 
-   File run/start.bat
-   File run/stop.bat
-   File /oname=run-backend.bat run/deploy.bat
-   File /oname=import.bat run/fillDb.bat
+   File run\start.bat
+   File run\stop.bat
+   File /oname=run-backend.bat run\deploy.bat
+   File /oname=import.bat run\fillDb.bat
 
    ; copy import data
    SetOutPath $_IMPORT_DIR
@@ -305,7 +305,7 @@ Section "!EasyManage (required)"
 
    ; copy backend binary
    SetOutPath $_BACKEND_DIR
-   File /oname=easy-manage.jar bin/resource-management.jar
+   File /oname=easy-manage.jar bin\resource-management.jar
 
    ; copy frontend structure
    SetOutPath $_FRONTEND_DIR
@@ -314,11 +314,11 @@ Section "!EasyManage (required)"
    ; extract binary and configuration files
    SetOutPath $INSTDIR
 
-   File /oname=README.md run/run_instructions.md
+   File /oname=README.md run\run_instructions.md
    SetFileAttributes README.md READONLY
 
    ; copy and customize backend configuration
-   File /oname=application.properties run/production.application.properties
+   File /oname=application.properties run\production.application.properties
 
    Var /Global BackendLogFileAbsolutePath
    ${StrRep} '$BackendLogFileAbsolutePath' '$_LOGS_DIR\$_BACKEND_LOG_FILE' '\' '\\'
@@ -334,7 +334,7 @@ Section "!EasyManage (required)"
 
    SetOutPath $_BIN_DIR
 
-   File /oname=easymanage.bat run/easymanage.bat
+   File /oname=easymanage.bat run\easymanage.bat
    SetFileAttributes easymanage.bat READONLY
 
    ; write config file
