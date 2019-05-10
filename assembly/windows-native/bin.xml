@@ -70,5 +70,9 @@
       <source>${win.native.build.directory}/run/production.application.properties</source>
       <destName>application.properties</destName>
     </file>
+    <file>
+      <source>${win.native.build.directory}/run/production.log4j2.properties</source>
+      <destName>log4j2.properties</destName>
+    </file>
   </files>
 </assembly>

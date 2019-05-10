@@ -320,6 +320,9 @@ Section "!EasyManage (required)"
    ; copy and customize backend configuration
    File /oname=application.properties run\production.application.properties
 
+   ; copy and customize backend configuration
+   File /oname=log4j2.properties run\production.log4j2.properties
+
    Var /Global BackendLogFileAbsolutePath
    ${StrRep} '$BackendLogFileAbsolutePath' '$_LOGS_DIR\$_BACKEND_LOG_FILE' '\' '\\'
 

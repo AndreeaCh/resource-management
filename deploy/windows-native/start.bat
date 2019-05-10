@@ -62,6 +62,7 @@ IF "%_HTTP_SERVER_VER%"=="" (
 SET _SCRIPTS_DIR=%_INSTALL_PATH%\scripts
 SET _LOGS_DIR=%_INSTALL_PATH%\logs
 SET _CONFIG_PATH=%_INSTALL_PATH%\application.properties
+SET _LOG_CONFIG_PATH=%_INSTALL_PATH%\log4j2.properties
 SET _BACKEND_PATH=%_INSTALL_PATH%\jars\easy-manage.jar
 SET _FRONTEND_PATH=%_INSTALL_PATH%\dist
 
@@ -99,7 +100,7 @@ FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq java.exe" /fo table /nh'
 )
 
 ECHO START_2.2 Starting new server instance...
-powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_DIR%\"; & .\run-backend.bat %_BACKEND_PATH% %_CONFIG_PATH% >> %_LOGS_DIR%\backend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
+powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_DIR%\"; & .\run-backend.bat %_BACKEND_PATH% %_CONFIG_PATH% %_LOG_CONFIG_PATH% >> %_LOGS_DIR%\backend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
 
 :::::::::::::::::::::::::::::::::::: START FRONTEND :::::::::::::::::::::::::::::::::::::
