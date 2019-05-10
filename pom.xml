@@ -143,22 +143,24 @@
     </dependencies>
 
     <build>
+        <!--remove filter, production properties shall not be used here-->
         <filters>
             <filter>deploy/windows-native/production.application.properties</filter>
         </filters>
         <resources>
-            <resource>
-                <directory>src/main/resources-filtered</directory>
-                <includes>
-                    <include>log4j2.properties</include>
-                </includes>
-                <filtering>true</filtering>
-            </resource>
+            <!--<resource>-->
+                <!--<directory>src/main/resources-filtered</directory>-->
+                <!--<includes>-->
+                    <!--<include>log4j2.properties</include>-->
+                <!--</includes>-->
+                <!--<filtering>true</filtering>-->
+            <!--</resource>-->
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>true</filtering>
                 <excludes>
                     <exclude>logback-spring.xml</exclude>
+                    <exclude>application.properties</exclude>
                     <exclude>fonts/*</exclude>
                 </excludes>
             </resource>
@@ -357,6 +359,7 @@
                                     <filtering>true</filtering>
                                     <includes>
                                         <include>production.application.properties</include>
+                                        <include>production.log4j2.properties</include>
                                         <include>run_instructions.md</include>
                                         <include>easymanage.bat</include>
                                         <include>start.bat</include>
@@ -684,6 +687,7 @@
                                             <bind>
                                                 <volume>${project.basedir}/logs:/home/container/logs</volume>
                                                 <volume>${project.basedir}/deploy/docker-on-linux/production.application.properties:/home/container/config/application.properties</volume>
+                                                <volume>${project.basedir}/deploy/docker-on-linux/production.log4j2.properties:/home/container/config/log4j2.properties</volume>
                                             </bind>
                                         </volumes>
                                     </run>
