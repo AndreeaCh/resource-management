@@ -1,14 +1,7 @@
 package com.resource.management.resource.service;
 
-import com.resource.management.resource.model.Equipment;
-import com.resource.management.resource.model.Resource;
-import com.resource.management.resource.model.ResourceLog;
-import com.resource.management.resource.model.ResourceStatus;
-import com.resource.management.resource.model.ResourceType;
-import com.resource.management.resource.model.SubUnit;
-import com.resource.management.resource.model.SubUnitsRepository;
-import com.resource.management.resource.model.configuration.SubUnitsConfiguration;
-import com.resource.management.resource.model.configuration.SubUnitsConfigurationRepository;
+import static com.resource.management.resource.model.configuration.SubUnitsConfiguration.ID;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -19,6 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -28,7 +22,15 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.resource.management.resource.model.configuration.SubUnitsConfiguration.ID;
+import com.resource.management.resource.model.Equipment;
+import com.resource.management.resource.model.Resource;
+import com.resource.management.resource.model.ResourceLog;
+import com.resource.management.resource.model.ResourceStatus;
+import com.resource.management.resource.model.ResourceType;
+import com.resource.management.resource.model.SubUnit;
+import com.resource.management.resource.model.SubUnitsRepository;
+import com.resource.management.resource.model.configuration.SubUnitsConfiguration;
+import com.resource.management.resource.model.configuration.SubUnitsConfigurationRepository;
 
 @Service
 public class SubUnitsService {
@@ -65,9 +67,12 @@ public class SubUnitsService {
     public List<SubUnit> updateSubUnitsOrder(final List<String> subUnitIds) {
         List<SubUnit> subUnits = repository.findAll();
         configurationRepository.save(new SubUnitsConfiguration(ID, subUnitIds));
-        return subUnits.stream()
-                       .sorted(subUnitsOrdering(subUnitIds))
-                       .collect(Collectors.toList());
+        final List<SubUnit> orderedSubUnits = subUnits.stream()
+              .sorted( subUnitsOrdering( subUnitIds ) )
+              .collect( Collectors.toList() );
+        repository.deleteAll();
+        repository.saveAll( orderedSubUnits );
+        return orderedSubUnits;
     }
 
     @Transactional
