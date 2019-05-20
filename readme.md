@@ -2,7 +2,7 @@
 
 ## Development info - Running the application
 * Install and start MongoDB
-* Run fillDb.bat script to import some test data to MongoDB (Example: fillDb.bat C:\Program Files\MongoDB\Server\4.0\bin)
+* Run fillDb.bat script to import some test data to MongoDB (Example: fillDb.bat "C:\Program Files\MongoDB\Server\4.0\bin")
 * Make your code changes
 * Run a mvn clean install
 * Run the deploy.bat script
