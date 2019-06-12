@@ -13,7 +13,6 @@ public class Services
    {
       return new Service( UUID.randomUUID().toString(), RandomStringUtils.randomAlphabetic( 1, 100 ),
             RandomStringUtils.randomAlphabetic( 1, 100 ), RandomStringUtils.randomAlphabetic( 1, 100 ),
-            RandomStringUtils.randomAlphabetic( 1, 100 ), RandomStringUtils.randomAlphabetic( 1, 100 ),
-            Instant.now().toString() );
+            RandomStringUtils.randomAlphabetic( 1, 100 ), "TODAY", Instant.now().toString() );
    }
 }

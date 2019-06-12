@@ -15,14 +15,21 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Service {
+public class Service
+{
    @Id
    private String id;
+
    private String name;
+
    private String title;
+
    private String role;
+
    private String contact;
+
    private String day;
+
    @JsonIgnore
    private String lastUpdate;
 

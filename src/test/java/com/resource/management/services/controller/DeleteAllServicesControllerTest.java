@@ -82,7 +82,7 @@ public class DeleteAllServicesControllerTest
       //given
       when( this.repository.findAll() ).thenReturn( Collections.emptyList() );
 
-      final DeleteAllServicesRequest request = new DeleteAllServicesRequest();
+      final DeleteAllServicesRequest request = new DeleteAllServicesRequest( "TODAY" );
 
       //when
       final ServicesListUpdatedNotification notification = this.sut.handle( request );
@@ -91,8 +91,8 @@ public class DeleteAllServicesControllerTest
       final ArgumentCaptor<LastUpdatedTimestamp> captor = ArgumentCaptor.forClass( LastUpdatedTimestamp.class );
       verify( this.timestampRepository ).save( captor.capture() );
       final LastUpdatedTimestamp timestamp = captor.getValue();
-      assertThat( timestamp.getId(), equalTo( "timeStamp" ) );
+      assertThat( timestamp.getId(), equalTo( "timeStampToday" ) );
       assertThat( timestamp.getTimeStamp(), notNullValue() );
-      assertThat( notification.getLastUpdate(), equalTo( timestamp.getTimeStamp() ) );
+      assertThat( notification.getLastUpdateToday(), equalTo( timestamp.getTimeStamp() ) );
    }
 }

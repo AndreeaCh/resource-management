@@ -9,6 +9,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class DeleteServiceRequest {
-    private String id;
+public class DeleteServiceRequest
+{
+   private String id;
 }

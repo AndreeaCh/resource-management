@@ -10,8 +10,6 @@ import org.springframework.stereotype.Controller;
 
 import com.resource.management.api.services.AddServiceRequest;
 import com.resource.management.api.services.ServicesListUpdatedNotification;
-import com.resource.management.services.model.LastUpdatedTimestamp;
-import com.resource.management.services.model.LastUpdatedTimestampRepository;
 import com.resource.management.services.model.Service;
 import com.resource.management.services.model.ServiceRepository;
 
@@ -22,7 +20,7 @@ public class AddServiceController
    private ServiceRepository repository;
 
    @Autowired
-   private LastUpdatedTimestampRepository timestampRepository;
+   private LastUpdatedTimestampService lastUpdatedTimestampService;
 
 
    @MessageMapping("/addService")
@@ -34,10 +32,6 @@ public class AddServiceController
                   request.getContact(), request.getDay(), Instant.now().toString() );
       this.repository.save( service );
 
-      final LastUpdatedTimestamp lastUpdatedTimestamp =
-            new LastUpdatedTimestamp( "timeStamp", Instant.now().toString() );
-      this.timestampRepository.save( lastUpdatedTimestamp );
-
-      return new ServicesListUpdatedNotification( this.repository.findAll(), lastUpdatedTimestamp.getTimeStamp() );
+      return this.lastUpdatedTimestampService.getLastUpdatedNotification( request.getDay() );
    }
 }
