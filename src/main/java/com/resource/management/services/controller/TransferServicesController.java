@@ -42,8 +42,7 @@ public class TransferServicesController
 
       final LastUpdatedTimestamp timestampToday =
             new LastUpdatedTimestamp( "timeStampToday", Instant.now().toString() );
-      final LastUpdatedTimestamp timestampTomorrow =
-            this.timestampRepository.findById( "timeStampTomorrow" ).orElse( null );
+      final LastUpdatedTimestamp timestampTomorrow = this.timestampRepository.getTomorrowTimestamp();
       this.timestampRepository.save( timestampToday );
 
       return new ServicesListUpdatedNotification( this.repository.findAll(), timestampToday.getTimeStamp(),

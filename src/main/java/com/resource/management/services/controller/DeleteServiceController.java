@@ -35,7 +35,6 @@ public class DeleteServiceController
 
       this.repository.deleteById( request.getId() );
 
-      System.out.println( "------------------DEBUGFGFGDFGFDGFDGFDGFD:--------- " + day );
       return this.lastUpdatedTimestampService.getLastUpdatedNotification( day );
    }
 }

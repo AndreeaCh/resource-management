@@ -13,6 +13,10 @@ import com.resource.management.services.model.ServiceRepository;
 @Service
 public class LastUpdatedTimestampService
 {
+   private static final String TIME_STAMP_TOMORROW = "timeStampTomorrow";
+
+   private static final String TIME_STAMP_TODAY = "timeStampToday";
+
    @Autowired
    private ServiceRepository repository;
 
@@ -24,22 +28,21 @@ public class LastUpdatedTimestampService
    {
       LastUpdatedTimestamp timestampToday = null;
       LastUpdatedTimestamp timestampTomorrow = null;
-      if ( "TODAY".equals( day ) )
+      switch ( day )
       {
-         timestampToday = new LastUpdatedTimestamp( "timeStampToday", Instant.now().toString() );
-         timestampTomorrow = this.timestampRepository.findById( "timeStampTomorrow" ).orElse( null );
-         this.timestampRepository.save( timestampToday );
-      }
-      else if ( "TOMORROW".equals( day ) )
-      {
-         timestampToday = this.timestampRepository.findById( "timeStampToday" ).orElse( null );
-         timestampTomorrow = new LastUpdatedTimestamp( "timeStampTomorrow", Instant.now().toString() );
-         this.timestampRepository.save( timestampTomorrow );
-      }
-      else
-      {
-         timestampToday = this.timestampRepository.findById( "timeStampToday" ).orElse( null );
-         timestampTomorrow = this.timestampRepository.findById( "timeStampTomorrow" ).orElse( null );
+         case "TODAY":
+            timestampToday = new LastUpdatedTimestamp( TIME_STAMP_TODAY, Instant.now().toString() );
+            timestampTomorrow = this.timestampRepository.getTomorrowTimestamp();
+            this.timestampRepository.save( timestampToday );
+            break;
+         case "TOMORROW":
+            timestampToday = this.timestampRepository.getTodaysTimestamp();
+            timestampTomorrow = new LastUpdatedTimestamp( TIME_STAMP_TOMORROW, Instant.now().toString() );
+            this.timestampRepository.save( timestampTomorrow );
+            break;
+         default:
+            timestampToday = this.timestampRepository.getTodaysTimestamp();
+            timestampTomorrow = this.timestampRepository.getTomorrowTimestamp();
       }
 
       return new ServicesListUpdatedNotification( this.repository.findAll(),

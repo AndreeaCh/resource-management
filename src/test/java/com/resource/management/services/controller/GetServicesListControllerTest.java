@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 
 import java.time.Instant;
 import java.util.Collections;
-import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,8 +51,8 @@ public class GetServicesListControllerTest
       final Service existingService = Services.api();
       when( this.repository.findAll() ).thenReturn( Collections.singletonList( existingService ) );
       final String timeStamp = Instant.now().toString();
-      when( this.timestampRepository.findById( "timeStampToday" ) )
-            .thenReturn( Optional.of( new LastUpdatedTimestamp( "timeStampToday", timeStamp ) ) );
+      when( this.timestampRepository.getTodaysTimestamp() )
+            .thenReturn( new LastUpdatedTimestamp( "timeStampToday", timeStamp ) );
 
       //when
       final ServicesListUpdatedNotification notification = this.sut.handle();

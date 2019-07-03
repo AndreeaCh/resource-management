@@ -17,7 +17,15 @@
 package com.resource.management.services.model;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.Query;
 
 public interface LastUpdatedTimestampRepository extends MongoRepository<LastUpdatedTimestamp, String>
 {
+
+   @Query("{ '_id' : 'timeStampToday' }")
+   LastUpdatedTimestamp getTodaysTimestamp();
+
+
+   @Query("{ '_id' : 'timeStampTomorrow' }")
+   LastUpdatedTimestamp getTomorrowTimestamp();
 }

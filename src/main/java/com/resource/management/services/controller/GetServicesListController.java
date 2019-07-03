@@ -28,12 +28,8 @@ public class GetServicesListController
    {
       final List<Service> services = this.repository.findAll();
 
-      final ServicesListUpdatedNotification notification;
-
-      final LastUpdatedTimestamp timestampToday =
-            this.timestampRepository.findById( "timeStampToday" ).orElse( null );
-      final LastUpdatedTimestamp timestampTomorrow =
-            this.timestampRepository.findById( "timeStampTomorrow" ).orElse( null );
+      final LastUpdatedTimestamp timestampToday = this.timestampRepository.getTodaysTimestamp();
+      final LastUpdatedTimestamp timestampTomorrow = this.timestampRepository.getTomorrowTimestamp();
 
       return new ServicesListUpdatedNotification( services,
             timestampToday == null ? Instant.now().toString() : timestampToday.getTimeStamp(),
