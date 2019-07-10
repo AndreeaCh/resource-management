@@ -44,7 +44,7 @@ public class UpdateServiceController
       }
       else
       {
-         notification = this.lastUpdatedTimestampService.getLastUpdatedNotification( null );
+         notification = this.lastUpdatedTimestampService.getLastUpdatedNotification();
       }
 
       return notification;

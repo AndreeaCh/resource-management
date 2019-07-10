@@ -23,8 +23,13 @@ public class DeleteAllServicesController
    @SendTo("/topic/services")
    public ServicesListUpdatedNotification handle( final DeleteAllServicesRequest request )
    {
-      this.repository.deleteByDay( request.getServicesDay() );
+      if ( request.getServicesDay() != null )
+      {
+         this.repository.deleteByDay( request.getServicesDay() );
 
-      return this.lastUpdatedTimestampService.getLastUpdatedNotification( request.getServicesDay() );
+         return this.lastUpdatedTimestampService.getLastUpdatedNotification( request.getServicesDay() );
+      }
+
+      return this.lastUpdatedTimestampService.getLastUpdatedNotification();
    }
 }

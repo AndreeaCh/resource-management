@@ -13,9 +13,6 @@ import com.resource.management.services.model.ServiceRepository;
 @Service
 public class LastUpdatedTimestampService
 {
-   private static final String TIME_STAMP_TOMORROW = "timeStampTomorrow";
-
-   private static final String TIME_STAMP_TODAY = "timeStampToday";
 
    @Autowired
    private ServiceRepository repository;
@@ -31,19 +28,28 @@ public class LastUpdatedTimestampService
       switch ( day )
       {
          case "TODAY":
-            timestampToday = new LastUpdatedTimestamp( TIME_STAMP_TODAY, Instant.now().toString() );
+            timestampToday = this.timestampRepository.saveTodaysTimestamp();
             timestampTomorrow = this.timestampRepository.getTomorrowTimestamp();
-            this.timestampRepository.save( timestampToday );
             break;
          case "TOMORROW":
             timestampToday = this.timestampRepository.getTodaysTimestamp();
-            timestampTomorrow = new LastUpdatedTimestamp( TIME_STAMP_TOMORROW, Instant.now().toString() );
-            this.timestampRepository.save( timestampTomorrow );
+            timestampTomorrow = this.timestampRepository.saveTomorrowsTimestamp();
             break;
          default:
             timestampToday = this.timestampRepository.getTodaysTimestamp();
             timestampTomorrow = this.timestampRepository.getTomorrowTimestamp();
       }
+
+      return new ServicesListUpdatedNotification( this.repository.findAll(),
+            timestampToday == null ? Instant.now().toString() : timestampToday.getTimeStamp(),
+            timestampTomorrow == null ? Instant.now().toString() : timestampTomorrow.getTimeStamp() );
+   }
+
+
+   public ServicesListUpdatedNotification getLastUpdatedNotification()
+   {
+      final LastUpdatedTimestamp timestampToday = this.timestampRepository.getTodaysTimestamp();
+      final LastUpdatedTimestamp timestampTomorrow = this.timestampRepository.getTomorrowTimestamp();
 
       return new ServicesListUpdatedNotification( this.repository.findAll(),
             timestampToday == null ? Instant.now().toString() : timestampToday.getTimeStamp(),

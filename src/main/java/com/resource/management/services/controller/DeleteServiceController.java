@@ -31,10 +31,11 @@ public class DeleteServiceController
       if ( service.isPresent() )
       {
          day = service.get().getDay();
+         this.repository.deleteById( request.getId() );
+
+         return this.lastUpdatedTimestampService.getLastUpdatedNotification( day );
       }
 
-      this.repository.deleteById( request.getId() );
-
-      return this.lastUpdatedTimestampService.getLastUpdatedNotification( day );
+      return this.lastUpdatedTimestampService.getLastUpdatedNotification();
    }
 }

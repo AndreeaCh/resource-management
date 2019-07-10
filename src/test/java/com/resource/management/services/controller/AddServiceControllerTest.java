@@ -7,6 +7,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.Instant;
 import java.util.Arrays;
 
 import org.junit.Test;
@@ -104,11 +105,10 @@ public class AddServiceControllerTest
 
       //when
       final ServicesListUpdatedNotification notification = this.sut.handle( request );
+      final LastUpdatedTimestamp timestamp = new LastUpdatedTimestamp( "timeStampToday", Instant.now().toString() );
+      when( this.timestampRepository.saveTodaysTimestamp() ).thenReturn( timestamp );
 
       //then
-      final ArgumentCaptor<LastUpdatedTimestamp> captor = ArgumentCaptor.forClass( LastUpdatedTimestamp.class );
-      verify( this.timestampRepository ).save( captor.capture() );
-      final LastUpdatedTimestamp timestamp = captor.getValue();
       assertThat( timestamp.getId(), equalTo( "timeStampToday" ) );
       assertThat( timestamp.getTimeStamp(), notNullValue() );
       assertThat( notification.getLastUpdateToday(), equalTo( timestamp.getTimeStamp() ) );
