@@ -7,11 +7,11 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.Instant;
 import java.util.Collections;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -81,18 +81,17 @@ public class DeleteAllServicesControllerTest
    {
       //given
       when( this.repository.findAll() ).thenReturn( Collections.emptyList() );
-
-      final DeleteAllServicesRequest request = new DeleteAllServicesRequest();
+      final DeleteAllServicesRequest request = new DeleteAllServicesRequest( "TODAY" );
 
       //when
       final ServicesListUpdatedNotification notification = this.sut.handle( request );
+      final String now = Instant.now().toString();
+      final LastUpdatedTimestamp timestamp = new LastUpdatedTimestamp( "timeStampToday", now );
+      when( this.timestampRepository.saveTodaysTimestamp() ).thenReturn( timestamp );
 
       //then
-      final ArgumentCaptor<LastUpdatedTimestamp> captor = ArgumentCaptor.forClass( LastUpdatedTimestamp.class );
-      verify( this.timestampRepository ).save( captor.capture() );
-      final LastUpdatedTimestamp timestamp = captor.getValue();
-      assertThat( timestamp.getId(), equalTo( "timeStamp" ) );
+      assertThat( timestamp.getId(), equalTo( "timeStampToday" ) );
       assertThat( timestamp.getTimeStamp(), notNullValue() );
-      assertThat( notification.getLastUpdate(), equalTo( timestamp.getTimeStamp() ) );
+      assertThat( notification.getLastUpdateToday(), equalTo( now ) );
    }
 }

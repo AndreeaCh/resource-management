@@ -7,11 +7,13 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.Instant;
 import java.util.Collections;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -27,76 +29,81 @@ import com.resource.management.services.model.ServiceRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class DeleteServiceControllerTest {
-    @MockBean
-    private ServiceRepository repository;
+public class DeleteServiceControllerTest
+{
+   @MockBean
+   private ServiceRepository repository;
 
-    @MockBean
-    private LastUpdatedTimestampRepository timestampRepository;
+   @MockBean
+   private LastUpdatedTimestampRepository timestampRepository;
+
+   @Autowired
+   private DeleteServiceController sut;
 
 
-    @Autowired
-    private DeleteServiceController sut;
+   @Test
+   public void contextLoads() throws Exception
+   {
+      assertThat( this.sut, notNullValue() );
+   }
 
-    @Test
-    public void contextLoads() throws Exception {
-        assertThat(this.sut, notNullValue());
-    }
 
-    @Test
-    public void handleDeleteServiceRequest_sut_callsDeleteOnRepository() {
-        //given
-        Service existingService = Services.api();
-        Service deletedService = Services.api();
-        when(repository.findAll()).thenReturn(Collections.singletonList(existingService));
+   @Test
+   public void handleDeleteServiceRequest_sut_callsDeleteOnRepository()
+   {
+      //given
+      final Service existingService = Services.api();
+      final Service deletedService = Services.api();
+      when( this.repository.findById( ArgumentMatchers.anyString() ) ).thenReturn( Optional.of( existingService ) );
 
-        DeleteServiceRequest request = new DeleteServiceRequest(deletedService.getId());
+      final DeleteServiceRequest request = new DeleteServiceRequest( deletedService.getId() );
 
-        //when
-        this.sut.handle(request);
+      //when
+      this.sut.handle( request );
 
-        //then
-        verify(repository).deleteById(deletedService.getId().toString());
-    }
+      //then
+      verify( this.repository ).deleteById( deletedService.getId().toString() );
+   }
 
-    @Test
-    public void handleDeleteServiceRequest_sut_publishesNotification() {
-        //given
-        Service existingService = Services.api();
-        Service deletedService = Services.api();
-        when(repository.findAll()).thenReturn(Collections.singletonList(existingService));
 
-        DeleteServiceRequest request = new DeleteServiceRequest(deletedService.getId());
+   @Test
+   public void handleDeleteServiceRequest_sut_publishesNotification()
+   {
+      //given
+      final Service existingService = Services.api();
+      final Service deletedService = Services.api();
+      when( this.repository.findAll() ).thenReturn( Collections.singletonList( existingService ) );
 
-        //when
-        ServicesListUpdatedNotification notification = this.sut.handle(request);
+      final DeleteServiceRequest request = new DeleteServiceRequest( deletedService.getId() );
 
-        //then
-        assertThat(
-                "Expected service to be deleted.",
-                notification.getServices(),
-                containsInAnyOrder(existingService));
-    }
+      //when
+      final ServicesListUpdatedNotification notification = this.sut.handle( request );
 
-    @Test
-    public void handleDeleteServiceRequest_sut_callsSaveOnTimestampRepositoryAndPublishesTimestampInNotification()
-    {
-        //given
-        Service existingService = Services.api();
-        Service deletedService = Services.api();
-        when(repository.findAll()).thenReturn(Collections.singletonList(existingService));
+      //then
+      assertThat( "Expected service to be deleted.", notification.getServices(),
+            containsInAnyOrder( existingService ) );
+   }
 
-        DeleteServiceRequest request = new DeleteServiceRequest(deletedService.getId());
 
-        //when
-        ServicesListUpdatedNotification notification = this.sut.handle(request);
+   @Test
+   public void handleDeleteServiceRequest_sut_callsSaveOnTimestampRepositoryAndPublishesTimestampInNotification()
+   {
+      //given
+      final Service existingService = Services.api();
 
-        //then
-        ArgumentCaptor<LastUpdatedTimestamp> captor = ArgumentCaptor.forClass( LastUpdatedTimestamp.class );
-        verify( timestampRepository ).save( captor.capture() );
-        LastUpdatedTimestamp timestamp = captor.getValue();
-        assertThat( timestamp.getId(), equalTo( "timeStamp" ) );
-        assertThat( timestamp.getTimeStamp(), notNullValue() );
-        assertThat( notification.getLastUpdate(), equalTo( timestamp.getTimeStamp() ) );
-    }
+      final Service deletedService = Services.api();
+      when( this.repository.findById( ArgumentMatchers.anyString() ) ).thenReturn( Optional.of( existingService ) );
+
+      final DeleteServiceRequest request = new DeleteServiceRequest( deletedService.getId() );
+
+      //when
+      final ServicesListUpdatedNotification notification = this.sut.handle( request );
+      final LastUpdatedTimestamp timestamp = new LastUpdatedTimestamp( "timeStampToday", Instant.now().toString() );
+      when( this.timestampRepository.saveTodaysTimestamp() ).thenReturn( timestamp );
+
+      //then
+      assertThat( timestamp.getId(), equalTo( "timeStampToday" ) );
+      assertThat( timestamp.getTimeStamp(), notNullValue() );
+      assertThat( notification.getLastUpdateToday(), equalTo( timestamp.getTimeStamp() ) );
+   }
 }

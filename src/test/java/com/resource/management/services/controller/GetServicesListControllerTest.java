@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 
 import java.time.Instant;
 import java.util.Collections;
-import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,39 +25,41 @@ import com.resource.management.services.model.ServiceRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class GetServicesListControllerTest {
-    @MockBean
-    private ServiceRepository repository;
+public class GetServicesListControllerTest
+{
+   @MockBean
+   private ServiceRepository repository;
 
-    @MockBean
-    private LastUpdatedTimestampRepository timestampRepository;
+   @MockBean
+   private LastUpdatedTimestampRepository timestampRepository;
 
-    @Autowired
-    private GetServicesListController sut;
+   @Autowired
+   private GetServicesListController sut;
 
-    @Test
-    public void contextLoads() throws Exception {
-        assertThat(this.sut, notNullValue());
-    }
 
-    @Test
-    public void handleGetServicesListRequest_sut_publishesNotification() {
-        //given
-        Service existingService = Services.api();
-        when(repository.findAll()).thenReturn(Collections.singletonList(existingService));
-        final String timeStamp = Instant.now().toString();
-        when( timestampRepository.findById( "timeStamp" ) ).thenReturn(
-              Optional.of( new LastUpdatedTimestamp( "timeStamp",
-                    timeStamp ) ) );
+   @Test
+   public void contextLoads() throws Exception
+   {
+      assertThat( this.sut, notNullValue() );
+   }
 
-        //when
-        ServicesListUpdatedNotification notification = this.sut.handle();
 
-        //then
-        assertThat(
-                "Expected services to be in there.",
-                notification.getServices(),
-                containsInAnyOrder(existingService));
-        assertThat( "Expected timestamp.", notification.getLastUpdate(), equalTo( timeStamp ) );
-    }
+   @Test
+   public void handleGetServicesListRequest_sut_publishesNotification()
+   {
+      //given
+      final Service existingService = Services.api();
+      when( this.repository.findAll() ).thenReturn( Collections.singletonList( existingService ) );
+      final String timeStamp = Instant.now().toString();
+      when( this.timestampRepository.getTodaysTimestamp() )
+            .thenReturn( new LastUpdatedTimestamp( "timeStampToday", timeStamp ) );
+
+      //when
+      final ServicesListUpdatedNotification notification = this.sut.handle();
+
+      //then
+      assertThat( "Expected services to be in there.", notification.getServices(),
+            containsInAnyOrder( existingService ) );
+      assertThat( "Expected timestamp.", notification.getLastUpdateToday(), equalTo( timeStamp ) );
+   }
 }

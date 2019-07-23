@@ -1,7 +1,7 @@
 package com.resource.management.services.controller;
 
+import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.annotation.SubscribeMapping;
@@ -14,24 +14,25 @@ import com.resource.management.services.model.Service;
 import com.resource.management.services.model.ServiceRepository;
 
 @Controller
-public class GetServicesListController {
-    @Autowired
-    private ServiceRepository repository;
+public class GetServicesListController
+{
+   @Autowired
+   private ServiceRepository repository;
 
-    @Autowired
-    private LastUpdatedTimestampRepository timestampRepository;
+   @Autowired
+   private LastUpdatedTimestampRepository timestampRepository;
 
-    @SubscribeMapping("/services")
-    public ServicesListUpdatedNotification handle() {
-        List<Service> services = repository.findAll();
 
-        final ServicesListUpdatedNotification notification;
-        final Optional<LastUpdatedTimestamp> timestampOptional = timestampRepository.findById( "timeStamp" );
-        notification = timestampOptional.map( lastUpdatedTimestamp -> new ServicesListUpdatedNotification(
-              services, lastUpdatedTimestamp.getTimeStamp() ) ).orElseGet( () -> new ServicesListUpdatedNotification(
-              services, null ) );
+   @SubscribeMapping("/services")
+   public ServicesListUpdatedNotification handle()
+   {
+      final List<Service> services = this.repository.findAll();
 
-        return notification;
+      final LastUpdatedTimestamp timestampToday = this.timestampRepository.getTodaysTimestamp();
+      final LastUpdatedTimestamp timestampTomorrow = this.timestampRepository.getTomorrowTimestamp();
 
-    }
+      return new ServicesListUpdatedNotification( services,
+            timestampToday == null ? Instant.now().toString() : timestampToday.getTimeStamp(),
+            timestampTomorrow == null ? Instant.now().toString() : timestampTomorrow.getTimeStamp() );
+   }
 }
