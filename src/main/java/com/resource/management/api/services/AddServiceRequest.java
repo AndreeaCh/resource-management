@@ -9,10 +9,17 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class AddServiceRequest {
-    private String name;
-    private String title;
-    private String role;
-    private String contact;
-    private String day;
+public class AddServiceRequest
+{
+   private String name;
+
+   private String title;
+
+   private String role;
+
+   private String subUnit;
+
+   private String contact;
+
+   private String day;
 }

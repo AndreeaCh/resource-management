@@ -26,6 +26,8 @@ public class Service
 
    private String role;
 
+   private String subUnit;
+
    private String contact;
 
    private String day;
@@ -36,7 +38,7 @@ public class Service
 
    public Service serviceWithDay( final String day )
    {
-      return new Service( UUID.randomUUID().toString(), this.name, this.title, this.role, this.contact, day,
-            this.lastUpdate );
+      return new Service( UUID.randomUUID().toString(), this.name, this.title, this.role, this.subUnit, this.contact,
+            day, this.lastUpdate );
    }
 }

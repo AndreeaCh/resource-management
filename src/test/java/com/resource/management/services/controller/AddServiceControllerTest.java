@@ -56,7 +56,7 @@ public class AddServiceControllerTest
       when( this.repository.findAll() ).thenReturn( Arrays.asList( existingService, addedService ) );
       final AddServiceRequest request =
             new AddServiceRequest( addedService.getName(), addedService.getTitle(), addedService.getRole(),
-                  addedService.getContact(), addedService.getDay() );
+                  addedService.getSubUnit(), addedService.getContact(), addedService.getDay() );
 
       //when
       this.sut.handle( request );
@@ -68,6 +68,7 @@ public class AddServiceControllerTest
       assertThat( actualService.getName(), equalTo( addedService.getName() ) );
       assertThat( actualService.getTitle(), equalTo( addedService.getTitle() ) );
       assertThat( actualService.getRole(), equalTo( addedService.getRole() ) );
+      assertThat( actualService.getSubUnit(), equalTo( addedService.getSubUnit() ) );
       assertThat( actualService.getContact(), equalTo( addedService.getContact() ) );
    }
 
@@ -81,7 +82,7 @@ public class AddServiceControllerTest
       when( this.repository.findAll() ).thenReturn( Arrays.asList( existingService, addedService ) );
       final AddServiceRequest request =
             new AddServiceRequest( addedService.getName(), addedService.getTitle(), addedService.getRole(),
-                  addedService.getContact(), addedService.getDay() );
+                  addedService.getSubUnit(), addedService.getContact(), addedService.getDay() );
 
       //when
       final ServicesListUpdatedNotification notification = this.sut.handle( request );
@@ -101,7 +102,7 @@ public class AddServiceControllerTest
       when( this.repository.findAll() ).thenReturn( Arrays.asList( existingService, addedService ) );
       final AddServiceRequest request =
             new AddServiceRequest( addedService.getName(), addedService.getTitle(), addedService.getRole(),
-                  addedService.getContact(), addedService.getDay() );
+                  addedService.getSubUnit(), addedService.getContact(), addedService.getDay() );
 
       //when
       final ServicesListUpdatedNotification notification = this.sut.handle( request );

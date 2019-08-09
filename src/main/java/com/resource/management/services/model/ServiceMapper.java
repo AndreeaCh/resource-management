@@ -11,6 +11,7 @@ public class ServiceMapper
       internalService.setName( externalService.getName() );
       internalService.setTitle( externalService.getTitle() );
       internalService.setRole( externalService.getRole() );
+      internalService.setSubUnit( externalService.getSubUnit() );
       internalService.setContact( externalService.getContact() );
       internalService.setLastUpdate( lastUpdate );
       internalService.setDay( externalService.getDay() );
@@ -25,6 +26,7 @@ public class ServiceMapper
       externalService.setId( internalService.getId() );
       externalService.setTitle( internalService.getTitle() );
       externalService.setRole( internalService.getRole() );
+      externalService.setSubUnit( internalService.getSubUnit() );
       externalService.setContact( internalService.getContact() );
       externalService.setDay( internalService.getDay() );
       return externalService;
