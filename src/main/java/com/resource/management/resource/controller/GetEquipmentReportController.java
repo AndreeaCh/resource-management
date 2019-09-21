@@ -1,7 +1,8 @@
 package com.resource.management.resource.controller;
 
-import com.resource.management.management.vehicles.model.VehicleType;
+import com.resource.management.api.resources.lock.LockSubUnitRequest;
 import com.resource.management.management.vehicles.model.VehicleRepository;
+import com.resource.management.management.vehicles.model.VehicleType;
 import com.resource.management.management.vehicles.model.VehicleTypes;
 import com.resource.management.resource.model.SubUnit;
 import com.resource.management.resource.model.SubUnitsRepository;
@@ -18,7 +19,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import static com.resource.management.management.vehicles.model.VehicleTypes.ID;
@@ -27,6 +30,9 @@ import static com.resource.management.resource.service.EquipmentXlsCreator.EQUIP
 @Controller
 public class GetEquipmentReportController {
     private static final Logger LOG = LoggerFactory.getLogger(GetEquipmentReportController.class);
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
+
     @Autowired
     private SubUnitsRepository subUnitsRepository;
 
@@ -40,13 +46,16 @@ public class GetEquipmentReportController {
     private EquipmentXlsCreator xlsCreator;
 
     @MessageMapping("/getEquipmentReport")
-    @SendTo("/topic/equipmentReport")
-    public String getFile() {
+    public void handleGetEquipmentReportRequest(
+            @Payload final LockSubUnitRequest request,
+            final SimpMessageHeaderAccessor headerAccessor) {
         List<SubUnit> subUnits = subUnitsRepository.findAll();
         Optional<VehicleTypes> vehiclesOptional = vehicleRepository.findById(ID);
         List<VehicleType> vehicleTypeList = vehiclesOptional.map(vehicleTypes -> new ArrayList<>(vehicleTypes.getVehicleTypes())).orElseGet(ArrayList::new);
         xlsCreator.createXls(subUnits, vehicleTypeList);
-        return getXLSFileContentAsBase64();
+        String xlsFileContentAsBase64 = getXLSFileContentAsBase64();
+        messagingTemplate.convertAndSendToUser(
+                headerAccessor.getSessionId(), "/queue/equipmentReport", xlsFileContentAsBase64, headerAccessor.getMessageHeaders());
     }
 
     private String getXLSFileContentAsBase64() {
