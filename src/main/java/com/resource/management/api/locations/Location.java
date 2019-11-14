@@ -1,4 +1,6 @@
-package com.resource.management.api.resources;
+package com.resource.management.api.locations;
+
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 
@@ -11,10 +13,15 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class PointOfInterest
+public class Location
 {
    @Id
    private String id;
 
    private String name;
+
+   private Double[] coordinates;
+
+   private List<String> pointsOfInterest;
+
 }

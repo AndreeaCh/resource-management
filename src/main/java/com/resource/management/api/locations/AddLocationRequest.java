@@ -2,8 +2,6 @@ package com.resource.management.api.locations;
 
 import java.util.List;
 
-import com.resource.management.locations.model.PointOfInterest;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,5 +17,5 @@ public class AddLocationRequest
 
    private Double[] coordinates;
 
-   private List<PointOfInterest> pointsOfInterest;
+   private List<String> pointsOfInterest;
 }

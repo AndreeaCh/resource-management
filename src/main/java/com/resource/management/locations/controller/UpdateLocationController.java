@@ -1,6 +1,5 @@
 package com.resource.management.locations.controller;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,23 +24,16 @@ public class UpdateLocationController
    @SendTo("/topic/locations")
    public LocationsListUpdatedNotification handle( final UpdateLocationRequest request )
    {
-      LocationsListUpdatedNotification notification = null;
-      if ( request.getLocation() != null )
-      {
-         final Location updatedLocation = LocationMapper.toInternal( request.getLocation() );
+      final Optional<Location> locationOptional = this.repository.findById( request.getId() );
 
-         final Optional<Location> locationOptional = this.repository.findById( updatedLocation.getId() );
-         locationOptional.ifPresent( location ->
-         {
-            this.repository.save( updatedLocation );
-         } );
-         notification = new LocationsListUpdatedNotification( this.repository.findAll() );
-      }
-      else
+      locationOptional.ifPresent( location ->
       {
-         notification = new LocationsListUpdatedNotification( new ArrayList() );
-      }
+         final Location updatedLocation =
+               LocationMapper.toInternal( new com.resource.management.api.locations.Location( request.getId(),
+                     request.getName(), request.getCoordinates(), request.getPointsOfInterest() ) );
+         this.repository.save( updatedLocation );
+      } );
 
-      return notification;
+      return new LocationsListUpdatedNotification( this.repository.findAll() );
    }
 }
