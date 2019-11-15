@@ -1,4 +1,4 @@
-package com.resource.management.locations.model;
+package com.resource.management.api.locations;
 
 import java.util.List;
 

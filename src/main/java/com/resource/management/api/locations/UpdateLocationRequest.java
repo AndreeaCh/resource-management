@@ -1,6 +1,6 @@
 package com.resource.management.api.locations;
 
-import com.resource.management.api.resources.Location;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,5 +13,11 @@ import lombok.ToString;
 @ToString
 public class UpdateLocationRequest
 {
-   Location location;
+   private String id;
+
+   private String name;
+
+   private Double[] coordinates;
+
+   private List<String> pointsOfInterest;
 }
