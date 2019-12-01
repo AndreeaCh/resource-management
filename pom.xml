@@ -5,7 +5,7 @@
 
     <groupId>com.volunteering</groupId>
     <artifactId>resource-management</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>resource-management</name>
@@ -50,6 +50,10 @@
         <db.image.name>isu/${project.artifactId}-db</db.image.name>
         <db.image.alias>mongodb</db.image.alias>
         <db.docker.image.filename>${db.image.alias}-docker-image.tar.gz</db.docker.image.filename>
+
+        <auth.image.name>isu/${project.artifactId}-auth</auth.image.name>
+        <auth.image.alias>auth</auth.image.alias>
+        <auth.docker.image.filename>${auth.image.alias}-docker-image.tar.gz</auth.docker.image.filename>
 
         <version.docker-maven-plugin>0.25.0</version.docker-maven-plugin>
         <version.buildnumber-maven-plugin>1.4</version.buildnumber-maven-plugin>
@@ -238,6 +242,27 @@
                                     <classifier>bin</classifier>
                                     <overWrite>true</overWrite>
                                     <type>tar.gz</type>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy keycloak files</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${dockerOutputDirectory}/auth</outputDirectory>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>${frontend.groupId}</groupId>
+                                    <artifactId>${frontend.artifactId}</artifactId>
+                                    <version>${frontend.version}</version>
+                                    <classifier>bin</classifier>
+                                    <overWrite>true</overWrite>
+                                    <type>tar.gz</type>
+                                    <includes>realm-export.json</includes>
                                 </artifactItem>
                             </artifactItems>
                         </configuration>
@@ -443,6 +468,13 @@
                                         <dockerFileDir>${dockerOutputDirectory}/db</dockerFileDir>
                                     </build>
                                 </image>
+                                <image>
+                                    <alias>${auth.image.alias}</alias>
+                                    <name>${auth.image.name}</name>
+                                    <build>
+                                        <dockerFileDir>${dockerOutputDirectory}/auth</dockerFileDir>
+                                    </build>
+                                </image>
                             </images>
                         </configuration>
                     </execution>
@@ -490,6 +522,22 @@
                                 <image>
                                     <alias>${db.image.alias}</alias>
                                     <name>${db.image.name}</name>
+                                </image>
+                            </images>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>save auth docker image</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>save</goal>
+                        </goals>
+                        <configuration>
+                            <saveFile>${project.build.directory}/${auth.docker.image.filename}</saveFile>
+                            <images>
+                                <image>
+                                    <alias>${auth.image.alias}</alias>
+                                    <name>${auth.image.name}</name>
                                 </image>
                             </images>
                         </configuration>
@@ -603,7 +651,7 @@
       <profile>
             <id>linux</id>
            <properties>
-               <disable.docker.plugin>true</disable.docker.plugin>
+               <disable.docker.plugin>false</disable.docker.plugin>
            </properties>
            <activation>
                 <os>
@@ -647,6 +695,51 @@
                                     </run>
                                 </image>
                             </images>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>auth</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <version>${version.docker-maven-plugin}</version>
+                        <configuration>
+                           <skip>${disable.docker.plugin}</skip>
+                           <verbose>true</verbose>
+                           <logStdout>true</logStdout>
+                           <images>
+                               <image>
+                                   <name>${auth.image.name}</name>
+                                   <alias>${auth.image.alias}</alias>
+                                   <run>
+                                       <namingStrategy>alias</namingStrategy>
+                                       <hostname>${env.HOSTNAME}</hostname>
+                                       <ports>
+                                            <port>8180:8080</port>
+                                            <port>9990:9990</port>
+                                       </ports>
+                                       <restartPolicy>
+                                           <name>on-failure</name>
+                                           <retry>3</retry>
+                                       </restartPolicy>
+                                       <memory>1024000000</memory>
+                                       <memorySwap>-1</memorySwap>
+                                       <extraHosts>
+                                           <host>localhosts:127.0.0.1</host>
+                                       </extraHosts>
+                                       <env>
+                                           <KEYCLOAK_USER>admin</KEYCLOAK_USER>
+                                           <KEYCLOAK_PASSWORD>admin</KEYCLOAK_PASSWORD>
+                                           <KEYCLOAK_IMPORT>/tmp/realm-export.json</KEYCLOAK_IMPORT>
+                                       </env>
+                                   </run>
+                               </image>
+                           </images>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -711,9 +804,9 @@
                                         <extraHosts>
                                             <host>localhosts:127.0.0.1</host>
                                         </extraHosts>
-                                       <env>
-                                           <SERVER_ADDRESS>localhost</SERVER_ADDRESS>
-                                       </env>
+                                        <env>
+                                            <SERVER_ADDRESS>localhost</SERVER_ADDRESS>
+                                        </env>
                                         <volumes>
                                             <bind>
                                                 <volume>${project.basedir}/logs:/home/container/logs</volume>

@@ -85,7 +85,7 @@ Section "-Meta setup"
 
    SectionIn RO
 
-   StrCpy $_INSTALL_VERSION '0.0.1-SNAPSHOT'
+   StrCpy $_INSTALL_VERSION '0.0.2-SNAPSHOT'
    StrCpy $_HTTP_SERVER_VERSION '0.11.1'
 
    StrCpy $_SCRIPTS_DIR $INSTDIR\scripts
