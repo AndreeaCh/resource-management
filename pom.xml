@@ -247,7 +247,7 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>copy keycloak files</id>
+                        <id>copy keycloak realm files for docker</id>
                         <phase>package</phase>
                         <goals>
                             <goal>unpack</goal>
@@ -268,6 +268,27 @@
                         </configuration>
                     </execution>
                     <!--scope:windows-native-->
+                    <execution>
+                        <id>copy keycloak realm files for windows native</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${win.native.build.directory}/auth</outputDirectory>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>${frontend.groupId}</groupId>
+                                    <artifactId>${frontend.artifactId}</artifactId>
+                                    <version>${frontend.version}</version>
+                                    <classifier>bin</classifier>
+                                    <overWrite>true</overWrite>
+                                    <type>tar.gz</type>
+                                    <includes>realm-export.json</includes>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
                     <execution>
                         <id>copy backend assembly for windows native deploy</id>
                         <phase>install</phase>
@@ -311,6 +332,28 @@
                 <configuration>
                     <stripVersion>true</stripVersion>
                 </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>com.googlecode.maven-download-plugin</groupId>
+                <artifactId>download-maven-plugin</artifactId>
+                <version>1.4.2</version>
+                <executions>
+                    <execution>
+                        <id>fetch-keycloak-archive</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>https://downloads.jboss.org/keycloak/8.0.0/keycloak-8.0.0.zip</url>
+                            <!--<unpack>true</unpack>-->
+                            <outputDirectory>${win.native.source}</outputDirectory>
+                            <sha1>d07ae0afa4cb76fe96fd096bb52eab1fc7a043be</sha1>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
            <!--copy resource files-->
@@ -389,6 +432,13 @@
                                         <include>easymanage.bat</include>
                                         <include>start.bat</include>
                                         <include>stop.bat</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${win.native.source}</directory>
+                                    <targetPath>${win.native.build.directory}/auth</targetPath>
+                                    <includes>
+                                        <include>keycloak-8.0.0.zip</include>
                                     </includes>
                                 </resource>
                                 <resource>
@@ -651,7 +701,7 @@
       <profile>
             <id>linux</id>
            <properties>
-               <disable.docker.plugin>false</disable.docker.plugin>
+               <disable.docker.plugin>true</disable.docker.plugin>
            </properties>
            <activation>
                 <os>
