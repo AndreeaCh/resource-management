@@ -31,3 +31,4 @@ maven.config
 
 ### Other ###
 *.log
+*.zip

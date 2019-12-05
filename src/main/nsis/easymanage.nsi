@@ -50,6 +50,11 @@ Var _DB_VERSION
 Var _DB_INSTALL_OPTION
 Var _DB_INSTALL_PARAMS
 
+; auth constants
+Var _AUTH_INSTALL_OPTION
+Var _AUTH_INSTALL_PATH
+Var _AUTH_SERVER_PORT
+
 ; node constants
 Var _NODE_INSTALL_OPTION
 Var _NODE_INSTALL_PATH
@@ -116,6 +121,10 @@ Section "-Meta setup"
    StrCpy $_DB_VERSION '4.0.4'
    StrCpy $_DB_INSTALL_PARAMS '/dataPath:$_MONGO_DATA_PATH /logPath:$_MONGO_LOG_PATH'
 
+   StrCpy $_AUTH_INSTALL_OPTION keycloak
+   StrCpy $_AUTH_INSTALL_PATH 'C:\Keycloak'
+   StrCpy $_AUTH_SERVER_PORT "8180"
+
    StrCpy $_NODE_INSTALL_OPTION nodejs
    StrCpy $_NODE_INSTALL_PATH 'C:\Progra~1\nodejs'
    StrCpy $_NODE_VERSION '10.15.0'
@@ -131,6 +140,7 @@ Section "-Meta setup"
    WriteINIStr "$PROFILE\\easymanage.ini" "paths" "CHOCO_INSTALL_PATH" $_CHOCO_INSTALL_PATH
    WriteINIStr "$PROFILE\\easymanage.ini" "paths" "JAVA_INSTALL_PATH" $_JAVA_INSTALL_PATH
    WriteINIStr "$PROFILE\\easymanage.ini" "paths" "NODE_INSTALL_PATH" $_NODE_INSTALL_PATH
+   WriteINIStr "$PROFILE\\easymanage.ini" "paths" "AUTH_INSTALL_PATH" $_AUTH_INSTALL_PATH
    WriteINIStr "$PROFILE\\easymanage.ini" "paths" "MONGO_SERVER_PATH" $_MONGO_SERVER_PATH
    WriteINIStr "$PROFILE\\easymanage.ini" "paths" "MONGO_DATA_PATH" $_MONGO_DATA_PATH
    WriteINIStr "$PROFILE\\easymanage.ini" "paths" "MONGO_LOG_PATH" $_MONGO_LOG_PATH
@@ -138,6 +148,7 @@ Section "-Meta setup"
    WriteINIStr "$PROFILE\\easymanage.ini" "dependencies" "JAVA_INSTALL_OPTION" $_JAVA_INSTALL_OPTION
    WriteINIStr "$PROFILE\\easymanage.ini" "dependencies" "DB_INSTALL_OPTION" $_DB_INSTALL_OPTION
    WriteINIStr "$PROFILE\\easymanage.ini" "dependencies" "NODE_INSTALL_OPTION" $_NODE_INSTALL_OPTION
+   WriteINIStr "$PROFILE\\easymanage.ini" "dependencies" "AUTH_INSTALL_OPTION" $_AUTH_INSTALL_OPTION
 
 
    SetRegView 64
@@ -233,6 +244,34 @@ Section "Mongodb (required)"
       DetailPrint "Database install method returned $0"
       MessageBox MB_OK "Installation failed. Please check the logs."
       Abort "Database server failed to install."
+   ${EndIf}
+
+SectionEnd
+
+Section "Auth (required)"
+
+   SectionIn RO
+
+   CreateDirectory $_AUTH_INSTALL_PATH
+   SetOutPath $_AUTH_INSTALL_PATH
+
+   File /r auth\*.*
+
+   nsExec::ExecToLog 'powershell.exe -NoP -NonI -Command "Expand-Archive $_AUTH_INSTALL_PATH\keycloak-8.0.0.zip $_AUTH_INSTALL_PATH\"'
+   Pop $0
+
+   ${If} $0 == 0
+      DetailPrint "Auth server installed successfully. Setting environment variables"
+
+      DetailPrint "Set KEYCLOAK_HOME environment variable"
+      ${EnvVarUpdate} $0 "KEYCLOAK_HOME" "A" "HKLM" "$_AUTH_INSTALL_PATH"
+
+      DetailPrint "Add keycloak bin to PATH environment variable"
+      ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$_AUTH_INSTALL_PATH"
+   ${Else}
+      DetailPrint "Auth install method returned $0"
+      MessageBox MB_OK "Installation failed. Please check the logs."
+      Abort "Auth server failed to install."
    ${EndIf}
 
 SectionEnd
