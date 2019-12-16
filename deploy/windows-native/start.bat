@@ -19,6 +19,8 @@ For /F "tokens=1* delims==" %%A IN (%UserProfile%\easymanage.conf) DO (
 
     IF "%%A"=="JAVA_HOME" set _JAVA_HOME=%%B
 
+    IF "%%A"=="AUTH_HOME" set _AUTH_HOME=%%B
+
     IF "%%A"=="HTTP_SERVER_VERSION" set _HTTP_SERVER_VER=%%B
 )
 
@@ -27,6 +29,7 @@ ECHO Configured INSTALLED_VERSION is '%_INSTALLED_VERSION%'
 ECHO Configured MONGO_HOME is '%_MONGO_HOME%'
 ECHO Configured JAVA_HOME is '%_JAVA_HOME%'
 ECHO Configured NODE_HOME is '%_NODE_HOME%'
+ECHO Configured AUTH_HOME is '%_AUTH_HOME%'
 ECHO Configured SERVER_ADDRESS is '%_SERVER_ADDRESS%'
 ECHO Configured HTTP_SERVER_VERSION is '%_HTTP_SERVER_VER%'
 
@@ -54,6 +57,11 @@ IF "%_NODE_HOME%"=="" (
     GOTO :cleaning
 )
 
+IF "%_AUTH_HOME%"=="" (
+    ECHO Auth server install path is NOT defined
+    GOTO :cleaning
+)
+
 IF "%_HTTP_SERVER_VER%"=="" (
     ECHO Http server version is not defined, using default
     SET _HTTP_SERVER_VER=0.11.1
@@ -67,6 +75,8 @@ SET _BACKEND_PATH=%_INSTALL_PATH%\jars\easy-manage.jar
 SET _FRONTEND_PATH=%_INSTALL_PATH%\dist
 
 SET _MONGO_BIN_PATH=%_MONGO_HOME%/bin
+SET _AUTH_IMPORT_PATH=%_INSTALL_PATH%\import\realm-export.json
+SET _AUTH_HTTP_PORT=8180
 
 : set-timestamp
 FOR /f "tokens=2 delims==" %%I IN ('wmic os get localdatetime /format:list') DO SET _DATETIME=%%I
@@ -89,12 +99,29 @@ powershell -command "Start-Process powershell -ArgumentList '%_MONGO_BIN_PATH%\m
 ECHO START_1.2 Waiting for the daemon to start...
 timeout 15
 
+:::::::::::::::::::::::::::::::::::: START AUTH :::::::::::::::::::::::::::::::::::::
+
+:: TODO - use 'starts with' instead
+
+:start_backend
+ECHO START_X.1 Verify if auth application has already started
+FOR /F "tokens=1,2" %%G IN ('jps') DO (
+	IF %%H == easy-manage.jar (
+        GOTO start_backend
+    )
+)
+
+ECHO START_X.2 Starting new auth server instance...
+powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_DIR%\"; & .\run-auth.bat %_AUTH_HOME% %_SERVER_ADDRESS% %_AUTH_HTTP_PORT% %_AUTH_IMPORT_PATH% >> %_LOGS_DIR%\auth-%_DATETIME%.log 2>&1' -WindowStyle hidden"
+
 :::::::::::::::::::::::::::::::::::: START BACKEND :::::::::::::::::::::::::::::::::::::
+
+:: TODO - use 'starts with' instead
 
 :start_backend
 ECHO START_2.1 Verify if backend application has already started
-FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq java.exe" /fo table /nh') DO (
-    IF %%H NEQ No (
+FOR /F "tokens=1,2" %%G IN ('jps') DO (
+	IF %%H == jboss-modules.jar (
         GOTO start_frontend
     )
 )
