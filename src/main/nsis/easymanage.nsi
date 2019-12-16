@@ -7,6 +7,8 @@
 !include 'LogicLib.nsh'
 !include "psexec.nsh"
 
+; TODO : supply the plugin path through a makensis argument
+!addplugindir /x86-ansi "/home/marius/workspace/isu/resource-management/src/main/nsis/Plugins/x86-ansi"
 ;--------------------------------
 
 ; Attributes section
@@ -53,6 +55,7 @@ Var _DB_INSTALL_PARAMS
 ; auth constants
 Var _AUTH_INSTALL_OPTION
 Var _AUTH_INSTALL_PATH
+Var _AUTH_VERSION
 Var _AUTH_SERVER_PORT
 
 ; node constants
@@ -124,6 +127,7 @@ Section "-Meta setup"
    StrCpy $_AUTH_INSTALL_OPTION keycloak
    StrCpy $_AUTH_INSTALL_PATH 'C:\Keycloak'
    StrCpy $_AUTH_SERVER_PORT "8180"
+   StrCpy $_AUTH_VERSION "8.0.8"
 
    StrCpy $_NODE_INSTALL_OPTION nodejs
    StrCpy $_NODE_INSTALL_PATH 'C:\Progra~1\nodejs'
@@ -210,11 +214,6 @@ Section "Chocolatey (required)"
 
        SetOutPath $_SCRIPTS_DIR\chocolatey
 
-       ; todo: hide windows
-       ;nsExec::ExecToLog 'powershell -inputformat none -ExecutionPolicy Bypass -command "Invoke-Item -Path $_SCRIPTS_DIR\chocolatey\installChocolatey.cmd"'
-       ;ExecWait '"$_SCRIPTS_DIR\set_execution_policy.bat" Unrestricted' $0
-       ;ExecWait '"$_SCRIPTS_DIR\chocolatey\installChocolatey.cmd"'
-       ;ExecWait '"$_SCRIPTS_DIR\set_execution_policy.bat" Restricted' $0
        ${PowerShellExecFileLog} "$_SCRIPTS_DIR\install_chocolatey.ps1"
    ${EndIf}
 
@@ -252,12 +251,24 @@ Section "Auth (required)"
 
    SectionIn RO
 
-   CreateDirectory $_AUTH_INSTALL_PATH
+   ;TODO: use env var instead of hardcoding
    SetOutPath $_AUTH_INSTALL_PATH
+   File /r auth\keycloak-8.0.0\*.*
 
-   File /r auth\*.*
+   ;TODO : use if we have the ability to supply variables exetrnally
+   ;InitPluginsDir
+   ;nsisunz::UnzipToStack "$_AUTH_INSTALL_OPTION-$_AUTH_VERSION.zip" "$TEMP\"
+   ;nsisunz::UnzipToStack "$TEMP\keycloak-8.0.0.zip" "$TEMP\"
 
-   nsExec::ExecToLog 'powershell.exe -NoP -NonI -Command "Expand-Archive $_AUTH_INSTALL_PATH\keycloak-8.0.0.zip $_AUTH_INSTALL_PATH\"'
+   ;Pop $0
+
+   ;StrCmp $0 "success" ok
+   ;   DetailPrint "Auth install method returned $0"
+   ;   MessageBox MB_OK "Installation failed. Please check the logs."
+   ;   Abort "Auth server failed to install."
+   ;ok:
+
+   nsExec::ExecToLog 'powershell -inputformat none -ExecutionPolicy Bypass -command set NOPAUSE=yes; & $_AUTH_INSTALL_PATH\bin\add-user-keycloak.bat --user admin --password 1337Hex'
    Pop $0
 
    ${If} $0 == 0
@@ -267,7 +278,7 @@ Section "Auth (required)"
       ${EnvVarUpdate} $0 "KEYCLOAK_HOME" "A" "HKLM" "$_AUTH_INSTALL_PATH"
 
       DetailPrint "Add keycloak bin to PATH environment variable"
-      ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$_AUTH_INSTALL_PATH"
+      ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$_AUTH_INSTALL_PATH\bin"
    ${Else}
       DetailPrint "Auth install method returned $0"
       MessageBox MB_OK "Installation failed. Please check the logs."
@@ -336,11 +347,13 @@ Section "!EasyManage (required)"
    File run\start.bat
    File run\stop.bat
    File /oname=run-backend.bat run\deploy.bat
+   File /oname=run-auth.bat run\run_auth.bat
    File /oname=import.bat run\fillDb.bat
 
    ; copy import data
    SetOutPath $_IMPORT_DIR
    File fillDb\*.json
+   File auth\realm-export.json
 
    ; copy backend binary
    SetOutPath $_BACKEND_DIR
@@ -387,6 +400,7 @@ Section "!EasyManage (required)"
 
    ${ConfigWrite} "$PROFILE\easymanage.conf" "INSTALL_PATH=" "$INSTDIR" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "INSTALLED_VERSION=" "$_INSTALL_VERSION" $R0
+   ${ConfigWrite} "$PROFILE\easymanage.conf" "AUTH_HOME=" "$_AUTH_INSTALL_PATH" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "MONGO_HOME=" "$_MONGO_SERVER_PATH" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "JAVA_HOME=" "$_JAVA_INSTALL_PATH" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "NODE_HOME=" "$_NODE_INSTALL_PATH" $R0
@@ -543,6 +557,19 @@ Section "Uninstall"
 
    DetailPrint "Remove node bin dir from PATH environment variable"
    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$_NODE_INSTALL_PATH"
+
+   ; Uninstall Auth
+
+   ReadINIStr $_AUTH_INSTALL_OPTION "$PROFILE\\easymanage.ini" "dependencies" "AUTH_INSTALL_OPTION"
+   ReadINIStr $_AUTH_INSTALL_PATH "$PROFILE\\easymanage.ini" "paths" "AUTH_INSTALL_PATH"
+
+   RMDir /r "$_AUTH_INSTALL_PATH"
+
+   DetailPrint "Unset AUTH_HOME environment variable"
+   ${un.EnvVarUpdate} $0 "AUTH_HOME" "R" "HKLM" "$_AUTH_INSTALL_PATH"
+
+   DetailPrint "Remove auth bin dir from PATH environment variable"
+   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$_AUTH_INSTALL_PATH\bin"
 
    ; Uninstall 'Chocolatey'
    ReadINIStr $_CHOCO_INSTALL_PATH "$PROFILE\\easymanage.ini" "paths" "CHOCO_INSTALL_PATH"

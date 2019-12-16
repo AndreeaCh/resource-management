@@ -348,10 +348,28 @@
                         </goals>
                         <configuration>
                             <url>https://downloads.jboss.org/keycloak/8.0.0/keycloak-8.0.0.zip</url>
-                            <!--<unpack>true</unpack>-->
+                            <!--NO UNPACKING TO BE DONE HERE SO THE ARCHIVE IS CACHED-->
                             <outputDirectory>${win.native.source}</outputDirectory>
                             <sha1>d07ae0afa4cb76fe96fd096bb52eab1fc7a043be</sha1>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.8</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <configuration>
+                            <tasks>
+                                <echo message="unzipping keycloak" />
+                                <unzip src="${win.native.source}/keycloak-8.0.0.zip" dest="${win.native.build.directory}/auth" />
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -430,17 +448,18 @@
                                         <include>production.log4j2.properties</include>
                                         <include>run_instructions.md</include>
                                         <include>easymanage.bat</include>
+                                        <include>run_auth.bat</include>
                                         <include>start.bat</include>
                                         <include>stop.bat</include>
                                     </includes>
                                 </resource>
-                                <resource>
-                                    <directory>${win.native.source}</directory>
-                                    <targetPath>${win.native.build.directory}/auth</targetPath>
-                                    <includes>
-                                        <include>keycloak-8.0.0.zip</include>
-                                    </includes>
-                                </resource>
+                                <!--<resource>-->
+                                    <!--<directory>${win.native.source}</directory>-->
+                                    <!--<targetPath>${win.native.build.directory}/auth</targetPath>-->
+                                    <!--<includes>-->
+                                        <!--<include>keycloak-8.0.0.zip</include>-->
+                                    <!--</includes>-->
+                                <!--</resource>-->
                                 <resource>
                                     <directory>${nsisSourceDirectory}</directory>
                                     <targetPath>${win.native.build.directory}</targetPath>
