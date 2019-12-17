@@ -8,7 +8,7 @@
 !include "psexec.nsh"
 
 ; TODO : supply the plugin path through a makensis argument
-!addplugindir /x86-ansi "/home/marius/workspace/isu/resource-management/src/main/nsis/Plugins/x86-ansi"
+; !addplugindir /x86-ansi "/home/marius/workspace/isu/resource-management/src/main/nsis/Plugins/x86-ansi"
 ;--------------------------------
 
 ; Attributes section
@@ -251,11 +251,12 @@ Section "Auth (required)"
 
    SectionIn RO
 
-   ;TODO: use env var instead of hardcoding
    SetOutPath $_AUTH_INSTALL_PATH
+
+   ;TODO: use env var instead of hardcoding
    File /r auth\keycloak-8.0.0\*.*
 
-   ;TODO : use if we have the ability to supply variables exetrnally
+   ;TODO : use if we have the ability to supply variables externally
    ;InitPluginsDir
    ;nsisunz::UnzipToStack "$_AUTH_INSTALL_OPTION-$_AUTH_VERSION.zip" "$TEMP\"
    ;nsisunz::UnzipToStack "$TEMP\keycloak-8.0.0.zip" "$TEMP\"
@@ -268,10 +269,10 @@ Section "Auth (required)"
    ;   Abort "Auth server failed to install."
    ;ok:
 
-   nsExec::ExecToLog 'powershell -inputformat none -ExecutionPolicy Bypass -command set NOPAUSE=yes; & $_AUTH_INSTALL_PATH\bin\add-user-keycloak.bat --user admin --password 1337Hex'
-   Pop $0
+   ;nsExec::ExecToLog 'powershell -inputformat none -ExecutionPolicy Bypass -command set NOPAUSE=yes; & $_AUTH_INSTALL_PATH\bin\add-user-keycloak.bat --user admin --password 1337Hex'
+   ;Pop $0
 
-   ${If} $0 == 0
+   ;${If} $0 == 0
       DetailPrint "Auth server installed successfully. Setting environment variables"
 
       DetailPrint "Set KEYCLOAK_HOME environment variable"
@@ -279,11 +280,11 @@ Section "Auth (required)"
 
       DetailPrint "Add keycloak bin to PATH environment variable"
       ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$_AUTH_INSTALL_PATH\bin"
-   ${Else}
-      DetailPrint "Auth install method returned $0"
-      MessageBox MB_OK "Installation failed. Please check the logs."
-      Abort "Auth server failed to install."
-   ${EndIf}
+   ;${Else}
+   ;   DetailPrint "Auth install method returned $0"
+   ;   MessageBox MB_OK "Installation failed. Please check the logs."
+   ;   Abort "Auth server failed to install."
+   ;${EndIf}
 
 SectionEnd
 
@@ -581,10 +582,15 @@ Section "Uninstall"
    ${un.EnvVarUpdate} $0 "ChocolateyInstall" "R" "HKLM" "$_CHOCO_INSTALL_PATH"
    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$_CHOCO_INSTALL_PATH\bin"
 
-   ; Remove uninstall and install folder
-   Delete $INSTDIR\uninstall.exe
+   ; Remove install folder
    Delete $INSTDIR\*.md
    Delete $INSTDIR\*.properties
+
+   ; Remove metadata
+   Delete $PROFILE\easymanage.conf
+   Delete $PROFILE\easymanage.ini
+
+   Delete $INSTDIR\uninstall.exe
    ;RMDir "$INSTDIR"
 
 SectionEnd
