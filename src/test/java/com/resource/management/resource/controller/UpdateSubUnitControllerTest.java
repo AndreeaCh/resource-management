@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -47,13 +48,13 @@ public class UpdateSubUnitControllerTest {
         Map<String, Object> sessionAttributes = new HashMap<>();
         sessionAttributes.put("ip", IP_ADDRESS);
         when(headerAccessor.getSessionAttributes()).thenReturn(sessionAttributes);
-
+        when(headerAccessor.getSessionId()).thenReturn(UUID.randomUUID().toString());
     }
 
     @Test
     public void handleRequest_subUnitExists_sendUnitUpdatedNotification() {
         // Given
-        when(subUnitService.updateSubUnit(SubUnits.updatedInternal(), IP_ADDRESS )).thenReturn(Optional.of(SubUnits.updatedInternal()));
+        when(subUnitService.updateSubUnit(SubUnits.updatedInternal(), IP_ADDRESS)).thenReturn(Optional.of(SubUnits.updatedInternal()));
         SubUnit updatedSubUnit = SubUnits.updatedApi();
 
         // When
@@ -66,20 +67,20 @@ public class UpdateSubUnitControllerTest {
     @Test
     public void handleRequest_subUnitExists_saveUpdatedSubUnit() {
         // Given
-        when(subUnitService.updateSubUnit(SubUnits.updatedInternal(), IP_ADDRESS )).thenReturn(Optional.of(SubUnits.updatedInternal()));
+        when(subUnitService.updateSubUnit(SubUnits.updatedInternal(), IP_ADDRESS)).thenReturn(Optional.of(SubUnits.updatedInternal()));
         SubUnit updatedSubUnit = SubUnits.updatedApi();
 
         // When
         controller.handleUpdateSubUnitMessage(new UpdateSubUnitRequest(updatedSubUnit), headerAccessor);
 
         // Then
-        verify(subUnitService).updateSubUnit(SubUnitMapper.toInternal(updatedSubUnit), IP_ADDRESS );
+        verify(subUnitService).updateSubUnit(SubUnitMapper.toInternal(updatedSubUnit), IP_ADDRESS);
     }
 
     @Test
     public void handleRequest_subUnitDoesNotExist_doesNotSendUnitUpdatedNotification() {
         // Given
-        when(subUnitService.updateSubUnit(SubUnits.updatedInternal(), IP_ADDRESS )).thenReturn(Optional.empty());
+        when(subUnitService.updateSubUnit(SubUnits.updatedInternal(), IP_ADDRESS)).thenReturn(Optional.empty());
         SubUnit updatedSubUnit = SubUnits.updatedApi();
 
         // When

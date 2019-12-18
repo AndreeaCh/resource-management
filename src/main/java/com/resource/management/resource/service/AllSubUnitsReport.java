@@ -1,7 +1,9 @@
 package com.resource.management.resource.service;
 
+import com.resource.management.resource.model.SubUnit;
 import lombok.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -10,6 +12,6 @@ import java.util.Map;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class AllSubUnitsReport {
-    private Map<String, SubUnitReport> subUnitReports;
+    private List<SubUnitReport> subUnitReports;
     private SubUnitReport totals;
 }

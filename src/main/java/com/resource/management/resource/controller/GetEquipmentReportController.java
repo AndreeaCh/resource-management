@@ -6,14 +6,16 @@ import com.resource.management.management.vehicles.model.VehicleType;
 import com.resource.management.management.vehicles.model.VehicleTypes;
 import com.resource.management.resource.model.SubUnit;
 import com.resource.management.resource.model.SubUnitsRepository;
-import com.resource.management.resource.service.EquipmentPdfCreator;
-import com.resource.management.resource.service.EquipmentXlsCreator;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import com.resource.management.resource.service.TemplateBasedReportCreator;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +27,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import static com.resource.management.management.vehicles.model.VehicleTypes.ID;
-import static com.resource.management.resource.service.EquipmentXlsCreator.EQUIPMENT_REPORT_FILE_NAME;
+import static com.resource.management.resource.service.TemplateBasedReportCreator.EQUIPMENT_REPORT_FILE_NAME;
 
 @Controller
 public class GetEquipmentReportController {
@@ -40,19 +42,16 @@ public class GetEquipmentReportController {
     private VehicleRepository vehicleRepository;
 
     @Autowired
-    private EquipmentPdfCreator pdfCreator;
-
-    @Autowired
-    private EquipmentXlsCreator xlsCreator;
+    private TemplateBasedReportCreator reportCreator;
 
     @MessageMapping("/getEquipmentReport")
     public void handleGetEquipmentReportRequest(
             @Payload final LockSubUnitRequest request,
-            final SimpMessageHeaderAccessor headerAccessor) {
+            final SimpMessageHeaderAccessor headerAccessor) throws FileNotFoundException {
         List<SubUnit> subUnits = subUnitsRepository.findAll();
         Optional<VehicleTypes> vehiclesOptional = vehicleRepository.findById(ID);
         List<VehicleType> vehicleTypeList = vehiclesOptional.map(vehicleTypes -> new ArrayList<>(vehicleTypes.getVehicleTypes())).orElseGet(ArrayList::new);
-        xlsCreator.createXls(subUnits, vehicleTypeList);
+        reportCreator.buildReportFile(subUnits, vehicleTypeList);
         String xlsFileContentAsBase64 = getXLSFileContentAsBase64();
         messagingTemplate.convertAndSendToUser(
                 headerAccessor.getSessionId(), "/queue/equipmentReport", xlsFileContentAsBase64, headerAccessor.getMessageHeaders());

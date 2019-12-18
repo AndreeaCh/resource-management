@@ -84,22 +84,20 @@ public class DeleteServiceControllerTest
             containsInAnyOrder( existingService ) );
    }
 
-
    @Test
    public void handleDeleteServiceRequest_sut_callsSaveOnTimestampRepositoryAndPublishesTimestampInNotification()
    {
       //given
       final Service existingService = Services.api();
-
       final Service deletedService = Services.api();
       when( this.repository.findById( ArgumentMatchers.anyString() ) ).thenReturn( Optional.of( existingService ) );
 
       final DeleteServiceRequest request = new DeleteServiceRequest( deletedService.getId() );
 
       //when
-      final ServicesListUpdatedNotification notification = this.sut.handle( request );
       final LastUpdatedTimestamp timestamp = new LastUpdatedTimestamp( "timeStampToday", Instant.now().toString() );
       when( this.timestampRepository.saveTodaysTimestamp() ).thenReturn( timestamp );
+      final ServicesListUpdatedNotification notification = this.sut.handle( request );
 
       //then
       assertThat( timestamp.getId(), equalTo( "timeStampToday" ) );

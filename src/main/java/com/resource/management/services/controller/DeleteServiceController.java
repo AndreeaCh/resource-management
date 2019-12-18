@@ -13,29 +13,23 @@ import com.resource.management.services.model.Service;
 import com.resource.management.services.model.ServiceRepository;
 
 @Controller
-public class DeleteServiceController
-{
-   @Autowired
-   private ServiceRepository repository;
+public class DeleteServiceController {
+    @Autowired
+    private ServiceRepository repository;
 
-   @Autowired
-   private LastUpdatedTimestampService lastUpdatedTimestampService;
+    @Autowired
+    private LastUpdatedTimestampService lastUpdatedTimestampService;
 
+    @MessageMapping("/deleteService")
+    @SendTo("/topic/services")
+    public ServicesListUpdatedNotification handle(final DeleteServiceRequest request) {
+        final Optional<Service> service = this.repository.findById(request.getId());
+        if (service.isPresent()) {
+            String day = service.get().getDay();
+            this.repository.deleteById(request.getId());
+            return this.lastUpdatedTimestampService.getLastUpdatedNotification(day);
+        }
 
-   @MessageMapping("/deleteService")
-   @SendTo("/topic/services")
-   public ServicesListUpdatedNotification handle( final DeleteServiceRequest request )
-   {
-      final Optional<Service> service = this.repository.findById( request.getId() );
-      String day = null;
-      if ( service.isPresent() )
-      {
-         day = service.get().getDay();
-         this.repository.deleteById( request.getId() );
-
-         return this.lastUpdatedTimestampService.getLastUpdatedNotification( day );
-      }
-
-      return this.lastUpdatedTimestampService.getLastUpdatedNotification();
-   }
+        return this.lastUpdatedTimestampService.getLastUpdatedNotification();
+    }
 }
