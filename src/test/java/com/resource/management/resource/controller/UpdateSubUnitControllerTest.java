@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -46,6 +47,8 @@ public class UpdateSubUnitControllerTest {
     public void setUp() throws Exception {
         Map<String, Object> sessionAttributes = new HashMap<>();
         sessionAttributes.put("ip", IP_ADDRESS);
+        String mockSessionId = UUID.randomUUID().toString();
+        when(headerAccessor.getSessionId()).thenReturn(mockSessionId);
         when(headerAccessor.getSessionAttributes()).thenReturn(sessionAttributes);
 
     }
