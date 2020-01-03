@@ -17,4 +17,8 @@ public class PointOfInterest
    private String id;
 
    private String name;
+
+   private String contact;
+
+   private String comments;
 }

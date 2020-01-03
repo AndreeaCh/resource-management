@@ -22,6 +22,6 @@ public class Location
 
    private Double[] coordinates;
 
-   private List<String> pointsOfInterest;
+   private List<PointOfInterest> pointsOfInterest;
 
 }

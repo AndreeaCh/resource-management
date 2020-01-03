@@ -2,6 +2,7 @@ package com.resource.management.api.locations;
 
 import java.util.List;
 
+import com.resource.management.api.resources.PointOfInterest;
 import org.springframework.data.annotation.Id;
 
 import lombok.AllArgsConstructor;
@@ -22,6 +23,6 @@ public class Location
 
    private Double[] coordinates;
 
-   private List<String> pointsOfInterest;
+   private List<PointOfInterest> pointsOfInterest;
 
 }
