@@ -1,7 +1,11 @@
 package com.resource.management.locations.controller;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
+import com.resource.management.locations.model.LocationMapper;
+import com.resource.management.locations.model.PointOfInterest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
@@ -23,11 +27,11 @@ public class AddLocationController
    @SendTo("/topic/locations")
    public LocationsListUpdatedNotification handle( final AddLocationRequest request )
    {
-      final Location location =
-            new Location( UUID.randomUUID().toString(), request.getName(), request.getCoordinates(),
-                  request.getPointsOfInterest() );
+       List<PointOfInterest> points = request.getPointsOfInterest().stream().map(LocationMapper::toInternal).collect(Collectors.toList());
+       final Location location =
+            new Location( UUID.randomUUID().toString(), request.getName(), request.getCoordinates(), points
+                  );
       this.repository.save( location );
-
       return new LocationsListUpdatedNotification( this.repository.findAll() );
    }
 }

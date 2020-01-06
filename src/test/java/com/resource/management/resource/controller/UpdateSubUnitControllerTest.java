@@ -47,6 +47,8 @@ public class UpdateSubUnitControllerTest {
     public void setUp() throws Exception {
         Map<String, Object> sessionAttributes = new HashMap<>();
         sessionAttributes.put("ip", IP_ADDRESS);
+        String mockSessionId = UUID.randomUUID().toString();
+        when(headerAccessor.getSessionId()).thenReturn(mockSessionId);
         when(headerAccessor.getSessionAttributes()).thenReturn(sessionAttributes);
         when(headerAccessor.getSessionId()).thenReturn(UUID.randomUUID().toString());
     }
