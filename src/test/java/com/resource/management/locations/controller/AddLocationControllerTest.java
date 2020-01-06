@@ -8,7 +8,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
+import com.resource.management.locations.model.LocationMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -34,8 +36,7 @@ public class AddLocationControllerTest
 
 
    @Test
-   public void contextLoads() throws Exception
-   {
+   public void contextLoads() {
       assertThat( this.controller, notNullValue() );
    }
 
@@ -49,7 +50,7 @@ public class AddLocationControllerTest
       when( this.repository.findAll() ).thenReturn( Arrays.asList( existingLocation, addedLocation ) );
       final AddLocationRequest request =
             new AddLocationRequest( addedLocation.getName(), addedLocation.getCoordinates(),
-                  addedLocation.getPointsOfInterest() );
+                    addedLocation.getPointsOfInterest().stream().map(LocationMapper::toApi).collect(Collectors.toList()));
 
       //when
       this.controller.handle( request );
@@ -73,7 +74,7 @@ public class AddLocationControllerTest
       when( this.repository.findAll() ).thenReturn( Arrays.asList( existingLocation, addedLocation ) );
       final AddLocationRequest request =
             new AddLocationRequest( addedLocation.getName(), addedLocation.getCoordinates(),
-                  addedLocation.getPointsOfInterest() );
+                  addedLocation.getPointsOfInterest().stream().map(LocationMapper::toApi).collect(Collectors.toList()) );
 
       //when
       final LocationsListUpdatedNotification notification = this.controller.handle( request );
