@@ -8,9 +8,14 @@ import org.springframework.data.annotation.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
-public class VehicleType {
+public class VehicleType implements Comparable<VehicleType> {
     @Id
     private String id;
     private String shortName;
     private String longName;
+
+    @Override
+    public int compareTo(VehicleType o) {
+        return longName.compareTo(o.longName);
+    }
 }

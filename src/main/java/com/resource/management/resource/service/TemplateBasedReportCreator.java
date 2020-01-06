@@ -1,6 +1,7 @@
 package com.resource.management.resource.service;
 
 import com.resource.management.management.vehicles.model.VehicleType;
+import com.resource.management.resource.model.Equipment;
 import com.resource.management.resource.model.SubUnit;
 import org.apache.commons.jexl3.JexlBuilder;
 import org.apache.commons.jexl3.JexlEngine;
@@ -41,17 +42,35 @@ public class TemplateBasedReportCreator {
                 .flatMap(v -> v.getFirstInterventionResourceReport().stream())
                 .map(VehicleTypeReport::getVehicleType)
                 .filter(distinctByKey(VehicleType::getShortName))
+                .filter(v -> !v.getShortName().isEmpty())
                 .collect(Collectors.toSet());
 
-        InputStream resourceAsStream = new FileInputStream("C:\\1-DEV\\resource-management\\src\\main\\resources\\RaportS61Template.xlsx");
+        Collection<VehicleType> otherInterventionResources = report.getSubUnitReports().stream()
+                .flatMap(v -> v.getOtherResourceReport().stream())
+                .map(VehicleTypeReport::getVehicleType)
+                .filter(distinctByKey(VehicleType::getShortName))
+                .filter(v -> !v.getShortName().isEmpty())
+                .collect(Collectors.toSet());
+
+        Collection<Equipment> equipments = report.getSubUnitReports().stream()
+                .flatMap(v -> v.getEquipmentReport().stream())
+                .map(EquipmentReport::getEquipment)
+                .filter(distinctByKey(Equipment::getEquipmentType))
+                .filter(v -> !v.getEquipmentType().isEmpty())
+                .collect(Collectors.toSet());
+
+        InputStream resourceAsStream = new FileInputStream("C:\\1-DEV\\projects\\resource-management\\src\\main\\resources\\RS61Template.xlsx");
         try (InputStream is = resourceAsStream) {
             try (OutputStream os = new FileOutputStream(EQUIPMENT_REPORT_FILE_NAME)) {
                 Transformer transformer = TransformerFactory.createTransformer(is, os);
+                transformer.setEvaluateFormulas(true);
 
                 Context context = new Context();
                 context.putVar("date", formatter.format(Instant.now()));
                 context.putVar("subUnitReports", report.getSubUnitReports());
                 context.putVar("firstInterventionResources", firstInterventionResources);
+                context.putVar("otherResources", otherInterventionResources);
+                context.putVar("equipments", equipments);
 
                 JexlExpressionEvaluator evaluator = (JexlExpressionEvaluator) transformer.getTransformationConfig().getExpressionEvaluator();
                 Map<String, Object> functionMap = new HashMap<>();
@@ -69,7 +88,6 @@ public class TemplateBasedReportCreator {
                 firstArea.processFormulas();
                 String sourceSheetName = firstArea.getStartCellRef().getSheetName();
                 transformer.deleteSheet(sourceSheetName);
-
                 transformer.write();
             }
         } catch (IOException e) {

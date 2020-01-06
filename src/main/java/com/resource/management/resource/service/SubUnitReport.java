@@ -1,11 +1,8 @@
 package com.resource.management.resource.service;
 
-import com.resource.management.management.vehicles.model.VehicleType;
-import com.resource.management.resource.model.Equipment;
 import lombok.*;
 
 import java.util.List;
-import java.util.Map;
 
 @Data
 @ToString
@@ -15,8 +12,8 @@ import java.util.Map;
 public class SubUnitReport {
     private String subUnitName;
     private List<VehicleTypeReport> firstInterventionResourceReport;
-    private Map<VehicleType, Report> otherResourceReport;
-    private Map<Equipment, Report> equipmentReport;
+    private List<VehicleTypeReport> otherResourceReport;
+    private List<EquipmentReport> equipmentReport;
     private Report firstInterventionTotal;
     private Report otherResourcesTotal;
     private Report allResourcesTotal;

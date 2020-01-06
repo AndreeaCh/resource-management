@@ -21,26 +21,26 @@ public class ReportBuilder {
             SubUnitReport subUnitReport = new SubUnitReport();
             subUnitReport.setSubUnitName(subUnit.getName());
             List<VehicleType> firstInterventionResourcesTypes = getFirstInterventionResourcesTypes(subUnits, vehicleTypeList);
-            List<VehicleTypeReport> fiResourceMap = new ArrayList<>();
+            List<VehicleTypeReport> fiResources = new ArrayList<>();
             firstInterventionResourcesTypes.forEach(resourceType -> {
                 List<Resource> resourcesOfType = getResourcesOfType(subUnit, resourceType.getShortName());
-                fiResourceMap.add(new VehicleTypeReport(resourceType, buildReportForResource(resourcesOfType)));
+                fiResources.add(new VehicleTypeReport(resourceType, buildReportForResource(resourcesOfType)));
             });
-            subUnitReport.setFirstInterventionResourceReport(fiResourceMap);
+            subUnitReport.setFirstInterventionResourceReport(fiResources);
 
-            Map<VehicleType, Report> otherResourceMap = new HashMap<>();
+            List<VehicleTypeReport> otherResources = new ArrayList<>();
             List<VehicleType> otherResourcesTypes = getOtherResourcesTypes(subUnits, vehicleTypeList);
             otherResourcesTypes.forEach(resourceType -> {
                 List<Resource> resourcesOfType = getResourcesOfType(subUnit, resourceType.getShortName());
-                otherResourceMap.put(resourceType, buildReportForResource(resourcesOfType));
+                otherResources.add(new VehicleTypeReport(resourceType, buildReportForResource(resourcesOfType)));
             });
-            subUnitReport.setOtherResourceReport(otherResourceMap);
+            subUnitReport.setOtherResourceReport(otherResources);
 
-            Map<Equipment, Report> equipmentResourceMap = new HashMap<>();
+            List<EquipmentReport> equipmentResourceMap = new ArrayList<>();
             List<Equipment> equipmentResourceTypes = getEquipmentTypes(subUnits);
-            equipmentResourceTypes.forEach(resourceType -> {
-                List<Equipment> equipmentList = getEquipmentOfType(subUnit, resourceType.getEquipmentType());
-                equipmentResourceMap.put(resourceType, buildReportForEquipment(equipmentList));
+            equipmentResourceTypes.forEach(equipment -> {
+                List<Equipment> equipmentList = getEquipmentOfType(subUnit, equipment.getEquipmentType());
+                equipmentResourceMap.add(new EquipmentReport(equipment, buildReportForEquipment(equipmentList)));
             });
             subUnitReport.setEquipmentReport(equipmentResourceMap);
 
@@ -51,63 +51,8 @@ public class ReportBuilder {
             subUnitReports.add(subUnitReport);
         });
 
-       // computeTotals(report);
+        // computeTotals(report);
         return report;
-    }
-
-    private void computeTotals(final AllSubUnitsReport report) {
-        SubUnitReport totals = new SubUnitReport();
-        report.setTotals(totals);
-/*
-        Map<VehicleType, Report> firstInterventionTotals = report.getSubUnitReports()
-                .stream()
-                .flatMap(r -> r.getFirstInterventionResourceReport().entrySet().stream())
-                .collect(Collectors.toMap(k -> k.getKey(), v -> v.getValue(), (v1, v2) -> addReports(v1, v2)));
-        totals.setFirstInterventionResourceReport(firstInterventionTotals);
-*/
-
-        Report firstInterventionTotal = new Report();
-/*        firstInterventionTotals.values()
-                .forEach(r -> {
-                    firstInterventionTotal.setUsable(firstInterventionTotal.getUsable() + r.getUsable());
-                    firstInterventionTotal.setReserves(firstInterventionTotal.getReserves() + r.getReserves());
-                    firstInterventionTotal.setUnusable(firstInterventionTotal.getUnusable() + r.getUnusable());
-                });
-        totals.setFirstInterventionTotal(firstInterventionTotal);*/
-
-        Map<VehicleType, Report> otherResourcesTotals = report.getSubUnitReports()
-                .stream()
-                .flatMap(r -> r.getOtherResourceReport().entrySet().stream())
-                .collect(Collectors.toMap(k -> k.getKey(), v -> v.getValue(), (v1, v2) -> addReports(v1, v2)));
-        totals.setOtherResourceReport(otherResourcesTotals);
-        Report otherResourcesTotal = new Report();
-        otherResourcesTotals.values()
-                .forEach(r -> {
-                    otherResourcesTotal.setUsable(otherResourcesTotal.getUsable() + r.getUsable());
-                    otherResourcesTotal.setReserves(otherResourcesTotal.getReserves() + r.getReserves());
-                    otherResourcesTotal.setUnusable(otherResourcesTotal.getUnusable() + r.getUnusable());
-                });
-        totals.setOtherResourcesTotal(otherResourcesTotal);
-
-        Report allResourcesTotal = new Report();
-        allResourcesTotal.setUsable(firstInterventionTotal.getUsable() + otherResourcesTotal.getUsable());
-        allResourcesTotal.setReserves(firstInterventionTotal.getReserves() + otherResourcesTotal.getReserves());
-        allResourcesTotal.setUnusable(firstInterventionTotal.getUnusable() + otherResourcesTotal.getUnusable());
-        totals.setAllResourcesTotal(allResourcesTotal);
-
-        Map<Equipment, Report> equipmentTotals = report.getSubUnitReports()
-                .stream()
-                .flatMap(r -> r.getEquipmentReport().entrySet().stream())
-                .collect(Collectors.toMap(k -> k.getKey(), v -> v.getValue(), (v1, v2) -> addReports(v1, v2)));
-        totals.setEquipmentReport(equipmentTotals);
-        Report equipmentsTotal = new Report();
-        equipmentTotals.values()
-                .forEach(r -> {
-                    equipmentsTotal.setUsable(equipmentsTotal.getUsable() + r.getUsable());
-                    equipmentsTotal.setReserves(equipmentsTotal.getReserves() + r.getReserves());
-                    equipmentsTotal.setUnusable(equipmentsTotal.getUnusable() + r.getUnusable());
-                });
-        totals.setEquipmentTotal(equipmentsTotal);
     }
 
     private Report addReports(Report r1, Report r2) {
@@ -150,18 +95,18 @@ public class ReportBuilder {
     private void setOtherResourcesTotal(final SubUnitReport subUnitReport) {
         Report report = new Report();
         report.setUsable(subUnitReport.getOtherResourceReport()
-                .values()
                 .stream()
+                .map(VehicleTypeReport::getReport)
                 .mapToLong(Report::getUsable)
                 .sum());
         report.setReserves(subUnitReport.getOtherResourceReport()
-                .values()
                 .stream()
+                .map(VehicleTypeReport::getReport)
                 .mapToLong(Report::getReserves)
                 .sum());
         report.setUnusable(subUnitReport.getOtherResourceReport()
-                .values()
                 .stream()
+                .map(VehicleTypeReport::getReport)
                 .mapToLong(Report::getUnusable)
                 .sum());
         subUnitReport.setOtherResourcesTotal(report);
@@ -170,18 +115,18 @@ public class ReportBuilder {
     private void setEquipmentsTotal(final SubUnitReport subUnitReport) {
         Report report = new Report();
         report.setUsable(subUnitReport.getEquipmentReport()
-                .values()
                 .stream()
+                .map(EquipmentReport::getReport)
                 .mapToLong(Report::getUsable)
                 .sum());
         report.setReserves(subUnitReport.getEquipmentReport()
-                .values()
                 .stream()
+                .map(EquipmentReport::getReport)
                 .mapToLong(Report::getReserves)
                 .sum());
         report.setUnusable(subUnitReport.getEquipmentReport()
-                .values()
                 .stream()
+                .map(EquipmentReport::getReport)
                 .mapToLong(Report::getUnusable)
                 .sum());
         subUnitReport.setEquipmentTotal(report);
