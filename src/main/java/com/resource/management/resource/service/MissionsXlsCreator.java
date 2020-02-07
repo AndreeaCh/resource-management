@@ -1,19 +1,3 @@
-/************************************************************************
- ** PROJECT:   XVP
- ** LANGUAGE:  Java, J2SE JDK 1.8
- **
- ** COPYRIGHT: FREQUENTIS AG
- **            Innovationsstrasse 1
- **            A-1100 VIENNA
- **            AUSTRIA
- **            tel +43 1 811 50-0
- **
- ** The copyright to the computer program(s) herein
- ** is the property of Frequentis AG, Austria.
- ** The program(s) shall not be used and/or copied without
- ** the written permission of Frequentis AG.
- **
- ************************************************************************/
 package com.resource.management.resource.service;
 
 import java.io.File;
@@ -70,10 +54,10 @@ public class MissionsXlsCreator
       try
       {
          recreateReportFile();
-         Workbook workbook = buildReportFile( subUnits );
+         final Workbook workbook = buildReportFile( subUnits );
          writeReportFile( workbook );
       }
-      catch ( IOException e )
+      catch ( final IOException e )
       {
          LOG.error( "Could not create XLS file. ", e );
       }
@@ -82,31 +66,31 @@ public class MissionsXlsCreator
 
    private Workbook buildReportFile( final List<SubUnit> subUnits )
    {
-      Workbook workbook = new XSSFWorkbook();
+      final Workbook workbook = new XSSFWorkbook();
 
-      Sheet sheet = workbook.createSheet( "Raport" );
+      final Sheet sheet = workbook.createSheet( "Raport" );
 
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd.MM.YYYY" ).withZone( ZoneId.systemDefault() );
-      Row title = sheet.createRow( 0 );
-      Cell titleCell = title.createCell( 3 );
+      final DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "dd.MM.YYYY" ).withZone( ZoneId.systemDefault() );
+      final Row title = sheet.createRow( 0 );
+      final Cell titleCell = title.createCell( 3 );
       titleCell.setCellValue( TITLE + formatter.format( Instant.now() ) );
       titleCell.setCellStyle( createTitleStyle( workbook ) );
       sheet.addMergedRegion( new CellRangeAddress( 0, 0, 3, 15 ) );
 
-      CellStyle headerStyle = createHeaderStyle( workbook, ( short ) 0 );
-      CellStyle cellStyle = createCellStyle( workbook, ( short ) 0 );
+      final CellStyle headerStyle = createHeaderStyle( workbook, ( short ) 0 );
+      final CellStyle cellStyle = createCellStyle( workbook, ( short ) 0 );
 
-      Row headerRow = sheet.createRow( 1 );
+      final Row headerRow = sheet.createRow( 1 );
 
       // add DETASAMENT header
       int startRowNumber = 1;
-      int endRowNumber = startRowNumber + 2;
+      final int endRowNumber = startRowNumber + 2;
       int columnStartIndex = 0;
       int columnEndIndex = 1;
-      Cell detasamentHeader = headerRow.createCell( columnStartIndex );
+      final Cell detasamentHeader = headerRow.createCell( columnStartIndex );
       detasamentHeader.setCellValue( DETASAMENT_HEADER );
       detasamentHeader.setCellStyle( headerStyle );
-      CellRangeAddress detasamentHeaderRegion = new CellRangeAddress( startRowNumber, endRowNumber,
+      final CellRangeAddress detasamentHeaderRegion = new CellRangeAddress( startRowNumber, endRowNumber,
             columnStartIndex, columnEndIndex );
       sheet.addMergedRegion( detasamentHeaderRegion );
       setBoldBorders( sheet, detasamentHeaderRegion );
@@ -114,10 +98,10 @@ public class MissionsXlsCreator
       // add DESCRIERE header
       columnStartIndex = columnEndIndex + 1;
       columnEndIndex = columnStartIndex + 15;
-      Cell descriereHeader = headerRow.createCell( columnStartIndex );
+      final Cell descriereHeader = headerRow.createCell( columnStartIndex );
       descriereHeader.setCellValue( DESCRIERE_HEADER );
       descriereHeader.setCellStyle( headerStyle );
-      CellRangeAddress descriereHeaderRegion = new CellRangeAddress( startRowNumber, endRowNumber, columnStartIndex,
+      final CellRangeAddress descriereHeaderRegion = new CellRangeAddress( startRowNumber, endRowNumber, columnStartIndex,
             columnEndIndex );
       sheet.addMergedRegion( descriereHeaderRegion );
       setBoldBorders( sheet, descriereHeaderRegion );
@@ -127,21 +111,21 @@ public class MissionsXlsCreator
 
       subUnits.forEach( subUnit ->
       {
-         Row contentRow = sheet.createRow( startIndex.getAndAdd( 3 ) );
+         final Row contentRow = sheet.createRow( startIndex.getAndAdd( 3 ) );
 
          // add subunits in first column
-         Cell subUnitNameCell = contentRow.createCell( 0 );
+         final Cell subUnitNameCell = contentRow.createCell( 0 );
          subUnitNameCell.setCellValue( subUnit.getName() );
          subUnitNameCell.setCellStyle( headerStyle );
-         CellRangeAddress detasamentRegion = new CellRangeAddress( contentRow.getRowNum(), contentRow.getRowNum() + 2,
+         final CellRangeAddress detasamentRegion = new CellRangeAddress( contentRow.getRowNum(), contentRow.getRowNum() + 2,
                0, 1 );
          sheet.addMergedRegion( detasamentRegion );
          setBoldBorders( sheet, detasamentRegion );
 
          // add empty cells for handwritten text
-         Cell emptyCell = contentRow.createCell( 1 );
+         final Cell emptyCell = contentRow.createCell( 1 );
          emptyCell.setCellStyle( cellStyle );
-         CellRangeAddress emptyCellRegion = new CellRangeAddress( contentRow.getRowNum(), contentRow.getRowNum() + 2, 2,
+         final CellRangeAddress emptyCellRegion = new CellRangeAddress( contentRow.getRowNum(), contentRow.getRowNum() + 2, 2,
                17 );
          sheet.addMergedRegion( emptyCellRegion );
          RegionUtil.setBorderBottom( BorderStyle.MEDIUM, emptyCellRegion, sheet );
@@ -153,12 +137,12 @@ public class MissionsXlsCreator
    }
 
 
-   private CellStyle createHeaderStyle( Workbook workbook, short rotation )
+   private CellStyle createHeaderStyle( final Workbook workbook, final short rotation )
    {
-      CellStyle headerStyle = workbook.createCellStyle();
+      final CellStyle headerStyle = workbook.createCellStyle();
       headerStyle.setFillForegroundColor( IndexedColors.GREY_25_PERCENT.getIndex() );
       headerStyle.setFillPattern( FillPatternType.SOLID_FOREGROUND );
-      XSSFFont font = (( XSSFWorkbook ) workbook).createFont();
+      final XSSFFont font = (( XSSFWorkbook ) workbook).createFont();
       font.setFontName( "Arial" );
       font.setFontHeightInPoints( ( short ) 12 );
       font.setBold( true );
@@ -167,7 +151,7 @@ public class MissionsXlsCreator
       headerStyle.setWrapText( false );
       headerStyle.setShrinkToFit( true );
       headerStyle.setAlignment( HorizontalAlignment.CENTER );
-      headerStyle.setVerticalAlignment( VerticalAlignment.CENTER);
+      headerStyle.setVerticalAlignment( VerticalAlignment.CENTER );
       headerStyle.setBorderTop( BorderStyle.MEDIUM );
       headerStyle.setBorderBottom( BorderStyle.MEDIUM );
       headerStyle.setBorderLeft( BorderStyle.MEDIUM );
@@ -176,10 +160,10 @@ public class MissionsXlsCreator
    }
 
 
-   private CellStyle createCellStyle( Workbook workbook, short rotation )
+   private CellStyle createCellStyle( final Workbook workbook, final short rotation )
    {
-      CellStyle cellStyle = workbook.createCellStyle();
-      XSSFFont font = (( XSSFWorkbook ) workbook).createFont();
+      final CellStyle cellStyle = workbook.createCellStyle();
+      final XSSFFont font = (( XSSFWorkbook ) workbook).createFont();
       font.setFontName( "Arial" );
       font.setFontHeightInPoints( ( short ) 12 );
       font.setBold( false );
@@ -194,10 +178,10 @@ public class MissionsXlsCreator
    }
 
 
-   private CellStyle createTitleStyle( Workbook workbook )
+   private CellStyle createTitleStyle( final Workbook workbook )
    {
-      CellStyle headerStyle = workbook.createCellStyle();
-      XSSFFont font = (( XSSFWorkbook ) workbook).createFont();
+      final CellStyle headerStyle = workbook.createCellStyle();
+      final XSSFFont font = (( XSSFWorkbook ) workbook).createFont();
       font.setFontName( "Arial" );
       font.setFontHeightInPoints( ( short ) 16 );
       font.setBold( true );
@@ -218,7 +202,7 @@ public class MissionsXlsCreator
 
    private void writeReportFile( final Workbook workbook ) throws IOException
    {
-      FileOutputStream outputStream = new FileOutputStream( MISSIONS_REPORT_FILE_NAME );
+      final FileOutputStream outputStream = new FileOutputStream( MISSIONS_REPORT_FILE_NAME );
       workbook.write( outputStream );
       workbook.close();
    }
@@ -226,7 +210,7 @@ public class MissionsXlsCreator
 
    private void recreateReportFile() throws IOException
    {
-      File f = new File( MISSIONS_REPORT_FILE_NAME );
+      final File f = new File( MISSIONS_REPORT_FILE_NAME );
       if ( !f.exists() )
       {
          f.createNewFile();
