@@ -32,7 +32,7 @@
       <destName>README.md</destName>
     </file>
     <file>
-      <source>${project.build.directory}/resource-management-0.0.2-SNAPSHOT.jar</source>
+      <source>${project.build.directory}/resource-management-0.0.3-SNAPSHOT.jar</source>
       <outputDirectory>jars</outputDirectory>
       <destName>easy-manage.jar</destName>
     </file>
