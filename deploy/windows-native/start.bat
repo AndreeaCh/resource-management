@@ -15,6 +15,10 @@ For /F "tokens=1* delims==" %%A IN (%UserProfile%\easymanage.conf) DO (
 
     IF "%%A"=="MONGO_HOME" set _MONGO_HOME=%%B
 
+    IF "%%A"=="MONGO_DATA_PATH" set _MONGO_DATA_PATH=%%B
+
+    IF "%%A"=="MONGO_LOG_PATH" set _MONGO_LOG_PATH=%%B
+
     IF "%%A"=="NODE_HOME" set _NODE_HOME=%%B
 
     IF "%%A"=="JAVA_HOME" set _JAVA_HOME=%%B
@@ -27,6 +31,8 @@ For /F "tokens=1* delims==" %%A IN (%UserProfile%\easymanage.conf) DO (
 ECHO Configured INSTALL_PATH is '%_INSTALL_PATH%'
 ECHO Configured INSTALLED_VERSION is '%_INSTALLED_VERSION%'
 ECHO Configured MONGO_HOME is '%_MONGO_HOME%'
+ECHO Configured MONGO_DATA_PATH is '%_MONGO_DATA_PATH%'
+ECHO Configured MONGO_LOG_PATH is '%_MONGO_LOG_PATH%'
 ECHO Configured JAVA_HOME is '%_JAVA_HOME%'
 ECHO Configured NODE_HOME is '%_NODE_HOME%'
 ECHO Configured AUTH_HOME is '%_AUTH_HOME%'
@@ -44,6 +50,16 @@ IF "%_INSTALL_PATH%"=="" (
 
 IF "%_MONGO_HOME%"=="" (
     ECHO MongoDb install path is NOT defined
+    GOTO :cleaning
+)
+
+IF "%_MONGO_DATA_PATH%"=="" (
+    ECHO MongoDb data path is NOT defined
+    GOTO :cleaning
+)
+
+IF "%_MONGO_LOG_PATH%"=="" (
+    ECHO MongoDb log path is NOT defined
     GOTO :cleaning
 )
 
@@ -94,7 +110,7 @@ FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq mongod.exe" /fo table /n
 
 :start_mongod
 ECHO START_1.1 Start mongo
-powershell -command "Start-Process powershell -ArgumentList '%_MONGO_BIN_PATH%\mongod --config %_MONGO_BIN_PATH%\mongod.cfg  >> %_LOGS_DIR%\mongod-%_DATETIME%.log 2>&1' -WindowStyle hidden"
+powershell -command "Start-Process powershell -ArgumentList '%_MONGO_BIN_PATH%\mongod --dbpath=%_MONGO_DATA_PATH% --logpath=%_MONGO_LOG_PATH%  >> %_LOGS_DIR%\mongod-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
 ECHO START_1.2 Waiting for the daemon to start...
 timeout 15

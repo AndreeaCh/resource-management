@@ -35,22 +35,19 @@ Var _BACKEND_LOG_FILE
 Var _BACKEND_LOG_LEVEL
 Var _BACKEND_RESOURCE_STATUS_FILE
 
-; chocolatey constants
-Var _CHOCO_VERSION
-Var _CHOCO_INSTALL_PATH
-
 ; java constants
+Var _JAVA_INSTALL_KIT
 Var _JAVA_INSTALL_OPTION
 Var _JAVA_INSTALL_PATH
 Var _JAVA_VERSION
 
 ; db constants
+Var _MONGO_INSTALL_KIT
 Var _MONGO_SERVER_PATH
 Var _MONGO_DATA_PATH
 Var _MONGO_LOG_PATH
 Var _DB_VERSION
 Var _DB_INSTALL_OPTION
-Var _DB_INSTALL_PARAMS
 
 ; auth constants
 Var _AUTH_INSTALL_OPTION
@@ -59,6 +56,7 @@ Var _AUTH_VERSION
 Var _AUTH_SERVER_PORT
 
 ; node constants
+Var _NODE_INSTALL_KIT
 Var _NODE_INSTALL_OPTION
 Var _NODE_INSTALL_PATH
 Var _NODE_VERSION
@@ -93,7 +91,7 @@ Section "-Meta setup"
 
    SectionIn RO
 
-   StrCpy $_INSTALL_VERSION '0.0.2-SNAPSHOT'
+   StrCpy $_INSTALL_VERSION '0.0.3-SNAPSHOT'
    StrCpy $_HTTP_SERVER_VERSION '0.11.1'
 
    StrCpy $_SCRIPTS_DIR $INSTDIR\scripts
@@ -109,20 +107,18 @@ Section "-Meta setup"
 
    StrCpy $_FRONTEND_DIR $INSTDIR\dist
 
-   StrCpy $_CHOCO_VERSION '0.10.13'
-   StrCpy $_CHOCO_INSTALL_PATH 'C:\ProgramData\chocolatey\bin'
-
    StrCpy $_JAVA_INSTALL_OPTION zulu
    StrCpy $_JAVA_INSTALL_PATH 'C:\Progra~1\Zulu\zulu'
-   StrCpy $_JAVA_VERSION '11.29.3'
+   StrCpy $_JAVA_VERSION '11.37.17'
+   StrCpy $_JAVA_INSTALL_KIT 'zulu11.37.17-ca-jdk11.0.6-win_x64.msi'
 
    StrCpy $_MONGO_SERVER_PATH 'C:\Progra~1\MongoDB\Server\4.0'
    StrCpy $_MONGO_DATA_PATH 'C:\mongodb\data\db'
    StrCpy $_MONGO_LOG_PATH 'C:\mongodb\log'
+   StrCpy $_MONGO_INSTALL_KIT 'mongodb-win32-x86_64-2008plus-ssl-4.0.16-signed.msi'
 
    StrCpy $_DB_INSTALL_OPTION mongodb
-   StrCpy $_DB_VERSION '4.0.4'
-   StrCpy $_DB_INSTALL_PARAMS '/dataPath:$_MONGO_DATA_PATH /logPath:$_MONGO_LOG_PATH'
+   StrCpy $_DB_VERSION '4.0.16'
 
    StrCpy $_AUTH_INSTALL_OPTION keycloak
    StrCpy $_AUTH_INSTALL_PATH 'C:\Keycloak'
@@ -132,6 +128,7 @@ Section "-Meta setup"
    StrCpy $_NODE_INSTALL_OPTION nodejs
    StrCpy $_NODE_INSTALL_PATH 'C:\Progra~1\nodejs'
    StrCpy $_NODE_VERSION '10.15.0'
+   StrCpy $_NODE_INSTALL_KIT 'node-v10.15.0-x64.msi'
 
    ; save install constants to ini file to be used at uninstall
    WriteINIStr "$PROFILE\\easymanage.ini" "paths" "BIN_PATH" $_BIN_DIR
@@ -141,7 +138,6 @@ Section "-Meta setup"
    WriteINIStr "$PROFILE\\easymanage.ini" "paths" "BACKEND_PATH" $_BACKEND_DIR
    WriteINIStr "$PROFILE\\easymanage.ini" "paths" "FRONTEND_PATH" $_FRONTEND_DIR
 
-   WriteINIStr "$PROFILE\\easymanage.ini" "paths" "CHOCO_INSTALL_PATH" $_CHOCO_INSTALL_PATH
    WriteINIStr "$PROFILE\\easymanage.ini" "paths" "JAVA_INSTALL_PATH" $_JAVA_INSTALL_PATH
    WriteINIStr "$PROFILE\\easymanage.ini" "paths" "NODE_INSTALL_PATH" $_NODE_INSTALL_PATH
    WriteINIStr "$PROFILE\\easymanage.ini" "paths" "AUTH_INSTALL_PATH" $_AUTH_INSTALL_PATH
@@ -167,6 +163,10 @@ Section "-Meta setup"
    WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\EasyManage" "NoRepair" 1
    WriteUninstaller "$INSTDIR\uninstall.exe"
 
+   ; copy installer kits
+   SetOutPath $TEMP
+   File msi\*.msi
+
    ; extract setup script
    SetOutPath $INSTDIR
 
@@ -176,8 +176,6 @@ Section "-Meta setup"
    ; extract install script files
    SetOutPath $_SCRIPTS_DIR
 
-   File setup\install_chocolatey.bat
-   File setup\install_chocolatey.ps1
    File setup\install_db.bat
    File setup\install_java.bat
    File setup\install_node.bat
@@ -191,44 +189,14 @@ Section "-Meta setup"
 
 SectionEnd
 
-Section "Chocolatey (required)"
-
-   SectionIn RO
-   SetOutPath $INSTDIR
-
-   nsExec::ExecToStack 'powershell -inputformat none -command choco -V'
-   Pop $0
-   Pop $1
-
-   Var /Global _INSTALLED_CHOCO_VERSION
-   StrCpy $_INSTALLED_CHOCO_VERSION "$1"
-
-   DetailPrint "Verify if 'chocolatey' is installed. Required version is $\"$_CHOCO_VERSION$\""
-
-   ${VersionCompare} "$_INSTALLED_CHOCO_VERSION" "$_CHOCO_VERSION" $R0
-
-   ${If} $R0 == 0
-       DetailPrint "Chocolatey is installed ( v. $_INSTALLED_CHOCO_VERSION )"
-   ${Else}
-       DetailPrint "Choco is not installed : Output was $\"$_INSTALLED_CHOCO_VERSION$\""
-
-       SetOutPath $_SCRIPTS_DIR\chocolatey
-
-       ${PowerShellExecFileLog} "$_SCRIPTS_DIR\install_chocolatey.ps1"
-   ${EndIf}
-
-   ;ExecWait '"$INSTDIR\setup.bat" prereq /S' $0
-   DetailPrint "Install prerequisites returned $0"
-
-SectionEnd
-
 Section "Mongodb (required)"
 
-   SectionIn RO
-   SetOutPath $INSTDIR
+   ;SectionIn RO
+   SetOutPath $TEMP
 
-   ;ExecWait '"$INSTDIR\setup.bat" db /S' $0
-   nsExec::ExecToLog 'powershell -inputformat none -ExecutionPolicy Bypass -command $_CHOCO_INSTALL_PATH\choco install $_DB_INSTALL_OPTION -y --version $_DB_VERSION'
+   nsExec::ExecToLog 'powershell -inputformat none -ExecutionPolicy Bypass -command Start-Process msiexec -ArgumentList \
+   $\'/qn /norestart /l*v $_LOGS_DIR\db_install.log /i $_MONGO_INSTALL_KIT INSTALLDIR="$_MONGO_SERVER_PATH" ADDLOCAL="ServerNoService,ImportExportTools" SHOULD_INSTALL_COMPASS="0" $\' \
+   -NoNewWindow -Wait'
    Pop $0
 
    ${If} $0 == 0
@@ -239,6 +207,8 @@ Section "Mongodb (required)"
 
       DetailPrint "Add mongo bin to PATH environment variable"
       ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$_MONGO_SERVER_PATH\bin"
+
+      CreateDirectory $_MONGO_DATA_PATH
    ${Else}
       DetailPrint "Database install method returned $0"
       MessageBox MB_OK "Installation failed. Please check the logs."
@@ -249,7 +219,7 @@ SectionEnd
 
 Section "Auth (required)"
 
-   SectionIn RO
+   ;SectionIn RO
 
    SetOutPath $_AUTH_INSTALL_PATH
 
@@ -290,11 +260,11 @@ SectionEnd
 
 Section "Java (required)"
 
-   SectionIn RO
-   SetOutPath $INSTDIR
+   ;SectionIn RO
+   SetOutPath $TEMP
 
-   ; ExecWait '"$INSTDIR\setup.bat" java' $0
-   nsExec::ExecToLog '$_CHOCO_INSTALL_PATH\choco install $_JAVA_INSTALL_OPTION -y --version $_JAVA_VERSION'
+   nsExec::ExecToLog 'powershell -inputformat none -ExecutionPolicy Bypass -command Start-Process msiexec -ArgumentList \
+   $\'/qn /norestart /l*v $_LOGS_DIR\java_install.log /i $_JAVA_INSTALL_KIT INSTALLDIR="$_JAVA_INSTALL_PATH"$\' -NoNewWindow -Wait'
    Pop $0
 
    ${If} $0 == 0
@@ -315,11 +285,12 @@ SectionEnd
 
 Section "NodeJs (required)"
 
-   SectionIn RO
-   SetOutPath $INSTDIR
+   ;SectionIn RO
+   SetOutPath $TEMP
 
-   ; ExecWait '"$INSTDIR\setup.bat" node' $0
-   nsExec::ExecToLog '$_CHOCO_INSTALL_PATH\choco install $_NODE_INSTALL_OPTION -y --version $_NODE_VERSION'
+   nsExec::ExecToLog 'powershell -inputformat none -ExecutionPolicy Bypass -command Start-Process msiexec -ArgumentList \
+   $\'/l*v $_LOGS_DIR\node_install.log /qn /i $_NODE_INSTALL_KIT INSTALLDIR=$_NODE_INSTALL_PATH $\' \
+   -NoNewWindow -Wait'
    Pop $0
 
    ${If} $0 == 0
@@ -340,7 +311,7 @@ SectionEnd
 
 Section "!EasyManage (required)"
 
-   SectionIn RO
+   ;SectionIn RO
 
    ; extract run script files
    SetOutPath $_SCRIPTS_DIR
@@ -403,6 +374,8 @@ Section "!EasyManage (required)"
    ${ConfigWrite} "$PROFILE\easymanage.conf" "INSTALLED_VERSION=" "$_INSTALL_VERSION" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "AUTH_HOME=" "$_AUTH_INSTALL_PATH" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "MONGO_HOME=" "$_MONGO_SERVER_PATH" $R0
+   ${ConfigWrite} "$PROFILE\easymanage.conf" "MONGO_DATA_PATH=" "$_MONGO_DATA_PATH" $R0
+   ${ConfigWrite} "$PROFILE\easymanage.conf" "MONGO_LOG_PATH=" "$_MONGO_LOG_PATH" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "JAVA_HOME=" "$_JAVA_INSTALL_PATH" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "NODE_HOME=" "$_NODE_INSTALL_PATH" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "SERVER_ADDRESS=" "$_SERVER_ADDRESS" $R0
@@ -450,8 +423,6 @@ SectionEnd
 Section "-Cleanup"
 
     ; Remove files and uninstaller
-    Delete $_SCRIPTS_DIR\install_chocolatey.bat
-    Delete $_SCRIPTS_DIR\install_chocolatey.ps1
     Delete $_SCRIPTS_DIR\install_db.bat
     Delete $_SCRIPTS_DIR\install_java.bat
     Delete $_SCRIPTS_DIR\install_node.bat
@@ -516,7 +487,7 @@ Section "Uninstall"
 
    ReadINIStr $_JAVA_INSTALL_OPTION "$PROFILE\\easymanage.ini" "dependencies" "JAVA_INSTALL_OPTION"
    ReadINIStr $_JAVA_INSTALL_PATH "$PROFILE\\easymanage.ini" "paths" "JAVA_INSTALL_PATH"
-   nsExec::ExecToLog 'choco uninstall $_JAVA_INSTALL_OPTION -y'
+   ;nsExec::ExecToLog 'TODO'
    Pop $0
 
    DetailPrint "Uninstall java returned $0"
@@ -534,7 +505,7 @@ Section "Uninstall"
    ReadINIStr $_MONGO_DATA_PATH "$PROFILE\\easymanage.ini" "paths" "MONGO_DATA_PATH"
    ReadINIStr $_MONGO_LOG_PATH "$PROFILE\\easymanage.ini" "paths" "MONGO_LOG_PATH"
 
-   nsExec::ExecToLog 'choco uninstall $_DB_INSTALL_OPTION -y'
+   ;nsExec::ExecToLog 'TODO'
    Pop $0
    DetailPrint "Uninstall db returned $0"
 
@@ -549,7 +520,7 @@ Section "Uninstall"
    ReadINIStr $_NODE_INSTALL_OPTION "$PROFILE\\easymanage.ini" "dependencies" "NODE_INSTALL_OPTION"
    ReadINIStr $_NODE_INSTALL_PATH "$PROFILE\\easymanage.ini" "paths" "NODE_INSTALL_PATH"
 
-   nsExec::ExecToLog 'choco uninstall $_NODE_INSTALL_OPTION -y'
+   ;nsExec::ExecToLog 'TODO'
    Pop $0
    DetailPrint "Uninstall node returned $0"
 
@@ -571,16 +542,6 @@ Section "Uninstall"
 
    DetailPrint "Remove auth bin dir from PATH environment variable"
    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$_AUTH_INSTALL_PATH\bin"
-
-   ; Uninstall 'Chocolatey'
-   ReadINIStr $_CHOCO_INSTALL_PATH "$PROFILE\\easymanage.ini" "paths" "CHOCO_INSTALL_PATH"
-
-   DetailPrint "Deleting $_CHOCO_INSTALL_PATH"
-   RMDir /r "$_CHOCO_INSTALL_PATH"
-
-   DetailPrint "Unset ChocolateyInstall environment variable pointing to $\"$_CHOCO_INSTALL_PATH$\""
-   ${un.EnvVarUpdate} $0 "ChocolateyInstall" "R" "HKLM" "$_CHOCO_INSTALL_PATH"
-   ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$_CHOCO_INSTALL_PATH\bin"
 
    ; Remove install folder
    Delete $INSTDIR\*.md

@@ -5,7 +5,7 @@
 
     <groupId>com.volunteering</groupId>
     <artifactId>resource-management</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>resource-management</name>
@@ -23,7 +23,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <disable.docker.plugin>true</disable.docker.plugin>
+        <disable.docker.plugin>false</disable.docker.plugin>
 
        <!--docker build related properties-->
         <dockerSourceDirectory>${project.basedir}/src/main/docker</dockerSourceDirectory>
@@ -353,6 +353,45 @@
                             <sha1>d07ae0afa4cb76fe96fd096bb52eab1fc7a043be</sha1>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>fetch-mongodb-kit</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>https://fastdl.mongodb.org/win32/mongodb-win32-x86_64-2008plus-ssl-4.0.16-signed.msi</url>
+                            <!--NO UNPACKING TO BE DONE HERE SO THE ARCHIVE IS CACHED-->
+                            <outputDirectory>${win.native.source}</outputDirectory>
+                            <sha1>31c022f2f2a8e104b4fdb9b573b2fc9f1e7201dc</sha1>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>fetch-java-kit</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>https://cdn.azul.com/zulu/bin/zulu11.37.17-ca-jdk11.0.6-win_x64.msi</url>
+                            <!--NO UNPACKING TO BE DONE HERE SO THE ARCHIVE IS CACHED-->
+                            <outputDirectory>${win.native.source}</outputDirectory>
+                            <sha1>58f975c54ab160446b74f471fcdf2d0179bdaa22</sha1>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>fetch-nodejs-kit</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>wget</goal>
+                        </goals>
+                        <configuration>
+                            <url>https://nodejs.org/download/release/v10.15.0/node-v10.15.0-x64.msi</url>
+                            <!--NO UNPACKING TO BE DONE HERE SO THE ARCHIVE IS CACHED-->
+                            <outputDirectory>${win.native.source}</outputDirectory>
+                            <sha1>7f4a13d1bf09dab24a08ec7981a10458fd945344</sha1>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -451,6 +490,15 @@
                                         <include>run_auth.bat</include>
                                         <include>start.bat</include>
                                         <include>stop.bat</include>
+                                    </includes>
+                                </resource>
+                                <resource>
+                                    <directory>${win.native.source}</directory>
+                                    <targetPath>${win.native.build.directory}/msi</targetPath>
+                                    <includes>
+                                        <include>mongodb-win32-x86_64-2008plus-ssl-4.0.16-signed.msi</include>
+                                        <include>zulu11.37.17-ca-jdk11.0.6-win_x64.msi</include>
+                                        <include>node-v10.15.0-x64.msi</include>
                                     </includes>
                                 </resource>
                                 <!--<resource>-->
@@ -874,7 +922,7 @@
                                             <host>localhosts:127.0.0.1</host>
                                         </extraHosts>
                                         <env>
-                                            <SERVER_ADDRESS>localhost</SERVER_ADDRESS>
+                                            <SERVER_ADDRESS>gugustiuc.go.ro</SERVER_ADDRESS>
                                         </env>
                                         <volumes>
                                             <bind>

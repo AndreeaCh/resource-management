@@ -1,5 +1,5 @@
 SET _JAR_PATH=%1
-IF "%_JAR_PATH%"=="" SET _JAR_PATH=target/resource-management-0.0.2-SNAPSHOT.jar
+IF "%_JAR_PATH%"=="" SET _JAR_PATH=target/resource-management-0.0.3-SNAPSHOT.jar
 
 SET _CONFIG_PATH=%2
 IF "%_CONFIG_PATH%"=="" SET _CONFIG_PATH=src/main/resources/application.properties
