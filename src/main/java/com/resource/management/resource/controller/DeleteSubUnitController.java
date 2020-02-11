@@ -15,6 +15,7 @@ import com.resource.management.resource.model.SubUnit;
 import com.resource.management.resource.model.SubUnitsRepository;
 import com.resource.management.resource.service.NotificationService;
 import com.resource.management.resource.service.SubUnitsService;
+import com.resource.management.services.model.LastUpdatedTimestampRepository;
 import com.resource.management.services.model.ServiceRepository;
 
 @Controller
@@ -32,6 +33,9 @@ public class DeleteSubUnitController
    @Autowired
    private NotificationService notificationService;
 
+   @Autowired
+   private LastUpdatedTimestampRepository timestampRepository;
+
 
    @MessageMapping("/deleteSubUnit")
    @SendTo("/topic/unitDeletedNotification")
@@ -43,6 +47,8 @@ public class DeleteSubUnitController
       {
          final String subUnitName = subUnit.get().getName();
          this.serviceRepository.deleteBySubUnit( subUnitName );
+         this.timestampRepository.saveTodaysTimestamp();
+         this.timestampRepository.saveTomorrowsTimestamp();
       }
       final String ipAddress = headerAccessor.getSessionAttributes().get( "ip" ).toString();
       this.service.deleteSubUnit( request.getId(), ipAddress );
