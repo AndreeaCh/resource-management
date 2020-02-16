@@ -117,7 +117,7 @@ public class EquipmentPdfCreator {
 
     private void addUnusableResources(PdfPTable table, SubUnitReport subUnitReport, boolean isTotalRow) {
         addHeaderCell(table, NEOPERATIONAL, 0, 1, 1);
-        subUnitReport.getFirstInterventionResourceReport()
+        subUnitReport.getInterventionTechniqueResourcesReport()
                      .forEach((type, r) -> {
                          if (isTotalRow) {
                              addTotalCell(table, r.getUnusableAsString());
@@ -125,8 +125,8 @@ public class EquipmentPdfCreator {
                              addSimpleTableCell(table, r.getUnusableAsString());
                          }
                      });
-        addTotalCell(table, subUnitReport.getFirstInterventionTotal().getUnusableAsString());
-        subUnitReport.getOtherResourceReport()
+        addTotalCell(table, subUnitReport.getInterventionTechniqueTotal().getUnusableAsString());
+        /*subUnitReport.getOtherResourceReport()
                      .forEach((type, r) -> {
                          if (isTotalRow) {
                              addTotalCell(table, r.getUnusableAsString());
@@ -134,7 +134,7 @@ public class EquipmentPdfCreator {
                              addSimpleTableCell(table, r.getUnusableAsString());
                          }
                      });
-        addTotalCell(table, subUnitReport.getOtherResourcesTotal().getUnusableAsString());
+        addTotalCell(table, subUnitReport.getOtherResourcesTotal().getUnusableAsString());*/
         addTotalCell(table, subUnitReport.getAllResourcesTotal().getUnusableAsString());
         subUnitReport.getEquipmentReport()
                      .forEach((type, r) -> {
@@ -153,7 +153,7 @@ public class EquipmentPdfCreator {
 
     private void addReserveResources(PdfPTable table, SubUnitReport subUnitReport, boolean isTotalRow) {
         addHeaderCell(table, REZERVA, 0, 1, 1);
-        subUnitReport.getFirstInterventionResourceReport()
+        subUnitReport.getInterventionTechniqueResourcesReport()
                      .forEach((type, r) -> {
                          if (isTotalRow) {
                              addTotalCell(table, r.getReserveAsString());
@@ -161,8 +161,8 @@ public class EquipmentPdfCreator {
                              addSimpleTableCell(table, r.getReserveAsString());
                          }
                      });
-        addTotalCell(table, subUnitReport.getFirstInterventionTotal().getReserveAsString());
-        subUnitReport.getOtherResourceReport()
+        addTotalCell(table, subUnitReport.getInterventionTechniqueTotal().getReserveAsString());
+       /* subUnitReport.getOtherResourceReport()
                      .forEach((type, r) -> {
                          if (isTotalRow) {
                              addTotalCell(table, r.getReserveAsString());
@@ -170,7 +170,7 @@ public class EquipmentPdfCreator {
                              addSimpleTableCell(table, r.getReserveAsString());
                          }
                      });
-        addTotalCell(table, subUnitReport.getOtherResourcesTotal().getReserveAsString());
+        addTotalCell(table, subUnitReport.getOtherResourcesTotal().getReserveAsString());*/
         addTotalCell(table, subUnitReport.getAllResourcesTotal().getReserveAsString());
         subUnitReport.getEquipmentReport()
                      .forEach((type, r) -> {
@@ -189,7 +189,7 @@ public class EquipmentPdfCreator {
 
     private void addUsableResources(PdfPTable table, SubUnitReport subUnitReport, boolean isTotalRow) {
         addHeaderCell(table, OPERATIONAL, 0, 1, 1);
-        subUnitReport.getFirstInterventionResourceReport()
+        subUnitReport.getInterventionTechniqueResourcesReport()
                      .forEach((type, r) -> {
                          if (isTotalRow) {
                              addTotalCell(table, r.getUsableAsString());
@@ -198,8 +198,8 @@ public class EquipmentPdfCreator {
                          }
                          ;
                      });
-        addTotalCell(table, subUnitReport.getFirstInterventionTotal().getUsableAsString());
-        subUnitReport.getOtherResourceReport()
+        addTotalCell(table, subUnitReport.getInterventionTechniqueTotal().getUsableAsString());
+        /*subUnitReport.getOtherResourceReport()
                      .forEach((type, r) -> {
                          if (isTotalRow) {
                              addTotalCell(table, r.getUsableAsString());
@@ -208,7 +208,7 @@ public class EquipmentPdfCreator {
                          }
                          ;
                      });
-        addTotalCell(table, subUnitReport.getOtherResourcesTotal().getUsableAsString());
+        addTotalCell(table, subUnitReport.getOtherResourcesTotal().getUsableAsString());*/
         addTotalCell(table, subUnitReport.getAllResourcesTotal().getUsableAsString());
         subUnitReport.getEquipmentReport()
                      .forEach((type, r) -> {
@@ -241,28 +241,28 @@ public class EquipmentPdfCreator {
 
     private void createTableHeader(PdfPTable table, AllSubUnitsReport report) {
         SubUnitReport subUnitReport = report.getSubUnitReports().values().stream().findFirst().orElse(null);
-        int firstInterventionResources = subUnitReport.getFirstInterventionResourceReport().size();
-        int otherResourcesSize = subUnitReport.getOtherResourceReport().size();
+        int interventionTechniqueResources = subUnitReport.getInterventionTechniqueResourcesReport().size();
+        //int otherResourcesSize = subUnitReport.getOtherResourceReport().size();
         int equipmentsSize = subUnitReport.getEquipmentReport().size();
 
         addHeaderCell(table, GARDA_DE_INTERVENTIE, 90, 2, 3);
-        addHeaderCell(table, TEHNICA_DE_INTERVENTIE, 0, firstInterventionResources + otherResourcesSize + 2, 1);
+        addHeaderCell(table, TEHNICA_DE_INTERVENTIE, 0, interventionTechniqueResources + 2, 1);
         addHeaderCell(table, TOTAL_TEHNICA_DE_INTERVENTIE, 90, 1, 3);
         addHeaderCell(table, ECHIPAMENTE, 0, equipmentsSize, 2);
         addHeaderCell(table, TOTAL_ECHIPAMENTE, 90, 1, 3);
-        addHeaderCell(table, TEHNICA_DE_PRIMA_INTERVENTIE, 0, firstInterventionResources, 1);
+        addHeaderCell(table, TEHNICA_DE_PRIMA_INTERVENTIE, 0, interventionTechniqueResources, 1);
         addHeaderCell(table, TOTAL_TEHNICA_DE_PRIMA_INTERVENTIE, 90, 1, 2);
-        addHeaderCell(table, ALTE_TIPURI_DE_TEHNICA, 0, otherResourcesSize, 1);
+       // addHeaderCell(table, ALTE_TIPURI_DE_TEHNICA, 0, otherResourcesSize, 1);
         addHeaderCell(table, TOTAL_ALTE_TIPURI_DE_TEHNICA, 90, 1, 2);
 
-        subUnitReport.getFirstInterventionResourceReport().keySet().forEach(r -> {
+        subUnitReport.getInterventionTechniqueResourcesReport().keySet().forEach(r -> {
             addHeaderCell(table, r, 90, 1, 1);
         });
 
-        subUnitReport.getOtherResourceReport().keySet().forEach(r -> {
+       /* subUnitReport.getOtherResourceReport().keySet().forEach(r -> {
             addHeaderCell(table, r, 90, 1, 1);
         });
-
+*/
         subUnitReport.getEquipmentReport().keySet().forEach(r -> {
             addHeaderCell(table, r, 90, 1, 1);
         });
