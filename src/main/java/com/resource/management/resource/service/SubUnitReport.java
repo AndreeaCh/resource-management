@@ -11,11 +11,9 @@ import java.util.Map;
 @EqualsAndHashCode
 public class SubUnitReport {
     private String subUnitName;
-    private Map<String, Report> firstInterventionResourceReport;
-    private Map<String, Report> otherResourceReport;
+    private Map<String, Report> interventionTechniqueResourcesReport;
     private Map<String, Report> equipmentReport;
-    private Report firstInterventionTotal;
-    private Report otherResourcesTotal;
+    private Report interventionTechniqueTotal;
     private Report allResourcesTotal;
     private Report equipmentTotal;
 }
