@@ -2,6 +2,7 @@ package com.resource.management.resource.service;
 
 import com.resource.management.management.vehicles.model.VehicleType;
 import com.resource.management.resource.model.SubUnit;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -69,7 +71,7 @@ public class EquipmentXlsCreator {
 
         SubUnitReport subUnitReport = report.getSubUnitReports().values().stream().findFirst().orElse(null);
         int interventionTechniqueResourcesSize = subUnitReport.getInterventionTechniqueResourcesReport().size();
-       // int otherResourcesSize = subUnitReport.getOtherResourceReport().size();
+        // int otherResourcesSize = subUnitReport.getOtherResourceReport().size();
         int equipmentsSize = subUnitReport.getEquipmentReport().size();
 
         Workbook workbook = new XSSFWorkbook();
@@ -102,7 +104,7 @@ public class EquipmentXlsCreator {
         Cell tehnicaDeInterventieHeader = header.createCell(columnStartIndex);
         tehnicaDeInterventieHeader.setCellValue(TEHNICA_DE_INTERVENTIE);
         tehnicaDeInterventieHeader.setCellStyle(headerStyle);
-        sheet.addMergedRegion(new CellRangeAddress(lastRowNumber, lastRowNumber, columnStartIndex, columnEndIndex));
+        sheet.addMergedRegion(new CellRangeAddress(lastRowNumber, lastRowNumber + 1, columnStartIndex, columnEndIndex));
 
         columnStartIndex = columnEndIndex + 1;
         columnEndIndex = columnStartIndex;
@@ -111,8 +113,8 @@ public class EquipmentXlsCreator {
         totalTehnicaDeInterventieHeader.setCellStyle(rotatedHeaderStyle);
         sheet.addMergedRegion(new CellRangeAddress(lastRowNumber, lastRowNumber + 2, columnStartIndex, columnEndIndex));
 
-        columnStartIndex = columnEndIndex + 1;
-        columnEndIndex = columnStartIndex + equipmentsSize - 1;
+        columnStartIndex = columnEndIndex + 2;
+        columnEndIndex = columnStartIndex + equipmentsSize - 2;
         Cell echipamenteHeader = header.createCell(columnStartIndex);
         echipamenteHeader.setCellValue(ECHIPAMENTE);
         echipamenteHeader.setCellStyle(headerStyle);
@@ -125,11 +127,11 @@ public class EquipmentXlsCreator {
         totalEchipamenteHeader.setCellStyle(rotatedHeaderStyle);
         sheet.addMergedRegion(new CellRangeAddress(lastRowNumber, lastRowNumber + 2, columnStartIndex, columnEndIndex));
 
-        lastRowNumber = sheet.getLastRowNum() + 1;
+        lastRowNumber = sheet.getLastRowNum()+1 ;
         header = sheet.createRow(lastRowNumber);
 
-        columnStartIndex = 2;
-        columnEndIndex = columnStartIndex + interventionTechniqueResourcesSize - 1;
+        columnStartIndex = columnEndIndex + 1;
+        columnEndIndex = columnStartIndex ;
         /*Cell tehnicaDePrimaInterventieHeader = header.createCell(columnStartIndex);
         tehnicaDePrimaInterventieHeader.setCellValue(TEHNICA_DE_PRIMA_INTERVENTIE);
         tehnicaDePrimaInterventieHeader.setCellStyle(headerStyle);*/
@@ -150,12 +152,12 @@ public class EquipmentXlsCreator {
         alteTipuriDeTehnicaHeader.setCellStyle(headerStyle);*/
         //sheet.addMergedRegion(new CellRangeAddress(lastRowNumber, lastRowNumber, columnStartIndex, columnEndIndex));
 
-        columnStartIndex = columnEndIndex + 1;
-        columnEndIndex = columnStartIndex;
+//        columnStartIndex = columnEndIndex + 1;
+//        columnEndIndex = columnStartIndex;
         Cell totalAlteTipuriDeTehnicaHeader = header.createCell(columnStartIndex);
         totalAlteTipuriDeTehnicaHeader.setCellValue(TOTAL_ALTE_TIPURI_DE_TEHNICA);
         totalAlteTipuriDeTehnicaHeader.setCellStyle(rotatedHeaderStyle);
-        sheet.addMergedRegion(new CellRangeAddress(lastRowNumber, lastRowNumber + 1, columnStartIndex, columnEndIndex));
+        sheet.addMergedRegion(new CellRangeAddress(lastRowNumber , lastRowNumber + 1, columnStartIndex, columnEndIndex));
 
         lastRowNumber = sheet.getLastRowNum() + 1;
         final Row finalHeaderRow = sheet.createRow(lastRowNumber);
@@ -189,15 +191,15 @@ public class EquipmentXlsCreator {
 
         final AtomicInteger startIndex = new AtomicInteger(sheet.getLastRowNum() + 1);
         report.getSubUnitReports()
-              .forEach((subUnitName, r) -> {
-                  Row contentRow = sheet.createRow(startIndex.getAndIncrement());
-                  addSubunitName(sheet, contentRow, subUnitName, headerStyle);
-                  addUsableResources(contentRow, r, headerStyle, cellStyle);
-                  contentRow = sheet.createRow(startIndex.getAndIncrement());
-                  addReserveResources(contentRow, r, headerStyle, cellStyle);
-                  contentRow = sheet.createRow(startIndex.getAndIncrement());
-                  addUnusableResources(contentRow, r, headerStyle, cellStyle);
-              });
+                .forEach((subUnitName, r) -> {
+                    Row contentRow = sheet.createRow(startIndex.getAndIncrement());
+                    addSubunitName(sheet, contentRow, subUnitName, headerStyle);
+                    addUsableResources(contentRow, r, headerStyle, cellStyle);
+                    contentRow = sheet.createRow(startIndex.getAndIncrement());
+                    addReserveResources(contentRow, r, headerStyle, cellStyle);
+                    contentRow = sheet.createRow(startIndex.getAndIncrement());
+                    addUnusableResources(contentRow, r, headerStyle, cellStyle);
+                });
 
         final AtomicInteger totalStartIndex = new AtomicInteger(sheet.getLastRowNum() + 1);
         SubUnitReport reportTotals = report.getTotals();
@@ -223,11 +225,11 @@ public class EquipmentXlsCreator {
 
         AtomicInteger columnNumber = new AtomicInteger(2);
         subUnitReport.getInterventionTechniqueResourcesReport()
-                     .forEach((type, r) -> {
-                         Cell resourceCell = contentRow.createCell(columnNumber.getAndIncrement());
-                         resourceCell.setCellValue(r.getUsable());
-                         resourceCell.setCellStyle(cellStyle);
-                     });
+                .forEach((type, r) -> {
+                    Cell resourceCell = contentRow.createCell(columnNumber.getAndIncrement());
+                    resourceCell.setCellValue(r.getUsable());
+                    resourceCell.setCellStyle(cellStyle);
+                });
 
         Cell firstInterventionTotalCell = contentRow.createCell(columnNumber.getAndIncrement());
         firstInterventionTotalCell.setCellValue(subUnitReport.getInterventionTechniqueTotal().getUsable());
@@ -249,11 +251,11 @@ public class EquipmentXlsCreator {
         resourcesTotalCell.setCellStyle(headerStyle);
 
         subUnitReport.getEquipmentReport()
-                     .forEach((type, r) -> {
-                         Cell resourceCell = contentRow.createCell(columnNumber.getAndIncrement());
-                         resourceCell.setCellValue(r.getUsable());
-                         resourceCell.setCellStyle(cellStyle);
-                     });
+                .forEach((type, r) -> {
+                    Cell resourceCell = contentRow.createCell(columnNumber.getAndIncrement());
+                    resourceCell.setCellValue(r.getUsable());
+                    resourceCell.setCellStyle(cellStyle);
+                });
 
         Cell equipmentTotal = contentRow.createCell(columnNumber.getAndIncrement());
         equipmentTotal.setCellValue(subUnitReport.getEquipmentTotal().getUsable());
@@ -267,11 +269,11 @@ public class EquipmentXlsCreator {
 
         AtomicInteger columnNumber = new AtomicInteger(2);
         subUnitReport.getInterventionTechniqueResourcesReport()
-                     .forEach((type, r) -> {
-                         Cell resourceCell = contentRow.createCell(columnNumber.getAndIncrement());
-                         resourceCell.setCellValue(r.getReserves());
-                         resourceCell.setCellStyle(cellStyle);
-                     });
+                .forEach((type, r) -> {
+                    Cell resourceCell = contentRow.createCell(columnNumber.getAndIncrement());
+                    resourceCell.setCellValue(r.getReserves());
+                    resourceCell.setCellStyle(cellStyle);
+                });
 
         Cell firstInterventionTotalCell = contentRow.createCell(columnNumber.getAndIncrement());
         firstInterventionTotalCell.setCellValue(subUnitReport.getInterventionTechniqueTotal().getReserves());
@@ -293,11 +295,11 @@ public class EquipmentXlsCreator {
         resourcesTotalCell.setCellStyle(headerStyle);
 
         subUnitReport.getEquipmentReport()
-                     .forEach((type, r) -> {
-                         Cell resourceCell = contentRow.createCell(columnNumber.getAndIncrement());
-                         resourceCell.setCellValue(r.getReserves());
-                         resourceCell.setCellStyle(cellStyle);
-                     });
+                .forEach((type, r) -> {
+                    Cell resourceCell = contentRow.createCell(columnNumber.getAndIncrement());
+                    resourceCell.setCellValue(r.getReserves());
+                    resourceCell.setCellStyle(cellStyle);
+                });
 
         Cell equipmentTotal = contentRow.createCell(columnNumber.getAndIncrement());
         equipmentTotal.setCellValue(subUnitReport.getEquipmentTotal().getReserves());
@@ -311,11 +313,11 @@ public class EquipmentXlsCreator {
 
         AtomicInteger columnNumber = new AtomicInteger(2);
         subUnitReport.getInterventionTechniqueResourcesReport()
-                     .forEach((type, r) -> {
-                         Cell resourceCell = contentRow.createCell(columnNumber.getAndIncrement());
-                         resourceCell.setCellValue(r.getUnusable());
-                         resourceCell.setCellStyle(cellStyle);
-                     });
+                .forEach((type, r) -> {
+                    Cell resourceCell = contentRow.createCell(columnNumber.getAndIncrement());
+                    resourceCell.setCellValue(r.getUnusable());
+                    resourceCell.setCellStyle(cellStyle);
+                });
 
         Cell firstInterventionTotalCell = contentRow.createCell(columnNumber.getAndIncrement());
         firstInterventionTotalCell.setCellValue(subUnitReport.getInterventionTechniqueTotal().getUnusable());
@@ -337,11 +339,11 @@ public class EquipmentXlsCreator {
         resourcesTotalCell.setCellStyle(headerStyle);
 
         subUnitReport.getEquipmentReport()
-                     .forEach((type, r) -> {
-                         Cell resourceCell = contentRow.createCell(columnNumber.getAndIncrement());
-                         resourceCell.setCellValue(r.getUnusable());
-                         resourceCell.setCellStyle(cellStyle);
-                     });
+                .forEach((type, r) -> {
+                    Cell resourceCell = contentRow.createCell(columnNumber.getAndIncrement());
+                    resourceCell.setCellValue(r.getUnusable());
+                    resourceCell.setCellStyle(cellStyle);
+                });
 
         Cell equipmentTotal = contentRow.createCell(columnNumber.getAndIncrement());
         equipmentTotal.setCellValue(subUnitReport.getEquipmentTotal().getUnusable());
