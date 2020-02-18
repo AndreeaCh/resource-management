@@ -104,7 +104,7 @@ SET _DATETIME=%_DATETIME:~0,8%-%_DATETIME:~8,6%
 ECHO START_1.0 Verify if mongod has already started
 FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq mongod.exe" /fo table /nh') DO (
     IF %%H NEQ No (
-        GOTO start_backend
+        GOTO start_auth
     )
 )
 
@@ -117,12 +117,10 @@ timeout 15
 
 :::::::::::::::::::::::::::::::::::: START AUTH :::::::::::::::::::::::::::::::::::::
 
-:: TODO - use 'starts with' instead
-
-:start_backend
+:start_auth
 ECHO START_X.1 Verify if auth application has already started
 FOR /F "tokens=1,2" %%G IN ('jps') DO (
-	IF %%H == easy-manage.jar (
+	IF %%H == jboss-modules.jar (
         GOTO start_backend
     )
 )
@@ -137,7 +135,7 @@ powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_DIR%
 :start_backend
 ECHO START_2.1 Verify if backend application has already started
 FOR /F "tokens=1,2" %%G IN ('jps') DO (
-	IF %%H == jboss-modules.jar (
+	IF %%H == easy-manage.jar (
         GOTO start_frontend
     )
 )
