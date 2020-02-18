@@ -63,6 +63,7 @@ Var _NODE_VERSION
 
 ; dynamic variables
 Var _SERVER_ADDRESS
+Var _SERVER_PORT
 
 ; show installation details for debug purposes
 ShowInstDetails show
@@ -129,6 +130,8 @@ Section "-Meta setup"
    StrCpy $_NODE_INSTALL_PATH 'C:\Progra~1\nodejs'
    StrCpy $_NODE_VERSION '10.15.0'
    StrCpy $_NODE_INSTALL_KIT 'node-v10.15.0-x64.msi'
+
+   StrCpy $_SERVER_PORT "8345"
 
    ; save install constants to ini file to be used at uninstall
    WriteINIStr "$PROFILE\\easymanage.ini" "paths" "BIN_PATH" $_BIN_DIR
@@ -373,12 +376,14 @@ Section "!EasyManage (required)"
    ${ConfigWrite} "$PROFILE\easymanage.conf" "INSTALL_PATH=" "$INSTDIR" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "INSTALLED_VERSION=" "$_INSTALL_VERSION" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "AUTH_HOME=" "$_AUTH_INSTALL_PATH" $R0
+   ${ConfigWrite} "$PROFILE\easymanage.conf" "AUTH_SERVER_PORT=" "$_AUTH_SERVER_PORT" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "MONGO_HOME=" "$_MONGO_SERVER_PATH" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "MONGO_DATA_PATH=" "$_MONGO_DATA_PATH" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "MONGO_LOG_PATH=" "$_MONGO_LOG_PATH" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "JAVA_HOME=" "$_JAVA_INSTALL_PATH" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "NODE_HOME=" "$_NODE_INSTALL_PATH" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "SERVER_ADDRESS=" "$_SERVER_ADDRESS" $R0
+   ${ConfigWrite} "$PROFILE\easymanage.conf" "SERVER_PORT=" "$_SERVER_PORT" $R0
    ${ConfigWrite} "$PROFILE\easymanage.conf" "HTTP_SERVER_VERSION=" "$_HTTP_SERVER_VERSION" $R0
 
    ; set environment variables

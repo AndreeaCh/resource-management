@@ -13,6 +13,10 @@ For /F "tokens=1* delims==" %%A IN (%UserProfile%\easymanage.conf) DO (
 
     IF "%%A"=="SERVER_ADDRESS" set _SERVER_ADDRESS=%%B
 
+    IF "%%A"=="SERVER_PORT" set _BACKEND_SERVER_PORT=%%B
+
+    IF "%%A"=="FRONTEND_SERVER_PORT" set _FRONTEND_SERVER_PORT=%%B
+
     IF "%%A"=="MONGO_HOME" set _MONGO_HOME=%%B
 
     IF "%%A"=="MONGO_DATA_PATH" set _MONGO_DATA_PATH=%%B
@@ -37,6 +41,8 @@ ECHO Configured JAVA_HOME is '%_JAVA_HOME%'
 ECHO Configured NODE_HOME is '%_NODE_HOME%'
 ECHO Configured AUTH_HOME is '%_AUTH_HOME%'
 ECHO Configured SERVER_ADDRESS is '%_SERVER_ADDRESS%'
+ECHO Configured BACKEND_SERVER_PORT is '%_BACKEND_SERVER_PORT%'
+ECHO Configured FRONTEND_SERVER_PORT is '%_FRONTEND_SERVER_PORT%'
 ECHO Configured HTTP_SERVER_VERSION is '%_HTTP_SERVER_VER%'
 
 ::::::::::::::::::::::::::::::::: PATH CONSTANTS ::::::::::::::::::::::::::::::::::::::
@@ -76,6 +82,21 @@ IF "%_NODE_HOME%"=="" (
 IF "%_AUTH_HOME%"=="" (
     ECHO Auth server install path is NOT defined
     GOTO :cleaning
+)
+
+IF "%_SERVER_ADDRESS%"=="" (
+    ECHO Backend server host address is not defined
+    GOTO :cleaning
+)
+
+IF "%_BACKEND_SERVER_PORT%"=="" (
+    ECHO Backend server port is not defined
+    GOTO :cleaning
+)
+
+IF "%_FRONTEND_SERVER_PORT%"=="" (
+    ECHO Backend server port is not defined, using default
+    SET _FRONTEND_SERVER_PORT=8080
 )
 
 IF "%_HTTP_SERVER_VER%"=="" (
@@ -125,7 +146,10 @@ FOR /F "tokens=1,2" %%G IN ('jps') DO (
     )
 )
 
-ECHO START_X.2 Starting new auth server instance...
+ECHO START_X.2.1 Forcibly closing the process which is using the auth server required port
+FOR /f "tokens=5" %%G IN ('netstat -aon ^| FIND ":%_AUTH_HTTP_PORT%" ^| FIND "LISTENING"') DO taskkill /f /pid %%G
+
+ECHO START_X.2.2 Starting new auth server instance...
 powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_DIR%\"; & .\run-auth.bat %_AUTH_HOME% %_SERVER_ADDRESS% %_AUTH_HTTP_PORT% %_AUTH_IMPORT_PATH% >> %_LOGS_DIR%\auth-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
 :::::::::::::::::::::::::::::::::::: START BACKEND :::::::::::::::::::::::::::::::::::::
@@ -140,7 +164,10 @@ FOR /F "tokens=1,2" %%G IN ('jps') DO (
     )
 )
 
-ECHO START_2.2 Starting new server instance...
+ECHO START_2.2.1 Forcibly closing the process which is using the backend server required port
+FOR /f "tokens=5" %%G IN ('netstat -aon ^| FIND ":%_BACKEND_SERVER_PORT%" ^| FIND "LISTENING"') DO taskkill /f /pid %%G
+
+ECHO START_2.2.2 Starting new server instance...
 powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_DIR%\"; & .\run-backend.bat %_BACKEND_PATH% %_CONFIG_PATH% %_LOG_CONFIG_PATH% >> %_LOGS_DIR%\backend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
 
@@ -173,8 +200,11 @@ FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq node.exe" /fo table /nh'
 ECHO START_3.2.1 Update backend address in the frontend environment configuration
 powershell -command "(gc %_INSTALL_PATH%\dist\static\env.js) -replace 'localhost', '%_SERVER_ADDRESS%' | Out-File %_INSTALL_PATH%\dist\static\env.js"
 
+ECHO START_3.2.2 Forcibly closing the process which is using the frontend server required port
+FOR /f "tokens=5" %%G IN ('netstat -aon ^| FIND ":%_FRONTEND_SERVER_PORT%" ^| FIND "LISTENING"') DO taskkill /f /pid %%G
+
 ECHO START_3.2.3 Starting new client instance...
-powershell -command "Start-Process powershell -ArgumentList 'http-server %_FRONTEND_PATH% -p 8080 >> %_LOGS_DIR%\frontend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
+powershell -command "Start-Process powershell -ArgumentList 'http-server %_FRONTEND_PATH% -p %_FRONTEND_SERVER_PORT% >> %_LOGS_DIR%\frontend-%_DATETIME%.log 2>&1' -WindowStyle hidden"
 
 ::::::::::::::::::::::::::::::::::: POST PROCESSING :::::::::::::::::::::::::::::::::::::
 
