@@ -17,21 +17,7 @@ public class ReportBuilder {
         subUnits.forEach(subUnit -> {
             SubUnitReport subUnitReport = new SubUnitReport();
             subUnitReport.setSubUnitName(subUnit.getName());
-            /*List<VehicleType> firstInterventionResourcesTypes = getFirstInterventionResourcesTypes(subUnits,
-            vehicleTypeList);
-            Map<String, Report> fiResourceMap = new HashMap<>();
-            firstInterventionResourcesTypes.forEach(resourceType -> {
-                List<Resource> resourcesOfType = getResourcesOfType(subUnit, resourceType.getShortName());
-                fiResourceMap.put(resourceType.getLongName(), buildReportForResource(resourcesOfType));
-            });
 
-            Map<String, Report> otherResourceMap = new HashMap<>();
-            List<VehicleType> otherResourcesTypes = getOtherResourcesTypes(subUnits, vehicleTypeList);
-            otherResourcesTypes.forEach(resourceType -> {
-                List<Resource> resourcesOfType = getResourcesOfType(subUnit, resourceType.getShortName());
-                otherResourceMap.put(resourceType.getLongName(), buildReportForResource(resourcesOfType));
-            });
-*/
             List<VehicleType> interventionTechniqueResourcesTypes = getInterventionTechniqueResourcesTypes(subUnits,
                     vehicleTypeList);
             Map<String, Report> interventionTechnique = new HashMap<>();
@@ -40,9 +26,6 @@ public class ReportBuilder {
                 interventionTechnique.put(resourceType.getLongName(), buildReportForResource(resourcesOfType));
             });
             subUnitReport.setInterventionTechniqueResourcesReport(interventionTechnique);
-
-/*            subUnitReport.setFirstInterventionResourceReport(fiResourceMap);
-            subUnitReport.setOtherResourceReport(otherResourceMap);*/
 
             Map<String, Report> equipmentResourceMap = new HashMap<>();
             List<String> equipmentResourceTypes = getEquipmentTypes(subUnits);
@@ -85,22 +68,6 @@ public class ReportBuilder {
                                            .setUnusable(interventionTechniqueTotal.getUnusable() + r.getUnusable());
                                });
         totals.setInterventionTechniqueTotal(interventionTechniqueTotal);
-
-        /*Map<String, Report> otherResourcesTotals = report.getSubUnitReports()
-                                                         .values()
-                                                         .stream()
-                                                         .flatMap(r -> r.getOtherResourceReport().entrySet().stream())
-                                                         .collect(Collectors.toMap(k -> k.getKey(), v -> v.getValue(),
-                                                                 (v1, v2) -> addReports(v1, v2)));
-        totals.setOtherResourceReport(otherResourcesTotals);
-        Report otherResourcesTotal = new Report();
-        otherResourcesTotals.values()
-                            .forEach(r -> {
-                                otherResourcesTotal.setUsable(otherResourcesTotal.getUsable() + r.getUsable());
-                                otherResourcesTotal.setReserves(otherResourcesTotal.getReserves() + r.getReserves());
-                                otherResourcesTotal.setUnusable(otherResourcesTotal.getUnusable() + r.getUnusable());
-                            });
-        totals.setOtherResourcesTotal(otherResourcesTotal);*/
 
         Report allResourcesTotal = new Report();
         allResourcesTotal.setUsable(interventionTechniqueTotal.getUsable());
