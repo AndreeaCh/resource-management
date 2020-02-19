@@ -47,28 +47,28 @@ IF "%_DB_SERVER_PORT%"=="" (
 
 ECHO ---
 ECHO STOP_1/6 Stopping processes listening on db server port %_DB_SERVER_PORT%:
-FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_DB_SERVER_PORT%\>"') DO (
+FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_DB_SERVER_PORT%\>" ^| FIND "LISTENING"') DO (
     FOR /f "tokens=1 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo Stopping process %%~A
     taskkill /PID %%G /F
 )
 
 ECHO ---
 ECHO STOP_2/6 Stopping Processes listening on auth server port %_AUTH_SERVER_PORT%:
-FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_AUTH_SERVER_PORT%\>"') DO (
+FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_AUTH_SERVER_PORT%\>" ^| FIND "LISTENING"') DO (
 	FOR /f "tokens=1 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo Stopping process %%~A
 	taskkill /PID %%G /F
 )
 
 ECHO ---
 ECHO STOP_3/6 Stopping processes listening on backend server port %_BACKEND_SERVER_PORT%:
-FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_BACKEND_SERVER_PORT%\>"') DO (
+FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_BACKEND_SERVER_PORT%\>" ^| FIND "LISTENING"') DO (
 	FOR /f "tokens=1 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo Stopping process %%~A
 	taskkill /PID %%G /F
 )
 
 ECHO ---
 ECHO STOP_4/6 Stopping processes listening on frontend server port %_FRONTEND_SERVER_PORT%:
-FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_FRONTEND_SERVER_PORT%\>"') DO (
+FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_FRONTEND_SERVER_PORT%\>" ^| FIND "LISTENING"') DO (
 	FOR /f "tokens=1 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo Stopping process %%~A
 	taskkill /PID %%G /F
 )
