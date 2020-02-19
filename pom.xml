@@ -23,7 +23,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
 
-        <disable.docker.plugin>false</disable.docker.plugin>
+        <disable.docker.plugin>true</disable.docker.plugin>
 
        <!--docker build related properties-->
         <dockerSourceDirectory>${project.basedir}/src/main/docker</dockerSourceDirectory>
@@ -485,6 +485,7 @@
                                     <includes>
                                         <include>production.application.properties</include>
                                         <include>production.log4j2.properties</include>
+                                        <include>status.bat</include>
                                         <include>run_instructions.md</include>
                                         <include>easymanage.bat</include>
                                         <include>run_auth.bat</include>
@@ -768,7 +769,7 @@
       <profile>
             <id>linux</id>
            <properties>
-               <disable.docker.plugin>true</disable.docker.plugin>
+               <disable.docker.plugin>false</disable.docker.plugin>
            </properties>
            <activation>
                 <os>

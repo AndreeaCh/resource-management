@@ -45,6 +45,10 @@
       <outputDirectory>scripts</outputDirectory>
     </file>
     <file>
+      <source>${win.native.build.directory}/run/status.bat</source>
+      <outputDirectory>scripts</outputDirectory>
+    </file>
+    <file>
       <source>${win.native.build.directory}/run/stop.bat</source>
       <outputDirectory>scripts</outputDirectory>
     </file>

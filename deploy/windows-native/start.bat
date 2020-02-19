@@ -124,7 +124,7 @@ SET _DATETIME=%_DATETIME:~0,8%-%_DATETIME:~8,6%
 :check_mongod
 ECHO START_1.0 Verify if mongod has already started
 FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq mongod.exe" /fo table /nh') DO (
-    IF %%H NEQ No (
+    IF %%G NEQ No (
         GOTO start_auth
     )
 )
@@ -141,7 +141,7 @@ timeout 15
 :start_auth
 ECHO START_X.1 Verify if auth application has already started
 FOR /F "tokens=1,2" %%G IN ('jps') DO (
-	IF %%H == jboss-modules.jar (
+	IF %%G == jboss-modules.jar (
         GOTO start_backend
     )
 )
@@ -159,7 +159,7 @@ powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_DIR%
 :start_backend
 ECHO START_2.1 Verify if backend application has already started
 FOR /F "tokens=1,2" %%G IN ('jps') DO (
-	IF %%H == easy-manage.jar (
+	IF %%G == easy-manage.jar (
         GOTO start_frontend
     )
 )
@@ -192,7 +192,7 @@ ECHO START_3.0.3 Configure http server
 
 ECHO START_3.1 Verify if frontend application has already started
 FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq node.exe" /fo table /nh') DO (
-    IF %%H NEQ No (
+    IF %%G NEQ No (
         GOTO cleaning
     )
 )

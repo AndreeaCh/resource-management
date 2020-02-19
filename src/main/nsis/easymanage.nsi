@@ -321,6 +321,7 @@ Section "!EasyManage (required)"
 
    File run\start.bat
    File run\stop.bat
+   File run\status.bat
    File /oname=run-backend.bat run\deploy.bat
    File /oname=run-auth.bat run\run_auth.bat
    File /oname=import.bat run\fillDb.bat
