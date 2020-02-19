@@ -140,13 +140,12 @@ SET _DATETIME=%_DATETIME:~0,8%-%_DATETIME:~8,6%
 :check_mongod
 ECHO ---
 ECHO Processes listening on db server port %_DB_SERVER_PORT%:
-FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_DB_SERVER_PORT%\>"') DO (
+FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_DB_SERVER_PORT%\>" ^| FIND "LISTENING"') DO (
 	FOR /f "tokens=1 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo %%~A
 )
 
 ECHO START_1.0 Verify if mongod is already running
 FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq mongod.exe" /fo table /nh') DO (
-    ECHO Q: Is mongod running A: %%H
     IF %%H NEQ No (
         ECHO Mongodb server is already running!
         GOTO start_auth
@@ -166,13 +165,13 @@ timeout 15
 ECHO START_X.1 Verify if auth application is already running
 FOR /F "tokens=1,2" %%G IN ('jps') DO (
 	IF %%H == jboss-modules.jar (
-	    ECHO Auth application %%H is already running!
+	    ECHO Auth application '%%H' is already running!
         GOTO start_backend
     )
 )
 
 ECHO -/
-ECHO START_X.2.1 Forcibly closing the process which is using the auth server %_AUTH_SERVER_PORT% port
+ECHO START_X.2.1 Forcibly closing any process which is using the auth server %_AUTH_SERVER_PORT% port
 FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_AUTH_SERVER_PORT%\>" ^| FIND "LISTENING"') DO (
 	FOR /f "tokens=1 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo Stopping process %%~A
 	taskkill /f /pid %%G
@@ -183,19 +182,17 @@ powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_DIR%
 
 :::::::::::::::::::::::::::::::::::: START BACKEND :::::::::::::::::::::::::::::::::::::
 
-:: TODO - use 'starts with' instead
-
 :start_backend
 ECHO START_2.1 Verify if backend application is already running
 FOR /F "tokens=1,2" %%G IN ('jps') DO (
 	IF %%H == easy-manage.jar (
-	    ECHO Backend application is already running!
+	    ECHO Backend application '%%H' is already running!
         GOTO start_frontend
     )
 )
 
 ECHO -/
-ECHO START_2.2.1 Forcibly closing the process which is using the backend server %_BACKEND_SERVER_PORT% port
+ECHO START_2.2.1 Forcibly closing any process which is using the backend server %_BACKEND_SERVER_PORT% port
 FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_BACKEND_SERVER_PORT%\>" ^| FIND "LISTENING"') DO (
 	FOR /f "tokens=1 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo Stopping process %%~A
     taskkill /f /pid %%G
@@ -213,7 +210,7 @@ powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_DIR%
 ECHO START_3.0.1 check if http-server is installed
 FOR /f "tokens=2" %%G IN ('%_NODE_HOME%\npm list -g --depth=0 2^>^&1 ^| findstr /i "http-server"') DO (
     IF %%G == http-server@%_HTTP_SERVER_VER% (
-        ECHO Http server is already installed!
+        ECHO Http server '%%G' is already installed!
         GOTO http_server_configure
     )
 )
