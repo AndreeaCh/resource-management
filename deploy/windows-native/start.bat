@@ -138,18 +138,19 @@ SET _DATETIME=%_DATETIME:~0,8%-%_DATETIME:~8,6%
 :::::::::::::::::::::::::::::::::::: START DB SERVER ::::::::::::::::::::::::::::::::::
 
 :check_mongod
-ECHO START_1.0 Verify if mongod is already running
-FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq mongod.exe" /fo table /nh') DO (
-    IF %%G NEQ No (
-        ECHO Mongodb server is already running!
-        GOTO start_auth
-    )
-)
-
 ECHO ---
 ECHO Processes listening on db server port %_DB_SERVER_PORT%:
 FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_DB_SERVER_PORT%\>"') DO (
 	FOR /f "tokens=1 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo %%~A
+)
+
+ECHO START_1.0 Verify if mongod is already running
+FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq mongod.exe" /fo table /nh') DO (
+    ECHO Q: Is mongod running A: %%H
+    IF %%H NEQ No (
+        ECHO Mongodb server is already running!
+        GOTO start_auth
+    )
 )
 
 :start_mongod
@@ -164,8 +165,8 @@ timeout 15
 :start_auth
 ECHO START_X.1 Verify if auth application is already running
 FOR /F "tokens=1,2" %%G IN ('jps') DO (
-	IF %%G == jboss-modules.jar (
-	    ECHO Auth application is already running!
+	IF %%H == jboss-modules.jar (
+	    ECHO Auth application %%H is already running!
         GOTO start_backend
     )
 )
@@ -187,13 +188,13 @@ powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_DIR%
 :start_backend
 ECHO START_2.1 Verify if backend application is already running
 FOR /F "tokens=1,2" %%G IN ('jps') DO (
-	IF %%G == easy-manage.jar (
+	IF %%H == easy-manage.jar (
 	    ECHO Backend application is already running!
         GOTO start_frontend
     )
 )
 
-ECHO ---
+ECHO -/
 ECHO START_2.2.1 Forcibly closing the process which is using the backend server %_BACKEND_SERVER_PORT% port
 FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_BACKEND_SERVER_PORT%\>" ^| FIND "LISTENING"') DO (
 	FOR /f "tokens=1 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo Stopping process %%~A
@@ -224,7 +225,7 @@ powershell -command %_NODE_HOME%\npm install -g http-server
 :http_server_configure
 ECHO START_3.1 Verify if frontend application is already running
 FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq node.exe" /fo table /nh') DO (
-    IF %%G NEQ No (
+    IF %%H NEQ No (
         ECHO Frontend application is already running!
         GOTO cleaning
     )
@@ -233,7 +234,7 @@ FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq node.exe" /fo table /nh'
 ECHO START_3.2.1 Update backend address in the frontend environment configuration
 powershell -command "(gc %_INSTALL_PATH%\dist\static\env.js) -replace 'localhost', '%_SERVER_ADDRESS%' | Out-File %_INSTALL_PATH%\dist\static\env.js"
 
-ECHO ---
+ECHO -/
 ECHO START_3.2.2 Forcibly closing the process which is using the frontend server %_FRONTEND_SERVER_PORT% port
 FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_FRONTEND_SERVER_PORT%\>" ^| FIND "LISTENING"') DO (
 	FOR /f "tokens=1 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo %%~A
