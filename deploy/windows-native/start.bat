@@ -139,19 +139,15 @@ SET _DATETIME=%_DATETIME:~0,8%-%_DATETIME:~8,6%
 
 :check_mongod
 ECHO ---
-ECHO Processes listening on db server port %_DB_SERVER_PORT%:
-FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_DB_SERVER_PORT%\>" ^| FIND "LISTENING"') DO (
-	FOR /f "tokens=1 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo %%~A
-)
-
 ECHO START_1.0 Verify if mongod is already running
 FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq mongod.exe" /fo table /nh') DO (
     IF %%H NEQ No (
-        ECHO Mongodb server is already running!
+        ECHO Mongodb server '%%G'^(%%H^) is already running!
         GOTO start_auth
     )
 )
 
+ECHO -/
 :start_mongod
 ECHO START_1.1 Start mongo
 powershell -command "Start-Process powershell -ArgumentList '%_MONGO_BIN_PATH%\mongod --dbpath=%_MONGO_DATA_PATH% --logpath=%_MONGO_LOG_PATH%  >> %_LOGS_DIR%\mongod-%_DATETIME%.log 2>&1' -WindowStyle hidden"
@@ -162,10 +158,11 @@ timeout 15
 :::::::::::::::::::::::::::::::::::: START AUTH :::::::::::::::::::::::::::::::::::::
 
 :start_auth
+ECHO ---
 ECHO START_X.1 Verify if auth application is already running
 FOR /F "tokens=1,2" %%G IN ('jps') DO (
 	IF %%H == jboss-modules.jar (
-	    ECHO Auth application '%%H' is already running!
+	    ECHO Auth application '%%H'^(%%G^) is already running!
         GOTO start_backend
     )
 )
@@ -183,10 +180,11 @@ powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_DIR%
 :::::::::::::::::::::::::::::::::::: START BACKEND :::::::::::::::::::::::::::::::::::::
 
 :start_backend
+ECHO ---
 ECHO START_2.1 Verify if backend application is already running
 FOR /F "tokens=1,2" %%G IN ('jps') DO (
 	IF %%H == easy-manage.jar (
-	    ECHO Backend application '%%H' is already running!
+	    ECHO Backend application '%%H'^(%%G^) is already running!
         GOTO start_frontend
     )
 )
@@ -205,6 +203,7 @@ powershell -command "Start-Process powershell -ArgumentList 'cd \"%_SCRIPTS_DIR%
 :::::::::::::::::::::::::::::::::::: START FRONTEND :::::::::::::::::::::::::::::::::::::
 
 :start_frontend
+ECHO ---
 
 :node_configure
 ECHO START_3.0.1 check if http-server is installed
@@ -223,7 +222,7 @@ powershell -command %_NODE_HOME%\npm install -g http-server
 ECHO START_3.1 Verify if frontend application is already running
 FOR /F "tokens=1,2" %%G IN ('tasklist /FI "IMAGENAME eq node.exe" /fo table /nh') DO (
     IF %%H NEQ No (
-        ECHO Frontend application is already running!
+        ECHO Frontend application '%%G'^(%%H^) is already running!
         GOTO cleaning
     )
 )
@@ -243,5 +242,6 @@ powershell -command "Start-Process powershell -ArgumentList 'http-server %_FRONT
 
 ::::::::::::::::::::::::::::::::::: POST PROCESSING :::::::::::::::::::::::::::::::::::::
 
+ECHO --\
 :cleaning
 ECHO ON
