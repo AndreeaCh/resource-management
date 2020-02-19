@@ -44,25 +44,25 @@ IF "%_DB_SERVER_PORT%"=="" (
 ECHO ---
 ECHO STATUS_1/4 Processes listening on db server port %_DB_SERVER_PORT%:
 FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_DB_SERVER_PORT%\>" ^| FIND "LISTENING"') DO (
-	FOR /f "tokens=1 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo %%~A
+	FOR /f "tokens=1,2 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo %%~A %%~B
 )
 
 ECHO ---
 ECHO STATUS_2/4 Processes listening on auth server port %_AUTH_SERVER_PORT%:
 FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_AUTH_SERVER_PORT%\>" ^| FIND "LISTENING"') DO (
-	FOR /f "tokens=1 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo %%~A
+	FOR /f "tokens=1,2 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo %%~A %%~B
 )
 
 ECHO ---
 ECHO STATUS_3/4 Processes listening on backend server port %_BACKEND_SERVER_PORT%:
 FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_BACKEND_SERVER_PORT%\>" ^| FIND "LISTENING"') DO (
-	FOR /f "tokens=1 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo %%~A
+	FOR /f "tokens=1,2 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo %%~A %%~B
 )
 
 ECHO ---
 ECHO STATUS_4/4 Processes listening on frontend server port %_FRONTEND_SERVER_PORT%:
 FOR /F "tokens=5" %%G IN ('netstat -ano ^| findstr ":%_FRONTEND_SERVER_PORT%\>" ^| FIND "LISTENING"') DO (
-	FOR /f "tokens=1 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo %%~A
+	FOR /f "tokens=1,2 delims=," %%A IN ('tasklist /fi "pid eq %%G" /nh /fo:csv') DO echo %%~A %%~B
 )
 
 ECHO ---
