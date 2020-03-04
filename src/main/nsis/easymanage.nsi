@@ -329,7 +329,7 @@ Section "!EasyManage (required)"
    ; copy import data
    SetOutPath $_IMPORT_DIR
    File fillDb\*.json
-   File auth\realm-export.json
+   ; File auth\realm-export.json
 
    ; copy backend binary
    SetOutPath $_BACKEND_DIR

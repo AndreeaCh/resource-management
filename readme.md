@@ -24,7 +24,7 @@
 ``` bash
     :resource-management$ mvn clean install -DskipTests
 ```
-The generated bundle can be found at target/'easy-manage-windows-native-*.zip'
+The generated installer can be found at target/'EasyManage-*.exe'
 
 * extract target/easy-manage-windows-native-*.zip
 * continue with the instructions found in the extracted file named README.md
@@ -55,3 +55,17 @@ The generated bundle can be found at target/'easy-manage-windows-native-*.zip'
     :$ docker logs -f backend
     :$ docker logs -f frontend
 ```
+
+
+## Maven Setup
+
+In order to avoid using installed maven version on the machine(and existing maven configuration), or to avoid installing it:
+
+# setup maven wrapper for the current project
+mvn -N io.takari:maven:wrapper
+
+# run maven wrapper instead of installed maven
+./mvnw clean install
+mvnw.cmd clean install
+
+For more details refer to the project [page](https://github.com/takari/maven-wrapper).

@@ -28,6 +28,9 @@
 ### Custom dev settings ###
 maven.config
 .gitconfig
+mvnw
+mvnw.cmd
+.mvn/
 
 ### Other ###
 *.log

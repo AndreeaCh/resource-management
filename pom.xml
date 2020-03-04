@@ -57,6 +57,7 @@
 
         <version.docker-maven-plugin>0.25.0</version.docker-maven-plugin>
         <version.buildnumber-maven-plugin>1.4</version.buildnumber-maven-plugin>
+        <version.nsis-maven-plugin>1.0-SNAPSHOT</version.nsis-maven-plugin>
     </properties>
 
     <pluginRepositories>
@@ -744,9 +745,10 @@
            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>nsis-maven-plugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>${version.nsis-maven-plugin}</version>
                 <executions>
                     <execution>
+                        <id>generate-win-native-installer</id>
                         <phase>install</phase>
                         <goals>
                             <goal>generate-project</goal>
@@ -765,9 +767,9 @@
 
 
    <profiles>
-       <!--profiles for running docker build when docker is available on the system-->
+       <!--enable docker build when docker is available on the system-->
       <profile>
-            <id>linux</id>
+           <id>linux</id>
            <properties>
                <disable.docker.plugin>false</disable.docker.plugin>
            </properties>
@@ -776,7 +778,40 @@
                     <family>unix</family>
                 </os>
             </activation>
-       </profile>
+      </profile>
+      <!--disable installer and docker build targets when on windows-->
+      <profile>
+           <id>windows</id>
+           <properties>
+               <disable.docker.plugin>true</disable.docker.plugin>
+           </properties>
+           <activation>
+               <os>
+                   <family>windows</family>
+               </os>
+           </activation>
+           <build>
+               <plugins>
+                   <plugin>
+                       <groupId>org.codehaus.mojo</groupId>
+                       <artifactId>nsis-maven-plugin</artifactId>
+                       <version>${version.nsis-maven-plugin}</version>
+                       <executions>
+                           <execution>
+                               <id>generate-win-native-installer</id>
+                               <phase>none</phase>
+                           </execution>
+                       </executions>
+                   </plugin>
+               </plugins>
+           </build>
+      </profile>
+      <profile>
+           <id>no-docker</id>
+           <properties>
+               <disable.docker.plugin>true</disable.docker.plugin>
+           </properties>
+      </profile>
       <!--profiles for running the container using maven cli-->
       <profile>
             <id>db</id>
