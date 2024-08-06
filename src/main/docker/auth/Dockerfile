@@ -1,3 +1,3 @@
-FROM jboss/keycloak:8.0.0
+FROM quay.io/keycloak/keycloak:17.0.1
 
 COPY realm-export.json /tmp/

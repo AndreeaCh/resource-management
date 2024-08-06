@@ -55,7 +55,7 @@
         <auth.image.alias>auth</auth.image.alias>
         <auth.docker.image.filename>${auth.image.alias}-docker-image.tar.gz</auth.docker.image.filename>
 
-        <version.docker-maven-plugin>0.25.0</version.docker-maven-plugin>
+        <version.docker-maven-plugin>0.45.0</version.docker-maven-plugin>
         <version.buildnumber-maven-plugin>1.4</version.buildnumber-maven-plugin>
         <version.nsis-maven-plugin>1.0-SNAPSHOT</version.nsis-maven-plugin>
     </properties>
@@ -757,6 +757,27 @@
                         <configuration>
                            <setupScript>${win.native.build.directory}/easymanage.nsi</setupScript>
                            <outputFile>${project.build.directory}/EasyManage-${project.version}.exe</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <!-- https://mvnrepository.com/artifact/org.digitalmediaserver/nsis-maven-plugin -->
+                <groupId>org.digitalmediaserver</groupId>
+                <artifactId>nsis-maven-plugin</artifactId>
+                <version>1.0.6</version>
+                <executions>
+                    <execution>
+                        <id>generate-win-native-installer-new</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>generate-headerfile</goal>
+                            <goal>make</goal>
+                        </goals>
+                        <configuration>
+                            <disabled>true</disabled>
+                            <scriptFile>${win.native.build.directory}/easymanage.nsi</scriptFile>
+                            <outputFile>${project.build.directory}/EasyManage-${project.version}.exe</outputFile>
                         </configuration>
                     </execution>
                 </executions>

@@ -11,6 +11,7 @@
           <include>backend-docker-image.tar.gz</include>
           <include>${frontend.docker.image.filename}</include>
           <include>${db.docker.image.filename}</include>
+          <include>${auth.docker.image.filename}</include>
       </includes>
     </fileSet>
     <fileSet>

@@ -17,6 +17,7 @@ echo "SERVER_ADDRESS=$SERVER_ADDRESS" >> ${HOME}/.easyman
 echo "FRONTEND_RAM=1024000000" >> ${HOME}/.easyman
 echo "BACKEND_RAM=1024000000" >> ${HOME}/.easyman
 echo "DB_RAM=1024000000" >> ${HOME}/.easyman
+echo "AUTH_RAM=1024000000" >> ${HOME}/.easyman
 
 echo "INSTALL_3 Add bin to PATH"
 

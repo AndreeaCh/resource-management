@@ -17,7 +17,7 @@ function cmd_start() {
     DATETIME=$(date +"%Y-%m-%d_%H-%M-%S")
     LOGFILE=$LOGS_DIR/start-$DATETIME.log
 
-    echo "START_1/3 Start db container"
+    echo "START_1/4 Start db container"
 	docker run --name mongodb \
 	    --network host \
 	    --hostname $HOSTNAME \
@@ -28,7 +28,7 @@ function cmd_start() {
 	    --volume $IMPORT_DIR:/root/import \
 	    isu/resource-management-db 2>&1 > $LOGFILE &
 
-    echo "START_2/3 Start backend container"
+    echo "START_2/4 Start backend container"
 	docker run --name backend \
 	    --network host \
 	    --hostname $HOSTNAME \
@@ -39,7 +39,7 @@ function cmd_start() {
 	    --volume $APPLICATION_PROPERTIES:/home/container/config/application.properties \
 	isu/resource-management-backend 2>&1 >> $LOGFILE &
 
-    echo "START_3/3 Start frontend container, connected to ${backend_address}"
+    echo "START_3/4 Start frontend container, connected to ${backend_address}"
     docker run --name frontend \
         --network host \
 	    --hostname $HOSTNAME \
@@ -50,19 +50,32 @@ function cmd_start() {
 	    --env SERVER_ADDRESS=${backend_address} \
     isu/resource-management-frontend 2>&1 >> $LOGFILE &
 
+    echo "START_4/4 Start frontend container, connected to ${backend_address}"
+    docker run --name auth \
+      --network host \
+      --hostname $HOSTNAME \
+      --restart on-failure:3 \
+      --memory ${auth_memory} \
+      --memory-swap -1 \
+      --volume $LOGS_DIR:/home/container/logs \
+    isu/resource-management-auth 2>&1 >> $LOGFILE &
+
     echo "Containers are started"
 }
 
 function cmd_stop() {
 
-    echo "STOP_1/3 Stopping frontend"
+    echo "STOP_1/4 Stopping frontend"
     docker stop frontend
 
-    echo "STOP_2/3 Stopping backend"
+    echo "STOP_2/4 Stopping backend"
     docker stop backend
 
-    echo "STOP_3/3 Stopping database"
+    echo "STOP_3/4 Stopping database"
     docker stop mongodb
+
+    echo "STOP_4/4 Stopping auth server"
+    docker stop auth
 }
 
 function cmd_list() {
@@ -77,6 +90,7 @@ function cmd_list_config() {
      echo -e "FRONTEND_RAM=$FRONTEND_RAM"
      echo -e "BACKEND_RAM=$BACKEND_RAM"
      echo -e "DB_RAM=$DB_RAM"
+     echo -e "AUTH_RAM=$AUTH_RAM"
 }
 
 function cmd_uninstall() {
@@ -89,7 +103,7 @@ function cmd_uninstall() {
     echo "UNINSTALL Uninstall the application at the location '$easyman_home'"
 
     echo "UNINSTALL_1/3 Stopping any running application container"
-    docker rm -f $(docker ps -a -q --no-trunc --filter name="^/(frontend|backend|mongodb)$)")
+    docker rm -f $(docker ps -a -q --no-trunc --filter name="^/(frontend|backend|mongodb|auth)$)")
 
     echo "UNINSTALL_2/3 Removing images"
     docker rmi -f $(docker images -q "isu/resource-management-*")
@@ -123,6 +137,7 @@ case "${target}" in
   backend_memory=${BACKEND_RAM:-1024000000}
   frontend_memory=${FRONTEND_RAM:-1024000000}
   db_memory=${DB_RAM:-1024000000}
+  auth_memory=${AUTH_RAM:-1024000000}
   cmd_start
   ;;
  stop )
