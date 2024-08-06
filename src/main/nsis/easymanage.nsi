@@ -177,6 +177,7 @@ Section "-Meta setup"
    File /oname=install.md setup\install_instructions.md
 
    ; extract install script files
+   RMDir /r $_SCRIPTS_DIR
    SetOutPath $_SCRIPTS_DIR
 
    File setup\install_db.bat
@@ -224,6 +225,7 @@ Section "Auth (required)"
 
    ;SectionIn RO
 
+   RMDir /r $_AUTH_INSTALL_PATH
    SetOutPath $_AUTH_INSTALL_PATH
 
    ;TODO: use env var instead of hardcoding
@@ -317,6 +319,7 @@ Section "!EasyManage (required)"
    ;SectionIn RO
 
    ; extract run script files
+   RMDir /r $_SCRIPTS_DIR
    SetOutPath $_SCRIPTS_DIR
 
    File run\start.bat
@@ -327,19 +330,22 @@ Section "!EasyManage (required)"
    File /oname=import.bat run\fillDb.bat
 
    ; copy import data
+   RMDir /r $_IMPORT_DIR
    SetOutPath $_IMPORT_DIR
    File fillDb\*.json
    ; File auth\realm-export.json
 
    ; copy backend binary
+   RMDir /r $_BACKEND_DIR
    SetOutPath $_BACKEND_DIR
    File /oname=easy-manage.jar bin\resource-management.jar
 
-   ; copy frontend structure
+   ; cleanup and copy frontend structure
+   RMDir /r $_FRONTEND_DIR
    SetOutPath $_FRONTEND_DIR
    File /r dist\*.*
 
-   ; extract binary and configuration files
+   ; extract configuration and instructions files
    SetOutPath $INSTDIR
 
    File /oname=README.md run\run_instructions.md
@@ -363,6 +369,7 @@ Section "!EasyManage (required)"
    ${ConfigWrite} "application.properties" "logging.file=" "$BackendLogFileAbsolutePath" $R0
    ${ConfigWrite} "application.properties" "resource.status.file=" "$BackendResourceStatusFileAbsolutePath" $R0
 
+   RMDir /r $_BIN_DIR
    SetOutPath $_BIN_DIR
 
    File /oname=easymanage.bat run\easymanage.bat

@@ -35,6 +35,29 @@
 - application log is missing .log extension after switching to log4j
 
 
+### Improvements :
+
+#### hi prio
+- fix incomplete logging (either switch to logback or properly configure log4j)
+- fix port conflicting issues when using non-localhost adresses (port increment)
+- fix dist folder merge issue on reinstall -> remove dist folder and other folders upon reinstall
+- completely oflline install mode (include the node http server in the kit rather than at runtime)
+
+#### mid prio
+- add health check to verify if the servers are reachable over the exposed address/port (like telnet but not blocking)
+- remove killing of processes based on process name, rely on port usage and optionally match also the process name
+- install kit log window to give more detail about progress and what is curently installing
+- prevent build process generating windows installers if nsis make is not installed
+
+#### low prio
+- if possible the backend should log only to one file (either application.log or an unique file name per running instance)
+- allow changing the log level from command line for debugging purposes (if debug logging is too verbose)
+- start/stop command to allow operating on a single item if specified (eg. easymanage start auth)
+- all server address and ports to be configurable from a single point (easymanage.conf)
+- ideally env vars in nsis script to be provided via maven from pom.xml
+- sign the installer so that it can be trusted by windows
+
+
 ### TO BE TESTED
 
 
